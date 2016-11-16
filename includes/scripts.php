@@ -23,8 +23,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function wpbd_enqueue_admin_scripts( $hook ) {
 
-	$js_dir  = DA_PLUGIN_URL . 'assets/js/';
-	wp_register_script( 'wp-bulk-delete', $js_dir . 'wp-bulk-delete-admin.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), DA_VERSION );
+	$js_dir  = WPBD_PLUGIN_URL . 'assets/js/';
+	wp_register_script( 'wp-bulk-delete', $js_dir . 'wp-bulk-delete-admin.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPBD_VERSION );
 	wp_enqueue_script( 'wp-bulk-delete' );
 	
 }
@@ -40,8 +40,9 @@ function wpbd_enqueue_admin_scripts( $hook ) {
  */
 function wpbd_enqueue_admin_styles( $hook ) {
 
-  	$css_dir = DA_PLUGIN_URL . 'assets/css/';
+  	$css_dir = WPBD_PLUGIN_URL . 'assets/css/';
  	wp_enqueue_style('jquery-ui', $css_dir . 'jquery-ui.css', false, "1.12.0" );
+ 	wp_enqueue_style('wp-bulk-delete-css', $css_dir . 'wp-bulk-delete-admin.css', false, "" );
 }
 
 add_action( 'admin_enqueue_scripts', 'wpbd_enqueue_admin_scripts' );

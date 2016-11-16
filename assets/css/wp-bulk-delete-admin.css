@@ -2,3 +2,22 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+ .upgrade_to_pro{
+	padding-top: 100px;
+	padding: 15px;
+	border-radius: 2px;
+	-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+	box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+	margin-bottom: 20px;
+	background: url('../images/xt_logo.png') no-repeat bottom 5%right 5% #fff;
+	background-size: 20%;
+}
+.upgrade_to_pro h2{
+	font-size: 22px !important;
+	padding: 0px !important; 
+}
+.upgrade_button{
+	height: 36px !important;
+	padding: 4px 20px !important;
+	font-size: 16px !important;
+}

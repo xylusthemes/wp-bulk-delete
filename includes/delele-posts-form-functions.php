@@ -285,9 +285,9 @@ function wpbd_render_form_date_interval(){
             <?php _e('Date interval :','wp-bulk-delete'); ?>
         </th>
         <td>
-            <input type="date" id="delete_start_date" name="delete_start_date" class="delete_all_datepicker" />
+            <input type="text" id="delete_start_date" name="delete_start_date" class="delete_all_datepicker" />
              -
-            <input type="date" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" />
+            <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" />
             <p class="description">
                 <?php _e('Set the date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
             </p>
@@ -316,7 +316,7 @@ function wpbd_render_form_post_contains(){
                     <option value=""><?php _e( "Don't delete It.", "wp-bulk-delete" ); ?> </option>
                 </select>
                 <br/>
-                <span style="color: red">Available in Pro version. </span><a href="<?php echo esc_url(DA_PLUGIN_BUY_NOW_URL); ?>">Buy Now</a>
+                <?php do_action( 'wpbd_display_available_in_pro'); ?>
             </td>
         </tr>
         <tr>
@@ -331,7 +331,7 @@ function wpbd_render_form_post_contains(){
                     <option value=""><?php _e( "Don't delete It.", "wp-bulk-delete" ); ?> </option>
                 </select>
                 <br/>
-                <span style="color: red">Available in Pro version. </span><a href="<?php echo esc_url(DA_PLUGIN_BUY_NOW_URL); ?>">Buy Now</a>
+                <?php do_action( 'wpbd_display_available_in_pro'); ?>
             </td>
         </tr>
         <?php
@@ -411,7 +411,7 @@ function wpbd_render_limit_post(){
                 <?php _e('Limit :','wp-bulk-delete'); ?>
             </th>
             <td>
-                <input type="number" id="limit_post" name="limit_post" class="limit_post_input" />
+                <input type="number" min="1" id="limit_post" name="limit_post" class="limit_post_input" />
                 <p class="description">
                     <?php _e('Set the limit over post delete. It will delete only first limit posts. This option will help you in case of you have lots of posts to delete and script timeout.','wp-bulk-delete'); ?>
                 </p>
@@ -441,7 +441,7 @@ function wpbd_render_form_custom_fields(){
             <?php esc_html_e( 'Value', 'wp-bulk-delete' ); ?> 
             <input type="text" id="disabled_sample3" name="disabled_sample3" class="disabled_sample3" disabled="disabled" />
             <br />
-            <span style="color: red">Available in Pro version. </span><a href="<?php echo esc_url(DA_PLUGIN_BUY_NOW_URL); ?>">Buy Now</a>
+            <span style="color: red">Available in Pro version. </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>">Buy Now</a>
         </td>
     </tr>
     <?php
@@ -457,27 +457,27 @@ function wpbd_render_post_cleanup(){
     ?>
     <tr>
         <th scope="row">
-            <?php _e('Cleanup Type :','wp-bulk-delete'); ?>
+            <?php _e('Cleanup Posts :','wp-bulk-delete'); ?>
         </th>
         <td>
             <fieldset>
                 <label for="cleanup_post_type">
                     <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_revision" type="checkbox" value="revision" checked="checked">
-                    <?php printf( __( 'Cleanup Revisions (%d Revisions)', 'wp-bulk-delete' ), wpbulkdelete()->api->get_post_count('revision') ); ?>
+                    <?php printf( __( 'Revisions (%d Revisions)', 'wp-bulk-delete' ), wpbulkdelete()->api->get_post_count('revision') ); ?>
                 </label>
             </fieldset>
 
             <fieldset>
                 <label for="cleanup_post_type">
                     <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_trash" type="checkbox" value="trash" checked="checked">
-                    <?php printf( __( 'Cleanup Trash (Deleted Posts) (%d Trash)', 'wp-bulk-delete' ),  wpbulkdelete()->api->get_post_count('trash') ); ?>
+                    <?php printf( __( 'Trash (Deleted Posts) (%d Trash)', 'wp-bulk-delete' ),  wpbulkdelete()->api->get_post_count('trash') ); ?>
                 </label>
             </fieldset>
 
             <fieldset>
                 <label for="cleanup_post_type">
                     <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_revision" type="checkbox" value="auto_drafts" checked="checked">
-                    <?php printf( __( 'Cleanup Auto Drafts (%d Auto Drafts)', 'wp-bulk-delete' ),  wpbulkdelete()->api->get_post_count('auto_drafts') ); ?>
+                    <?php printf( __( 'Auto Drafts (%d Auto Drafts)', 'wp-bulk-delete' ),  wpbulkdelete()->api->get_post_count('auto_drafts') ); ?>
                 </label>
             </fieldset>
         </td>

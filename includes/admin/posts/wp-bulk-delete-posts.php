@@ -17,30 +17,8 @@ if(  ! empty( $_POST ) && isset( $_POST['delete_post_type'] ) ){
     
     // Get post_result for delete based on user input.
     $post_result = xt_delete_posts_form_process( $_POST );
-    if ( ! empty( $post_result ) && $post_result['status'] == 1 ){
+    wpbd_display_admin_notice( $post_result );
 
-        if( !empty( $post_result['messages'] ) ){
-            foreach ( $post_result['messages'] as $smessages ) {
-                ?>
-                <div class="notice notice-success">
-                    <p><strong><?php echo $smessages; ?></strong></p>
-                </div>
-                <?php
-            }
-        }  
-    } elseif ( ! empty( $post_result ) && $post_result['status'] == 0 ){
-
-        if( !empty( $post_result['messages'] ) ){
-            foreach ( $post_result['messages'] as $emessages ) {
-                ?>
-                <div class="notice notice-error">
-                    <p><strong><?php echo $emessages; ?></strong></p>
-                </div>
-                <?php
-            }
-        }
-
-    }
 } 
 ?>
 <form method="post" id="delete_posts_form">
@@ -78,7 +56,7 @@ if(  ! empty( $_POST ) && isset( $_POST['delete_post_type'] ) ){
         </tbody>
     </table>
     <p class="submit">
-        <input name="delete_posts_submit" id="delete_posts_submit" class="button button-primary" value="Delete" type="button">
+        <input name="delete_posts_submit" id="delete_posts_submit" class="button button-primary" value="Delete Posts" type="button">
         <span class="spinner" style="float: none;"></span>
     </p>
 </form>

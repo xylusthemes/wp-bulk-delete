@@ -54,7 +54,7 @@
 	                    jQuery(".delete_notice").html('<div class="notice notice-success"><p><strong>' + response.messages + '</strong></p></div>');
 	                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
 	                } else if( response.status == 1 ){
-	                    if ( confirm(  response.post_count + ' records will be delete. Would you like to proceed further?'  ) ){
+	                    if ( confirm(  response.post_count + ' posts will be delete. Would you like to proceed further?'  ) ){
 	                        jQuery("#delete_posts_form").submit();    
 	                    } 
 	                }
@@ -109,6 +109,120 @@
 	            }else{
 	            	terms_space.html( '' );
 	            }	            
+	        });    
+	    });                    
+	});
+
+
+	// Delete users form handle.
+	jQuery(document).ready(function() {
+	    jQuery('#delete_users_submit').on( 'click', function() {
+	        var deleteuserform = jQuery("#delete_users_form").serialize();
+	        var data = {
+	            'action': 'delete_users_count',
+	            'form': deleteuserform
+	        };
+	        jQuery(".spinner").addClass("is-active");
+	        jQuery.post(ajaxurl, data, function(response) {
+	            if( response != '' ){
+	                var response = jQuery.parseJSON( response );
+	                if( response.status == 0 ){
+	                    jQuery(".delete_notice").html('<div class="notice notice-error"><p><strong>' + response.messages + '</strong></p></div>');
+	                } else if( response.status == 2 ){
+	                    jQuery(".delete_notice").html('<div class="notice notice-success"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
+	                } else if( response.status == 1 ){
+	                    if ( confirm(  response.post_count + ' users will be delete. Would you like to proceed further?'  ) ){
+	                        jQuery("#delete_users_form").submit();    
+	                    } 
+	                }
+	            }
+	            jQuery(".spinner").removeClass("is-active");
+	        });    
+	    });                    
+	});
+
+	// Delete comments form handle.
+	jQuery(document).ready(function() {
+	    jQuery('#delete_comments_submit').on( 'click', function() {
+	        var deletecommentform = jQuery("#delete_comments_form").serialize();
+	        var data = {
+	            'action': 'delete_comments_count',
+	            'form': deletecommentform
+	        };
+	        jQuery(".spinner").addClass("is-active");
+	        jQuery.post(ajaxurl, data, function(response) {
+	            if( response != '' ){
+	                var response = jQuery.parseJSON( response );
+	                if( response.status == 0 ){
+	                    jQuery(".delete_notice").html('<div class="notice notice-error"><p><strong>' + response.messages + '</strong></p></div>');
+	                } else if( response.status == 2 ){
+	                    jQuery(".delete_notice").html('<div class="notice notice-success"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
+	                } else if( response.status == 1 ){
+	                    if ( confirm(  response.post_count + ' comments will be delete. Would you like to proceed further?'  ) ){
+	                        jQuery("#delete_comments_form").submit();    
+	                    } 
+	                }
+	            }
+	            jQuery(".spinner").removeClass("is-active");
+	        });    
+	    });                    
+	});
+
+	// Delete meta form handle.
+	jQuery(document).ready(function() {
+	    jQuery('#delete_meta_submit').on( 'click', function() {
+	        var metaform = jQuery("#delete_meta_form").serialize();
+	        var data = {
+	            'action': 'delete_meta_count',
+	            'form': metaform
+	        };
+	        jQuery(".spinner").addClass("is-active");
+	        jQuery.post(ajaxurl, data, function(response) {
+	            if( response != '' ){
+	                var response = jQuery.parseJSON( response );
+	                if( response.status == 0 ){
+	                    jQuery(".delete_notice").html('<div class="notice notice-error"><p><strong>' + response.messages + '</strong></p></div>');
+	                } else if( response.status == 2 ){
+	                    jQuery(".delete_notice").html('<div class="notice notice-success"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
+	                } else if( response.status == 1 ){
+	                    if ( confirm(  response.post_count + ' meta will be delete. Would you like to proceed further?'  ) ){
+	                        jQuery("#delete_meta_form").submit();    
+	                    } 
+	                }
+	            }
+	            jQuery(".spinner").removeClass("is-active");
+	        });    
+	    });                    
+	});
+
+
+	// Delete meta form handle.
+	jQuery(document).ready(function() {
+	    jQuery('#delete_terms_submit').on( 'click', function() {
+	        var termform = jQuery("#delete_terms_form").serialize();
+	        var data = {
+	            'action': 'delete_terms_count',
+	            'form': termform
+	        };
+	        jQuery(".spinner").addClass("is-active");
+	        jQuery.post(ajaxurl, data, function(response) {
+	            if( response != '' ){
+	                var response = jQuery.parseJSON( response );
+	                if( response.status == 0 ){
+	                    jQuery(".delete_notice").html('<div class="notice notice-error"><p><strong>' + response.messages + '</strong></p></div>');
+	                } else if( response.status == 2 ){
+	                    jQuery(".delete_notice").html('<div class="notice notice-success"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
+	                } else if( response.status == 1 ){
+	                    if ( confirm(  response.post_count + ' Terms will be delete. Would you like to proceed further?'  ) ){
+	                        jQuery("#delete_terms_form").submit();    
+	                    } 
+	                }
+	            }
+	            jQuery(".spinner").removeClass("is-active");
 	        });    
 	    });                    
 	});

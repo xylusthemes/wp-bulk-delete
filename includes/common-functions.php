@@ -54,3 +54,72 @@ function wpbd_get_terms_by_taxonomy( $taxonomy = '' ) {
 	}
 	return $terms;	
 }
+
+/**
+ * Display Admin Notices
+ *
+ * @since 1.0
+ * @param array $notice_result Status array
+ * @return void
+ */
+function wpbd_display_admin_notice( $notice_result = array() ) {
+
+	if ( ! empty( $notice_result ) && $notice_result['status'] == 1 ){
+        if( !empty( $notice_result['messages'] ) ){
+            foreach ( $notice_result['messages'] as $smessages ) {
+                ?>
+                <div class="notice notice-success">
+                    <p><strong><?php echo $smessages; ?></strong></p>
+                </div>
+                <?php
+            }
+        }  
+    } elseif ( ! empty( $notice_result ) && $notice_result['status'] == 0 ){
+
+        if( !empty( $notice_result['messages'] ) ){
+            foreach ( $notice_result['messages'] as $emessages ) {
+                ?>
+                <div class="notice notice-error">
+                    <p><strong><?php echo $emessages; ?></strong></p>
+                </div>
+                <?php
+            }
+        }
+
+    }
+}
+
+/**
+ * Display Admin Notices
+ *
+ * @since 1.0
+ * @param array $notice_result Status array
+ * @return void
+ */
+function wpbd_display_available_in_pro() {
+	?>
+	<span style="color: red"><?php _e('Available in Pro version.','wp-bulk-delete'); ?></span>
+	<a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php _e('Buy Now','wp-bulk-delete'); ?></a>
+	<?php
+}
+add_action( 'wpbd_display_available_in_pro', 'wpbd_display_available_in_pro' );
+
+/**
+ * Function only for debuging
+ *
+ * @since 1.1
+ */
+function wp_p( $data, $exit = false ){
+
+	echo '<pre>';
+	if ( is_array( $data ) || is_object( $data ) ){
+		print_r( $data );
+	} else {
+		echo $data; 
+	}
+	echo '</pre>';
+	if ( $exit ) {
+		exit();
+	}
+
+}

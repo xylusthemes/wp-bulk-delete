@@ -2,8 +2,8 @@
 /**
  * Plugin Name:       WP Bulk Delete
  * Plugin URI:        http://xylusthemes.com/plugins/wp-bulk-delete/
- * Description:       Delete and clean anything like posts, comments, users, meta, taxonomy in bulk. with powerful filter options.
- * Version:           1.0.0
+ * Description:       Bulk delete and cleanup anything like posts, comments, users, meta fields, taxonomy terms. with powerful filter options.
+ * Version:           1.1.0
  * Author:            Xylus Themes
  * Author URI:        http://xylusthemes.com
  * License:           GPL-2.0+
@@ -91,27 +91,27 @@ class WP_Bulk_Delete{
 	private function setup_constants() {
 
 		// Plugin version.
-		if( ! defined( 'DA_VERSION' ) ){
-			define( 'DA_VERSION', '1.0.0' );
+		if( ! defined( 'WPBD_VERSION' ) ){
+			define( 'WPBD_VERSION', '1.0.0' );
 		}
 
 		// Plugin folder Path.
-		if( ! defined( 'DA_PLUGIN_DIR' ) ){
-			define( 'DA_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+		if( ! defined( 'WPBD_PLUGIN_DIR' ) ){
+			define( 'WPBD_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 		}
 
 		// Plugin folder URL.
-		if( ! defined( 'DA_PLUGIN_URL' ) ){
-			define( 'DA_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+		if( ! defined( 'WPBD_PLUGIN_URL' ) ){
+			define( 'WPBD_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 		}
 
 		// Plugin root file.
-		if( ! defined( 'DA_PLUGIN_FILE' ) ){
-			define( 'DA_PLUGIN_FILE', __FILE__ );
+		if( ! defined( 'WPBD_PLUGIN_FILE' ) ){
+			define( 'WPBD_PLUGIN_FILE', __FILE__ );
 		}
 		// Pro plugin Buy now Link.
-		if( ! defined( 'DA_PLUGIN_BUY_NOW_URL' ) ){
-			define( 'DA_PLUGIN_BUY_NOW_URL', 'http://xylusthemes.com/plugins/wp-bulk-delete/' );
+		if( ! defined( 'WPBD_PLUGIN_BUY_NOW_URL' ) ){
+			define( 'WPBD_PLUGIN_BUY_NOW_URL', 'http://xylusthemes.com/plugins/wp-bulk-delete/?utm_source=insideplugin&utm_medium=web&utm_content=sidebar&utm_campaign=freeplugin' );
 		}
 	}
 
@@ -123,18 +123,24 @@ class WP_Bulk_Delete{
 	 * @return void
 	 */
 	private function includes() {
-
-		require_once DA_PLUGIN_DIR . 'includes/scripts.php';
-		require_once DA_PLUGIN_DIR . 'includes/class-delete-api.php';
-		require_once DA_PLUGIN_DIR . 'includes/common-functions.php';
-		require_once DA_PLUGIN_DIR . 'includes/ajax-functions.php';
-		require_once DA_PLUGIN_DIR . 'includes/delele-posts-form-functions.php';
-		require_once DA_PLUGIN_DIR . 'includes/admin/admin-pages.php';
-		require_once DA_PLUGIN_DIR . 'includes/admin/posts/display-delete-posts.php';
-		require_once DA_PLUGIN_DIR . 'includes/admin/comments/display-delete-comments.php';
-		require_once DA_PLUGIN_DIR . 'includes/admin/users/display-delete-users.php';
-		require_once DA_PLUGIN_DIR . 'includes/admin/meta/display-delete-meta.php';
-		require_once DA_PLUGIN_DIR . 'includes/admin/taxonomy/display-delete-taxonomy.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/scripts.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/class-delete-api.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/common-functions.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/ajax-functions.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/delele-posts-form-functions.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/delele-users-form-functions.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/delele-comments-form-functions.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/delele-meta-form-functions.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/delele-terms-form-functions.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/admin/admin-pages.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/admin/admin-sidebar.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/admin/posts/display-delete-posts.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/admin/comments/display-delete-comments.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/admin/users/display-delete-users.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/admin/meta/display-delete-meta.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/admin/terms/display-delete-terms.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/admin/cleanup/cleanup-form.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/admin/cleanup/cleanup-page.php';
 	}
 
 	/**
@@ -149,7 +155,7 @@ class WP_Bulk_Delete{
 		load_plugin_textdomain(
 			'wp-bulk-delete',
 			false,
-			DA_PLUGIN_DIR . '/languages/'
+			WPBD_PLUGIN_DIR . '/languages/'
 		);
 	
 	}

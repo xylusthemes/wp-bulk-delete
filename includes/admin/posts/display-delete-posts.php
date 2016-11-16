@@ -25,7 +25,7 @@ function wpbd_delete_posts_page(){
 	<div class="wrap">
 		<h2><?php esc_html_e('Delete Posts','wp-bulk-delete'); ?></h2>
 		<?php
-		// Set Default Tab to General
+		// Set Default Tab to Cleanup
 		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'cleanup';
 		?>
 		<div id="poststuff">
@@ -37,13 +37,13 @@ function wpbd_delete_posts_page(){
 
 				<div class="delete_notice"></div>
 
-				<!--<div id="postbox-container-1" class="postbox-container">
-
-				</div>-->
+				<div id="postbox-container-1" class="postbox-container">
+					<?php do_action('wpbd_admin_sidebar'); ?>
+				</div>
 
 				<div id="postbox-container-2" class="postbox-container">
 
-					<h2 class="nav-tab-wrapper" style="padding-bottom: 0px">
+					<h1 class="nav-tab-wrapper" style="padding-bottom: 0px">
 						<a href="?page=delete_all_posts&tab=cleanup" class="nav-tab <?php echo $active_tab == 'cleanup' ? 'nav-tab-active' : ''; ?>">
 							<?php esc_attr_e( 'Cleanup', 'wp-bulk-delete' ); ?>
 						</a>
@@ -65,15 +65,15 @@ function wpbd_delete_posts_page(){
 						<a href="?page=delete_all_posts&tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">
 							<?php esc_attr_e( 'General (By All)', 'wp-bulk-delete' ); ?>
 						</a>
-					</h2>
+					</h1>
 
 					<?php
 					if( $active_tab == 'general' || $active_tab == 'by_taxonomy' || $active_tab == 'by_author' || $active_tab == 'by_title' || $active_tab == 'by_posttype' || $active_tab == 'by_customfield' ) {					
 						// load General Post Delete Form
-						require_once DA_PLUGIN_DIR . 'includes/admin/posts/wp-bulk-delete-posts.php';
+						require_once WPBD_PLUGIN_DIR . 'includes/admin/posts/wp-bulk-delete-posts.php';
 					}
 					if( $active_tab == 'cleanup' ){
-						require_once DA_PLUGIN_DIR . 'includes/admin/posts/post-cleanup.php';
+						wpbd_cleanup_form( 'post' );
 					}
 					?>
 				</div>

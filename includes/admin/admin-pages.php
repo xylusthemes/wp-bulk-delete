@@ -16,7 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Create the Admin menu and submenu and assign their links to global varibles.
  *
  * @since 1.0
- * @param string $hook Page hook
  * @return void
  */
 function wpbd_add_menu_pages() {
@@ -30,9 +29,10 @@ function wpbd_add_menu_pages() {
 
 	$xt_delete_users_page = add_submenu_page( 'delete_all_posts', __( 'Delete Users', 'wp-bulk-delete' ), __( 'Delete Users', 'wp-bulk-delete' ), 'manage_options', 'delete_all_users', 'wpbd_delete_users_page' );
 
-	$xt_delete_meta_page = add_submenu_page( 'delete_all_posts', __( 'Delete Meta', 'wp-bulk-delete' ), __( 'Delete Meta', 'wp-bulk-delete' ), 'manage_options', 'delete_all_meta', 'wpbd_delete_meta_page' );
+	$xt_delete_meta_page = add_submenu_page( 'delete_all_posts', __( 'Delete Meta Fields', 'wp-bulk-delete' ), __( 'Delete Meta Fields', 'wp-bulk-delete' ), 'manage_options', 'delete_all_meta', 'wpbd_delete_meta_page' );
 
-	$xt_delete_taxonomy_page = add_submenu_page( 'delete_all_posts', __( 'Delete Taxonomy', 'wp-bulk-delete' ), __( 'Delete Taxonomy', 'wp-bulk-delete' ), 'manage_options', 'delete_all_taxonomy', 'wpbd_delete_taxonomy_page' );
+	$xt_delete_taxonomy_page = add_submenu_page( 'delete_all_posts', __( 'Delete Terms', 'wp-bulk-delete' ), __( 'Delete Terms', 'wp-bulk-delete' ), 'manage_options', 'wpbd_delete_terms', 'wpbd_delete_terms_page' );
 
+	$xt_delete_taxonomy_page = add_submenu_page( 'delete_all_posts', __( 'Cleanup', 'wp-bulk-delete' ), __( 'Cleanup', 'wp-bulk-delete' ), 'manage_options', 'wpbd_cleanup', 'wpbd_render_cleanup_page' );
 }
 add_action( 'admin_menu', 'wpbd_add_menu_pages', 10 );
