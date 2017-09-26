@@ -156,7 +156,7 @@ class WP_Bulk_Delete{
 		load_plugin_textdomain(
 			'wp-bulk-delete',
 			false,
-			WPBD_PLUGIN_DIR . '/languages/'
+			basename( dirname( __FILE__ ) ) . '/languages'
 		);
 	
 	}
