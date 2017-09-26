@@ -3,8 +3,8 @@ Contributors: xylus
 Donate link: http://xylusthemes.com
 Tags: delete, bulk, clean, bulk delete, bulk clean, posts delete, delete all, mass delete, posts delete, delete posts, delete comments, delete users, delete meta, delete taxonomy, delete revision, wp clean, clean trash, bulk user delete, delete all, delete all users, delete all comments, delete all posts, trash, clean spam, delete with condition, delete with filter, remove
 Requires at least: 3.9
-Tested up to: 4.7
-Stable tag: 1.1.1
+Tested up to: 4.8
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,8 +117,7 @@ We are working on providing more options :)
 #### Support
 
 * If you have found a bug/issue or have a feature request, then post them in [Support ticket][1]
-* If you have a question about the plugin usage or need help to troubleshoot, then post about it in our [BulkWP Support forums][1]
-* If you have a question about any of the addon or need help to troubleshoot the addons, then post about it in our [WP Bulk delete Support][1]
+* If you have a question about plugin or need help to troubleshoot plugin, then post about it in our [WP Bulk delete Support][1]
 * If you like the Plugin, then kindly leave a review/feedback at [WordPress repo page][2]. This will help more people to discover the plugin.
 * Checkout other [WordPress Plugins][3] that we have written
 
@@ -163,6 +162,9 @@ We are working on providing more options :)
 13. Cleanup
 
 == Changelog ==
+
+= 1.1.1 =
+* FIXES: Some bug fixes in delete users
 
 = 1.1.1 =
 * Added: post count after posttypes

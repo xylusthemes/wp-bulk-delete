@@ -84,12 +84,14 @@ function wpdb_render_delete_users_userroles(){
             <?php
             if( ! empty( $userroles['avail_roles'] ) ){
                 foreach ($userroles['avail_roles'] as $userrole => $count ) {
+                    if( $userrole != 'none' ){
                     ?>
                     <input name="delete_user_roles[]" class="delete_user_roles" id="user_role_<?php echo $userrole; ?>" type="checkbox" value="<?php echo $userrole; ?>" >
                     <label for="user_role_<?php echo $userrole; ?>">
                         <?php echo $userrole . ' ' . sprintf( __( '( %s Users )', 'wp-bulk-delete' ), $count ); ?>
                     </label><br/>
-                <?php
+                    <?php
+                    }
                 }
             }
             ?>

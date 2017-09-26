@@ -113,7 +113,7 @@ add_action( 'wpbd_display_available_in_pro', 'wpbd_display_available_in_pro' );
 function wpbd_get_posttype_post_count( $posttye ){
 	if( $posttye != '' ){
 		global $wpdb;
-		$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_type = %s", esc_attr( $posttye ) ) );
+		$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_type = %s AND `post_status` NOT IN ('trash', 'auto-draft')", esc_attr( $posttye ) ) );
 		return $count;
 	}
 	return 0;

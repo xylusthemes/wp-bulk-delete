@@ -104,7 +104,7 @@ function wpbd_render_terms_by_taxonomy() {
 	$terms = array();
 	if ( $post_taxo != '' ) {
 		if( taxonomy_exists( $post_taxo ) ){
-			$terms = get_terms( $post_taxo, array( 'hide_empty' => false ) );
+			$terms = get_terms( $post_taxo, array( 'hide_empty' => true ) );
 		}
 	}
 	if( ! empty( $terms ) ){

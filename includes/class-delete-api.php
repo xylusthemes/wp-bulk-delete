@@ -37,18 +37,18 @@ class WPBD_Delete_API {
 		global $wpdb;
 		if( ! empty( $data['delete_post_type'] ) &&  ! empty( $data['delete_post_status'] ) ){
 
-            $post_types = ( $data['delete_post_type'] ) ? $data['delete_post_type'] : array();
+            $post_types = isset( $data['delete_post_type'] ) ? $data['delete_post_type'] : array();
             if( ! is_array( $post_types ) ){
                 $post_types = array( $post_types ); 
             }
             $post_types = array_map('esc_sql', $post_types );
 
-            $post_status = ( $data['delete_post_status'] ) ? array_map('esc_sql', $data['delete_post_status'] ) : array();
-            $delete_start_date = ( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
-            $delete_end_date = ( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
+            $post_status = isset( $data['delete_post_status'] ) ? array_map('esc_sql', $data['delete_post_status'] ) : array();
+            $delete_start_date = isset( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
+            $delete_end_date = isset( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
             $delete_authors = isset( $data['delete_authors'] ) ?  array_map( 'intval', $data['delete_authors'] ) : array();
-            $delete_type = ( $data['delete_type'] )?$data['delete_type']:'trash';
-            $limit_post = ( $data['limit_post'] ) ? absint( $data['limit_post'] ) : '';
+            $delete_type = isset( $data['delete_type'] )?$data['delete_type']:'trash';
+            $limit_post = isset( $data['limit_post'] ) ? absint( $data['limit_post'] ) : '';
 
             // BY Taxonomy.
             $post_taxonomy =  isset( $data['post_taxonomy'] ) ?  esc_sql( $data['post_taxonomy'] ) : '';
@@ -111,7 +111,7 @@ class WPBD_Delete_API {
 	 * @param array $data Posts Id.
 	 * @return array | deleted posts count.
 	 */
-	public function do_delete_posts( $post_ids = array(), $force_delete = 'false') {
+	public function do_delete_posts( $post_ids = array(), $force_delete = false ) {
 		$post_delete_count = 0;
 
 		if ( ! empty( $post_ids ) ){
@@ -402,16 +402,16 @@ class WPBD_Delete_API {
         if( empty( $data['delete_user_roles'] ) && ( $data['user_meta_key'] == '' || $data['user_meta_value'] == '' ) ){
             return array();
         }
-        $delete_user_roles = ( $data['delete_user_roles'] ) ? $data['delete_user_roles'] : array();
+        $delete_user_roles = isset( $data['delete_user_roles'] ) ? $data['delete_user_roles'] : array();
         $delete_user_roles = array_map('esc_sql', $delete_user_roles );
-        $delete_start_date = ( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
-        $delete_end_date = ( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
+        $delete_start_date = isset( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
+        $delete_end_date = isset( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
         $limit_user = isset( $data['limit_user'] ) ? absint( $data['limit_user'] ) : '';
 
         // By Usermeta.
-        $user_meta_key =  ( $data['user_meta_key'] ) ? esc_sql( $data['user_meta_key'] ) : '';
-        $user_meta_value =  ( $data['user_meta_value'] ) ? esc_sql( $data['user_meta_value'] ) : '';
-        $user_meta_compare =  ( $data['user_meta_compare'] ) ? $data['user_meta_compare'] : 'equal_to_str';
+        $user_meta_key =  isset( $data['user_meta_key'] ) ? esc_sql( $data['user_meta_key'] ) : '';
+        $user_meta_value =  isset( $data['user_meta_value'] ) ? esc_sql( $data['user_meta_value'] ) : '';
+        $user_meta_compare =  isset( $data['user_meta_compare'] ) ? $data['user_meta_compare'] : 'equal_to_str';
             
         // Query Generation.
         $query = "SELECT DISTINCT $wpdb->users.ID FROM $wpdb->users ";
@@ -421,11 +421,7 @@ class WPBD_Delete_API {
         }
 
         if( !empty( $delete_user_roles ) ){
-            $i = 1;
-            foreach ($delete_user_roles as $delete_user_role ) {
-                $query .= " INNER JOIN $wpdb->usermeta AS mt{$i} ON ( $wpdb->users.ID = mt{$i}.user_id )";    
-                $i++;
-            }
+            $query .= " INNER JOIN $wpdb->usermeta AS mt_roles ON ( $wpdb->users.ID = mt_roles.user_id )";
         }
 
         $query .= ' WHERE 1=1 ';
@@ -504,11 +500,9 @@ class WPBD_Delete_API {
         }
 
         if( !empty( $delete_user_roles ) ){
-            $j = 1;
             $subquery = array();
             foreach ($delete_user_roles as $delete_user_role ) {
-                $subquery[]= "( mt{$j}.meta_key = '{$wpdb->prefix}capabilities' AND mt{$j}.meta_value LIKE '%\"{$delete_user_role}\"%' )";
-                $j++;
+                $subquery[] = "( mt_roles.meta_key = '{$wpdb->prefix}capabilities' AND mt_roles.meta_value LIKE '%".'\"'.$delete_user_role.'\"%'."' )";
             }
             $subquery = implode( ' OR ',  $subquery );
             $query .= " AND ( {$subquery} )";
@@ -571,10 +565,10 @@ class WPBD_Delete_API {
     public function get_delete_comment_count( $data = array() ){
         global $wpdb;
         $comment_delete_count = 0;
-        $delete_comment_status = ( $data['delete_comment_status'] ) ? $data['delete_comment_status'] : array();
+        $delete_comment_status = isset( $data['delete_comment_status'] ) ? $data['delete_comment_status'] : array();
         $delete_comment_status = array_map('esc_sql', $delete_comment_status );
-        $delete_start_date = ( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
-        $delete_end_date = ( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
+        $delete_start_date = isset( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
+        $delete_end_date = isset( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
 
         if ( ! empty( $data ) ){
 
@@ -631,10 +625,10 @@ class WPBD_Delete_API {
         global $wpdb;
 
         $comment_delete_count = 0;
-        $delete_comment_status = ( $data['delete_comment_status'] ) ? $data['delete_comment_status'] : array();
+        $delete_comment_status = isset( $data['delete_comment_status'] ) ? $data['delete_comment_status'] : array();
         $delete_comment_status = array_map('esc_sql', $delete_comment_status );
-        $delete_start_date = ( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
-        $delete_end_date = ( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
+        $delete_start_date = isset( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
+        $delete_end_date = isset( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
 
         if ( ! empty( $data ) ){
 
@@ -692,9 +686,9 @@ class WPBD_Delete_API {
         global $wpdb;
         if( ! empty( $data['meta_post_type'] ) &&  ! empty( $data['custom_field_key'] ) ){
 
-            $post_type = ( $data['meta_post_type'] ) ? esc_sql( $data['meta_post_type'] ) : '';
-            $delete_start_date = ( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
-            $delete_end_date = ( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
+            $post_type = isset( $data['meta_post_type'] ) ? esc_sql( $data['meta_post_type'] ) : '';
+            $delete_start_date = isset( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
+            $delete_end_date = isset( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
 
             // Post Query Generation.
             $postquery = "SELECT DISTINCT $wpdb->posts.ID FROM $wpdb->posts ";
@@ -766,8 +760,8 @@ class WPBD_Delete_API {
         global $wpdb;
         if( $data['custom_field_key'] != '' ){
 
-            $delete_start_date = ( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
-            $delete_end_date = ( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
+            $delete_start_date = isset( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
+            $delete_end_date = isset( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
 
             // Post Query Generation.
             $commentquery = "SELECT DISTINCT $wpdb->comments.comment_ID FROM $wpdb->comments WHERE 1 = 1";
@@ -837,9 +831,9 @@ class WPBD_Delete_API {
         global $wpdb;
         if( $data['custom_field_key'] != '' && !empty( $data['delete_user_roles'] ) ){
             
-            $delete_user_roles = ( $data['delete_user_roles'] ) ? $data['delete_user_roles'] : array();
-            $delete_start_date = ( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
-            $delete_end_date = ( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
+            $delete_user_roles = isset( $data['delete_user_roles'] ) ? $data['delete_user_roles'] : array();
+            $delete_start_date = isset( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
+            $delete_end_date = isset( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
 
             $userquery = "SELECT DISTINCT $wpdb->users.ID FROM $wpdb->users ";
 
