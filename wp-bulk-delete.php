@@ -3,7 +3,7 @@
  * Plugin Name:       WP Bulk Delete
  * Plugin URI:        http://xylusthemes.com/plugins/wp-bulk-delete/
  * Description:       Bulk delete and cleanup anything like posts, comments, users, meta fields, taxonomy terms. with powerful filter options.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Author:            Xylus Themes
  * Author URI:        http://xylusthemes.com
  * License:           GPL-2.0+
@@ -141,6 +141,7 @@ class WP_Bulk_Delete{
 		require_once WPBD_PLUGIN_DIR . 'includes/admin/terms/display-delete-terms.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/admin/cleanup/cleanup-form.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/admin/cleanup/cleanup-page.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/admin/support-page.php';
 	}
 
 	/**

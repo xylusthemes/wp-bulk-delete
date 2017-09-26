@@ -1057,4 +1057,58 @@ class WPBD_Delete_API {
         }
         return $metaWhere;
     }
+
+    /**
+     * Get Plugin array
+     *
+     * @since 1.1.0
+     * @return array
+     */
+    public function get_xyuls_themes_plugins(){
+        return array(
+            'wp-event-aggregator' => esc_html__( 'WP Event Aggregator', 'wp-bulk-delete' ),
+            'import-facebook-events' => esc_html__( 'Import Facebook Events', 'wp-bulk-delete' ),
+            'import-eventbrite-events' => esc_html__( 'Import Eventbrite Events', 'wp-bulk-delete' ),
+            'import-meetup-events' => esc_html__( 'Import Meetup Events', 'wp-bulk-delete' ),
+            'event-schema' => esc_html__( 'Event Schema / Structured Data', 'wp-bulk-delete' ),
+        );
+    }
+
+    /**
+     * Get Plugin Details.
+     *
+     * @since 1.1.0
+     * @return array
+     */
+    public function get_wporg_plugin( $slug ){
+
+        if( $slug == '' ){
+            return false;
+        }
+
+        $transient_name = 'support_plugin_box'.$slug;
+        $plugin_data = get_transient( $transient_name );
+        if( false === $plugin_data ){
+            if ( ! function_exists( 'plugins_api' ) ) {
+                include_once ABSPATH . '/wp-admin/includes/plugin-install.php';
+            }
+
+            $plugin_data = plugins_api( 'plugin_information', array(
+                'slug' => $slug,
+                'is_ssl' => is_ssl(),
+                'fields' => array(
+                    'banners' => true,
+                    'active_installs' => true,
+                ),
+            ) );
+
+            if ( ! is_wp_error( $plugin_data ) ) {
+                set_transient( $transient_name, $plugin_data, 24 * HOUR_IN_SECONDS );
+            } else {
+                // If there was a bug on the Current Request just leave
+                return false;
+            }           
+        }
+        return $plugin_data;
+    }
 }

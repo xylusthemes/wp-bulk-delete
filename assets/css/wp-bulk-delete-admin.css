@@ -21,3 +21,51 @@
 	padding: 4px 20px !important;
 	font-size: 16px !important;
 }
+
+.wpbd_well{
+	background-color: #f9f9f9;
+	border: 1px solid #ccc;
+	padding: 8px 20px 20px 20px;
+}
+
+.plugin_box {
+    width: 24%;
+    float: left;
+    background-color: #fff;
+    border-radius: 3px;
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+    margin-bottom: 20px;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+}
+
+.plugin_box .plugin_img{
+    width: 100%;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.plugin_box h3{
+    margin: 0.5em 0;
+}
+.plugin_box .plugin_content{
+    padding: 10px 10px 20px 10px;
+}
+ @media (max-width: 1300px ){
+    .plugin_box {
+        width: 32.333%;
+    }
+}
+@media (max-width: 1080px ){
+    .plugin_box {
+        width: 48%;
+        margin-left: 1%;
+        margin-right: 1%;
+    }
+}
+ @media (max-width: 1080px ){
+    .plugin_box {
+        width: 100%;
+        float: none;
+    }
+}

@@ -129,6 +129,11 @@ function wpbd_render_form_posttype(){
                             <label for="delete_post_type">
                                 <input name="delete_post_type[]" class="delete_post_type" id="<?php echo $key_type; ?>" type="checkbox" value="<?php echo $key_type; ?>" <?php if( 'post' == $key_type ){ echo 'checked="checked"'; } ?>>
                                 <?php printf( __( '%s', 'wp-bulk-delete' ), $type ); ?>
+                                <?php $post_count = wpbd_get_posttype_post_count( $key_type );
+                                if( $post_count >= 0 ){
+                                	echo '('.$post_count .' '. $type .')';
+                                }
+                                ?>
                             </label>
                         </fieldset>
                         <?php

@@ -105,6 +105,21 @@ function wpbd_display_available_in_pro() {
 add_action( 'wpbd_display_available_in_pro', 'wpbd_display_available_in_pro' );
 
 /**
+ * Return post count from posttype
+ *
+ * @since 1.0
+ * @return void
+ */
+function wpbd_get_posttype_post_count( $posttye ){
+	if( $posttye != '' ){
+		global $wpdb;
+		$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_type = %s", esc_attr( $posttye ) ) );
+		return $count;
+	}
+	return 0;
+}
+
+/**
  * Function only for debuging
  *
  * @since 1.1

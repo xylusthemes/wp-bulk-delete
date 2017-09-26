@@ -34,5 +34,7 @@ function wpbd_add_menu_pages() {
 	$xt_delete_taxonomy_page = add_submenu_page( 'delete_all_posts', __( 'Delete Terms', 'wp-bulk-delete' ), __( 'Delete Terms', 'wp-bulk-delete' ), 'manage_options', 'wpbd_delete_terms', 'wpbd_delete_terms_page' );
 
 	$xt_delete_taxonomy_page = add_submenu_page( 'delete_all_posts', __( 'Cleanup', 'wp-bulk-delete' ), __( 'Cleanup', 'wp-bulk-delete' ), 'manage_options', 'wpbd_cleanup', 'wpbd_render_cleanup_page' );
+
+	$xt_delete_support_page = add_submenu_page( 'delete_all_posts', __( 'Support & Help', 'wp-bulk-delete' ), __( 'Support & Help', 'wp-bulk-delete' ), 'manage_options', 'wpbd_support', 'wpbd_render_support_page' );
 }
 add_action( 'admin_menu', 'wpbd_add_menu_pages', 10 );
