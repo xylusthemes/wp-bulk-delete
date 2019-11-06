@@ -4,7 +4,7 @@ Donate link: http://xylusthemes.com
 Tags: delete, bulk, clean, bulk delete, bulk clean, posts delete, delete all, mass delete, posts delete, delete posts, delete comments, delete users, delete meta, delete taxonomy, delete revision, wp clean, clean trash, bulk user delete, delete all, delete all users, delete all comments, delete all posts, trash, clean spam, delete with condition, delete with filter, remove
 Requires at least: 3.9
 Requires PHP: 5.3
-Tested up to: 4.8
+Tested up to: 5.3
 Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -57,7 +57,7 @@ WP bulk Delete support below powerfull conditions and filters.
 * Delete Comments by date interval
 * Delete Comments by comment author. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Delete Comments by comment post.  [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Delete Commets by conditions & filters 
+* Delete Comments by conditions & filters  [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 
 #### Delete users
 

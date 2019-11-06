@@ -39,12 +39,10 @@ function wpbd_enqueue_admin_scripts( $hook ) {
  * @return void
  */
 function wpbd_enqueue_admin_styles( $hook ) {
-	$page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
-	if( 'delete_all_posts' == $page || 'delete_all_comments' == $page || 'delete_all_users' == $page || 'delete_all_meta' == $page || 'wpbd_delete_terms' == $page || 'wpbd_cleanup' == $page || 'wpbd_support' == $page ){
-		$css_dir = WPBD_PLUGIN_URL . 'assets/css/';
-	 	wp_enqueue_style('jquery-ui', $css_dir . 'jquery-ui.css', false, "1.12.0" );
-	 	wp_enqueue_style('wp-bulk-delete-css', $css_dir . 'wp-bulk-delete-admin.css', false, "" );
-	}
+
+  	$css_dir = WPBD_PLUGIN_URL . 'assets/css/';
+ 	wp_enqueue_style('jquery-ui', $css_dir . 'jquery-ui.css', false, "1.12.0" );
+ 	wp_enqueue_style('wp-bulk-delete-css', $css_dir . 'wp-bulk-delete-admin.css', false, "" );
 }
 
 add_action( 'admin_enqueue_scripts', 'wpbd_enqueue_admin_scripts' );
