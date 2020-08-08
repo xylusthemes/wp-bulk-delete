@@ -90,7 +90,7 @@
 
 	// Render Dynamic Terms.
 	jQuery(document).ready(function() {
-	    jQuery('.post_taxonomy_radio').live( 'change', function() {
+	    jQuery(document).on( 'change', '.post_taxonomy_radio', function() {
 
 	    	var post_taxomony = jQuery(this).val();
 	    	var xt_taxonomy_title = jQuery(this).attr( 'title' );
