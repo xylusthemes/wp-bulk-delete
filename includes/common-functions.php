@@ -97,10 +97,12 @@ function wpbd_display_admin_notice( $notice_result = array() ) {
  * @return void
  */
 function wpbd_display_available_in_pro() {
-	?>
-	<span style="color: red"><?php _e('Available in Pro version.','wp-bulk-delete'); ?></span>
-	<a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php _e('Buy Now','wp-bulk-delete'); ?></a>
-	<?php
+	if( !wpbd_is_pro() ) {
+		?>
+		<span style="color: red"><?php _e('Available in Pro version.','wp-bulk-delete'); ?></span>
+		<a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php _e('Buy Now','wp-bulk-delete'); ?></a>
+		<?php
+	}
 }
 add_action( 'wpbd_display_available_in_pro', 'wpbd_display_available_in_pro' );
 

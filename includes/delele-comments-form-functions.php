@@ -144,15 +144,35 @@ function wpdb_render_delete_comments_date_interval(){
  * @return void
  */
 function wpdb_render_delete_comments_users(){
+    global $wpdb;
     ?>
     <tr>
         <th scope="row">
             <?php _e('Comment Author','wp-bulk-delete'); ?> :
         </th>
         <td>
-            <select name="sample1" class="sample1" disabled="disabled" >
-                <option value=""><?php esc_attr_e( 'Select author', 'wp-bulk-delete' ); ?></option>
-           </select>
+            <?php 
+            if( ! wpbd_is_pro() ) { ?>
+                <select name="sample1" class="sample1" disabled="disabled" >
+                    <option value=""><?php esc_attr_e( 'Select author', 'wp-bulk-delete' ); ?></option>
+                </select>
+                <?php
+            } else {
+                $comment_query = "SELECT DISTINCT `comment_author` FROM {$wpdb->comments}";
+                $comment_authors = $wpdb->get_col( $comment_query );
+                if( !empty( $comment_authors ) ){
+                    ?>
+                    <select name="comment_author" class="chosen_select">
+                        <option value=""><?php esc_attr_e( 'Select author', 'wp-bulk-delete' ); ?></option>
+                        <?php
+                        foreach ($comment_authors as $comment_author ) {
+                            echo '<option value="' . $comment_author . '">' . $comment_author . '</option>';
+                        }
+                        ?>
+                    </select>
+                    <?php
+                }
+            } ?>
             <p class="description">
                 <?php _e('Select comment author whose comment you want to delete.','wp-bulk-delete'); ?>
             </p>
@@ -169,15 +189,35 @@ function wpdb_render_delete_comments_users(){
  * @return void
  */
 function wpdb_render_delete_comments_posts(){
+    global $wpdb;
     ?>
     <tr>
         <th scope="row">
             <?php _e('Comment Post','wp-bulk-delete'); ?> :
         </th>
         <td>
-            <select name="sample2" class="sample2" disabled="disabled" >
-                <option value=""><?php esc_attr_e( 'Select post', 'wp-bulk-delete' ); ?></option>
-            </select>
+            <?php 
+            if( ! wpbd_is_pro() ) { ?>
+                <select name="sample2" class="sample2" disabled="disabled" >
+                    <option value=""><?php esc_attr_e( 'Select post', 'wp-bulk-delete' ); ?></option>
+                </select>
+                <?php
+            } else {
+                $comment_query = "SELECT DISTINCT `comment_post_ID` FROM {$wpdb->comments}";
+                $comment_posts = $wpdb->get_col( $comment_query );
+                if( !empty( $comment_posts ) ){
+                    ?>
+                    <select name="comment_post" class="chosen_select">
+                        <option value=""><?php esc_attr_e( 'Select post', 'wp-bulk-delete' ); ?></option>
+                        <?php
+                        foreach ($comment_posts as $comment_post ) {
+                            echo '<option value="' . $comment_post . '">' . get_the_title( $comment_post ) . '</option>';
+                        }
+                        ?>
+                    </select>
+                    <?php
+                }
+            } ?>
             <p class="description">
                 <?php _e('Select comment post whose comment you want to delete.','wp-bulk-delete'); ?>
             </p>

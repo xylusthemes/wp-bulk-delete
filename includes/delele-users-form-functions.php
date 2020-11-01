@@ -12,11 +12,11 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /** Actions *************************************************************/
-add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_userroles' );
-add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_usermeta' );
-add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_assignuser' );
-add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_date_interval' );
-add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_limit' );
+add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_userroles', 10 );
+add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_usermeta', 20 );
+add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_assignuser', 30 );
+add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_date_interval', 40 );
+add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_limit', 50 );
 
 /**
  * Process Delete Users form form
@@ -42,8 +42,11 @@ function xt_delete_users_form_process( $data ) {
     		// Get post_ids for delete based on user input.
     		$user_ids = wpbulkdelete()->api->get_delete_user_ids( $data );
     		if ( ! empty( $user_ids ) && count( $user_ids ) > 0 ) {
-    			
-    			$user_count = wpbulkdelete()->api->do_delete_users( $user_ids ); 
+                if( !wpbd_is_pro() ){
+                    $user_count = wpbulkdelete()->api->do_delete_users( $user_ids );
+                } else {
+                    $user_count = wpbulkdelete()->api->do_delete_users( $user_ids, (int)$data['reassign_user'] );
+                }
     			return  array(
 	    			'status' => 1,
 	    			'messages' => array( sprintf( esc_html__( '%d User(s) deleted successfully.', 'wp-bulk-delete' ), $user_count )
@@ -189,9 +192,17 @@ function wpdb_render_delete_users_assignuser(){
             <?php _e('Assign deleted user\'s data to','wp-bulk-delete'); ?> :
         </th>
         <td>
-            <select name="sample_user" disabled="disabled">
-                <option value=""> <?php esc_attr_e( 'Select User','wp-bulk-delete')?></option>
-            </select>
+            <?php 
+            if( wpbd_is_pro() ) {
+                wp_dropdown_users( array( 'show_option_none' => esc_attr__( 'Select User', 'wp-bulk-delete'), 'name' => 'reassign_user' ) );
+            } else {
+                ?>
+                <select name="sample_user" disabled="disabled">
+                    <option value=""><?php esc_attr_e( 'Select User','wp-bulk-delete'); ?></option>
+                </select>
+                <?php
+            }
+            ?>
             <p class="description">
                 <?php _e('Select user to whom you want to assign deleted user\'s data.','wp-bulk-delete'); ?>
             </p>
@@ -199,5 +210,4 @@ function wpdb_render_delete_users_assignuser(){
         </td>
     </tr>
     <?php
-    
 }

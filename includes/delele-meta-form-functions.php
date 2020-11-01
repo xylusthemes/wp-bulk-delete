@@ -346,7 +346,7 @@ function wpdb_render_meta_form_postdropdown(){
             <?php _e('Post :','wp-bulk-delete'); ?>
         </th>
         <td>
-            <div class="postdropdown_space">
+            <div <?php if(wpbd_is_pro()){ ?>class="postdropdown_space"<?php } ?>>
                 <select name="sample_post_dropdown" disabled="disabled">
                     <option value=""> <?php esc_html_e( 'Select post', 'wp-bulk-delete' ); ?></option>
                 </select>

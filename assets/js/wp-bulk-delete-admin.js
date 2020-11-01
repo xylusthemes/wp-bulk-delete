@@ -106,6 +106,7 @@
 	        jQuery.post(ajaxurl, data, function(response) {
 	            if( response != '' ){
 	            	terms_space.html( response );
+	            	jQuery(".taxonomy_terms_select").chosen({placeholder_text_multiple:"Select "+xt_taxonomy_title });
 	            }else{
 	            	terms_space.html( '' );
 	            }	            
@@ -223,6 +224,35 @@
 	                }
 	            }
 	            jQuery(".spinner").removeClass("is-active");
+	        });    
+	    });                    
+	});
+
+	// 
+	jQuery(document).ready(function(){
+		jQuery("#reassign_user").chosen({max_selected_options: 1});
+		jQuery(".chosen_select").chosen({max_selected_options: 1});
+	});	
+
+	// Render Dynamic post dropdown.
+	jQuery(document).ready(function() {
+	    jQuery('#meta_post_type').on( 'change', function() {
+	    	var post_type = jQuery(this).val();
+	        var data = {
+	            'action': 'render_postdropdown_by_posttype',
+	            'post_type': post_type
+	        };
+
+	        var postdropdown_space = jQuery('.postdropdown_space');
+	        postdropdown_space.html('<span class="spinner is-active" style="float: none;"></span>');
+	        // send ajax request.
+	        jQuery.post(ajaxurl, data, function(response) {
+	            if( response != '' ){
+	            	postdropdown_space.html( response );
+	            	jQuery(".post_for_meta").chosen({placeholder_text_multiple:"Select posts"});
+	            }else{
+	            	postdropdown_space.html( '' );
+	            }	            
 	        });    
 	    });                    
 	});

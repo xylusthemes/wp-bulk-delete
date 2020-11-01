@@ -44,7 +44,7 @@ class WP_Bulk_Delete{
      */
 	public static function instance() {
 		if( ! isset( self::$instance ) && ! (self::$instance instanceof WP_Bulk_Delete ) ) {
-			self::$instance = new WP_Bulk_Delete;
+			self::$instance = new WP_Bulk_Delete();
 			self::$instance->setup_constants();
 
 			add_action( 'plugins_loaded', array( self::$instance, 'load_textdomain' ) );
@@ -185,3 +185,19 @@ function wpbulkdelete() {
 
 // Get WP_Bulk_Delete Running.
 wpbulkdelete();
+
+/**
+ * Check is pro active or not.
+ *
+ * @since  1.2.0
+ * @return boolean
+ */
+function wpbd_is_pro() {
+	if( !function_exists( 'is_plugin_active' ) ){
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+	}
+	if ( is_plugin_active( 'wp-bulk-delete-pro/wp-bulk-delete-pro.php' ) ) {
+		return true;
+	}
+	return false;
+}

@@ -23,9 +23,9 @@ add_action( 'render_form_by_author', 'wpbd_render_common_form' );
 
 
 // By Title & Content
-add_action( 'render_form_by_title', 'wpbd_render_form_posttype' );
-add_action( 'render_form_by_title', 'wpbd_render_form_post_contains' );
-add_action( 'render_form_by_title', 'wpbd_render_common_form' );
+add_action( 'render_form_by_title', 'wpbd_render_form_posttype', 10 );
+add_action( 'render_form_by_title', 'wpbd_render_form_post_contains', 20 );
+add_action( 'render_form_by_title', 'wpbd_render_common_form', 30 );
 
 // By Taxonomy.
 add_action( 'render_form_by_taxonomy', 'wpbd_render_form_posttype_dropdown' );
@@ -33,17 +33,17 @@ add_action( 'render_form_by_taxonomy', 'wpbd_render_form_taxonomy' );
 add_action( 'render_form_by_taxonomy', 'wpbd_render_common_form' );
 
 // By Custom Fields
-add_action( 'render_form_by_custom_fields', 'wpbd_render_form_posttype' );
-add_action( 'render_form_by_custom_fields', 'wpbd_render_form_custom_fields' );
-add_action( 'render_form_by_custom_fields', 'wpbd_render_common_form' );
+add_action( 'render_form_by_custom_fields', 'wpbd_render_form_posttype', 10 );
+add_action( 'render_form_by_custom_fields', 'wpbd_render_form_custom_fields', 20 );
+add_action( 'render_form_by_custom_fields', 'wpbd_render_common_form', 30 );
 
 // General
-add_action( 'render_form_general', 'wpbd_render_form_posttype_dropdown' );
-add_action( 'render_form_general', 'wpbd_render_form_taxonomy' );
-add_action( 'render_form_general', 'wpbd_render_form_users' );
-add_action( 'render_form_general', 'wpbd_render_form_custom_fields' );
-add_action( 'render_form_general', 'wpbd_render_form_post_contains' );
-add_action( 'render_form_general', 'wpbd_render_common_form' );
+add_action( 'render_form_general', 'wpbd_render_form_posttype_dropdown', 10 );
+add_action( 'render_form_general', 'wpbd_render_form_taxonomy', 20 );
+add_action( 'render_form_general', 'wpbd_render_form_users', 30 );
+add_action( 'render_form_general', 'wpbd_render_form_custom_fields', 40 );
+add_action( 'render_form_general', 'wpbd_render_form_post_contains', 50 );
+add_action( 'render_form_general', 'wpbd_render_common_form', 60 );
 
 /**
  * Process Delete posts form
@@ -290,9 +290,9 @@ function wpbd_render_form_date_interval(){
             <?php _e('Date interval :','wp-bulk-delete'); ?>
         </th>
         <td>
-            <input type="text" id="delete_start_date" name="delete_start_date" class="delete_all_datepicker" />
+            <input type="text" id="delete_start_date" name="delete_start_date" class="delete_all_datepicker" placeholder="<?php _e('Start Date','wp-bulk-delete'); ?>" />
              -
-            <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" />
+            <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" placeholder="<?php _e('End Date','wp-bulk-delete'); ?>" />
             <p class="description">
                 <?php _e('Set the date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
             </p>

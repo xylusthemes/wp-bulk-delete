@@ -69,3 +69,7 @@
         float: none;
     }
 }
+
+.chosen-container{
+	min-width: 260px;
+}

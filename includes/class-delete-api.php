@@ -34,6 +34,10 @@ class WPBD_Delete_API {
 	 * @return array | Posts Id.
 	 */
 	public function get_delete_posts_ids( $data = array() ) {
+        if( wpbd_is_pro() && class_exists('WPBD_Delete_API_Pro', false) ){
+            $wpbdpro = new WPBD_Delete_API_Pro();
+            return $wpbdpro->get_delete_posts_ids( $data );
+        }
 		global $wpdb;
 		if( ! empty( $data['delete_post_type'] ) &&  ! empty( $data['delete_post_status'] ) ){
 
@@ -563,6 +567,10 @@ class WPBD_Delete_API {
     * @return comment count.
     */
     public function get_delete_comment_count( $data = array() ){
+        if( wpbd_is_pro() && class_exists('WPBD_Delete_API_Pro', false) ){
+            $wpbdpro = new WPBD_Delete_API_Pro();
+            return $wpbdpro->get_delete_comment_count( $data );
+        }
         global $wpdb;
         $comment_delete_count = 0;
         $delete_comment_status = isset( $data['delete_comment_status'] ) ? $data['delete_comment_status'] : array();
@@ -623,6 +631,10 @@ class WPBD_Delete_API {
      */
     public function do_delete_comments( $data = array() ) {
         global $wpdb;
+        if( wpbd_is_pro() && class_exists('WPBD_Delete_API_Pro', false) ){
+            $wpbdpro = new WPBD_Delete_API_Pro();
+            return $wpbdpro->do_delete_comments( $data );
+        }
 
         $comment_delete_count = 0;
         $delete_comment_status = isset( $data['delete_comment_status'] ) ? $data['delete_comment_status'] : array();
@@ -684,6 +696,10 @@ class WPBD_Delete_API {
      */
     public function get_delete_postmeta_ids( $data = array() ) {
         global $wpdb;
+        if( wpbd_is_pro() && class_exists('WPBD_Delete_API_Pro', false) ){
+            $wpbdpro = new WPBD_Delete_API_Pro();
+            return $wpbdpro->get_delete_postmeta_ids( $data );
+        }
         if( ! empty( $data['meta_post_type'] ) &&  ! empty( $data['custom_field_key'] ) ){
 
             $post_type = isset( $data['meta_post_type'] ) ? esc_sql( $data['meta_post_type'] ) : '';
