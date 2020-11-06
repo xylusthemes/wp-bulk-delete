@@ -73,3 +73,76 @@
 .chosen-container{
 	min-width: 260px;
 }
+
+.wpbd_inline{
+    display: inline;
+}
+
+.wpbd_input_days{
+    width: 4em;
+}
+
+.wpbd_inprogress_delete strong{
+    color: green;
+}
+
+
+.wp-bulk-delete_page_wpbd_schedule #TB_window.thickbox-loading:before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: -1;
+    margin: -10px 0 0 -10px;
+    background: #fcfcfc url(../../../../../wp-admin/images/spinner.gif) no-repeat center;
+    background-size: 20px 20px;
+    transform: translateZ(0);
+}
+
+.wp-bulk-delete_page_wpbd_schedule #TB_window {
+    background: #fcfcfc;
+}
+
+.wp-bulk-delete_page_wpbd_schedule #TB_title {
+    float: left;
+    height: 1px;
+}
+
+.wp-bulk-delete_page_wpbd_schedule #TB_ajaxWindowTitle {
+    display: none;
+}
+
+.wp-bulk-delete_page_wpbd_schedule #TB_closeWindowButton {
+    left: auto;
+    right: -30px;
+    color: #eee;
+}
+
+.wp-bulk-delete_page_wpbd_schedule #TB_closeWindowButton:hover,
+.wp-bulk-delete_page_wpbd_schedule #TB_closeWindowButton:focus {
+    color: #00a0d2;
+    outline: none;
+    box-shadow: none;
+}
+
+.wp-bulk-delete_page_wpbd_schedule .tb-close-icon {
+    display: none;
+}
+
+.wp-bulk-delete_page_wpbd_schedule #TB_closeWindowButton:after {
+    content: "\f335";
+    font: normal 32px/29px 'dashicons';
+    speak: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@media screen and (max-width: 830px) {
+    .wp-bulk-delete_page_wpbd_schedule #TB_closeWindowButton {
+    right: 0;
+    top: -30px;
+    }
+} 

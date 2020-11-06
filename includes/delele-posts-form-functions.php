@@ -62,13 +62,53 @@ function xt_delete_posts_form_process( $data ) {
 
     if ( isset( $data['_delete_all_posts_wpnonce'] ) && wp_verify_nonce( $data['_delete_all_posts_wpnonce'], 'delete_posts_nonce' ) ) {
 
-    	if( empty( $error ) ){
-    		
-    		// Get post_ids for delete based on user input.
+    	if( empty( $error ) ) {
+            $delete_time = ( $data['delete_time'] ) ? $data['delete_time'] : 'now';
+            $delete_datetime = ( $data['delete_datetime'] ) ? $data['delete_datetime'] : '';
+            $delete_frequency = ( $data['delete_frequency'] ) ? $data['delete_frequency'] : 'not_repeat';
+            if( $delete_time === 'scheduled' && !empty($delete_datetime) && wpbd_is_pro() ) {
+                $cron_time = strtotime($delete_datetime) - (int) ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
+                $data['delete_entity'] = 'post';
+                $scheduled = false;
+                if( $delete_frequency === 'not_repeat' ){
+                    $scheduled = wp_schedule_single_event( $cron_time, 'wpbd_run_scheduled_delete', array($data));
+                } else {
+                    $title = !empty( $data['schedule_name'] ) ? $data['schedule_name'] : __( 'Scheduled Delete - ', 'wp-bulk-delete' ) . ucfirst($data['delete_entity']);
+                    $insert_args = array(
+                        'post_type'   => 'wpbd_scheduled',
+                        'post_status' => 'publish',
+                        'post_title'  => $title,
+                    );
+        
+                    $insert = wp_insert_post( $insert_args, true );
+                    if ( is_wp_error( $insert ) ) {
+                        return array(
+                            'status' => 0,
+                            'messages' => array( esc_html__( 'Something went wrong when saving scheduled delete.', 'wp-bulk-delete' ) ),
+                        );
+                    }
+                    $data['wpbd_scheduled_id'] = $insert;
+                    update_post_meta( $insert, 'delete_options', $data );
+                    $scheduled = wp_schedule_event( $cron_time, $delete_frequency, 'wpbd_run_scheduled_delete', array('post_id' => $insert));
+                }
+                if( $scheduled) {
+                    return  array(
+                        'status' => 1,
+                        'messages' => array( esc_html__( 'Delete scheduled successfully.', 'wp-bulk-delete' ) )
+                    );
+                }else{
+                    return array(
+                        'status' => 0,
+                        'messages' => array( esc_html__( 'Error in scheduled delete.', 'wp-bulk-delete' ) ),
+                    );
+                }
+            }
+
+            // Get post_ids for delete based on user input.
     		$post_ids = wpbulkdelete()->api->get_delete_posts_ids( $data );
     		if ( ! empty( $post_ids ) && count( $post_ids ) > 0 ) {
     			$force_delete = false;
-    			if ( 'permenant' == $_POST['delete_type']  ) {
+    			if ( 'permenant' == $data['delete_type']  ) {
     				$force_delete = true;
     			}
     			
@@ -287,15 +327,26 @@ function wpbd_render_form_date_interval(){
     ?>
     <tr>
         <th scope="row">
-            <?php _e('Date interval :','wp-bulk-delete'); ?>
+            <?php _e('Post Date :','wp-bulk-delete'); ?>
         </th>
         <td>
-            <input type="text" id="delete_start_date" name="delete_start_date" class="delete_all_datepicker" placeholder="<?php _e('Start Date','wp-bulk-delete'); ?>" />
-             -
-            <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" placeholder="<?php _e('End Date','wp-bulk-delete'); ?>" />
-            <p class="description">
-                <?php _e('Set the date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
-            </p>
+            <?php _e('Delete Posts which are','wp-bulk-delete'); ?> 
+            <select name="date_type" class="date_type">
+                <option value="older_than"><?php _e('older than','wp-bulk-delete'); ?></option>
+                <option value="within_last"><?php _e('posted within last','wp-bulk-delete'); ?></option>
+                <option value="custom_date"><?php _e('posted between','wp-bulk-delete'); ?></option>
+            </select>
+            <div class="wpbd_date_days wpbd_inline">
+                <input type="number" id="input_days" name="input_days" class="wpbd_input_days" placeholder="0" min="0" /> <?php _e('days','wp-bulk-delete'); ?>
+            </div>
+            <div class="wpbd_custom_interval wpbd_inline" style="display:none;">
+                <input type="text" id="delete_start_date" name="delete_start_date" class="delete_all_datepicker" placeholder="<?php _e('Start Date','wp-bulk-delete'); ?>" />
+                -
+                <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" placeholder="<?php _e('End Date','wp-bulk-delete'); ?>" />
+                <p class="description">
+                    <?php _e('Set the date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
+                </p>
+            </div>
         </td>
     </tr>
     <?php
@@ -491,6 +542,74 @@ function wpbd_render_post_cleanup(){
 }
 
 /**
+ * Render Delete Time.
+ *
+ * @since 1.2
+ * @return void
+ */
+function wpbd_render_delete_time(){
+    ?>
+    <tr>
+        <th scope="row">
+            <?php _e('Delete Time :','wp-bulk-delete'); ?>
+        </th>
+        <td>
+            <input type="radio" id="delete_time" name="delete_time" class="delete_time" value="now" checked="checked"/>
+            <?php _e( 'Delete now', 'wp-bulk-delete'  ); ?><br />
+            <input type="radio" id="delete_time" name="delete_time" class="delete_time" value="scheduled" <?php echo( ( ! wpbd_is_pro() ) ? 'disabled="disabled"' : '' ); ?>/>
+            <?php _e( 'Schedule delete at', 'wp-bulk-delete'  ); ?>
+            <input type="text" id="delete_datetime" name="delete_datetime" class="delete_all_datetimepicker" placeholder="YYYY-MM-DD HH:mm:ss" <?php echo( ( ! wpbd_is_pro() ) ? 'disabled="disabled"' : '' ); ?>/>
+            <?php 
+            _e( 'repeat', 'wp-bulk-delete'  );
+            wpbd_render_import_frequency();
+            do_action( 'wpbd_display_available_in_pro');
+            ?>
+            <p class="description">
+                <strong><?php printf( esc_html__( 'Timezone: (%s)', 'wp-bulk-delete' ), wp_timezone()->getName()); ?></strong><br/>
+                <?php _e('Scheduled delete runs using cron and backgroud process. So, its useful for delete huge number of records and repeatative delete.','wp-bulk-delete'); ?>
+            </p>
+        </td>
+    </tr>
+    <?php
+}
+
+/**
+ * Render import Frequency
+ *
+ * @since   1.2.0
+ * @param string $selected Selected import frequency.
+ * @return  void
+ */
+function wpbd_render_import_frequency( $selected = 'not_repeat' ) {
+    ?>
+    <select name="delete_frequency" class="delete_frequency" <?php echo( ( ! wpbd_is_pro() ) ? 'disabled="disabled"' : '' ); ?> >
+        <option value='not_repeat' <?php selected( $selected, 'not_repeat' ); ?>>
+            <?php esc_html_e( 'Don\'t repeat', 'wp-bulk-delete' ); ?>
+        </option>
+        <option value='hourly' <?php selected( $selected, 'hourly' ); ?>>
+            <?php esc_html_e( 'Once Hourly', 'wp-bulk-delete' ); ?>
+        </option>
+        <option value='twicedaily' <?php selected( $selected, 'twicedaily' ); ?>>
+            <?php esc_html_e( 'Twice Daily', 'wp-bulk-delete' ); ?>
+        </option>
+        <option value="daily" <?php selected( $selected, 'daily' ); ?> >
+            <?php esc_html_e( 'Once Daily', 'wp-bulk-delete' ); ?>
+        </option>
+        <option value="weekly" <?php selected( $selected, 'weekly' ); ?>>
+            <?php esc_html_e( 'Once Weekly', 'wp-bulk-delete' ); ?>
+        </option>
+        <option value="monthly" <?php selected( $selected, 'monthly' ); ?>>
+            <?php esc_html_e( 'Once a Month', 'wp-bulk-delete' ); ?>
+        </option>
+    </select>
+    <span class="wpbd_schedule_name_wrap" style="display:none;">
+    <?php _e( 'Save it as ', 'wp-bulk-delete' ); ?>
+    <input type="text" name="schedule_name" placeholder="<?php _e( 'eg: Daily Post Delete', 'wp-bulk-delete' ); ?>" class="wpbd_schedule_name"/>
+    </span>
+    <?php
+}
+
+/**
  * Render Common form.
  *
  * Render common component of form.
@@ -515,4 +634,5 @@ function wpbd_render_common_form(){
 
     wpbd_render_limit_post();
 
+    wpbd_render_delete_time();
 }
