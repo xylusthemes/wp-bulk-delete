@@ -65,50 +65,16 @@ function xt_delete_posts_form_process( $data ) {
     	if( empty( $error ) ) {
             $delete_time = ( $data['delete_time'] ) ? $data['delete_time'] : 'now';
             $delete_datetime = ( $data['delete_datetime'] ) ? $data['delete_datetime'] : '';
-            $delete_frequency = ( $data['delete_frequency'] ) ? $data['delete_frequency'] : 'not_repeat';
             if( $delete_time === 'scheduled' && !empty($delete_datetime) && wpbd_is_pro() ) {
-                $cron_time = strtotime($delete_datetime) - (int) ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
                 $data['delete_entity'] = 'post';
-                $scheduled = false;
-                if( $delete_frequency === 'not_repeat' ){
-                    $scheduled = wp_schedule_single_event( $cron_time, 'wpbd_run_scheduled_delete', array($data));
-                } else {
-                    $title = !empty( $data['schedule_name'] ) ? $data['schedule_name'] : __( 'Scheduled Delete - ', 'wp-bulk-delete' ) . ucfirst($data['delete_entity']);
-                    $insert_args = array(
-                        'post_type'   => 'wpbd_scheduled',
-                        'post_status' => 'publish',
-                        'post_title'  => $title,
-                    );
-        
-                    $insert = wp_insert_post( $insert_args, true );
-                    if ( is_wp_error( $insert ) ) {
-                        return array(
-                            'status' => 0,
-                            'messages' => array( esc_html__( 'Something went wrong when saving scheduled delete.', 'wp-bulk-delete' ) ),
-                        );
-                    }
-                    $data['wpbd_scheduled_id'] = $insert;
-                    update_post_meta( $insert, 'delete_options', $data );
-                    $scheduled = wp_schedule_event( $cron_time, $delete_frequency, 'wpbd_run_scheduled_delete', array('post_id' => $insert));
-                }
-                if( $scheduled) {
-                    return  array(
-                        'status' => 1,
-                        'messages' => array( esc_html__( 'Delete scheduled successfully.', 'wp-bulk-delete' ) )
-                    );
-                }else{
-                    return array(
-                        'status' => 0,
-                        'messages' => array( esc_html__( 'Error in scheduled delete.', 'wp-bulk-delete' ) ),
-                    );
-                }
+                return wpbd_save_scheduled_delete($data);
             }
 
             // Get post_ids for delete based on user input.
     		$post_ids = wpbulkdelete()->api->get_delete_posts_ids( $data );
     		if ( ! empty( $post_ids ) && count( $post_ids ) > 0 ) {
     			$force_delete = false;
-    			if ( 'permenant' == $data['delete_type']  ) {
+    			if ( $data['delete_type'] === 'permenant' ) {
     				$force_delete = true;
     			}
     			

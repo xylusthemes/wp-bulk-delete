@@ -57,12 +57,12 @@ class WPBD_Delete_API {
             $input_days = isset( $data['input_days'] ) ? esc_sql( $data['input_days'] ) : '';
             if( $date_type === 'older_than') {
                 $delete_start_date = $delete_end_date = '';
-                if( $input_days == 0 || $input_days > 0){
+                if( $input_days === "0" || $input_days > 0){
                     $delete_end_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
                 }
             } else if( $date_type === 'within_last') {
                 $delete_start_date = $delete_end_date = '';
-                if( $input_days == 0 || $input_days > 0){
+                if( $input_days === "0" || $input_days > 0){
                     $delete_start_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
                 }
             }
@@ -590,6 +590,19 @@ class WPBD_Delete_API {
         $delete_comment_status = array_map('esc_sql', $delete_comment_status );
         $delete_start_date = isset( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
         $delete_end_date = isset( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
+        $date_type = isset( $data['date_type'] ) ? esc_sql( $data['date_type'] ) : 'custom_date';
+        $input_days = isset( $data['input_days'] ) ? esc_sql( $data['input_days'] ) : '';
+        if( $date_type === 'older_than') {
+            $delete_start_date = $delete_end_date = '';
+            if( $input_days === "0" || $input_days > 0){
+                $delete_end_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+            }
+        } else if( $date_type === 'within_last') {
+            $delete_start_date = $delete_end_date = '';
+            if( $input_days === "0" || $input_days > 0){
+                $delete_start_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+            }
+        }
 
         if ( ! empty( $data ) ){
 
@@ -654,6 +667,19 @@ class WPBD_Delete_API {
         $delete_comment_status = array_map('esc_sql', $delete_comment_status );
         $delete_start_date = isset( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
         $delete_end_date = isset( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
+        $date_type = isset( $data['date_type'] ) ? esc_sql( $data['date_type'] ) : 'custom_date';
+        $input_days = isset( $data['input_days'] ) ? esc_sql( $data['input_days'] ) : '';
+        if( $date_type === 'older_than') {
+            $delete_start_date = $delete_end_date = '';
+            if( $input_days === "0" || $input_days > 0){
+                $delete_end_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+            }
+        } else if( $date_type === 'within_last') {
+            $delete_start_date = $delete_end_date = '';
+            if( $input_days === "0" || $input_days > 0){
+                $delete_start_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+            }
+        }
 
         if ( ! empty( $data ) ){
 
