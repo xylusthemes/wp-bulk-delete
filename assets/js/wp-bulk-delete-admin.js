@@ -186,6 +186,10 @@
 	// Delete meta form handle.
 	jQuery(document).ready(function() {
 	    jQuery('#delete_meta_submit').on( 'click', function() {
+			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled"){
+				jQuery("#delete_meta_form").submit();
+				return;
+			}
 	        var metaform = jQuery("#delete_meta_form").serialize();
 	        var data = {
 	            'action': 'delete_meta_count',
