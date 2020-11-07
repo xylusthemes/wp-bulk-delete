@@ -122,6 +122,10 @@
 	// Delete users form handle.
 	jQuery(document).ready(function() {
 	    jQuery('#delete_users_submit').on( 'click', function() {
+			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled"){
+				jQuery("#delete_users_form").submit();
+				return;
+			}
 	        var deleteuserform = jQuery("#delete_users_form").serialize();
 	        var data = {
 	            'action': 'delete_users_count',
@@ -150,6 +154,10 @@
 	// Delete comments form handle.
 	jQuery(document).ready(function() {
 	    jQuery('#delete_comments_submit').on( 'click', function() {
+			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled"){
+				jQuery("#delete_comments_form").submit();
+				return;
+			}
 	        var deletecommentform = jQuery("#delete_comments_form").serialize();
 	        var data = {
 	            'action': 'delete_comments_count',

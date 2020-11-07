@@ -38,6 +38,12 @@ function xt_delete_users_form_process( $data ) {
     if ( isset( $data['_delete_users_wpnonce'] ) && wp_verify_nonce( $data['_delete_users_wpnonce'], 'delete_users_nonce' ) ) {
 
     	if( empty( $error ) ){
+            $delete_time = ( $data['delete_time'] ) ? $data['delete_time'] : 'now';
+            $delete_datetime = ( $data['delete_datetime'] ) ? $data['delete_datetime'] : '';
+            if( $delete_time === 'scheduled' && !empty($delete_datetime) && wpbd_is_pro() ) {
+                $data['delete_entity'] = 'user';
+                return wpbd_save_scheduled_delete($data);
+            }
     		
     		// Get post_ids for delete based on user input.
     		$user_ids = wpbulkdelete()->api->get_delete_user_ids( $data );
@@ -146,12 +152,23 @@ function wpdb_render_delete_users_date_interval(){
             <?php _e('User Registration Date :','wp-bulk-delete'); ?>
         </th>
         <td>
-            <input type="text" id="delete_start_date" name="delete_start_date" class="delete_all_datepicker" placeholder="Start date" />
-             -
-            <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" placeholder="End date" />
-            <p class="description">
-                <?php _e('Set the reigration date interval for users to delete ( only delete users register between these dates ) or leave these fields blank to select all users. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
-            </p>
+            <?php _e('Delete Users which are','wp-bulk-delete'); ?> 
+            <select name="date_type" class="date_type">
+                <option value="older_than"><?php _e('older than','wp-bulk-delete'); ?></option>
+                <option value="within_last"><?php _e('registered within last','wp-bulk-delete'); ?></option>
+                <option value="custom_date"><?php _e('registered between','wp-bulk-delete'); ?></option>
+            </select>
+            <div class="wpbd_date_days wpbd_inline">
+                <input type="number" id="input_days" name="input_days" class="wpbd_input_days" placeholder="0" min="0" /> <?php _e('days','wp-bulk-delete'); ?>
+            </div>
+            <div class="wpbd_custom_interval wpbd_inline" style="display:none;">
+                <input type="text" id="delete_start_date" name="delete_start_date" class="delete_all_datepicker" placeholder="<?php _e('Start Date','wp-bulk-delete'); ?>" />
+                -
+                <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" placeholder="<?php _e('End Date','wp-bulk-delete'); ?>" />
+                <p class="description">
+                    <?php _e('Set the reigration date interval for users to delete ( only delete users register between these dates ) or leave these fields blank to select all users. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
+                </p>
+            </div>            
         </td>
     </tr>
     <?php

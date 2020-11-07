@@ -520,9 +520,9 @@ function wpbd_render_delete_time(){
             <?php _e('Delete Time :','wp-bulk-delete'); ?>
         </th>
         <td>
-            <input type="radio" id="delete_time" name="delete_time" class="delete_time" value="now" checked="checked"/>
+            <input type="radio" id="delete_time_now" name="delete_time" class="delete_time" value="now" checked="checked"/>
             <?php _e( 'Delete now', 'wp-bulk-delete'  ); ?><br />
-            <input type="radio" id="delete_time" name="delete_time" class="delete_time" value="scheduled" <?php echo( ( ! wpbd_is_pro() ) ? 'disabled="disabled"' : '' ); ?>/>
+            <input type="radio" id="delete_time_later" name="delete_time" class="delete_time" value="scheduled" <?php echo( ( ! wpbd_is_pro() ) ? 'disabled="disabled"' : '' ); ?>/>
             <?php _e( 'Schedule delete at', 'wp-bulk-delete'  ); ?>
             <input type="text" id="delete_datetime" name="delete_datetime" class="delete_all_datetimepicker" placeholder="YYYY-MM-DD HH:mm:ss" <?php echo( ( ! wpbd_is_pro() ) ? 'disabled="disabled"' : '' ); ?>/>
             <?php 
