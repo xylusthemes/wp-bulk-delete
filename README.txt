@@ -5,7 +5,7 @@ Tags: delete, bulk, clean, bulk delete, bulk clean, posts delete, delete all, ma
 Requires at least: 3.9
 Requires PHP: 5.3
 Tested up to: 5.5
-Stable tag: 1.1.4
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -163,6 +163,12 @@ We are working on providing more options :)
 13. Cleanup
 
 == Changelog ==
+
+= 1.2.0 =
+* ADDED: Scheduled Delete
+* ADDED: Multiple options in date range
+* ADDED: PRO as addon
+* IMPROVEMENTS: Some code improvements
 
 = 1.1.4 =
 * FIXED: jQuery Error
