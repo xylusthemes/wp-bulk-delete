@@ -39,11 +39,15 @@
 	// Delete posts form handle.
 	jQuery(document).ready(function() {
 	    jQuery('#delete_posts_submit').on( 'click', function() {
+			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled"){
+				jQuery("#delete_posts_form").submit();
+				return;
+			}
 	        var deleteform = jQuery("#delete_posts_form").serialize();
 	        var data = {
 	            'action': 'delete_posts_count',
 	            'form': deleteform
-	        };
+			};
 	        jQuery(".spinner").addClass("is-active");
 	        jQuery.post(ajaxurl, data, function(response) {
 	            if( response != '' ){
@@ -55,7 +59,7 @@
 	                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
 	                } else if( response.status == 1 ){
 	                    if ( confirm(  response.post_count + ' posts will be delete. Would you like to proceed further?'  ) ){
-	                        jQuery("#delete_posts_form").submit();    
+	                        jQuery("#delete_posts_form").submit(); 
 	                    } 
 	                }
 	            }
@@ -106,6 +110,7 @@
 	        jQuery.post(ajaxurl, data, function(response) {
 	            if( response != '' ){
 	            	terms_space.html( response );
+	            	jQuery(".taxonomy_terms_select").chosen({placeholder_text_multiple:"Select "+xt_taxonomy_title });
 	            }else{
 	            	terms_space.html( '' );
 	            }	            
@@ -117,6 +122,10 @@
 	// Delete users form handle.
 	jQuery(document).ready(function() {
 	    jQuery('#delete_users_submit').on( 'click', function() {
+			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled"){
+				jQuery("#delete_users_form").submit();
+				return;
+			}
 	        var deleteuserform = jQuery("#delete_users_form").serialize();
 	        var data = {
 	            'action': 'delete_users_count',
@@ -145,6 +154,10 @@
 	// Delete comments form handle.
 	jQuery(document).ready(function() {
 	    jQuery('#delete_comments_submit').on( 'click', function() {
+			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled"){
+				jQuery("#delete_comments_form").submit();
+				return;
+			}
 	        var deletecommentform = jQuery("#delete_comments_form").serialize();
 	        var data = {
 	            'action': 'delete_comments_count',
@@ -173,6 +186,10 @@
 	// Delete meta form handle.
 	jQuery(document).ready(function() {
 	    jQuery('#delete_meta_submit').on( 'click', function() {
+			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled"){
+				jQuery("#delete_meta_form").submit();
+				return;
+			}
 	        var metaform = jQuery("#delete_meta_form").serialize();
 	        var data = {
 	            'action': 'delete_meta_count',
@@ -227,4 +244,59 @@
 	    });                    
 	});
 
+	// 
+	jQuery(document).ready(function(){
+		jQuery("#reassign_user").chosen({max_selected_options: 1});
+		jQuery(".chosen_select").chosen({max_selected_options: 1});
+	});	
+
+	// Render Dynamic post dropdown.
+	jQuery(document).ready(function() {
+	    jQuery('#meta_post_type').on( 'change', function() {
+	    	var post_type = jQuery(this).val();
+	        var data = {
+	            'action': 'render_postdropdown_by_posttype',
+	            'post_type': post_type
+	        };
+
+	        var postdropdown_space = jQuery('.postdropdown_space');
+	        postdropdown_space.html('<span class="spinner is-active" style="float: none;"></span>');
+	        // send ajax request.
+	        jQuery.post(ajaxurl, data, function(response) {
+	            if( response != '' ){
+	            	postdropdown_space.html( response );
+	            	jQuery(".post_for_meta").chosen({placeholder_text_multiple:"Select posts"});
+	            }else{
+	            	postdropdown_space.html( '' );
+	            }	            
+	        });    
+		});
+		
+		jQuery('.date_type').on( 'change', function() {
+	    	var date_type = jQuery(this).val();
+	        if(date_type === 'custom_date'){
+				jQuery(".wpbd_date_days").hide();
+				jQuery(".wpbd_custom_interval").show();
+			}else{
+				jQuery(".wpbd_custom_interval").hide();
+				jQuery(".wpbd_date_days").show();
+			}
+		});
+
+		jQuery('.delete_frequency').on( 'change', function() {
+	    	var date_type = jQuery(this).val();
+	        if(date_type === 'not_repeat'){
+				jQuery(".wpbd_schedule_name_wrap").hide();
+			}else{
+				jQuery(".wpbd_schedule_name_wrap").show();
+			}
+	    });
+	});
+
+	jQuery(document).ready(function(){
+		jQuery('.delete_all_datetimepicker').datetimepicker({
+			dateFormat: 'yy-mm-dd', 
+			timeFormat: 'HH:mm:ss'
+		});
+	});
 })( jQuery );

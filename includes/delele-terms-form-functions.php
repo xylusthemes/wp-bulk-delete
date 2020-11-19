@@ -82,7 +82,7 @@ function wpbd_render_delete_terms_taxonomy(){?>
             <div class="post_taxonomy">
             </div>
             <p class="description">
-                Select the post taxonomy whose terms you want to delete.
+                <?php _e( 'Select the post taxonomy whose terms you want to delete.', 'wp-bulk-delete' ); ?>
             </p>
         </td>
     </tr>

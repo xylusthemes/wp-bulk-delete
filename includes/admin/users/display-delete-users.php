@@ -46,7 +46,9 @@ function wpbd_delete_users_page(){
 				<div id="postbox-container-2" class="postbox-container">
 					<form method="post" id="delete_users_form">
     					<table class="form-table">
-    						<?php do_action( 'wpbd_delete_users_form' );
+							<?php
+							do_action( 'wpbd_delete_users_form' );
+							wpbd_render_delete_time();
     						?>
     					</table>
     					<?php

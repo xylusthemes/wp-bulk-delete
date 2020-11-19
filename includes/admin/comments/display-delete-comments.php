@@ -49,7 +49,11 @@ function wpbd_delete_comments_page(){
 
 					<form method="post" id="delete_comments_form">
     					<table class="form-table">
-    						<?php do_action( 'wpbd_delete_comments_form' ); ?>
+							<?php 
+							do_action( 'wpbd_delete_comments_form' );
+							
+							wpbd_render_delete_time();
+							?>
     					</table>
     					<?php
     					echo wp_nonce_field('delete_comments_nonce', '_delete_comments_wpnonce' );

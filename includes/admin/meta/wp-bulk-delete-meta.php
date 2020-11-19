@@ -38,6 +38,7 @@ if(  ! empty( $_POST ) && isset( $_POST['meta_type'] ) ){
             ?><input type="hidden" name="meta_type" value="commentmeta" ><?php
 
         }
+        wpbd_render_delete_time();
         wp_nonce_field('delete_meta_nonce', '_delete_meta_wpnonce' );
         ?>
         </tbody>

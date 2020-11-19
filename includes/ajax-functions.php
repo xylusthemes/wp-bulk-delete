@@ -108,11 +108,16 @@ function wpbd_render_terms_by_taxonomy() {
 		}
 	}
 	if( ! empty( $terms ) ){
-		foreach ($terms as $term ) {
-			?>
-			<input type="checkbox" name="post_taxonomy_terms[]" value="<?php echo $term->term_id;?>" class="post_taxonomy_terms" ><?php echo $term->name; ?> <br />
-			<?php	
-		}		
+		?>
+		<select name="post_taxonomy_terms[]" class="taxonomy_terms_select" multiple="multiple">
+			<?php
+			foreach ($terms as $term ) {
+				?>
+				<option value="<?php echo $term->term_id ?>"><?php echo $term->name; ?></option>
+				<?php	
+			} ?>
+		</select>
+		<?php
 	}
 	wp_die();
 }
@@ -137,7 +142,6 @@ function wpbd_delete_users_count() {
 	    if ( isset( $data['_delete_users_wpnonce'] ) && wp_verify_nonce( $data['_delete_users_wpnonce'], 'delete_users_nonce' ) ) {
 
 	    	if( empty( $error ) ){
-	    		
 	    		// Get post_ids for delete based on user input.
 		        $post_ids = wpbulkdelete()->api->get_delete_user_ids( $data );
 	    		
@@ -382,3 +386,38 @@ function wpbd_delete_terms_count() {
 	wp_die(); // this is required to terminate immediately and return a proper response
 }
 add_action( 'wp_ajax_delete_terms_count', 'wpbd_delete_terms_count' );
+
+
+/**
+ * Render Taxonomy based on Post type Selection.
+ *
+ * @since 1.0
+ * @return void
+ */
+function wpbd_render_postdropdown_by_posttype() {
+
+	$post_type  = $_REQUEST['post_type'];
+	$posts = array();
+	if ( $post_type != '' ) {
+		$posts = get_posts(
+	        array(
+	            'post_type'  => $post_type,
+	            'numberposts' => -1,
+	        )
+	    );
+	}
+	if( ! empty( $posts ) ){
+		?>
+		<select name="post_for_meta[]" class="post_for_meta" multiple="multiple">
+			<?php
+			foreach ($posts as $post ) {
+				?>
+				<option value="<?php echo $post->ID; ?>"><?php echo $post->post_title; ?></option>
+				<?php	
+			} ?>
+		</select>
+		<?php
+	}
+	wp_die();
+}
+add_action( 'wp_ajax_render_postdropdown_by_posttype', 'wpbd_render_postdropdown_by_posttype' );

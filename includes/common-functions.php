@@ -97,10 +97,12 @@ function wpbd_display_admin_notice( $notice_result = array() ) {
  * @return void
  */
 function wpbd_display_available_in_pro() {
-	?>
-	<span style="color: red"><?php _e('Available in Pro version.','wp-bulk-delete'); ?></span>
-	<a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php _e('Buy Now','wp-bulk-delete'); ?></a>
-	<?php
+	if( !wpbd_is_pro() ) {
+		?>
+		<span style="color: red"><?php _e('Available in Pro version.','wp-bulk-delete'); ?></span>
+		<a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php _e('Buy Now','wp-bulk-delete'); ?></a>
+		<?php
+	}
 }
 add_action( 'wpbd_display_available_in_pro', 'wpbd_display_available_in_pro' );
 
@@ -117,6 +119,51 @@ function wpbd_get_posttype_post_count( $posttye ){
 		return $count;
 	}
 	return 0;
+}
+
+/**
+ * Save Scheduled delete
+ *
+ * @param {Array} $data
+ * @return {Array}
+ */
+function wpbd_save_scheduled_delete($data){
+	$scheduled = false;
+	$delete_datetime = ( $data['delete_datetime'] ) ? $data['delete_datetime'] : '';
+    $delete_frequency = ( $data['delete_frequency'] ) ? $data['delete_frequency'] : 'not_repeat';
+	$cron_time = strtotime($delete_datetime) - (int) ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
+	if( $delete_frequency === 'not_repeat' ){
+		$scheduled = wp_schedule_single_event( $cron_time, 'wpbd_run_scheduled_delete', array($data));
+	} else {
+		$title = !empty( $data['schedule_name'] ) ? $data['schedule_name'] : __( 'Scheduled Delete - ', 'wp-bulk-delete' ) . ucfirst($data['delete_entity']);
+		$insert_args = array(
+			'post_type'   => 'wpbd_scheduled',
+			'post_status' => 'publish',
+			'post_title'  => $title,
+		);
+
+		$insert = wp_insert_post( $insert_args, true );
+		if ( is_wp_error( $insert ) ) {
+			return array(
+				'status' => 0,
+				'messages' => array( esc_html__( 'Something went wrong when saving scheduled delete.', 'wp-bulk-delete' ) ),
+			);
+		}
+		$data['wpbd_scheduled_id'] = $insert;
+		update_post_meta( $insert, 'delete_options', $data );
+		$scheduled = wp_schedule_event( $cron_time, $delete_frequency, 'wpbd_run_scheduled_delete', array('post_id' => $insert));
+	}
+	if( $scheduled) {
+		return  array(
+			'status' => 1,
+			'messages' => array( esc_html__( 'Delete scheduled successfully.', 'wp-bulk-delete' ) )
+		);
+	}else{
+		return array(
+			'status' => 0,
+			'messages' => array( esc_html__( 'Error in scheduled delete.', 'wp-bulk-delete' ) ),
+		);
+	}
 }
 
 /**

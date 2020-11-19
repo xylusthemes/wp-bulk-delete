@@ -19,6 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return void
  */
 function wpbd_admin_sidebar() {
+	if(!wpbd_is_pro()){
 	?>
 	<div class="upgrade_to_pro">
 		<h2><?php esc_html_e( 'Upgrade to Pro','wp-bulk-delete'); ?></h2>
@@ -45,5 +46,6 @@ function wpbd_admin_sidebar() {
 		</p>
 	</div>
 	<?php
+	}
 }
 add_action( 'wpbd_admin_sidebar', 'wpbd_admin_sidebar', 10 );

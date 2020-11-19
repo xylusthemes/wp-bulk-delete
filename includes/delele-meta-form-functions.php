@@ -46,6 +46,12 @@ function wpbd_delete_meta_form_process( $data ) {
     if ( isset( $data['_delete_meta_wpnonce'] ) && wp_verify_nonce( $data['_delete_meta_wpnonce'], 'delete_meta_nonce' ) ) {
 
         if( empty( $error ) ){
+            $delete_time = ( $data['delete_time'] ) ? $data['delete_time'] : 'now';
+            $delete_datetime = ( $data['delete_datetime'] ) ? $data['delete_datetime'] : '';
+            if( $delete_time === 'scheduled' && !empty($delete_datetime) && wpbd_is_pro() ) {
+                $data['delete_entity'] = $data['meta_type'];
+                return wpbd_save_scheduled_delete($data);
+            }
             
             // Get meta_results for delete based on user input.
             if( 'postmeta' == $data['meta_type'] ) {
@@ -288,12 +294,23 @@ function wpbd_render_meta_date_interval(){
             <?php _e('Date interval :','wp-bulk-delete'); ?>
         </th>
         <td>
-            <input type="text" id="delete_start_date" name="delete_start_date" class="delete_all_datepicker" placeholder="<?php esc_html_e('Start Date','wp-bulk-delete');?>" />
-             -
-            <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" placeholder="<?php esc_html_e('End Date','wp-bulk-delete');?>"/>
-            <p class="description">
-                <?php _e('Set the date interval for posts/comments/users whose meta fields will be delete, or leave these fields blank to select all meta. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
-            </p>
+        <?php _e('Delete meta for for posts/comments/users which are','wp-bulk-delete'); ?> 
+            <select name="date_type" class="date_type">
+                <option value="older_than"><?php _e('older than','wp-bulk-delete'); ?></option>
+                <option value="within_last"><?php _e('created within last','wp-bulk-delete'); ?></option>
+                <option value="custom_date"><?php _e('created between','wp-bulk-delete'); ?></option>
+            </select>
+            <div class="wpbd_date_days wpbd_inline">
+                <input type="number" id="input_days" name="input_days" class="wpbd_input_days" placeholder="0" min="0" /> <?php _e('days','wp-bulk-delete'); ?>
+            </div>
+            <div class="wpbd_custom_interval wpbd_inline" style="display:none;">
+                <input type="text" id="delete_start_date" name="delete_start_date" class="delete_all_datepicker" placeholder="<?php _e('Start Date','wp-bulk-delete'); ?>" />
+                -
+                <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" placeholder="<?php _e('End Date','wp-bulk-delete'); ?>" />
+                <p class="description">
+                    <?php _e('Set the date interval for posts/comments/users whose meta fields will be delete, or leave these fields blank to select all meta. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
+                </p>
+            </div>
         </td>
     </tr>
     <?php
@@ -346,7 +363,7 @@ function wpdb_render_meta_form_postdropdown(){
             <?php _e('Post :','wp-bulk-delete'); ?>
         </th>
         <td>
-            <div class="postdropdown_space">
+            <div <?php if(wpbd_is_pro()){ ?>class="postdropdown_space"<?php } ?>>
                 <select name="sample_post_dropdown" disabled="disabled">
                     <option value=""> <?php esc_html_e( 'Select post', 'wp-bulk-delete' ); ?></option>
                 </select>
