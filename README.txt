@@ -34,6 +34,7 @@ WP bulk Delete support below powerfull conditions and filters.
 * Delete Posts by custom fields.  [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Delete Posts by any filters.  [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Delete Posts by any conditions.  [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
+* Scheduled Delete [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 
 #### Delete post by conditions & filters
 
@@ -44,7 +45,7 @@ WP bulk Delete support below powerfull conditions and filters.
 * Only private posts
 * Restrict to first N posts
 * Delete permanently or just move to trash
-* Schedule deletion of posts automatically  (not yet working on it)
+* Schedule deletion of posts automatically
 * Post by Category 
 * Post by Author 
 * Post by status published,pending etc
@@ -58,6 +59,7 @@ WP bulk Delete support below powerfull conditions and filters.
 * Delete Comments by comment author. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Delete Comments by comment post.  [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Delete Comments by conditions & filters  [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
+* Scheduled Delete [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 
 #### Delete users
 
@@ -65,9 +67,9 @@ WP bulk Delete support below powerfull conditions and filters.
 * Delete Users by user roles
 * Delete Users by date interval
 * Delete users based on their registered date
-* Delete users who have not logged in in the last X days
 * Delete Users by user meta fields
 * Assign deleted user data to another user. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
+* Scheduled Delete [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 
 
 #### Delete Meta fields
@@ -161,6 +163,8 @@ We are working on providing more options :)
 11. Delete Commentmeta
 12. Delete Taxonomy Terms
 13. Cleanup
+14. Scheduled Delete
+15. Scheduled Delete History
 
 == Changelog ==
 
