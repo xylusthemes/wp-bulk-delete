@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the WP Bulk Delete package.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Bulk Delete 1.2.0\n"
+"Project-Id-Version: WP Bulk Delete 1.2.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-bulk-delete\n"
 "POT-Creation-Date: 2020-11-19 17:52:12+00:00\n"
 "MIME-Version: 1.0\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#. #-#-#-#-#  wp-bulk-delete.pot (WP Bulk Delete 1.2.0)  #-#-#-#-#
+#. #-#-#-#-#  wp-bulk-delete.pot (WP Bulk Delete 1.2.1)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
 #: includes/admin/admin-pages.php:23
 msgid "WP Bulk Delete"
