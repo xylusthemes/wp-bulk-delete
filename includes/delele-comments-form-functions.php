@@ -184,6 +184,9 @@ function wpdb_render_delete_comments_users(){
                         <?php
                         foreach ($comment_authors as $comment_author ) {
                             echo '<option value="' . $comment_author . '">' . $comment_author . '</option>';
+                            if( empty( $comment_author ) ){
+                                echo '<option value=" ">Anonymous (No Name)</option>';
+                            }
                         }
                         ?>
                     </select>
