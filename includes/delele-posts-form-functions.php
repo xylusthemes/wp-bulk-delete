@@ -529,9 +529,16 @@ function wpbd_render_delete_time(){
             _e( 'repeat', 'wp-bulk-delete'  );
             wpbd_render_import_frequency();
             do_action( 'wpbd_display_available_in_pro');
+            
+            $get_version = get_bloginfo( 'version' );
+            if( $get_version < 5.3 ){
+                $timezone = date_default_timezone_get().' '.get_option( 'gmt_offset' );
+            }else{
+                $timezone = wp_timezone()->getName();
+            }
             ?>
             <p class="description">
-                <strong><?php printf( esc_html__( 'Timezone: (%s)', 'wp-bulk-delete' ), wp_timezone()->getName()); ?></strong><br/>
+                <strong><?php printf( esc_html__( 'Timezone: ( %s )', 'wp-bulk-delete' ), $timezone ); ?></strong><br/>
                 <?php _e('Scheduled delete runs using cron and backgroud process. So, its useful for delete huge number of records and repeatative delete.','wp-bulk-delete'); ?>
             </p>
         </td>
