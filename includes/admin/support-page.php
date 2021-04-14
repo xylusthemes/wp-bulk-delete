@@ -57,9 +57,9 @@ function wpbd_render_support_page(){
                         </a>
 
                         <p><strong><?php _e( 'Enjoying Import Facebook Events or have feedback?','wp-bulk-delete' ); ?></strong></p>
-                        <a class="button button-secondary" href="<?php echo $review_url; ?>" target="_blank" >Leave us a review</a> 
-                        <a class="button button-secondary" href="<?php echo $twitter_url; ?>" target="_blank" >Follow us on Twitter</a> 
-                        <a class="button button-secondary" href="<?php echo $facebook_url; ?>" target="_blank" >Like us on Facebook</a>
+                        <a class="button button-secondary" href="<?php echo $review_url; ?>" target="_blank" ><?php _e( 'Leave us a review','wp-bulk-delete' ); ?></a> 
+                        <a class="button button-secondary" href="<?php echo $twitter_url; ?>" target="_blank" ><?php _e( 'Follow us on Twitter','wp-bulk-delete' ); ?></a> 
+                        <a class="button button-secondary" href="<?php echo $facebook_url; ?>" target="_blank" ><?php _e( 'Like us on Facebook','wp-bulk-delete' ); ?></a>
                     </div>
 
                     <?php 
@@ -72,7 +72,7 @@ function wpbd_render_support_page(){
                     }
                     ?>
                     <div class="" style="margin-top: 20px;">
-                        <h3 class="setting_bar"><?php _e( 'Plugins you should try','import-facebook-events' ); ?></h3>
+                        <h3 class="setting_bar"><?php _e( 'Plugins you should try','wp-bulk-delete' ); ?></h3>
                         <?php 
                         if( !empty( $plugins ) ){
                             foreach ($plugins as $plugin ) {
@@ -91,22 +91,22 @@ function wpbd_render_support_page(){
                                         ) );?>
 
                                         <?php if( $plugin->version != '' ){ ?>
-                                            <p><strong><?php _e( 'Version:','import-facebook-events' ); ?> </strong><?php echo $plugin->version; ?></p>
+                                            <p><strong><?php _e( 'Version:','wp-bulk-delete' ); ?> </strong><?php echo $plugin->version; ?></p>
                                         <?php } ?>
 
                                         <?php if( $plugin->requires != '' ){ ?>
-                                            <p><strong><?php _e( 'Requires:','import-facebook-events' ); ?> </strong> <?php _e( 'WordPress ','import-facebook-events' ); echo $plugin->requires; ?>+</p>
+                                            <p><strong><?php _e( 'Requires:','wp-bulk-delete' ); ?> </strong> <?php _e( 'WordPress ','wp-bulk-delete' ); echo $plugin->requires; ?>+</p>
                                         <?php } ?>
 
                                         <?php if( $plugin->active_installs != '' ){ ?>
-                                            <p><strong><?php _e( 'Active Installs:','import-facebook-events' ); ?> </strong><?php echo $plugin->active_installs; ?>+</p>
+                                            <p><strong><?php _e( 'Active Installs:','wp-bulk-delete' ); ?> </strong><?php echo $plugin->active_installs; ?>+</p>
                                         <?php } ?>
 
                                         <a class="button button-secondary" href="<?php echo admin_url( 'plugin-install.php?tab=plugin-information&plugin='. $plugin->slug.'&TB_iframe=1&width=772&height=600'); ?>" target="_blank">
-                                            <?php _e( 'Install Now','import-facebook-events' ); ?>
+                                            <?php _e( 'Install Now','wp-bulk-delete' ); ?>
                                         </a>
                                         <a class="button button-primary" href="<?php echo $plugin->homepage . '?utm_source=crosssell&utm_medium=web&utm_content=supportpage&utm_campaign=freeplugin'; ?>" target="_blank">
-                                            <?php _e( 'Buy Now','import-facebook-events' ); ?>
+                                            <?php _e( 'Buy Now','wp-bulk-delete' ); ?>
                                         </a>
                                     </div>
                                 </div>
