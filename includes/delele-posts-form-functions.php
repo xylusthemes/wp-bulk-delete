@@ -529,9 +529,10 @@ function wpbd_render_delete_time(){
             _e( 'repeat', 'wp-bulk-delete'  );
             wpbd_render_import_frequency();
             do_action( 'wpbd_display_available_in_pro');
+            $timezone = get_timezone_string();
             ?>
             <p class="description">
-                <strong><?php printf( esc_html__( 'Timezone: (%s)', 'wp-bulk-delete' ), wp_timezone()->getName()); ?></strong><br/>
+                <strong><?php printf( esc_html__( 'Timezone: (%s)', 'wp-bulk-delete' ), $timezone ); ?></strong><br/>
                 <?php _e('Scheduled delete runs using cron and backgroud process. So, its useful for delete huge number of records and repeatative delete.','wp-bulk-delete'); ?>
             </p>
         </td>
@@ -601,4 +602,23 @@ function wpbd_render_common_form(){
     wpbd_render_limit_post();
 
     wpbd_render_delete_time();
+}
+
+function get_timezone_string() {
+    $timezone_string = get_option( 'timezone_string' );
+ 
+    if ( $timezone_string ) {
+        return $timezone_string;
+    }
+ 
+    $offset  = (float) get_option( 'gmt_offset' );
+    $hours   = (int) $offset;
+    $minutes = ( $offset - $hours );
+ 
+    $sign      = ( $offset < 0 ) ? '-' : '+';
+    $abs_hour  = abs( $hours );
+    $abs_mins  = abs( $minutes * 60 );
+    $tz_offset = sprintf( '%s%02d:%02d', $sign, $abs_hour, $abs_mins );
+ 
+    return $tz_offset;
 }
