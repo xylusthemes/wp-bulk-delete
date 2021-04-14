@@ -1,21 +1,38 @@
-# Copyright (C) 2020 WP Bulk Delete
-# This file is distributed under the same license as the WP Bulk Delete package.
+# Copyright (C) 2021 Xylus Themes
+# This file is distributed under the same license as the WP Bulk Delete plugin.
 msgid ""
 msgstr ""
 "Project-Id-Version: WP Bulk Delete 1.2.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-bulk-delete\n"
-"POT-Creation-Date: 2020-11-19 17:52:12+00:00\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2021-04-14T17:57:38+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.4.0\n"
+"X-Domain: wp-bulk-delete\n"
 
-#. #-#-#-#-#  wp-bulk-delete.pot (WP Bulk Delete 1.2.1)  #-#-#-#-#
-#. Plugin Name of the plugin/theme
+#. Plugin Name of the plugin
 #: includes/admin/admin-pages.php:23
 msgid "WP Bulk Delete"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "http://xylusthemes.com/plugins/wp-bulk-delete/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Bulk delete and cleanup anything like posts, comments, users, meta fields, taxonomy terms. with powerful filter options."
+msgstr ""
+
+#. Author of the plugin
+msgid "Xylus Themes"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "http://xylusthemes.com"
 msgstr ""
 
 #: includes/admin/admin-pages.php:26
@@ -44,17 +61,20 @@ msgstr ""
 msgid "Delete Terms"
 msgstr ""
 
-#: includes/admin/admin-pages.php:36 includes/admin/cleanup/cleanup-page.php:25
+#: includes/admin/admin-pages.php:36
+#: includes/admin/cleanup/cleanup-page.php:25
 #: includes/admin/meta/display-delete-meta.php:47
 #: includes/admin/posts/display-delete-posts.php:48
 msgid "Cleanup"
 msgstr ""
 
-#: includes/admin/admin-pages.php:38 includes/admin/support-page.php:31
+#: includes/admin/admin-pages.php:38
+#: includes/admin/support-page.php:31
 msgid "Support & Help"
 msgstr ""
 
-#: includes/admin/admin-sidebar.php:25 includes/admin/admin-sidebar.php:28
+#: includes/admin/admin-sidebar.php:25
+#: includes/admin/admin-sidebar.php:28
 msgid "Upgrade to Pro"
 msgstr ""
 
@@ -67,9 +87,7 @@ msgid "Custom WordPress Development Services"
 msgstr ""
 
 #: includes/admin/admin-sidebar.php:34
-msgid ""
-"From small blog to complex web apps, we push the limits of what's possible "
-"with WordPress."
+msgid "From small blog to complex web apps, we push the limits of what's possible with WordPress."
 msgstr ""
 
 #: includes/admin/admin-sidebar.php:36
@@ -84,9 +102,12 @@ msgstr ""
 msgid "Get Premium"
 msgstr ""
 
-#: includes/admin/cleanup/cleanup-form.php:27 includes/ajax-functions.php:27
-#: includes/ajax-functions.php:139 includes/ajax-functions.php:192
-#: includes/ajax-functions.php:258 includes/ajax-functions.php:337
+#: includes/admin/cleanup/cleanup-form.php:27
+#: includes/ajax-functions.php:27
+#: includes/ajax-functions.php:139
+#: includes/ajax-functions.php:192
+#: includes/ajax-functions.php:258
+#: includes/ajax-functions.php:337
 #: includes/delele-comments-form-functions.php:31
 #: includes/delele-meta-form-functions.php:43
 #: includes/delele-posts-form-functions.php:60
@@ -95,9 +116,12 @@ msgstr ""
 msgid "You don't have enough permission for this operation."
 msgstr ""
 
-#: includes/admin/cleanup/cleanup-form.php:38 includes/ajax-functions.php:57
-#: includes/ajax-functions.php:168 includes/ajax-functions.php:233
-#: includes/ajax-functions.php:312 includes/ajax-functions.php:378
+#: includes/admin/cleanup/cleanup-form.php:38
+#: includes/ajax-functions.php:57
+#: includes/ajax-functions.php:168
+#: includes/ajax-functions.php:233
+#: includes/ajax-functions.php:312
+#: includes/ajax-functions.php:378
 #: includes/delele-comments-form-functions.php:75
 #: includes/delele-meta-form-functions.php:99
 #: includes/delele-posts-form-functions.php:101
@@ -115,15 +139,11 @@ msgid "Run Cleanup"
 msgstr ""
 
 #: includes/admin/cleanup/cleanup-page.php:30
-msgid ""
-"WARNING: Before you Cleanup any data please first take Backup, any delete "
-"operation done is irreversible. Please use it with caution!"
+msgid "WARNING: Before you Cleanup any data please first take Backup, any delete operation done is irreversible. Please use it with caution!"
 msgstr ""
 
 #: includes/admin/comments/display-delete-comments.php:39
-msgid ""
-"WARNING: Before you delete any comment please first take Backup, any delete "
-"operation done is irreversible. Please use it with caution!"
+msgid "WARNING: Before you delete any comment please first take Backup, any delete operation done is irreversible. Please use it with caution!"
 msgstr ""
 
 #: includes/admin/meta/display-delete-meta.php:26
@@ -131,9 +151,7 @@ msgid "Delete Meta"
 msgstr ""
 
 #: includes/admin/meta/display-delete-meta.php:35
-msgid ""
-"WARNING: Before you delete any meta please first take Backup, any delete "
-"operation done is irreversible. Please use it with caution!"
+msgid "WARNING: Before you delete any meta please first take Backup, any delete operation done is irreversible. Please use it with caution!"
 msgstr ""
 
 #: includes/admin/meta/display-delete-meta.php:50
@@ -150,9 +168,7 @@ msgid "Comment Meta"
 msgstr ""
 
 #: includes/admin/posts/display-delete-posts.php:35
-msgid ""
-"WARNING: Before you delete any post please first take Backup, any delete "
-"operation done is irreversible. Please use it with caution!"
+msgid "WARNING: Before you delete any post please first take Backup, any delete operation done is irreversible. Please use it with caution!"
 msgstr ""
 
 #: includes/admin/posts/display-delete-posts.php:51
@@ -184,9 +200,7 @@ msgid "Getting Support"
 msgstr ""
 
 #: includes/admin/support-page.php:43
-msgid ""
-"Thanks you for using Import Facebook Events, We are sincerely appreciate "
-"your support and we’re excited to see you using our plugins."
+msgid "Thanks you for using Import Facebook Events, We are sincerely appreciate your support and we’re excited to see you using our plugins."
 msgstr ""
 
 #: includes/admin/support-page.php:44
@@ -206,9 +220,7 @@ msgid "Looking for more immediate support?"
 msgstr ""
 
 #: includes/admin/support-page.php:52
-msgid ""
-"We offer premium support on our website with the purchase of our premium "
-"plugins."
+msgid "We offer premium support on our website with the purchase of our premium plugins."
 msgstr ""
 
 #: includes/admin/support-page.php:56
@@ -219,52 +231,22 @@ msgstr ""
 msgid "Enjoying Import Facebook Events or have feedback?"
 msgstr ""
 
-#: includes/admin/support-page.php:75
-msgid "Plugins you should try"
-msgstr ""
-
-#: includes/admin/support-page.php:94
-msgid "Version:"
-msgstr ""
-
-#: includes/admin/support-page.php:98
-msgid "Requires:"
-msgstr ""
-
-#: includes/admin/support-page.php:98
-msgid "WordPress "
-msgstr ""
-
-#: includes/admin/support-page.php:102
-msgid "Active Installs:"
-msgstr ""
-
-#: includes/admin/support-page.php:106
-msgid "Install Now"
-msgstr ""
-
-#: includes/admin/support-page.php:109 includes/common-functions.php:103
-msgid "Buy Now"
-msgstr ""
-
 #: includes/admin/terms/display-delete-terms.php:33
 msgid "Delete Taxonomy Terms"
 msgstr ""
 
 #: includes/admin/terms/display-delete-terms.php:38
-msgid ""
-"WARNING: Before you delete any terms please first take Backup, any delete "
-"operation done is irreversible. Please use it with caution!"
+msgid "WARNING: Before you delete any terms please first take Backup, any delete operation done is irreversible. Please use it with caution!"
 msgstr ""
 
 #: includes/admin/users/display-delete-users.php:37
-msgid ""
-"WARNING: Before you delete any users please first take Backup, any delete "
-"operation done is irreversible. Please use it with caution!"
+msgid "WARNING: Before you delete any users please first take Backup, any delete operation done is irreversible. Please use it with caution!"
 msgstr ""
 
-#: includes/ajax-functions.php:45 includes/ajax-functions.php:156
-#: includes/ajax-functions.php:221 includes/ajax-functions.php:300
+#: includes/ajax-functions.php:45
+#: includes/ajax-functions.php:156
+#: includes/ajax-functions.php:221
+#: includes/ajax-functions.php:300
 #: includes/ajax-functions.php:366
 #: includes/delele-comments-form-functions.php:63
 #: includes/delele-meta-form-functions.php:87
@@ -279,18 +261,21 @@ msgstr ""
 msgid "Please select Comment status for proceed delete operation."
 msgstr ""
 
-#: includes/ajax-functions.php:209 includes/ajax-functions.php:354
+#: includes/ajax-functions.php:209
+#: includes/ajax-functions.php:354
 #: includes/delele-comments-form-functions.php:51
 #: includes/delele-terms-form-functions.php:45
 msgid "Something went wrong pelase try again!!"
 msgstr ""
 
-#: includes/ajax-functions.php:262 includes/ajax-functions.php:267
+#: includes/ajax-functions.php:262
+#: includes/ajax-functions.php:267
 #: includes/ajax-functions.php:273
 msgid "Please select all required fields."
 msgstr ""
 
-#: includes/ajax-functions.php:341 includes/delele-terms-form-functions.php:32
+#: includes/ajax-functions.php:341
+#: includes/delele-terms-form-functions.php:32
 msgid "Please select required fields for proceed delete operation."
 msgstr ""
 
@@ -360,6 +345,10 @@ msgstr ""
 
 #: includes/common-functions.php:102
 msgid "Available in Pro version."
+msgstr ""
+
+#: includes/common-functions.php:103
+msgid "Buy Now"
 msgstr ""
 
 #: includes/common-functions.php:138
@@ -455,10 +444,7 @@ msgid "End Date"
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:149
-msgid ""
-"Set the date interval for comments to delete ( only delete comments between "
-"these dates ) or leave these fields blank to select all comments. The dates "
-"must be specified in the following format: <strong>YYYY-MM-DD</strong>"
+msgid "Set the date interval for comments to delete ( only delete comments between these dates ) or leave these fields blank to select all comments. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>"
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:168
@@ -638,9 +624,7 @@ msgid "Meta value (Optional)"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:274
-msgid ""
-"Enter the meta key for delete meta, please consider following points in to "
-"meta delete."
+msgid "Enter the meta key for delete meta, please consider following points in to meta delete."
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:275
@@ -648,9 +632,7 @@ msgid "1. If you want to delete meta by meta key only enter meta key."
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:276
-msgid ""
-"2. If you want to delete meta by meta key and meta value then enter both "
-"values."
+msgid "2. If you want to delete meta by meta key and meta value then enter both values."
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:294
@@ -670,10 +652,7 @@ msgid "created between"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:311
-msgid ""
-"Set the date interval for posts/comments/users whose meta fields will be "
-"delete, or leave these fields blank to select all meta. The dates must be "
-"specified in the following format: <strong>YYYY-MM-DD</strong>"
+msgid "Set the date interval for posts/comments/users whose meta fields will be delete, or leave these fields blank to select all meta. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:330
@@ -729,10 +708,7 @@ msgid "posted between"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:313
-msgid ""
-"Set the date interval for items to delete, or leave these fields blank to "
-"select all posts. The dates must be specified in the following format: "
-"<strong>YYYY-MM-DD</strong>"
+msgid "Set the date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:331
@@ -780,10 +756,7 @@ msgid "Limit :"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:438
-msgid ""
-"Set the limit over post delete. It will delete only first limit posts. This "
-"option will help you in case of you have lots of posts to delete and script "
-"timeout."
+msgid "Set the limit over post delete. It will delete only first limit posts. This option will help you in case of you have lots of posts to delete and script timeout."
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:455
@@ -831,9 +804,7 @@ msgid "Timezone: (%s)"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:535
-msgid ""
-"Scheduled delete runs using cron and backgroud process. So, its useful for "
-"delete huge number of records and repeatative delete."
+msgid "Scheduled delete runs using cron and backgroud process. So, its useful for delete huge number of records and repeatative delete."
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:553
@@ -913,18 +884,11 @@ msgid "registered between"
 msgstr ""
 
 #: includes/delele-users-form-functions.php:169
-msgid ""
-"Set the reigration date interval for users to delete ( only delete users "
-"register between these dates ) or leave these fields blank to select all "
-"users. The dates must be specified in the following format: <strong>YYYY-MM-"
-"DD</strong>"
+msgid "Set the reigration date interval for users to delete ( only delete users register between these dates ) or leave these fields blank to select all users. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>"
 msgstr ""
 
 #: includes/delele-users-form-functions.php:192
-msgid ""
-"Set the limit over user delete. It will delete only first limited users. "
-"This option will help you in case of you have lots of users to delete and "
-"script timeout."
+msgid "Set the limit over user delete. It will delete only first limited users. This option will help you in case of you have lots of users to delete and script timeout."
 msgstr ""
 
 #: includes/delele-users-form-functions.php:209
@@ -940,24 +904,7 @@ msgstr ""
 msgid "Select user to whom you want to assign deleted user's data."
 msgstr ""
 
-#: wp-bulk-delete.php:74 wp-bulk-delete.php:81
+#: wp-bulk-delete.php:74
+#: wp-bulk-delete.php:81
 msgid "Cheatin&#8217; huh?"
-msgstr ""
-
-#. Plugin URI of the plugin/theme
-msgid "http://xylusthemes.com/plugins/wp-bulk-delete/"
-msgstr ""
-
-#. Description of the plugin/theme
-msgid ""
-"Bulk delete and cleanup anything like posts, comments, users, meta fields, "
-"taxonomy terms. with powerful filter options."
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "Xylus Themes"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "http://xylusthemes.com"
 msgstr ""
