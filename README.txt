@@ -9,11 +9,11 @@ Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Delete posts, pages, comments, attachments, users, taxonomy terms and meta fields in bulk with different powerful filters and conditions.
+Delete posts, pages, comments, users, taxonomy terms and meta fields in bulk with different powerful filters and conditions.
 
 == Description ==
 
-WP Bulk Delete is a WordPress Plugin that allows you to delete posts, pages, comments, attachments, users, taxonomy terms and meta fields in bulk based with different powerful filters and conditions. WP bulk delete helps in finding and mass deleting unnecessary data clean up. It also helps in imporving Speed and reducing database load. 
+WP Bulk Delete is a WordPress Plugin that allows you to delete posts, pages, comments, users, taxonomy terms and meta fields in bulk based with different powerful filters and conditions. WP bulk delete helps in finding and mass deleting unnecessary data clean up. It also helps in imporving Speed and reducing database load. 
 
 
 ###Powerfull Features
@@ -79,10 +79,6 @@ WP bulk Delete support below powerfull conditions and filters.
 * Delete Comment meta fields
 * Delete Taxonomy terms
 
-
-#### Deleting Attachments
-
-* Delete Attachments 
 
 ####  Database Cleanup 
 
