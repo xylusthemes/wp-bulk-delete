@@ -2,10 +2,10 @@
 Contributors: xylus,dharm1025
 Donate link: http://xylusthemes.com
 Tags: delete, bulk, clean, bulk delete, bulk clean, posts delete, delete all, mass delete, posts delete, delete posts, delete comments, delete users, delete meta, delete taxonomy, delete revision, wp clean, clean trash, bulk user delete, delete all, delete all users, delete all comments, delete all posts, trash, clean spam, delete with condition, delete with filter, remove
-Requires at least: 3.9
+Requires at least: 4.9
 Requires PHP: 5.3
 Tested up to: 5.7
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -163,6 +163,11 @@ We are working on providing more options :)
 15. Scheduled Delete History
 
 == Changelog ==
+
+= 1.2.2 =
+* ADDED: Optional Plugin deactivation Feedback
+* FIXED: Delete button was not showing for WP < 5.3
+* IMPROVEMENTS: Support for WP 5.7
 
 = 1.2.1 =
 * FIXED: jQuery DateTimePicker Error
