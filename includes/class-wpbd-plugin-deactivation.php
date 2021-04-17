@@ -20,8 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @subpackage  WP_Bulk_Delete/admin
  * @author     Dharmesh Patel <dspatel44@gmail.com>
  */
-if ( ! class_exists( 'WPBD_Xylus_Plugin_Deactivation' ) ) {
-    class WPBD_Xylus_Plugin_Deactivation {
+if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
+    class WPBD_Plugin_Deactivation {
 
         private $prefix = 'wpbd_';
         private $slug = 'wp-bulk-delete';
@@ -35,7 +35,7 @@ if ( ! class_exists( 'WPBD_Xylus_Plugin_Deactivation' ) ) {
          * @since    1.0.0
          */
         public function __construct() {
-			$this->plugin_name =  __('WP_Bulk_Delete', 'wp-bulk-delete' );
+			$this->plugin_name =  __('WP Bulk Delete', 'wp-bulk-delete' );
 			if ( defined( 'WPBD_VERSION' ) ) {
 				$this->plugin_version = WPBD_VERSION;
 			}
@@ -156,7 +156,7 @@ if ( ! class_exists( 'WPBD_Xylus_Plugin_Deactivation' ) ) {
             <script>
                 jQuery(document).ready(function() {
 					var dataReason = jQuery('input:radio[name="<?php echo $this->prefix; ?>deactivatation_reason_radio"]').val();
-                    jQuery('a#deactivate-<?php echo $this->slug; ?>').click(function (e) {
+                    jQuery('a[aria-label="Deactivate WP Bulk Delete"]').on('click', function (e) {
                         e.preventDefault();
                         var pluginDeactivateURL = jQuery(this).attr('href');
                         jQuery('#<?php echo $this->slug; ?>-deactivate-dialog' ).dialog({
@@ -167,7 +167,7 @@ if ( ! class_exists( 'WPBD_Xylus_Plugin_Deactivation' ) ) {
                             'buttons'       : [
                                 {
                                     text: "<?php _e('Submit & Deactivate', 'wp-bulk-delete' ); ?>",
-                                    class: 'button button-primary',
+                                    class: 'button button-primary <?php echo $this->prefix . "deactivate_button"; ?>',
                                     click: function() {
 										var that = this;
 										var dataQuery = jQuery('#<?php echo $this->prefix; ?>customer_query').val();
@@ -177,6 +177,7 @@ if ( ! class_exists( 'WPBD_Xylus_Plugin_Deactivation' ) ) {
 										}
 										jQuery('#<?php echo $this->prefix; ?>deactivatation_form').hide();
 										jQuery('.<?php echo $this->prefix; ?>deactivatation_loading').show();
+                                        jQuery('button.<?php echo $this->prefix; ?>deactivate_button').prop('disabled', true);
                                         jQuery.ajax({
                                             type : "post",
                                             dataType : "json",
@@ -235,7 +236,7 @@ if ( ! class_exists( 'WPBD_Xylus_Plugin_Deactivation' ) ) {
                 });
             </script>
 			<style>
-			.<?php echo $this->slug; ?>-deactivate-dialog .ui-dialog-titlebar{
+			<?php echo '.'.$this->slug; ?>-deactivate-dialog .ui-dialog-titlebar{
 				display: none;
 			}
             .ui-widget.<?php echo $this->slug; ?>-deactivate-dialog{
@@ -248,6 +249,9 @@ if ( ! class_exists( 'WPBD_Xylus_Plugin_Deactivation' ) ) {
                 font-family: inherit;
                 font-size: 14px;
                 width: 100%;
+            }
+            <?php echo '#'.$this->slug; ?>-deactivate-dialog {
+                display : none;
             }
 			</style>
             <div id="<?php echo $this->slug; ?>-deactivate-dialog">
@@ -276,4 +280,4 @@ if ( ! class_exists( 'WPBD_Xylus_Plugin_Deactivation' ) ) {
     }
 }
 
-new WPBD_Xylus_Plugin_Deactivation();
+new WPBD_Plugin_Deactivation();
