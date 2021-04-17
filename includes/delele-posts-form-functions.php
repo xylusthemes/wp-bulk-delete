@@ -529,7 +529,7 @@ function wpbd_render_delete_time(){
             _e( 'repeat', 'wp-bulk-delete'  );
             wpbd_render_import_frequency();
             do_action( 'wpbd_display_available_in_pro');
-            $timezone = get_timezone_string();
+            $timezone = wpbd_get_timezone_string();
             ?>
             <p class="description">
                 <strong><?php printf( esc_html__( 'Timezone: (%s)', 'wp-bulk-delete' ), $timezone ); ?></strong><br/>
@@ -604,7 +604,7 @@ function wpbd_render_common_form(){
     wpbd_render_delete_time();
 }
 
-function get_timezone_string() {
+function wpbd_get_timezone_string() {
     $timezone_string = get_option( 'timezone_string' );
  
     if ( $timezone_string ) {
