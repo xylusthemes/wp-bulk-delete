@@ -111,7 +111,7 @@ class WP_Bulk_Delete{
 		}
 		// Pro plugin Buy now Link.
 		if( ! defined( 'WPBD_PLUGIN_BUY_NOW_URL' ) ){
-			define( 'WPBD_PLUGIN_BUY_NOW_URL', 'http://xylusthemes.com/plugins/wp-bulk-delete/?utm_source=insideplugin&utm_medium=web&utm_content=sidebar&utm_campaign=freeplugin' );
+			define( 'WPBD_PLUGIN_BUY_NOW_URL', 'https://xylusthemes.com/plugins/wp-bulk-delete/?utm_source=insideplugin&utm_medium=web&utm_content=sidebar&utm_campaign=freeplugin' );
 		}
 	}
 
