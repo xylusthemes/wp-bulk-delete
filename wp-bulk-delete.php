@@ -132,6 +132,7 @@ class WP_Bulk_Delete{
 		require_once WPBD_PLUGIN_DIR . 'includes/delele-comments-form-functions.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/delele-meta-form-functions.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/delele-terms-form-functions.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/class-wpbd-plugin-deactivation.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/admin/admin-pages.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/admin/admin-sidebar.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/admin/posts/display-delete-posts.php';
