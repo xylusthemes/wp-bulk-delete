@@ -134,7 +134,11 @@ class WPBD_Delete_API {
 		if ( ! empty( $post_ids ) ){
 
 			foreach ($post_ids as $post_id ) {
-				wp_delete_post( $post_id, $force_delete );
+                if( $force_delete === false ){
+                    wp_trash_post( $post_id );
+                }else{
+                    wp_delete_post( $post_id, true );
+                }
 			}
 			$post_delete_count = count( $post_ids );
 
