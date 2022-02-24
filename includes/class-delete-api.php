@@ -419,6 +419,9 @@ class WPBD_Delete_API {
         if( empty( $data['delete_user_roles'] ) && ( $data['user_meta_key'] == '' || $data['user_meta_value'] == '' ) ){
             return array();
         }
+        if( empty( $data['delete_user_roles'] ) && $data['user_email'] == '' ){
+            return array();
+        }
         $delete_user_roles = isset( $data['delete_user_roles'] ) ? $data['delete_user_roles'] : array();
         $delete_user_roles = array_map('esc_sql', $delete_user_roles );
         $delete_start_date = isset( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
@@ -443,6 +446,10 @@ class WPBD_Delete_API {
         $user_meta_value =  isset( $data['user_meta_value'] ) ? esc_sql( $data['user_meta_value'] ) : '';
         $user_meta_compare =  isset( $data['user_meta_compare'] ) ? $data['user_meta_compare'] : 'equal_to_str';
             
+        // By Useremail.
+        $user_email =  isset( $data['user_email'] ) ? esc_sql( $data['user_email'] ) : '';
+        $user_email_compare =  isset( $data['user_email_compare'] ) ? $data['user_email_compare'] : 'equal_to_str';
+
         // Query Generation.
         $query = "SELECT DISTINCT $wpdb->users.ID FROM $wpdb->users ";
 
@@ -525,6 +532,30 @@ class WPBD_Delete_API {
 
                 default:
                     $query .= "  AND $wpdb->usermeta.meta_value = '{$user_meta_value}' )";
+                    break;
+            }
+        }
+
+        if ( $user_email != '' && $user_email_compare != '' ) {
+            switch ( $user_email_compare ) {
+                case 'equal_to_str':
+                    $query .= " AND ( $wpdb->users.user_email = '{$user_email}' )"; 
+                    break;
+
+                case 'notequal_to_str':
+                    $query .= " AND ( $wpdb->users.user_email != '{$user_email}' )"; 
+                    break;
+
+                case 'like_str':
+                    $query .= " AND ( $wpdb->users.user_email LIKE '%{$user_email}%' )"; 
+                    break;
+
+                case 'notlike_str':
+                    $query .= " AND ( $wpdb->users.user_email NOT LIKE '%{$user_email}%' )"; 
+                    break;
+
+                default:
+                    $query .= "  AND ( $wpdb->users.user_email = '{$user_email}' )";
                     break;
             }
         }
