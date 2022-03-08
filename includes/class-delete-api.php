@@ -52,6 +52,7 @@ class WPBD_Delete_API {
             $delete_end_date = isset( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
             $delete_authors = isset( $data['delete_authors'] ) ?  array_map( 'intval', $data['delete_authors'] ) : array();
             $delete_type = isset( $data['delete_type'] ) ? $data['delete_type'] : 'trash';
+            $post_media = isset( $data['post_media'] ) ? $data['post_media'] : 'no';
             $limit_post = isset( $data['limit_post'] ) ? absint( $data['limit_post'] ) : '';
             $date_type = isset( $data['date_type'] ) ? esc_sql( $data['date_type'] ) : 'custom_date';
             $input_days = isset( $data['input_days'] ) ? esc_sql( $data['input_days'] ) : '';
@@ -128,13 +129,22 @@ class WPBD_Delete_API {
 	 * @param array $data Posts Id.
 	 * @return array | deleted posts count.
 	 */
-	public function do_delete_posts( $post_ids = array(), $force_delete = false ) {
-		$post_delete_count = 0;
+	public function do_delete_posts( $post_ids = array(), $force_delete = false, $item = array() ) {
+		global $wpdb;
+        $post_delete_count = 0;
 
 		if ( ! empty( $post_ids ) ){
 
-			foreach ($post_ids as $post_id ) {
-				wp_delete_post( $post_id, $force_delete );
+			foreach ( $post_ids as $post_id ) {
+                $post_attechment_id = get_post_meta( $post_id, '_thumbnail_id', true );
+                $attechment_ids     = $wpdb->get_col( "SELECT post_id FROM $wpdb->postmeta WHERE meta_value = $post_attechment_id" );
+               
+                if( isset( $item['post_media'] ) && $item['post_media'] === 'yes' ){
+                    if( count( $attechment_ids ) <= 1 ){
+                        wp_delete_attachment( $post_attechment_id, $force_delete );
+                    }
+                }
+                wp_delete_post( $post_id, $force_delete );
 			}
 			$post_delete_count = count( $post_ids );
 

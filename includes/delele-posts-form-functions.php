@@ -78,7 +78,7 @@ function xt_delete_posts_form_process( $data ) {
     				$force_delete = true;
     			}
     			
-    			$post_count = wpbulkdelete()->api->do_delete_posts( $post_ids, $force_delete ); 
+    			$post_count = wpbulkdelete()->api->do_delete_posts( $post_ids, $force_delete, $data ); 
     			return  array(
 	    			'status' => 1,
 	    			'messages' => array( sprintf( esc_html__( '%d Record deleted successfully.', 'wp-bulk-delete' ), $post_count)
@@ -599,6 +599,8 @@ function wpbd_render_common_form(){
 
     wpbd_render_form_delete_type();
 
+    wpbd_render_form_delete_media();
+
     wpbd_render_limit_post();
 
     wpbd_render_delete_time();
@@ -621,4 +623,30 @@ function wpbd_get_timezone_string() {
     $tz_offset = sprintf( '%s%02d:%02d', $sign, $abs_hour, $abs_mins );
  
     return $tz_offset;
+}
+
+/**
+ * Render Delete Post Media.
+ *
+ * @since 1.0
+ * @return void
+ */
+function wpbd_render_form_delete_media(){
+    ?>
+    <tr>
+        <th scope="row">
+            <?php _e('Delete Post Featured image :','wp-bulk-delete'); ?>
+        </th>
+        <?php if( wpbd_is_pro() ){ ?>
+            <td>
+                <input type="checkbox" id="post_media" name="post_media" class="post_media" value="yes" />
+                <?php _e( 'It enables the removal of the featured image of the post, if the image is a featured image of multiple posts, it will not be removed. and If the image is being used in a place other than the featured image, it will be deleted.', 'wp-bulk-delete'  ); ?>
+            </td>
+        <?php }else{ ?>
+            <td>
+                <?php do_action( 'wpbd_display_available_in_pro'); ?>
+            </td>
+        <?php } ?>
+    </tr>
+    <?php
 }
