@@ -130,24 +130,21 @@ class WPBD_Delete_API {
 	 * @return array | deleted posts count.
 	 */
 	public function do_delete_posts( $post_ids = array(), $force_delete = false, $item = array() ) {
-		global $wpdb;
+        global $wpdb;
         $post_delete_count = 0;
 
 		if ( ! empty( $post_ids ) ){
-
-			foreach ( $post_ids as $post_id ) {
+            foreach ( $post_ids as $post_id ) {
                 $post_attechment_id = get_post_meta( $post_id, '_thumbnail_id', true );
                 $attechment_ids     = $wpdb->get_col( "SELECT post_id FROM $wpdb->postmeta WHERE meta_value = $post_attechment_id" );
-               
                 if( isset( $item['post_media'] ) && $item['post_media'] === 'yes' ){
                     if( count( $attechment_ids ) <= 1 ){
                         wp_delete_attachment( $post_attechment_id, $force_delete );
                     }
                 }
                 wp_delete_post( $post_id, $force_delete );
-			}
-			$post_delete_count = count( $post_ids );
-
+            }
+            $post_delete_count = count( $post_ids );
 		}
 		return $post_delete_count;
 	}
