@@ -106,7 +106,7 @@ class WPBD_Delete_API {
                 $query .= " AND $wpdb->posts.post_author IN ( " . implode( ",", $delete_authors ). " )";
             }
 
-            if( $limit_post != '' ){
+            if( !empty( $limit_post ) ){
                 if( is_numeric( $limit_post ) ){
                     $query .= " LIMIT " . $limit_post;    
                 }                
@@ -547,10 +547,10 @@ class WPBD_Delete_API {
 
         $query .= " AND $wpdb->users.ID NOT IN ( ".get_current_user_id()." )";
 
-        if( $limit_user != '' ){
+        if( !empty( $limit_user ) ){
             if( is_numeric( $limit_user ) ){
                 $query .= " ORDER BY $wpdb->users.user_login ASC LIMIT " . $limit_user;    
-            }                
+            }
         }
         $users = $wpdb->get_col( $query );
         return $users;
