@@ -319,6 +319,41 @@ function wpbd_render_form_date_interval(){
 }
 
 /**
+ * Render Modified intervals.
+ *
+ * @since 1.0
+ * @return void
+ */
+function wpbd_render_form_modified_interval(){
+    ?>
+    <tr>
+        <th scope="row">
+            <?php _e('Post Modified :','wp-bulk-delete'); ?>
+        </th>
+        <td>
+            <?php _e('Delete Posts which are','wp-bulk-delete'); ?> 
+            <select name="mdate_type" class="mdate_type">
+                <option value="molder_than"><?php _e('older than','wp-bulk-delete'); ?></option>
+                <option value="mwithin_last"><?php _e('posted within last','wp-bulk-delete'); ?></option>
+                <option value="mcustom_date"><?php _e('posted between','wp-bulk-delete'); ?></option>
+            </select>
+            <div class="mwpbd_date_days wpbd_inline">
+                <input type="number" id="minput_days" name="minput_days" class="wpbd_input_days" placeholder="0" min="0" /> <?php _e('days','wp-bulk-delete'); ?>
+            </div>
+            <div class="mwpbd_custom_interval wpbd_inline" style="display:none;">
+                <input type="text" id="mdelete_start_date" name="mdelete_start_date" class="delete_all_datepicker" placeholder="<?php _e('Start Date','wp-bulk-delete'); ?>" />
+                -
+                <input type="text" id="mdelete_end_date" name="mdelete_end_date" class="delete_all_datepicker" placeholder="<?php _e('End Date','wp-bulk-delete'); ?>" />
+                <p class="description">
+                    <?php _e('Set the modified date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
+                </p>
+            </div>
+        </td>
+    </tr>
+    <?php
+}
+
+/**
  * Render Post title and content contains.
  *
  * @since 1.0
@@ -596,6 +631,8 @@ function wpbd_render_common_form(){
     wpbd_render_form_poststatus();
 
     wpbd_render_form_date_interval();
+
+    wpbd_render_form_modified_interval();
 
     wpbd_render_form_delete_type();
 

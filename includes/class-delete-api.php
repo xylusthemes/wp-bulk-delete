@@ -67,6 +67,22 @@ class WPBD_Delete_API {
                 }
             }
 
+            $mdelete_start_date = isset( $data['mdelete_start_date'] ) ? esc_sql( $data['mdelete_start_date'] ) : '';
+            $mdelete_end_date = isset( $data['mdelete_end_date'] ) ? esc_sql( $data['mdelete_end_date'] ) : '';
+            $mdate_type = isset( $data['mdate_type'] ) ? esc_sql( $data['mdate_type'] ) : 'mcustom_date';
+            $minput_days = isset( $data['minput_days'] ) ? esc_sql( $data['minput_days'] ) : '';
+            if( $mdate_type === 'molder_than') {
+                $mdelete_start_date = $mdelete_end_date = '';
+                if( $minput_days === "0" || $minput_days > 0){
+                    $mdelete_end_date = date('Y-m-d', strtotime("-{$minput_days} days", strtotime(current_time('Y-m-d'))));
+                }
+            } else if( $mdate_type === 'mwithin_last') {
+                $mdelete_start_date = $mdelete_end_date = '';
+                if( $minput_days === "0" || $minput_days > 0){
+                    $mdelete_start_date = date('Y-m-d', strtotime("-{$minput_days} days", strtotime(current_time('Y-m-d'))));
+                }
+            }
+
             // BY Taxonomy.
             $post_taxonomy =  isset( $data['post_taxonomy'] ) ?  esc_sql( $data['post_taxonomy'] ) : '';
             $post_taxonomy_terms =  isset( $data['post_taxonomy_terms'] ) ? array_map( 'intval', $data['post_taxonomy_terms'] ) : array();
@@ -100,6 +116,12 @@ class WPBD_Delete_API {
             }
             if( $delete_end_date != ''){
                 $query .= " AND $wpdb->posts.post_date <= '{$delete_end_date} 23:59:59'";
+            }
+            if( $mdelete_start_date != ''){
+                $query .= " AND $wpdb->posts.post_modified >= '{$mdelete_start_date} 00:00:00'";
+            }
+            if( $mdelete_end_date != ''){
+                $query .= " AND $wpdb->posts.post_modified <= '{$mdelete_end_date} 23:59:59'";
             }
 
             if( !empty( $delete_authors ) ){

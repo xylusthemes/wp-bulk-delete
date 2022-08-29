@@ -283,6 +283,17 @@
 			}
 		});
 
+		jQuery('.mdate_type').on( 'change', function() {
+	    	var mdate_type = jQuery(this).val();
+	        if( mdate_type === 'mcustom_date'){
+				jQuery(".mwpbd_date_days").hide();
+				jQuery(".mwpbd_custom_interval").show();
+			}else{
+				jQuery(".mwpbd_custom_interval").hide();
+				jQuery(".mwpbd_date_days").show();
+			}
+		});
+
 		jQuery('.delete_frequency').on( 'change', function() {
 	    	var date_type = jQuery(this).val();
 	        if(date_type === 'not_repeat'){
