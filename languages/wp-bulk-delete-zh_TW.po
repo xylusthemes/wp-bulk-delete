@@ -1,0 +1,1005 @@
+# Translation of Plugins - WP Bulk Delete - Stable (latest release) in Chinese (Taiwan)
+# This file is distributed under the same license as the Plugins - WP Bulk Delete - Stable (latest release) package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Plugins - WP Bulk Delete - Stable (latest release)\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2022-06-02 13:53+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#: includes/class-wpbd-plugin-deactivation.php:258
+msgid "If you have a moment, please let us know why you are deactivating:"
+msgstr "如果有時間，請讓我們知道您為什麼要停用:"
+
+#: includes/class-wpbd-plugin-deactivation.php:233
+#: includes/class-wpbd-plugin-deactivation.php:271
+msgid "Write your query here"
+msgstr "在此寫下您的查詢"
+
+#: includes/class-wpbd-plugin-deactivation.php:230
+msgid "Can you please let us know more about your requirement"
+msgstr "請您可以告訴我們更多關於您的需求嗎"
+
+#: includes/class-wpbd-plugin-deactivation.php:227
+msgid "Can you please let us know more about the feature you want"
+msgstr "請您可以告訴我們更多關於您想要的功能是什麼呢"
+
+#: includes/class-wpbd-plugin-deactivation.php:224
+msgid "Can you please let us know which plugin you found helpful"
+msgstr "請您可以告訴我們覺得外掛最好用的功能是哪個呢"
+
+#: includes/class-wpbd-plugin-deactivation.php:221
+msgid "Can you please let us know about the bug/issue in detail?"
+msgstr "請您可以告訴我們更多 程式錯誤/問題 的詳細狀況嗎?"
+
+#: includes/class-wpbd-plugin-deactivation.php:217
+msgid "Can you let us know the reason for deactivation (Required)"
+msgstr "請您可以告訴我們停用的原因嗎 (必填)"
+
+#: includes/class-wpbd-plugin-deactivation.php:214
+msgid "Finding it confusing? let us know so that we can improve the interface"
+msgstr "感到困惑？請讓我們知道以改善操作介面"
+
+#: includes/class-wpbd-plugin-deactivation.php:197
+msgid "Skip"
+msgstr "跳過"
+
+#: includes/class-wpbd-plugin-deactivation.php:169
+msgid "Submit & Deactivate"
+msgstr "傳送並停用"
+
+#: includes/class-wpbd-plugin-deactivation.php:56
+msgid "Other reasons"
+msgstr "其他原因"
+
+#: includes/class-wpbd-plugin-deactivation.php:55
+msgid "It's temporary deactivatation, for debug an issue"
+msgstr "為了偵錯而暫時性停用"
+
+#: includes/class-wpbd-plugin-deactivation.php:54
+msgid "Plugin didn't work as expected"
+msgstr "外掛運作不如預期"
+
+#: includes/class-wpbd-plugin-deactivation.php:53
+msgid "It's not what I was looking for"
+msgstr "這不是我在尋找的"
+
+#: includes/class-wpbd-plugin-deactivation.php:52
+msgid "Plugin has bugs and it's not working"
+msgstr "外掛有程式錯誤以致不能運作"
+
+#: includes/class-wpbd-plugin-deactivation.php:51
+msgid "The plugin is great, but I need specific feature that you don't support"
+msgstr "這個外掛實在棒極了，只不過沒有我需要的某個功能"
+
+#: includes/class-wpbd-plugin-deactivation.php:50
+msgid "I found a better plugin"
+msgstr "我找到更好的外掛"
+
+#: includes/class-wpbd-plugin-deactivation.php:49
+msgid "I couldn't understand how to make it work"
+msgstr "我不知道該如何使用它"
+
+#: includes/admin/support-page.php:62
+msgid "Like us on Facebook"
+msgstr "Facebook 上給我們一個讚"
+
+#: includes/admin/support-page.php:61
+msgid "Follow us on Twitter"
+msgstr "追蹤 Twitter"
+
+#: includes/admin/support-page.php:60
+msgid "Leave us a review"
+msgstr "留下評論"
+
+#: includes/common-functions.php:164
+msgid "Error in scheduled delete."
+msgstr "排程刪除時發生錯誤."
+
+#: includes/common-functions.php:159
+msgid "Delete scheduled successfully."
+msgstr "排程刪除成功."
+
+#: includes/common-functions.php:149
+msgid "Something went wrong when saving scheduled delete."
+msgstr "儲存排程刪除時發生錯誤."
+
+#: includes/common-functions.php:138
+msgid "Scheduled Delete - "
+msgstr "排程刪除 - "
+
+#: includes/delele-terms-form-functions.php:85
+msgid "Select the post taxonomy whose terms you want to delete."
+msgstr "選擇您想刪除分類詞彙的文章分類法."
+
+#: includes/delele-comments-form-functions.php:139
+msgid "submitted between"
+msgstr "提交日期介於"
+
+#: includes/delele-comments-form-functions.php:138
+msgid "submitted within last"
+msgstr "提交日期於近日"
+
+#: includes/delele-comments-form-functions.php:135
+msgid "Delete Comments which are"
+msgstr "刪除符合條件的留言"
+
+#: includes/delele-users-form-functions.php:159
+msgid "registered between"
+msgstr "註冊日期介於"
+
+#: includes/delele-users-form-functions.php:158
+msgid "registered within last"
+msgstr "註冊於近日"
+
+#: includes/delele-users-form-functions.php:155
+msgid "Delete Users which are"
+msgstr "刪除符合條件的使用者"
+
+#: includes/delele-posts-form-functions.php:574
+msgid "eg: Daily Post Delete"
+msgstr "例如：每日刪除文章"
+
+#: includes/delele-posts-form-functions.php:573
+msgid "Save it as "
+msgstr "另存 "
+
+#: includes/delele-posts-form-functions.php:569
+msgid "Once a Month"
+msgstr "每月一次"
+
+#: includes/delele-posts-form-functions.php:566
+msgid "Once Weekly"
+msgstr "每週一次"
+
+#: includes/delele-posts-form-functions.php:563
+msgid "Once Daily"
+msgstr "每日一次"
+
+#: includes/delele-posts-form-functions.php:560
+msgid "Twice Daily"
+msgstr "每日兩次"
+
+#: includes/delele-posts-form-functions.php:557
+msgid "Once Hourly"
+msgstr "每小時一次"
+
+#: includes/delele-posts-form-functions.php:554
+msgid "Don't repeat"
+msgstr "不要重複"
+
+#: includes/delele-posts-form-functions.php:536
+msgid "Scheduled delete runs using cron and backgroud process. So, its useful for delete huge number of records and repeatative delete."
+msgstr "排程刪除採用 cron 和背景運作，因此它對於刪除大量記錄和重複性刪除很有用。"
+
+#: includes/delele-posts-form-functions.php:535
+msgid "Timezone: (%s)"
+msgstr "時區: (%s)"
+
+#: includes/delele-posts-form-functions.php:529
+msgid "repeat"
+msgstr "重複"
+
+#: includes/delele-posts-form-functions.php:526
+msgid "Schedule delete at"
+msgstr "排程刪除於"
+
+#: includes/delele-posts-form-functions.php:524
+msgid "Delete now"
+msgstr "立即刪除"
+
+#: includes/delele-posts-form-functions.php:520
+msgid "Delete Time :"
+msgstr "刪除時間 :"
+
+#: includes/delele-posts-form-functions.php:303
+msgid "posted between"
+msgstr "發表介於"
+
+#: includes/delele-posts-form-functions.php:302
+msgid "posted within last"
+msgstr "發表於近日"
+
+#: includes/delele-posts-form-functions.php:299
+msgid "Delete Posts which are"
+msgstr "刪除符合條件的文章"
+
+#: includes/delele-posts-form-functions.php:296
+msgid "Post Date :"
+msgstr "張貼日期 :"
+
+#: includes/delele-users-form-functions.php:162
+#: includes/delele-meta-form-functions.php:304
+#: includes/delele-comments-form-functions.php:142
+#: includes/delele-posts-form-functions.php:306
+msgid "days"
+msgstr "天數"
+
+#: includes/delele-meta-form-functions.php:301
+msgid "created between"
+msgstr "建立日期介於"
+
+#: includes/delele-meta-form-functions.php:300
+msgid "created within last"
+msgstr "建立於最近"
+
+#: includes/delele-users-form-functions.php:157
+#: includes/delele-meta-form-functions.php:299
+#: includes/delele-comments-form-functions.php:137
+#: includes/delele-posts-form-functions.php:301
+msgid "older than"
+msgstr "超過"
+
+#: includes/delele-meta-form-functions.php:297
+msgid "Delete meta for for posts/comments/users which are"
+msgstr "刪除符合條件的文章/留言/使用者的中繼資料"
+
+#: includes/class-delete-api.php:1174
+msgid "Event Schema / Structured Data"
+msgstr "活動模式 / 結構化資料"
+
+#: includes/class-delete-api.php:1173
+msgid "Import Meetup Events"
+msgstr "從 Meetup 匯入活動"
+
+#: includes/class-delete-api.php:1172
+msgid "Import Eventbrite Events"
+msgstr "從 Eventbrite 匯入活動"
+
+#: includes/class-delete-api.php:1171
+msgid "Import Facebook Events"
+msgstr "從 Facebook 匯入活動"
+
+#: includes/class-delete-api.php:1170
+msgid "WP Event Aggregator"
+msgstr "WP Event Aggregator"
+
+#: includes/admin/support-page.php:106
+msgid "Install Now"
+msgstr "立即安裝"
+
+#: includes/admin/support-page.php:102
+msgid "Active Installs:"
+msgstr "啟用安裝項目:"
+
+#: includes/admin/support-page.php:98
+msgid "WordPress "
+msgstr "WordPress "
+
+#: includes/admin/support-page.php:98
+msgid "Requires:"
+msgstr "必要:"
+
+#: includes/admin/support-page.php:94
+msgid "Version:"
+msgstr "版本:"
+
+#: includes/admin/support-page.php:75
+msgid "Plugins you should try"
+msgstr "您會想試試看的外掛"
+
+#: includes/admin/support-page.php:59
+msgid "Enjoying Import Facebook Events or have feedback?"
+msgstr "喜歡 Import Facebook Events 或者有意見想反饋嗎?"
+
+#: includes/admin/support-page.php:56
+msgid "Contact us directly (Premium Support)"
+msgstr "直接連絡我們 (付費專屬支援)"
+
+#: includes/admin/support-page.php:52
+msgid "We offer premium support on our website with the purchase of our premium plugins."
+msgstr "購買我們付費版外掛套件的使用者可以在我們的網站獲得付費專屬支援."
+
+#: includes/admin/support-page.php:51
+msgid "Looking for more immediate support?"
+msgstr "尋找更快的技術支援嗎?"
+
+#: includes/admin/support-page.php:48
+msgid "Open-source forum on WordPress.org"
+msgstr "WordPress.org 開源論壇"
+
+#: includes/admin/support-page.php:46
+msgid "Looking for free support?"
+msgstr "尋找免費的技術支援嗎?"
+
+#: includes/admin/support-page.php:44
+msgid "Our support team is always around to help you."
+msgstr "我們的支援團隊隨時準備為您提供服務."
+
+#: includes/admin/support-page.php:43
+msgid "Thanks you for using Import Facebook Events, We are sincerely appreciate your support and we’re excited to see you using our plugins."
+msgstr "感謝您使用 Import Facebook Events，我們衷心地感謝您的支持，很高興您使用我們的外掛."
+
+#: includes/admin/support-page.php:42
+msgid "Getting Support"
+msgstr "取得技術支援"
+
+#: includes/admin/support-page.php:31 includes/admin/admin-pages.php:38
+msgid "Support & Help"
+msgstr "支援與說明"
+
+#: includes/admin/cleanup/cleanup-page.php:30
+msgid "WARNING: Before you Cleanup any data please first take Backup, any delete operation done is irreversible. Please use it with caution!"
+msgstr "警告：在您清除任何資料之前請先做好備份，任何刪除操作都是不可逆的，請小心使用!"
+
+#: includes/delele-users-form-functions.php:224
+msgid "Select user to whom you want to assign deleted user's data."
+msgstr "選擇您想分派已刪除使用者的資料的使用者."
+
+#: includes/delele-users-form-functions.php:214
+#: includes/delele-users-form-functions.php:218
+msgid "Select User"
+msgstr "選擇使用者"
+
+#: includes/delele-users-form-functions.php:209
+msgid "Assign deleted user's data to"
+msgstr "將已刪除的使用者資料分派給"
+
+#: includes/delele-users-form-functions.php:192
+msgid "Set the limit over user delete. It will delete only first limited users. This option will help you in case of you have lots of users to delete and script timeout."
+msgstr "設定刪除使用者的數量上限，它將只會刪除前面幾個使用者。這個選項對於要刪除大量使用者但腳本逾時的狀況時很有幫助。"
+
+#: includes/delele-users-form-functions.php:169
+msgid "Set the reigration date interval for users to delete ( only delete users register between these dates ) or leave these fields blank to select all users. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>"
+msgstr "設定要刪除使用者的註冊日期間隔（僅刪除這段日期之間註冊的使用者），或將這些欄位留空以選擇所有使用者。日期必須按以下格式: <strong>YYYY-MM-DD</strong>"
+
+#: includes/delele-users-form-functions.php:152
+msgid "User Registration Date :"
+msgstr "使用者註冊日期 :"
+
+#: includes/delele-users-form-functions.php:129
+msgid "User Meta Key"
+msgstr "使用者中繼資料金鑰"
+
+#: includes/delele-users-form-functions.php:108
+msgid "Select the user roles from which you want to delete users."
+msgstr "選擇您想刪除使用者的使用者角色."
+
+#: includes/delele-users-form-functions.php:58
+msgid "%d User(s) deleted successfully."
+msgstr "%d 個使用者已經成功刪除."
+
+#: includes/delele-users-form-functions.php:35
+msgid "Please select user role or add usermeta key and value."
+msgstr "請選擇使用者角色或使用者中繼資料金鑰和數值."
+
+#: includes/delele-terms-form-functions.php:52
+msgid "%d Term(s) deleted successfully."
+msgstr "%d 個分類詞彙已經成功刪除."
+
+#: includes/delele-posts-form-functions.php:502
+msgid "Auto Drafts (%d Auto Drafts)"
+msgstr "自動草稿 (%d 個自動草稿)"
+
+#: includes/delele-posts-form-functions.php:495
+msgid "Trash (Deleted Posts) (%d Trash)"
+msgstr "回收桶 (已刪除文章) (%d 個在回收桶)"
+
+#: includes/delele-posts-form-functions.php:488
+msgid "Revisions (%d Revisions)"
+msgstr "修訂 (%d 個修訂)"
+
+#: includes/delele-posts-form-functions.php:482
+msgid "Cleanup Posts :"
+msgstr "清除文章 :"
+
+#: includes/delele-meta-form-functions.php:372
+msgid "Select the post whose post meta fields you want to delete."
+msgstr "選擇您想刪除中繼資料欄位的文章."
+
+#: includes/delele-meta-form-functions.php:363
+msgid "Post :"
+msgstr "文章 :"
+
+#: includes/delele-meta-form-functions.php:346
+msgid "Select the user roles from which you want to delete user meta."
+msgstr "選擇您想刪除使用者中繼資料的使用者角色."
+
+#: includes/delele-users-form-functions.php:100
+#: includes/delele-meta-form-functions.php:339
+msgid "( %s Users )"
+msgstr "( %s 個使用者 )"
+
+#: includes/delele-users-form-functions.php:90
+#: includes/delele-meta-form-functions.php:330
+msgid "User roles"
+msgstr "使用者角色"
+
+#: includes/delele-meta-form-functions.php:311
+msgid "Set the date interval for posts/comments/users whose meta fields will be delete, or leave these fields blank to select all meta. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>"
+msgstr "設定要刪除中繼資料的文章/留言/使用者的日期間隔，或將這些欄位留空以選擇所有中繼資料。日期必須按以下格式: <strong>YYYY-MM-DD</strong>"
+
+#: includes/delele-users-form-functions.php:167
+#: includes/delele-meta-form-functions.php:309
+#: includes/delele-comments-form-functions.php:147
+#: includes/delele-posts-form-functions.php:311
+msgid "End Date"
+msgstr "結束日期"
+
+#: includes/delele-users-form-functions.php:165
+#: includes/delele-meta-form-functions.php:307
+#: includes/delele-comments-form-functions.php:145
+#: includes/delele-posts-form-functions.php:309
+msgid "Start Date"
+msgstr "開始日期"
+
+#: includes/delele-meta-form-functions.php:276
+msgid "2. If you want to delete meta by meta key and meta value then enter both values."
+msgstr "2. 如果要依中繼資料金鑰與中繼資料數值來刪除中繼資料，請同時輸入這兩個數值."
+
+#: includes/delele-meta-form-functions.php:275
+msgid "1. If you want to delete meta by meta key only enter meta key."
+msgstr "1. 如果要依中繼資料金鑰來刪除中繼資料，請只輸入中繼資料金鑰."
+
+#: includes/delele-meta-form-functions.php:274
+msgid "Enter the meta key for delete meta, please consider following points in to meta delete."
+msgstr "輸入要刪除的中繼資料的中繼資料金鑰，刪除中繼資料時請注意以下幾點."
+
+#: includes/delele-meta-form-functions.php:272
+msgid "Meta value (Optional)"
+msgstr "中繼資料數值 (選填)"
+
+#: includes/delele-meta-form-functions.php:269
+msgid "greater then and equal to ( number )"
+msgstr "大於或等於 ( 數字 )"
+
+#: includes/delele-meta-form-functions.php:268
+msgid "greater then ( number )"
+msgstr "大於（術）"
+
+#: includes/delele-meta-form-functions.php:267
+msgid "less then and equal to ( number )"
+msgstr "小於或等於 ( 數字 )"
+
+#: includes/delele-meta-form-functions.php:266
+msgid "less then ( number )"
+msgstr "小於 ( 數字 )"
+
+#: includes/delele-meta-form-functions.php:265
+msgid "not equal to ( number )"
+msgstr "不等於 ( 數字 )"
+
+#: includes/delele-meta-form-functions.php:264
+msgid "equal to ( number )"
+msgstr "等於 ( 數字 )"
+
+#: includes/delele-meta-form-functions.php:263
+msgid "greater then and equal to ( date )"
+msgstr "多於或等於 ( 日期 )"
+
+#: includes/delele-meta-form-functions.php:262
+msgid "greater then ( date )"
+msgstr "多於 ( 日期 )"
+
+#: includes/delele-meta-form-functions.php:261
+msgid "less then and equal to ( date )"
+msgstr "少於或等於 ( 日期 )"
+
+#: includes/delele-meta-form-functions.php:260
+msgid "less then ( date )"
+msgstr "少於 ( 日期)"
+
+#: includes/delele-meta-form-functions.php:259
+msgid "not equal to ( date )"
+msgstr "不等於 ( 日期 )"
+
+#: includes/delele-meta-form-functions.php:258
+msgid "equal to ( date )"
+msgstr "等於 ( 日期 )"
+
+#: includes/delele-meta-form-functions.php:258
+msgid "not like ( string )"
+msgstr "不相似 ( 字串 )"
+
+#: includes/delele-meta-form-functions.php:257
+msgid "like ( string )"
+msgstr "相似 ( 字串 )"
+
+#: includes/delele-meta-form-functions.php:256
+msgid "not equal to ( string )"
+msgstr "不等於 ( 字串 )"
+
+#: includes/delele-meta-form-functions.php:253
+msgid "Meta key (Required)"
+msgstr "中繼資料金鑰 (必填)"
+
+#: includes/delele-meta-form-functions.php:252
+msgid "Meta key"
+msgstr "中繼資料金鑰"
+
+#: includes/delele-meta-form-functions.php:249
+msgid "Meta fields"
+msgstr "中繼資料欄位"
+
+#: includes/delele-meta-form-functions.php:231
+msgid "Select the post type whose post meta fields you want to delete."
+msgstr "選擇您想刪除文章中繼資料欄位的文章類型."
+
+#: includes/delele-meta-form-functions.php:208
+msgid "Post type:"
+msgstr "文章類型:"
+
+#: includes/delele-meta-form-functions.php:177
+msgid "Duplicated Term Meta (%d Term Meta)"
+msgstr "重複的分類術語中繼資料 (%d 個分類術語中繼資料)"
+
+#: includes/delele-meta-form-functions.php:170
+msgid "Orphaned Term Meta (%d Term Meta)"
+msgstr "不再與任何項目關聯的詞彙中繼資料 (%d 個詞彙中繼資料)"
+
+#: includes/delele-meta-form-functions.php:163
+msgid "Duplicated User Meta (%d User Meta)"
+msgstr "重複的使用者中繼資料 (%d 個使用者中繼資料)"
+
+#: includes/delele-meta-form-functions.php:156
+msgid "Orphaned User Meta (%d User Meta)"
+msgstr "不再與任何項目關聯的使用者中繼資料 (%d 個使用者中繼資料)"
+
+#: includes/delele-meta-form-functions.php:149
+msgid "Duplicated Comment Meta (%d Comment Meta)"
+msgstr "重複的留言中繼資料 (%d 個留言中繼資料)"
+
+#: includes/delele-meta-form-functions.php:142
+msgid "Orphaned Comment Meta (%d Comment Meta)"
+msgstr "不再與任何項目關聯的留言中繼資料 (%d 個留言中繼資料)"
+
+#: includes/delele-meta-form-functions.php:135
+msgid "Duplicated Post Meta (%d Post Meta)"
+msgstr "重複的文章中繼資料 (%d 個文章中繼資料)"
+
+#: includes/delele-meta-form-functions.php:128
+msgid "Orphaned Post Meta (%d Post Meta)"
+msgstr "不再與任何項目關聯的文章中繼資料 (%d 個文章中繼資料)"
+
+#: includes/delele-meta-form-functions.php:122
+msgid "Cleanup Meta :"
+msgstr "清除中繼資料 :"
+
+#: includes/delele-meta-form-functions.php:82
+msgid "%d Meta deleted successfully."
+msgstr "%d 中繼資料已成功刪除."
+
+#: includes/delele-comments-form-functions.php:239
+msgid "Select comment post whose comment you want to delete."
+msgstr "選擇哪個留言文章的留言您想要刪除."
+
+#: includes/delele-meta-form-functions.php:368
+#: includes/delele-comments-form-functions.php:219
+#: includes/delele-comments-form-functions.php:228
+msgid "Select post"
+msgstr "選擇文章"
+
+#: includes/delele-comments-form-functions.php:213
+msgid "Comment Post"
+msgstr "留言文章"
+
+#: includes/delele-comments-form-functions.php:194
+msgid "Select comment author whose comment you want to delete."
+msgstr "選擇哪位留言者的留言您想要刪除."
+
+#: includes/delele-comments-form-functions.php:174
+#: includes/delele-comments-form-functions.php:183
+msgid "Select author"
+msgstr "選擇作者"
+
+#: includes/delele-comments-form-functions.php:168
+msgid "Comment Author"
+msgstr "留言者"
+
+#: includes/delele-comments-form-functions.php:149
+msgid "Set the date interval for comments to delete ( only delete comments between these dates ) or leave these fields blank to select all comments. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>"
+msgstr "設定刪除留言的日期間隔（僅刪除這段日期之間的評論），或將這些欄位留空以選擇所有留言。日期必須按以下格式: <strong>YYYY-MM-DD</strong>"
+
+#: includes/delele-comments-form-functions.php:132
+msgid "Comment Date :"
+msgstr "留言日期 :"
+
+#: includes/delele-comments-form-functions.php:114
+msgid "Select the comment statuses which you want to delete."
+msgstr "選擇您想刪除的留言狀態."
+
+#: includes/delele-comments-form-functions.php:106
+msgid "( %s Comment(s) )"
+msgstr "( %s 個留言 )"
+
+#: includes/delele-comments-form-functions.php:96
+msgid "Comment Status"
+msgstr "留言狀態"
+
+#: includes/delele-comments-form-functions.php:90
+msgid "Approved Comments"
+msgstr "批准留言"
+
+#: includes/delele-comments-form-functions.php:89
+msgid "Trash Comments"
+msgstr "回收桶中的留言"
+
+#: includes/delele-comments-form-functions.php:88
+msgid "Spam Comments"
+msgstr "垃圾留言"
+
+#: includes/delele-comments-form-functions.php:87
+msgid "Pending Comments"
+msgstr "待審核留言"
+
+#: includes/delele-comments-form-functions.php:58
+msgid "%d comment(s) deleted successfully."
+msgstr "%d 個留言已成功刪除."
+
+#: includes/common-functions.php:103 includes/admin/support-page.php:109
+msgid "Buy Now"
+msgstr "立即購買"
+
+#: includes/common-functions.php:102
+msgid "Available in Pro version."
+msgstr "專業版即可使用."
+
+#: includes/class-delete-api.php:400
+msgid "%s Duplicated Term Meta Cleaned up"
+msgstr "%s 個重複的詞彙中繼資料已清除"
+
+#: includes/class-delete-api.php:388
+msgid "%s Duplicated User Meta Cleaned up"
+msgstr "%s 個重複的使用者中繼資料已清除"
+
+#: includes/class-delete-api.php:376
+msgid "%s Duplicated Comment Meta Cleaned up"
+msgstr "%s 個重複的留言中繼資料已清除"
+
+#: includes/class-delete-api.php:364
+msgid "%s Duplicated Post Meta Cleaned up"
+msgstr "%s 個重複的文章中繼資料已清除"
+
+#: includes/class-delete-api.php:351
+msgid "%s Orphaned Term Meta Cleaned up"
+msgstr "%s 個不再與任何項目關聯的分類術語中繼資料已清除"
+
+#: includes/class-delete-api.php:336
+msgid "%s Orphaned User Meta Cleaned up"
+msgstr "%s 個不再與任何項目關聯的使用者中繼資料已清除"
+
+#: includes/class-delete-api.php:321
+msgid "%s Orphaned Comment Meta Cleaned up"
+msgstr "%s 個不再與任何項目關聯的留言中繼資料已清除"
+
+#: includes/class-delete-api.php:306
+msgid "%s Orphaned Post Meta Cleaned up"
+msgstr "%s 個不再與任何項目關聯的文章中繼資料已清除"
+
+#: includes/delele-terms-form-functions.php:32 includes/ajax-functions.php:341
+msgid "Please select required fields for proceed delete operation."
+msgstr "請選擇必要的欄位以進行刪除作業."
+
+#: includes/ajax-functions.php:262 includes/ajax-functions.php:267
+#: includes/ajax-functions.php:273
+msgid "Please select all required fields."
+msgstr "請選擇所有必要欄位."
+
+#: includes/delele-comments-form-functions.php:51
+#: includes/delele-terms-form-functions.php:45 includes/ajax-functions.php:209
+#: includes/ajax-functions.php:354
+msgid "Something went wrong pelase try again!!"
+msgstr "出了點差錯，請稍後再試!!"
+
+#: includes/delele-comments-form-functions.php:34
+#: includes/ajax-functions.php:196
+msgid "Please select Comment status for proceed delete operation."
+msgstr "請選擇要進行刪除作業的留言狀態."
+
+#: includes/admin/terms/display-delete-terms.php:33
+msgid "Delete Taxonomy Terms"
+msgstr "刪除分類法中的分類術語"
+
+#: includes/admin/meta/display-delete-meta.php:56
+msgid "Comment Meta"
+msgstr "留言中繼資料"
+
+#: includes/delele-users-form-functions.php:126
+#: includes/admin/meta/display-delete-meta.php:53
+msgid "User Meta"
+msgstr "使用者中繼資料"
+
+#: includes/admin/meta/display-delete-meta.php:50
+msgid "Post Meta"
+msgstr "文章中繼資料"
+
+#: includes/admin/cleanup/cleanup-form.php:54
+msgid "Nothing to cleanup!!"
+msgstr "沒清除任何東西!!"
+
+#: includes/admin/admin-sidebar.php:44
+msgid "Get Premium"
+msgstr "取得付費版"
+
+#: includes/admin/admin-sidebar.php:42
+msgid "Would you like to remove these ads?"
+msgstr "您想移除掉這些廣告嗎?"
+
+#: includes/admin/admin-sidebar.php:36
+msgid "Hire Us"
+msgstr "僱用我們"
+
+#: includes/admin/admin-sidebar.php:34
+msgid "From small blog to complex web apps, we push the limits of what's possible with WordPress."
+msgstr "從小型部落格到龐大網頁應用程式，我們都在不斷拓展 WordPress 的可能性的極限."
+
+#: includes/admin/admin-sidebar.php:33
+msgid "Custom WordPress Development Services"
+msgstr "客製化 WordPress 開發服務"
+
+#: includes/admin/admin-sidebar.php:26
+msgid "Unlock more power to bulk delete operation, Upgrade today!!"
+msgstr "今天就來升級，解鎖更多批量刪除操作功能!!"
+
+#: includes/admin/admin-sidebar.php:25 includes/admin/admin-sidebar.php:28
+msgid "Upgrade to Pro"
+msgstr "升級為專業版"
+
+#: includes/admin/terms/display-delete-terms.php:57
+#: includes/admin/admin-pages.php:34
+msgid "Delete Terms"
+msgstr "刪除分類術語"
+
+#: includes/admin/admin-pages.php:32
+msgid "Delete Meta Fields"
+msgstr "刪除中繼資料欄位"
+
+#. Author URI of the plugin
+msgid "http://xylusthemes.com"
+msgstr "http://xylusthemes.com"
+
+#. Author of the plugin
+msgid "Xylus Themes"
+msgstr "Xylus 主題"
+
+#. Description of the plugin
+msgid "Bulk delete and cleanup anything like posts, comments, users, meta fields, taxonomy terms. with powerful filter options."
+msgstr "可批量刪除和清理如文章、留言、使用者、中繼資料欄位和分類法術語，以及強大的篩選選項."
+
+#. Plugin URI of the plugin
+msgid "http://xylusthemes.com/plugins/wp-bulk-delete/"
+msgstr "http://xylusthemes.com/plugins/wp-bulk-delete/"
+
+#: wp-bulk-delete.php:74 wp-bulk-delete.php:81
+msgid "Cheatin&#8217; huh?"
+msgstr "哦，有問題喔?"
+
+#: includes/delele-posts-form-functions.php:591
+msgid "Filter your posts :"
+msgstr "篩選您的文章 :"
+
+#: includes/delele-users-form-functions.php:134
+#: includes/delele-meta-form-functions.php:271
+#: includes/delele-posts-form-functions.php:463
+msgid "Value"
+msgstr "數值"
+
+#: includes/delele-users-form-functions.php:132
+#: includes/delele-meta-form-functions.php:255
+#: includes/delele-posts-form-functions.php:461
+msgid "equal to ( string )"
+msgstr "等於 ( 字串 )"
+
+#: includes/delele-posts-form-functions.php:458
+msgid "Custom Fields Key"
+msgstr "自訂欄位金鑰"
+
+#: includes/delele-posts-form-functions.php:455
+msgid "Custom fields settings :"
+msgstr "自訂欄位設定 :"
+
+#: includes/delele-posts-form-functions.php:438
+msgid "Set the limit over post delete. It will delete only first limit posts. This option will help you in case of you have lots of posts to delete and script timeout."
+msgstr "設定刪除文章的數量上限，它將只會刪除前面幾個文章。這個選項對於要刪除大量文章但腳本逾時的狀況時很有幫助。"
+
+#: includes/delele-users-form-functions.php:187
+#: includes/delele-posts-form-functions.php:433
+msgid "Limit :"
+msgstr "限制 :"
+
+#: includes/delele-posts-form-functions.php:394
+msgid "Authors :"
+msgstr "作者 :"
+
+#: includes/delele-posts-form-functions.php:378
+msgid "Delete permanently"
+msgstr "永久刪除"
+
+#: includes/delele-posts-form-functions.php:376
+msgid "Move to Trash"
+msgstr "移動到回收桶"
+
+#: includes/delele-posts-form-functions.php:372
+msgid "Post Delete Type :"
+msgstr "文章刪除類型 :"
+
+#: includes/delele-posts-form-functions.php:346
+msgid "If Post Content Contains :"
+msgstr "如果文章內容包含 :"
+
+#: includes/delele-posts-form-functions.php:338
+#: includes/delele-posts-form-functions.php:353
+msgid "Don't delete It."
+msgstr "請勿刪除它."
+
+#: includes/delele-posts-form-functions.php:337
+#: includes/delele-posts-form-functions.php:352
+msgid "Delete It."
+msgstr "刪除它."
+
+#: includes/delele-posts-form-functions.php:335
+#: includes/delele-posts-form-functions.php:350
+msgid "Then"
+msgstr "然後"
+
+#: includes/delele-posts-form-functions.php:331
+msgid "If Post Title Contains :"
+msgstr "如果文章標題包含 :"
+
+#: includes/delele-posts-form-functions.php:313
+msgid "Set the date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>"
+msgstr "設定刪除項目的日期間隔，或將這些欄位留空以選擇所有文章。日期必須按以下格式: <strong>YYYY-MM-DD</strong>"
+
+#: includes/delele-meta-form-functions.php:294
+msgid "Date interval :"
+msgstr "日期間隔 :"
+
+#: includes/delele-posts-form-functions.php:215
+#: includes/delele-terms-form-functions.php:79
+msgid "Post Taxonomy :"
+msgstr "文章分類法 :"
+
+#: includes/delele-meta-form-functions.php:226
+#: includes/delele-posts-form-functions.php:148
+#: includes/delele-posts-form-functions.php:196
+msgid "No post types are there, WP Bulk Delete will not work."
+msgstr "沒有文章類型，WP Bulk Delete 就無能為力."
+
+#: includes/delele-meta-form-functions.php:219
+#: includes/delele-posts-form-functions.php:137
+#: includes/delele-posts-form-functions.php:189
+#: includes/delele-posts-form-functions.php:408
+msgid "%s"
+msgstr "%s"
+
+#: includes/delele-posts-form-functions.php:127
+#: includes/delele-posts-form-functions.php:178
+msgid "Post type of items to delete :"
+msgstr "刪除項目的文章類型 :"
+
+#: includes/delele-posts-form-functions.php:84
+msgid "%d Record deleted successfully."
+msgstr "%d 個記錄已成功刪除."
+
+#: includes/class-delete-api.php:290
+msgid "%s Trashed Posts Cleaned up"
+msgstr "%s 個回收桶中的文章已清除"
+
+#: includes/class-delete-api.php:280
+msgid "%s Auto Drafts Cleaned up"
+msgstr "%s 自動草稿已經清除"
+
+#: includes/class-delete-api.php:270
+msgid "%s Revisions Cleaned up"
+msgstr "%s 個修訂已清除"
+
+#: includes/delele-users-form-functions.php:63
+#: includes/delele-meta-form-functions.php:87
+#: includes/delele-comments-form-functions.php:63
+#: includes/delele-posts-form-functions.php:89
+#: includes/delele-terms-form-functions.php:57 includes/ajax-functions.php:45
+#: includes/ajax-functions.php:156 includes/ajax-functions.php:221
+#: includes/ajax-functions.php:300 includes/ajax-functions.php:366
+msgid "Nothing to delete!!"
+msgstr "沒刪除任何東西!!"
+
+#: includes/admin/users/display-delete-users.php:37
+msgid "WARNING: Before you delete any users please first take Backup, any delete operation done is irreversible. Please use it with caution!"
+msgstr "警告：在您清除任何使用者之前請先做好備份，任何刪除操作都是不可逆的，請小心使用!"
+
+#: includes/admin/terms/display-delete-terms.php:38
+msgid "WARNING: Before you delete any terms please first take Backup, any delete operation done is irreversible. Please use it with caution!"
+msgstr "警告：在您清除任何分類術語之前請先做好備份，任何刪除操作都是不可逆的，請小心使用!"
+
+#: includes/admin/cleanup/cleanup-form.php:95
+msgid "Run Cleanup"
+msgstr "執行清除"
+
+#: includes/delele-users-form-functions.php:75
+#: includes/admin/cleanup/cleanup-form.php:38
+#: includes/delele-meta-form-functions.php:99
+#: includes/delele-comments-form-functions.php:75
+#: includes/delele-posts-form-functions.php:101
+#: includes/delele-terms-form-functions.php:36 includes/ajax-functions.php:57
+#: includes/ajax-functions.php:168 includes/ajax-functions.php:233
+#: includes/ajax-functions.php:312 includes/ajax-functions.php:378
+msgid "Sorry, Your nonce did not verify."
+msgstr "抱歉，您的一次性驗證碼未通過."
+
+#: includes/delele-users-form-functions.php:32
+#: includes/admin/cleanup/cleanup-form.php:27
+#: includes/delele-meta-form-functions.php:43
+#: includes/delele-comments-form-functions.php:31
+#: includes/delele-posts-form-functions.php:60
+#: includes/delele-terms-form-functions.php:29 includes/ajax-functions.php:27
+#: includes/ajax-functions.php:139 includes/ajax-functions.php:192
+#: includes/ajax-functions.php:258 includes/ajax-functions.php:337
+msgid "You don't have enough permission for this operation."
+msgstr "您沒有足夠的權限進行此操作."
+
+#: includes/admin/posts/display-delete-posts.php:66
+msgid "General (By All)"
+msgstr "一般 (適用全部)"
+
+#: includes/admin/posts/display-delete-posts.php:63
+msgid "By Custom fields"
+msgstr "依照自訂欄位"
+
+#: includes/admin/posts/display-delete-posts.php:60
+msgid "By Title or Content"
+msgstr "依照標題或內容"
+
+#: includes/admin/posts/display-delete-posts.php:57
+msgid "By Author"
+msgstr "依照作者"
+
+#: includes/admin/posts/display-delete-posts.php:54
+msgid "By Taxonomy"
+msgstr "依照分類法"
+
+#: includes/admin/posts/display-delete-posts.php:51
+msgid "By Posttype"
+msgstr "依照文章類型"
+
+#: includes/admin/posts/display-delete-posts.php:48
+#: includes/admin/cleanup/cleanup-page.php:25
+#: includes/admin/meta/display-delete-meta.php:47
+#: includes/admin/admin-pages.php:36
+msgid "Cleanup"
+msgstr "清除"
+
+#: includes/admin/posts/display-delete-posts.php:35
+msgid "WARNING: Before you delete any post please first take Backup, any delete operation done is irreversible. Please use it with caution!"
+msgstr "警告：在您清除任何文章之前請先做好備份，任何刪除操作都是不可逆的，請小心使用!"
+
+#: includes/admin/meta/display-delete-meta.php:35
+msgid "WARNING: Before you delete any meta please first take Backup, any delete operation done is irreversible. Please use it with caution!"
+msgstr "警告：在您清除任何中繼資料之前請先做好備份，任何刪除操作都是不可逆的，請小心使用!"
+
+#: includes/admin/comments/display-delete-comments.php:39
+msgid "WARNING: Before you delete any comment please first take Backup, any delete operation done is irreversible. Please use it with caution!"
+msgstr "警告：在您清除任何留言之前請先做好備份，任何刪除操作都是不可逆的，請小心使用!"
+
+#: includes/admin/meta/display-delete-meta.php:26
+msgid "Delete Meta"
+msgstr "刪除中繼資料"
+
+#: includes/admin/users/display-delete-users.php:32
+#: includes/admin/users/display-delete-users.php:58
+#: includes/admin/admin-pages.php:30
+msgid "Delete Users"
+msgstr "刪除使用者"
+
+#: includes/admin/comments/display-delete-comments.php:34
+#: includes/admin/comments/display-delete-comments.php:62
+#: includes/admin/admin-pages.php:28
+msgid "Delete Comments"
+msgstr "刪除留言"
+
+#: includes/admin/posts/display-delete-posts.php:26
+#: includes/admin/admin-pages.php:26
+msgid "Delete Posts"
+msgstr "刪除文章"
+
+#. Plugin Name of the plugin
+#: includes/admin/admin-pages.php:23
+#: includes/class-wpbd-plugin-deactivation.php:38
+msgid "WP Bulk Delete"
+msgstr "WP Bulk Delete"
