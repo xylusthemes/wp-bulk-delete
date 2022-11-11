@@ -64,7 +64,7 @@ function xt_delete_posts_form_process( $data ) {
 
     	if( empty( $error ) ) {
             $delete_time = ( $data['delete_time'] ) ? $data['delete_time'] : 'now';
-            $delete_datetime = ( $data['delete_datetime'] ) ? $data['delete_datetime'] : '';
+            $delete_datetime = isset( $data['delete_datetime'] ) ? $data['delete_datetime'] : '';
             if( $delete_time === 'scheduled' && !empty($delete_datetime) && wpbd_is_pro() ) {
                 $data['delete_entity'] = 'post';
                 return wpbd_save_scheduled_delete($data);
@@ -249,8 +249,8 @@ function wpbd_render_form_poststatus(){
             <th scope="row">Post Status</th>
             <td>
                 <fieldset>
-                    <label for="delete_post_status">
-                        <input name="delete_post_status[]" id="publish" value="publish" type="checkbox" >
+                    <label for="delete_post_status" >
+                        <input name="delete_post_status[]" id="publish" value="publish" type="checkbox" checked="checked" >
                         Published
                     </label>
                 </fieldset>
@@ -372,7 +372,7 @@ function wpbd_render_form_delete_type(){
                 <?php _e('Post Delete Type :','wp-bulk-delete'); ?>
             </th>
             <td>
-                <input type="radio" id="delete_type" name="delete_type" class="delete_type" value="trash" />
+                <input type="radio" id="delete_type" name="delete_type" class="delete_type" value="trash" checked="checked"/>
                 <?php _e( 'Move to Trash', 'wp-bulk-delete'  ); ?>
                 &nbsp;&nbsp;<input type="radio" id="delete_type" name="delete_type" class="delete_type" value="permenant" />
                 <?php _e( 'Delete permanently', 'wp-bulk-delete'  ); ?>
@@ -520,7 +520,7 @@ function wpbd_render_delete_time(){
             <?php _e('Delete Time :','wp-bulk-delete'); ?>
         </th>
         <td>
-            <input type="radio" id="delete_time_now" name="delete_time" class="delete_time" value="now" />
+            <input type="radio" id="delete_time_now" name="delete_time" class="delete_time" value="now" checked="checked" />
             <?php _e( 'Delete now', 'wp-bulk-delete'  ); ?><br />
             <input type="radio" id="delete_time_later" name="delete_time" class="delete_time" value="scheduled" <?php echo( ( ! wpbd_is_pro() ) ? 'disabled="disabled"' : '' ); ?>/>
             <?php _e( 'Schedule delete at', 'wp-bulk-delete'  ); ?>
