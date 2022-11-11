@@ -74,6 +74,7 @@ msgstr ""
 msgid "Support & Help"
 msgstr ""
 
+#: includes/admin/admin-pages.php:40
 #: includes/admin/admin-sidebar.php:25
 #: includes/admin/admin-sidebar.php:28
 msgid "Upgrade to Pro"
