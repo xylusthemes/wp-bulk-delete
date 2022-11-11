@@ -5,7 +5,7 @@ Tags: delete, bulk, clean, bulk delete, bulk clean, posts delete, delete all, ma
 Requires at least: 4.9
 Requires PHP: 5.3
 Tested up to: 6.1 
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -163,6 +163,13 @@ We are working on providing more options :)
 15. Scheduled Delete History
 
 == Changelog ==
+
+= 1.2.3 =
+* ADDED: Taiwan language support.
+* ADDED: "Upgrade to Pro"  Admin menu.
+* FIXED: Move to Trash option bug.
+* FIXED: Nothing to delete notice bug.
+* IMPROVEMENTS: Support for WP 6.1
 
 = 1.2.2 =
 * ADDED: Optional Plugin deactivation Feedback
