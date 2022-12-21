@@ -65,7 +65,7 @@
 	            }
 	            jQuery(".spinner").removeClass("is-active");
 	        });    
-	    });     															
+	    });
 	});
 
 	// Render Dynamic taxomony.
