@@ -553,6 +553,8 @@ function wpbd_render_import_frequency( $selected = 'not_repeat' ) {
         <option value='not_repeat' <?php selected( $selected, 'not_repeat' ); ?>>
             <?php esc_html_e( 'Don\'t repeat', 'wp-bulk-delete' ); ?>
         </option>
+        <option value='halfhour' <?php selected( $selected, 'halfhour' ); ?>>
+            <?php esc_html_e( '30 Minutes', 'wp-bulk-delete' ); ?>
         <option value='tenminutes' <?php selected( $selected, 'tenminutes' ); ?>>
             <?php esc_html_e( 'Ten Minutes', 'wp-bulk-delete' ); ?>
         </option>
