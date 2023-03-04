@@ -65,7 +65,7 @@
 	            }
 	            jQuery(".spinner").removeClass("is-active");
 	        });    
-	    });                    
+	    });
 	});
 
 	// Render Dynamic taxomony.
@@ -181,6 +181,18 @@
 	            jQuery(".spinner").removeClass("is-active");
 	        });    
 	    });                    
+	});
+
+	jQuery(document).ready(function(){
+		jQuery('#with_custom_query').on('change', function(){
+			if( jQuery('#with_custom_query').is(':checked') ){
+				jQuery('input[name="delete_type"][value="permenant"]').prop('checked',true);
+				jQuery('input[name=delete_type][value="trash"]').prop("disabled",true);
+			}else{
+				jQuery('input[name=delete_type][value="trash"]').prop("disabled",false);
+			}
+		});
+		jQuery("#with_custom_query").trigger("checked");
 	});
 
 	// Delete meta form handle.
