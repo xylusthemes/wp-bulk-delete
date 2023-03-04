@@ -123,56 +123,56 @@ function wpbd_render_meta_cleanup(){
         </th>
         <td>
             <fieldset>
-                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_orphan_postmeta" type="checkbox" value="orphan_postmeta" checked="checked">
+                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_orphan_postmeta" type="checkbox" value="orphan_postmeta" >
                 <label for="cleanup_orphan_postmeta">                    
                     <?php printf( __( 'Orphaned Post Meta (%d Post Meta)', 'wp-bulk-delete' ), $orphan_postmeta_count ); ?>
                 </label>
             </fieldset>
 
             <fieldset>
-                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_duplicated_postmeta" type="checkbox" value="duplicated_postmeta" checked="checked">
+                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_duplicated_postmeta" type="checkbox" value="duplicated_postmeta" >
                 <label for="cleanup_duplicated_postmeta">                    
                     <?php printf( __( 'Duplicated Post Meta (%d Post Meta)', 'wp-bulk-delete' ), $duplicated_postmeta_count ); ?>
                 </label>
             </fieldset>
 
             <fieldset>
-                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_orphan_commentmeta" type="checkbox" value="orphan_commentmeta" checked="checked">
+                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_orphan_commentmeta" type="checkbox" value="orphan_commentmeta" >
                 <label for="cleanup_orphan_commentmeta">                    
                     <?php printf( __( 'Orphaned Comment Meta (%d Comment Meta)', 'wp-bulk-delete' ), $orphan_commentmeta_count ); ?>
                 </label>
             </fieldset>
 
             <fieldset>
-                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_duplicated_commentmeta" type="checkbox" value="duplicated_commentmeta" checked="checked">
+                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_duplicated_commentmeta" type="checkbox" value="duplicated_commentmeta" >
                 <label for="cleanup_duplicated_commentmeta">                    
                     <?php printf( __( 'Duplicated Comment Meta (%d Comment Meta)', 'wp-bulk-delete' ), $duplicated_commentmeta_count ); ?>
                 </label>
             </fieldset>
 
             <fieldset>
-                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_orphan_usermeta" type="checkbox" value="orphan_usermeta" checked="checked">
+                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_orphan_usermeta" type="checkbox" value="orphan_usermeta" >
                 <label for="cleanup_orphan_usermeta">                    
                     <?php printf( __( 'Orphaned User Meta (%d User Meta)', 'wp-bulk-delete' ), $orphan_usermeta_count ); ?>
                 </label>
             </fieldset>
 
             <fieldset>
-                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_duplicated_usermeta" type="checkbox" value="duplicated_usermeta" checked="checked">
+                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_duplicated_usermeta" type="checkbox" value="duplicated_usermeta" >
                 <label for="cleanup_duplicated_usermeta">                    
                     <?php printf( __( 'Duplicated User Meta (%d User Meta)', 'wp-bulk-delete' ), $duplicated_usermeta_count ); ?>
                 </label>
             </fieldset>
 
             <fieldset>
-                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_orphan_termmeta" type="checkbox" value="orphan_termmeta" checked="checked">
+                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_orphan_termmeta" type="checkbox" value="orphan_termmeta" >
                 <label for="cleanup_orphan_termmeta">                    
                     <?php printf( __( 'Orphaned Term Meta (%d Term Meta)', 'wp-bulk-delete' ), $orphan_commentmeta_count ); ?>
                 </label>
             </fieldset>
 
             <fieldset>
-                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_duplicated_termmeta" type="checkbox" value="duplicated_termmeta" checked="checked">
+                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_duplicated_termmeta" type="checkbox" value="duplicated_termmeta" >
                 <label for="cleanup_duplicated_termmeta">                    
                     <?php printf( __( 'Duplicated Term Meta (%d Term Meta)', 'wp-bulk-delete' ), $duplicated_termmeta_count ); ?>
                 </label>
@@ -298,7 +298,13 @@ function wpbd_render_meta_date_interval(){
             <select name="date_type" class="date_type">
                 <option value="older_than"><?php _e('older than','wp-bulk-delete'); ?></option>
                 <option value="within_last"><?php _e('created within last','wp-bulk-delete'); ?></option>
-                <option value="custom_date"><?php _e('created between','wp-bulk-delete'); ?></option>
+                <?php if( wpbd_is_pro() ) { ?>
+                    <option value="onemonth"><?php _e('1 Month','wp-bulk-delete'); ?></option>
+                    <option value="sixmonths"><?php _e('6 Months','wp-bulk-delete'); ?></option>
+                    <option value="oneyear"><?php _e('1 Year','wp-bulk-delete'); ?></option>
+                    <option value="twoyear"><?php _e('2 Years','wp-bulk-delete'); ?></option>
+                <?php } ?>
+                <option value="custom_date"><?php _e('created between custom','wp-bulk-delete'); ?></option>
             </select>
             <div class="wpbd_date_days wpbd_inline">
                 <input type="number" id="input_days" name="input_days" class="wpbd_input_days" placeholder="0" min="0" /> <?php _e('days','wp-bulk-delete'); ?>
@@ -309,6 +315,11 @@ function wpbd_render_meta_date_interval(){
                 <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" placeholder="<?php _e('End Date','wp-bulk-delete'); ?>" />
                 <p class="description">
                     <?php _e('Set the date interval for posts/comments/users whose meta fields will be delete, or leave these fields blank to select all meta. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
+                </p>
+            </div>
+            <div class="wpbd_date_range wpbd_inline" style="display:none;">
+                <p class="description">
+                    <?php _e('This option will work well with Scheduled Delete, which will help to delete posts/comments/users of the selected option from the scheduled run date.','wp-bulk-delete'); ?>
                 </p>
             </div>
         </td>
