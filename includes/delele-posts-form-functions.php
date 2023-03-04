@@ -245,6 +245,7 @@ function wpbd_render_form_taxonomy(){
  * @return void
  */
 function wpbd_render_form_poststatus(){
+    global $wpdb;
         ?>
         <tr>
             <th scope="row">Post Status</th>
@@ -282,6 +283,11 @@ function wpbd_render_form_poststatus(){
             </td>
         </tr>
         <?php
+        if( wpbd_is_pro() && class_exists( 'WP_Bulk_Delete_Pro_Common' ) ){
+            if( $wpdb->common_pro->wpbd_is_woo_active() == true ){
+                $wpdb->common_pro->wpbd_woo_order_detele_by_status();
+            }
+        }
 }
 
 /**
