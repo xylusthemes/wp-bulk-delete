@@ -65,6 +65,7 @@ function xt_delete_posts_form_process( $data ) {
     	if( empty( $error ) ) {
             $delete_time = ( $data['delete_time'] ) ? $data['delete_time'] : 'now';
             $delete_datetime = isset( $data['delete_datetime'] ) ? $data['delete_datetime'] : '';
+            $custom_query = !empty( $data['with_custom_query'] ) ? $data['with_custom_query'] : '';
             if( $delete_time === 'scheduled' && !empty($delete_datetime) && wpbd_is_pro() ) {
                 $data['delete_entity'] = 'post';
                 return wpbd_save_scheduled_delete($data);
@@ -77,8 +78,8 @@ function xt_delete_posts_form_process( $data ) {
     			if ( $data['delete_type'] === 'permenant' ) {
     				$force_delete = true;
     			}
-    			
-    			$post_count = wpbulkdelete()->api->do_delete_posts( $post_ids, $force_delete ); 
+       
+    			$post_count = wpbulkdelete()->api->do_delete_posts( $post_ids, $force_delete, $custom_query ); 
     			return  array(
 	    			'status' => 1,
 	    			'messages' => array( sprintf( esc_html__( '%d Record deleted successfully.', 'wp-bulk-delete' ), $post_count)
@@ -288,6 +289,32 @@ function wpbd_render_form_poststatus(){
 }
 
 /**
+ * Render Post Statuses.
+ *
+ * @since 1.0
+ * @return void
+ */
+function wpbd_render_form_custom_query(){
+    ?>
+    <tr>
+        <th scope="row">Post Delete from Custom Query:</th>
+        <td>
+            <fieldset>
+                <label for="delete_post_status" >
+                    <input name="with_custom_query" id="with_custom_query" value="custom_query" type="checkbox" >
+                    With Custom Query
+                </label>
+                <p class="description">
+                    <?php _e('You can delete posts from custom queries by enabling this option. This option will work only in the "Delete Permanently" option.','wp-bulk-delete' ); ?>
+                </p>
+            </fieldset>
+        </td>
+    </tr>
+    <?php
+}
+
+
+/**
  * Render Date intervals.
  *
  * @since 1.0
@@ -304,7 +331,13 @@ function wpbd_render_form_date_interval(){
             <select name="date_type" class="date_type">
                 <option value="older_than"><?php _e('older than','wp-bulk-delete'); ?></option>
                 <option value="within_last"><?php _e('posted within last','wp-bulk-delete'); ?></option>
-                <option value="custom_date"><?php _e('posted between','wp-bulk-delete'); ?></option>
+                <?php if( wpbd_is_pro() ) { ?>
+                    <option value="onemonth"><?php _e('1 Month','wp-bulk-delete'); ?></option>
+                    <option value="sixmonths"><?php _e('6 Months','wp-bulk-delete'); ?></option>
+                    <option value="oneyear"><?php _e('1 Year','wp-bulk-delete'); ?></option>
+                    <option value="twoyear"><?php _e('2 Years','wp-bulk-delete'); ?></option>
+                <?php } ?>
+                <option value="custom_date"><?php _e('posted between custom','wp-bulk-delete'); ?></option>
             </select>
             <div class="wpbd_date_days wpbd_inline">
                 <input type="number" id="input_days" name="input_days" class="wpbd_input_days" placeholder="0" min="0" /> <?php _e('days','wp-bulk-delete'); ?>
@@ -315,6 +348,11 @@ function wpbd_render_form_date_interval(){
                 <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" placeholder="<?php _e('End Date','wp-bulk-delete'); ?>" />
                 <p class="description">
                     <?php _e('Set the date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
+                </p>
+            </div>
+            <div class="wpbd_date_range wpbd_inline" style="display:none;">
+                <p class="description">
+                    <?php _e('This option will work well with Scheduled Delete, which will help to delete posts of the selected option from the scheduled run date.','wp-bulk-delete'); ?>
                 </p>
             </div>
         </td>
@@ -437,7 +475,7 @@ function wpbd_render_limit_post(){
                 <?php _e('Limit :','wp-bulk-delete'); ?>
             </th>
             <td>
-                <input type="number" min="1" id="limit_post" name="limit_post" class="limit_post_input" />
+                <input type="number" min="1" id="limit_post" name="limit_post" class="limit_post_input" max="10000" />
                 <p class="description">
                     <?php _e('Set the limit over post delete. It will delete only first limit posts. This option will help you in case of you have lots of posts to delete and script timeout.','wp-bulk-delete'); ?>
                 </p>
@@ -557,6 +595,12 @@ function wpbd_render_import_frequency( $selected = 'not_repeat' ) {
         <option value='not_repeat' <?php selected( $selected, 'not_repeat' ); ?>>
             <?php esc_html_e( 'Don\'t repeat', 'wp-bulk-delete' ); ?>
         </option>
+        <option value='tenminutes' <?php selected( $selected, 'tenminutes' ); ?>>
+            <?php esc_html_e( '10 Minutes', 'wp-bulk-delete' ); ?>
+        </option>
+        <option value='halfhour' <?php selected( $selected, 'halfhour' ); ?>>
+            <?php esc_html_e( '30 Minutes', 'wp-bulk-delete' ); ?>
+        </option>
         <option value='hourly' <?php selected( $selected, 'hourly' ); ?>>
             <?php esc_html_e( 'Once Hourly', 'wp-bulk-delete' ); ?>
         </option>
@@ -600,6 +644,8 @@ function wpbd_render_common_form(){
     wpbd_render_form_poststatus();
 
     wpbd_render_form_date_interval();
+
+    wpbd_render_form_custom_query();
 
     wpbd_render_form_delete_type();
 
