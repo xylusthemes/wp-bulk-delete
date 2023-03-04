@@ -925,6 +925,7 @@ msgstr ""
 
 #: includes/delele-posts-form-functions.php:557
 msgid "30 Minutes"
+msgid "Ten Minutes"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:560

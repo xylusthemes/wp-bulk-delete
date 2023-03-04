@@ -555,6 +555,8 @@ function wpbd_render_import_frequency( $selected = 'not_repeat' ) {
         </option>
         <option value='halfhour' <?php selected( $selected, 'halfhour' ); ?>>
             <?php esc_html_e( '30 Minutes', 'wp-bulk-delete' ); ?>
+        <option value='tenminutes' <?php selected( $selected, 'tenminutes' ); ?>>
+            <?php esc_html_e( 'Ten Minutes', 'wp-bulk-delete' ); ?>
         </option>
         <option value='hourly' <?php selected( $selected, 'hourly' ); ?>>
             <?php esc_html_e( 'Once Hourly', 'wp-bulk-delete' ); ?>
