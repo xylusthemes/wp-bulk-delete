@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-03-03T09:46:51+00:00\n"
+"POT-Creation-Date: 2023-03-04T07:51:52+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: wp-bulk-delete\n"
@@ -932,34 +932,42 @@ msgid "Don't repeat"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:557
+msgid "30 Minutes"
+msgstr ""
+
+#: includes/delele-posts-form-functions.php:559
+msgid "Ten Minutes"
+msgstr ""
+
+#: includes/delele-posts-form-functions.php:562
 msgid "Once Hourly"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:560
+#: includes/delele-posts-form-functions.php:565
 msgid "Twice Daily"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:563
+#: includes/delele-posts-form-functions.php:568
 msgid "Once Daily"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:566
+#: includes/delele-posts-form-functions.php:571
 msgid "Once Weekly"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:569
+#: includes/delele-posts-form-functions.php:574
 msgid "Once a Month"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:573
+#: includes/delele-posts-form-functions.php:578
 msgid "Save it as "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:574
+#: includes/delele-posts-form-functions.php:579
 msgid "eg: Daily Post Delete"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:591
+#: includes/delele-posts-form-functions.php:596
 msgid "Filter your posts :"
 msgstr ""
 
