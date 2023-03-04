@@ -327,7 +327,13 @@ function wpbd_render_form_date_interval(){
             <select name="date_type" class="date_type">
                 <option value="older_than"><?php _e('older than','wp-bulk-delete'); ?></option>
                 <option value="within_last"><?php _e('posted within last','wp-bulk-delete'); ?></option>
-                <option value="custom_date"><?php _e('posted between','wp-bulk-delete'); ?></option>
+                <?php if( wpbd_is_pro() ) { ?>
+                    <option value="onemonth"><?php _e('1 Month','wp-bulk-delete'); ?></option>
+                    <option value="sixmonths"><?php _e('6 Months','wp-bulk-delete'); ?></option>
+                    <option value="oneyear"><?php _e('1 Year','wp-bulk-delete'); ?></option>
+                    <option value="twoyear"><?php _e('2 Years','wp-bulk-delete'); ?></option>
+                <?php } ?>
+                <option value="custom_date"><?php _e('posted between custom','wp-bulk-delete'); ?></option>
             </select>
             <div class="wpbd_date_days wpbd_inline">
                 <input type="number" id="input_days" name="input_days" class="wpbd_input_days" placeholder="0" min="0" /> <?php _e('days','wp-bulk-delete'); ?>
@@ -338,6 +344,11 @@ function wpbd_render_form_date_interval(){
                 <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" placeholder="<?php _e('End Date','wp-bulk-delete'); ?>" />
                 <p class="description">
                     <?php _e('Set the date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
+                </p>
+            </div>
+            <div class="wpbd_date_range wpbd_inline" style="display:none;">
+                <p class="description">
+                    <?php _e('This option will work well with Scheduled Delete, which will help to delete posts of the selected option from the scheduled run date.','wp-bulk-delete'); ?>
                 </p>
             </div>
         </td>
@@ -579,6 +590,12 @@ function wpbd_render_import_frequency( $selected = 'not_repeat' ) {
     <select name="delete_frequency" class="delete_frequency" <?php echo( ( ! wpbd_is_pro() ) ? 'disabled="disabled"' : '' ); ?> >
         <option value='not_repeat' <?php selected( $selected, 'not_repeat' ); ?>>
             <?php esc_html_e( 'Don\'t repeat', 'wp-bulk-delete' ); ?>
+        </option>
+        <option value='tenminutes' <?php selected( $selected, 'tenminutes' ); ?>>
+            <?php esc_html_e( '10 Minutes', 'wp-bulk-delete' ); ?>
+        </option>
+        <option value='halfhour' <?php selected( $selected, 'halfhour' ); ?>>
+            <?php esc_html_e( '30 Minutes', 'wp-bulk-delete' ); ?>
         </option>
         <option value='hourly' <?php selected( $selected, 'hourly' ); ?>>
             <?php esc_html_e( 'Once Hourly', 'wp-bulk-delete' ); ?>

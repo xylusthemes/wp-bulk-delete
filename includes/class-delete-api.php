@@ -449,6 +449,17 @@ class WPBD_Delete_API {
             if( $input_days === "0" || $input_days > 0){
                 $delete_start_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
             }
+        } else if( $date_type === 'onemonth' || $date_type === 'sixmonths' || $date_type === 'oneyear' || $date_type === 'twoyear' ) {
+            $delete_end_date = date( 'Y-m-d', strtotime( current_time('Y-m-d') ) );
+            if( $date_type === 'onemonth' ){
+                $delete_start_date = date('Y-m-d', strtotime("-30 days", strtotime(current_time('Y-m-d'))));
+            }elseif( $date_type === 'sixmonths' ){
+                $delete_start_date = date('Y-m-d', strtotime("-6 months", strtotime(current_time('Y-m-d'))));
+            }elseif( $date_type === 'oneyear' ){
+                $delete_start_date = date('Y-m-d', strtotime("-1 year", strtotime(current_time('Y-m-d'))));
+            }elseif( $date_type === 'twoyear' ){
+                $delete_start_date = date('Y-m-d', strtotime("-2 years", strtotime(current_time('Y-m-d'))));
+            }
         }
 
         // By Usermeta.
@@ -868,6 +879,17 @@ class WPBD_Delete_API {
                 if( $input_days === "0" || $input_days > 0){
                     $delete_start_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
                 }
+            } else if( $date_type === 'onemonth' || $date_type === 'sixmonths' || $date_type === 'oneyear' || $date_type === 'twoyear' ) {
+                $delete_end_date = date( 'Y-m-d', strtotime( current_time('Y-m-d') ) );
+                if( $date_type === 'onemonth' ){
+                    $delete_start_date = date('Y-m-d', strtotime("-30 days", strtotime(current_time('Y-m-d'))));
+                }elseif( $date_type === 'sixmonths' ){
+                    $delete_start_date = date('Y-m-d', strtotime("-6 months", strtotime(current_time('Y-m-d'))));
+                }elseif( $date_type === 'oneyear' ){
+                    $delete_start_date = date('Y-m-d', strtotime("-1 year", strtotime(current_time('Y-m-d'))));
+                }elseif( $date_type === 'twoyear' ){
+                    $delete_start_date = date('Y-m-d', strtotime("-2 years", strtotime(current_time('Y-m-d'))));
+                }
             }
 
             // Post Query Generation.
@@ -952,6 +974,17 @@ class WPBD_Delete_API {
                 $delete_start_date = $delete_end_date = '';
                 if( $input_days === "0" || $input_days > 0){
                     $delete_start_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+                }
+            } else if( $date_type === 'onemonth' || $date_type === 'sixmonths' || $date_type === 'oneyear' || $date_type === 'twoyear' ) {
+                $delete_end_date = date( 'Y-m-d', strtotime( current_time('Y-m-d') ) );
+                if( $date_type === 'onemonth' ){
+                    $delete_start_date = date('Y-m-d', strtotime("-30 days", strtotime(current_time('Y-m-d'))));
+                }elseif( $date_type === 'sixmonths' ){
+                    $delete_start_date = date('Y-m-d', strtotime("-6 months", strtotime(current_time('Y-m-d'))));
+                }elseif( $date_type === 'oneyear' ){
+                    $delete_start_date = date('Y-m-d', strtotime("-1 year", strtotime(current_time('Y-m-d'))));
+                }elseif( $date_type === 'twoyear' ){
+                    $delete_start_date = date('Y-m-d', strtotime("-2 years", strtotime(current_time('Y-m-d'))));
                 }
             }
 

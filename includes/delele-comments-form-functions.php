@@ -136,7 +136,13 @@ function wpdb_render_delete_comments_date_interval(){
             <select name="date_type" class="date_type">
                 <option value="older_than"><?php _e('older than','wp-bulk-delete'); ?></option>
                 <option value="within_last"><?php _e('submitted within last','wp-bulk-delete'); ?></option>
-                <option value="custom_date"><?php _e('submitted between','wp-bulk-delete'); ?></option>
+                <?php if( wpbd_is_pro() ) { ?>
+                    <option value="onemonth"><?php _e('1 Month','wp-bulk-delete'); ?></option>
+                    <option value="sixmonths"><?php _e('6 Months','wp-bulk-delete'); ?></option>
+                    <option value="oneyear"><?php _e('1 Year','wp-bulk-delete'); ?></option>
+                    <option value="twoyear"><?php _e('2 Years','wp-bulk-delete'); ?></option>
+                <?php } ?>
+                <option value="custom_date"><?php _e('submitted between custom','wp-bulk-delete'); ?></option>
             </select>
             <div class="wpbd_date_days wpbd_inline">
                 <input type="number" id="input_days" name="input_days" class="wpbd_input_days" placeholder="0" min="0" /> <?php _e('days','wp-bulk-delete'); ?>
@@ -148,7 +154,12 @@ function wpdb_render_delete_comments_date_interval(){
                 <p class="description">
                     <?php _e('Set the date interval for comments to delete ( only delete comments between these dates ) or leave these fields blank to select all comments. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
                 </p>
-            </div>            
+            </div>
+            <div class="wpbd_date_range wpbd_inline" style="display:none;">
+                <p class="description">
+                    <?php _e('This option will work well with Scheduled Delete, which will help to delete comments of the selected option from the scheduled run date.','wp-bulk-delete'); ?>
+                </p>
+            </div> 
         </td>
     </tr>
     <?php
