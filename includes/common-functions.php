@@ -119,14 +119,14 @@ function timeout_memory_limit_is_enough() {
 	if( $memory_limit < '512' ){
 		?>
 		<div class="notice notice-warning is-dismissible">
-			<p><strong><?php _e( 'Attention: The server PHP memory limit is set to '.$memory_limit.', which is less than the recommended 512M. This may cause errors or incomplete deletion progress.', 'wp-bulk-delete' ); ?></strong></p>
+			<p><strong><?php _e( 'Attention: The server PHP memory limit is set to '.$memory_limit.', which is less than the recommended 512M. This may cause slow deletion progress if deleting large data.', 'wp-bulk-delete' ); ?></strong></p>
 		</div>
 		<?php
 	}
 	if( $timeout_limit < '600' ){
 		?>
 		<div class="notice notice-warning is-dismissible">
-		<p><strong><?php _e( 'Attention: The server PHP timeout limit is set to '.$timeout_limit.' seconds, which is less than the recommended 600 seconds. This may cause errors or incomplete deletion progress.', 'wp-bulk-delete' ); ?></strong></p>
+		<p><strong><?php _e( 'Attention: The server PHP timeout limit is set to '.$timeout_limit.' seconds, which is less than the recommended 600 seconds. This may cause slow deletion progress if deleting large data.', 'wp-bulk-delete' ); ?></strong></p>
 		</div>
 		<?php
 	}
