@@ -274,12 +274,18 @@
 		
 		jQuery('.date_type').on( 'change', function() {
 	    	var date_type = jQuery(this).val();
-	        if(date_type === 'custom_date'){
+	        if( date_type === 'custom_date' ){
 				jQuery(".wpbd_date_days").hide();
 				jQuery(".wpbd_custom_interval").show();
-			}else{
+				jQuery(".wpbd_date_range").hide();
+			}else if( date_type === 'within_last' || date_type === 'older_than' ){
 				jQuery(".wpbd_custom_interval").hide();
 				jQuery(".wpbd_date_days").show();
+				jQuery(".wpbd_date_range").hide();
+			}else{
+				jQuery(".wpbd_custom_interval").hide();
+				jQuery(".wpbd_date_days").hide();
+				jQuery(".wpbd_date_range").show();
 			}
 		});
 
