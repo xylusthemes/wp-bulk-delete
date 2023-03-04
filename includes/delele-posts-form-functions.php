@@ -283,8 +283,10 @@ function wpbd_render_form_poststatus(){
             </td>
         </tr>
         <?php
-        if( wpbd_is_pro() && $wpdb->common_pro->wpbd_is_woo_active() ){
-            $wpdb->common_pro->wpbd_woo_order_detele_by_status();
+        if( wpbd_is_pro() && class_exists( 'WP_Bulk_Delete_Pro_Common' ) ){
+            if( $wpdb->common_pro->wpbd_is_woo_active() == true ){
+                $wpdb->common_pro->wpbd_woo_order_detele_by_status();
+            }
         }
 }
 
