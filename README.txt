@@ -29,6 +29,7 @@ WP bulk Delete support below powerfull conditions and filters.
 * Delete Posts by custom post type
 * Delete Posts by post status
 * Delete Posts by date interval
+* Delete Posts by Modified date interval
 * Delete Posts by custom Taxonomy
 * Delete Posts by authors
 * Delete Post by meta fields
