@@ -167,7 +167,7 @@ We are working on providing more options :)
 == Changelog ==
 
 = 1.2.4 =
-* ADDED: Post Date Delete 1 month, 6 months, 1 year, 6 years options.(PRO)
+* ADDED: Post Date Delete 1 month, 6 months, 1 year, 2 years options.(PRO)
 * ADDED: 10 minutes and 30 minutes schedule option.(PRO)
 * ADDED: PHP  Memory and Timeout limit notice.
 * ADDED: Delete Post with Custom Query option.
