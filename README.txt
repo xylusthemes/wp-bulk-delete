@@ -1,11 +1,11 @@
 === WP Bulk Delete ===
-Contributors: xylus,dharm1025
+Contributors: xylus,dharm1025,rajat1192
 Donate link: http://xylusthemes.com
 Tags: delete, bulk, clean, bulk delete, bulk clean, posts delete, delete all, mass delete, posts delete, delete posts, delete comments, delete users, delete meta, delete taxonomy, delete revision, wp clean, clean trash, bulk user delete, delete all, delete all users, delete all comments, delete all posts, trash, clean spam, delete with condition, delete with filter, remove
 Requires at least: 4.9
 Requires PHP: 5.3
 Tested up to: 6.1 
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +22,8 @@ WP bulk Delete support below powerfull conditions and filters.
 #### Deleting posts
 
 * Delete Posts.
+* Delete WooCommerce Order [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
+* Delete Posts by custom query
 * Delete posts by category
 * Delete posts by tag
 * Delete Posts by custom post type
@@ -163,6 +165,14 @@ We are working on providing more options :)
 15. Scheduled Delete History
 
 == Changelog ==
+
+= 1.2.4 =
+* ADDED: Post Date Delete 1 month, 6 months, 1 year, 6 years options.(PRO)
+* ADDED: 10 minutes and 30 minutes schedule option.(PRO)
+* ADDED: PHP  Memory and Timeout limit notice.
+* ADDED: Delete Post with Custom Query option.
+* ADDED: WooCommerce Order Delete Section.
+* ADDED: Post deleted by modified date filter.
 
 = 1.2.3 =
 * ADDED: Taiwan language support.
