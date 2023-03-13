@@ -280,6 +280,12 @@ function wpbd_render_form_poststatus(){
                         Private
                     </label>
                 </fieldset>
+                <fieldset>
+                    <label for="delete_post_status">
+                        <input name="delete_post_status[]" id="trash" value="trash" type="checkbox">
+                        Trashed
+                    </label>
+                </fieldset>
             </td>
         </tr>
         <?php
