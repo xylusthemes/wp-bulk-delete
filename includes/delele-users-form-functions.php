@@ -157,7 +157,7 @@ function wpdb_render_delete_users_useremail(){
             <select name="sample4" disabled="disabled" >
                 <option value="equal_to_str"><?php esc_html_e( 'equal to ( string )', 'wp-bulk-delete' ); ?></option>
             </select>
-            <input type="text" id="sample5" name="sample5" class="sample5" placeholder="user_email" disabled="disabled" /><br/>
+            <textarea name="sample5" id="sample5" cols="59" class="wp_user_email_text" placeholder="You can add multiple emails with comma(,) separator" disabled="disabled" ></textarea><br/>
             <?php do_action( 'wpbd_display_available_in_pro'); ?>
         </td>
     </tr>

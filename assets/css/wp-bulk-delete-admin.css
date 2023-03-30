@@ -146,3 +146,8 @@
     top: -30px;
     }
 } 
+/* User Delete Section*/
+.wp_user_email_text{
+    height: 32px;
+    margin-bottom: -12px
+}

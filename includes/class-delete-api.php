@@ -536,27 +536,39 @@ class WPBD_Delete_API {
             }
         }
 
-        if ( $user_email != '' && $user_email_compare != '' ) {
-            switch ( $user_email_compare ) {
-                case 'equal_to_str':
-                    $query .= " AND ( $wpdb->users.user_email = '{$user_email}' )"; 
-                    break;
+        if ( $user_emails != '' && $user_email_compare != '' ) {
+            $user_email = preg_replace('/\s+/', '', explode( ",", $user_emails ) );
+            
+            if( count( $user_email ) > 1 ){
+                $imp = "'" . implode( "','", $user_email ) . "'";
+                switch ( $user_email_compare ) {
+                    case 'equal_to_str':
+                        $query .= " AND $wpdb->users.user_email IN ( $imp )";
+                        break;
 
-                case 'notequal_to_str':
-                    $query .= " AND ( $wpdb->users.user_email != '{$user_email}' )"; 
-                    break;
+                    case 'notequal_to_str':
+                        $query .= " AND $wpdb->users.user_email NOT IN ( $imp )";
+                        break;
 
-                case 'like_str':
-                    $query .= " AND ( $wpdb->users.user_email LIKE '%{$user_email}%' )"; 
-                    break;
+                    default:
+                        $query .= " AND $wpdb->users.user_email IN ( $imp )";
+                        break;
+                }
+            }else{
+                $imp = implode( ",", $user_email );
+                switch ( $user_email_compare ) {
+                    case 'equal_to_str':
+                        $query .= " AND ( $wpdb->users.user_email = '{$imp}' )"; 
+                        break;
 
-                case 'notlike_str':
-                    $query .= " AND ( $wpdb->users.user_email NOT LIKE '%{$user_email}%' )"; 
-                    break;
+                    case 'notequal_to_str':
+                        $query .= " AND ( $wpdb->users.user_email != '{$imp}' )"; 
+                        break;
 
-                default:
-                    $query .= "  AND ( $wpdb->users.user_email = '{$user_email}' )";
-                    break;
+                    default:
+                        $query .= "  AND ( $wpdb->users.user_email = '{$imp}' )";
+                        break;
+                }
             }
         }
 
@@ -580,7 +592,7 @@ class WPBD_Delete_API {
 
         if( $limit_user != '' ){
             if( is_numeric( $limit_user ) ){
-                $query .= " ORDER BY $wpdb->users.user_login ASC LIMIT " . $limit_user;    
+                $query .= " ORDER BY $wpdb->users.ID ASC LIMIT " . $limit_user;    
             }                
         }
         $users = $wpdb->get_col( $query );
