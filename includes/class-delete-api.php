@@ -536,9 +536,9 @@ class WPBD_Delete_API {
             }
         }
 
-        if ( $user_emails != '' && $user_email_compare != '' ) {
-            $user_email = preg_replace('/\s+/', '', explode( ",", $user_emails ) );
-            
+        if ( !empty( $user_email ) && !empty( $user_email_compare ) ) {
+            $user_email = preg_replace('/\s+/', '', explode( ",", str_replace( '\r\n', '', $user_email ) ) );
+
             if( count( $user_email ) > 1 ){
                 $imp = "'" . implode( "','", $user_email ) . "'";
                 switch ( $user_email_compare ) {
