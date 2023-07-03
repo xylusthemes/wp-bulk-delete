@@ -283,7 +283,7 @@ function wpbd_render_form_poststatus(){
                 <fieldset>
                     <label for="delete_post_status">
                         <input name="delete_post_status[]" id="trash" value="trash" type="checkbox">
-                        Trashed
+                        Trash
                     </label>
                 </fieldset>
             </td>
