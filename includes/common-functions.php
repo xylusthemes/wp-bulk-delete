@@ -106,6 +106,34 @@ function wpbd_display_available_in_pro() {
 }
 add_action( 'wpbd_display_available_in_pro', 'wpbd_display_available_in_pro' );
 
+
+/**
+ * Check timeout and memory limit
+ *
+ * @since  1.2.4
+ * @return boolean
+ */
+function timeout_memory_limit_is_enough() {
+	$memory_limit  = str_replace( 'M', '', ini_get('memory_limit') );
+	$timeout_limit = ini_get( 'max_execution_time' );
+	if( $memory_limit < '512' ){
+		?>
+		<div class="notice notice-warning is-dismissible">
+			<p><strong><?php _e( 'Attention: The server PHP memory limit is set to '.$memory_limit.'M, which is less than the recommended 512M. This may cause slow deletion progress if deleting large data.', 'wp-bulk-delete' ); ?></strong></p>
+		</div>
+		<?php
+	}
+	if( $timeout_limit < '600' ){
+		?>
+		<div class="notice notice-warning is-dismissible">
+		<p><strong><?php _e( 'Attention: The server PHP timeout limit is set to '.$timeout_limit.' seconds, which is less than the recommended 600 seconds. This may cause slow deletion progress if deleting large data.', 'wp-bulk-delete' ); ?></strong></p>
+		</div>
+		<?php
+	}
+	return false;
+}
+add_action( 'timeout_memory_is_enough', 'timeout_memory_limit_is_enough' );
+
 /**
  * Return post count from posttype
  *

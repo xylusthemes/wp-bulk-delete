@@ -33,7 +33,7 @@ function wpbd_delete_posts_count() {
 	    		
 	    		// Get post_ids for delete based on user input.
 		        $post_ids = wpbulkdelete()->api->get_delete_posts_ids( $data );
-	    		
+				
 	    		if ( ! empty( $post_ids ) && count( $post_ids ) > 0 ) {
 	    			$return = array(
 		    			'status' => 1,

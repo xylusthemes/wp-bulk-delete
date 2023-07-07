@@ -52,7 +52,7 @@ class WPBD_Delete_API {
             $delete_end_date = isset( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
             $delete_authors = isset( $data['delete_authors'] ) ?  array_map( 'intval', $data['delete_authors'] ) : array();
             $delete_type = isset( $data['delete_type'] ) ? $data['delete_type'] : 'trash';
-            $limit_post = isset( $data['limit_post'] ) ? absint( $data['limit_post'] ) : '';
+            $limit_post = !empty( $data['limit_post'] ) ? absint( $data['limit_post'] ) : '10000';
             $date_type = isset( $data['date_type'] ) ? esc_sql( $data['date_type'] ) : 'custom_date';
             $input_days = isset( $data['input_days'] ) ? esc_sql( $data['input_days'] ) : '';
             if( $date_type === 'older_than') {
@@ -67,9 +67,26 @@ class WPBD_Delete_API {
                 }
             }
 
+            $mdelete_start_date = isset( $data['mdelete_start_date'] ) ? esc_sql( $data['mdelete_start_date'] ) : '';
+            $mdelete_end_date = isset( $data['mdelete_end_date'] ) ? esc_sql( $data['mdelete_end_date'] ) : '';
+            $mdate_type = isset( $data['mdate_type'] ) ? esc_sql( $data['mdate_type'] ) : 'mcustom_date';
+            $minput_days = isset( $data['minput_days'] ) ? esc_sql( $data['minput_days'] ) : '';
+            if( $mdate_type === 'molder_than') {
+                $mdelete_start_date = $mdelete_end_date = '';
+                if( $minput_days === "0" || $minput_days > 0){
+                    $mdelete_end_date = date('Y-m-d', strtotime("-{$minput_days} days", strtotime(current_time('Y-m-d'))));
+                }
+            } else if( $mdate_type === 'mwithin_last') {
+                $mdelete_start_date = $mdelete_end_date = '';
+                if( $minput_days === "0" || $minput_days > 0){
+                    $mdelete_start_date = date('Y-m-d', strtotime("-{$minput_days} days", strtotime(current_time('Y-m-d'))));
+                }
+            }
+
             // BY Taxonomy.
             $post_taxonomy =  isset( $data['post_taxonomy'] ) ?  esc_sql( $data['post_taxonomy'] ) : '';
             $post_taxonomy_terms =  isset( $data['post_taxonomy_terms'] ) ? array_map( 'intval', $data['post_taxonomy_terms'] ) : array();
+            $d_selected_category =  isset( $data['delete_selected_category'] ) ? esc_sql( $data['delete_selected_category'] )  : '';            
 
             if( empty( $post_types ) || empty( $post_status ) ){
                 return array();
@@ -92,6 +109,16 @@ class WPBD_Delete_API {
                 $query .= " AND $wpdb->term_taxonomy.taxonomy  = '{$post_taxonomy}' )";
             }
 
+            if( $post_taxonomy != '' && ! empty( $post_taxonomy_terms ) && !empty( $d_selected_category ) ){
+                $query .= "AND $wpdb->posts.ID NOT IN (
+                    SELECT $wpdb->posts.ID
+                    FROM $wpdb->posts
+                    LEFT JOIN $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id)
+                    LEFT JOIN $wpdb->term_taxonomy ON ($wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id)
+                    LEFT JOIN $wpdb->terms ON ($wpdb->term_taxonomy.term_id = $wpdb->terms.term_id )
+                    WHERE $wpdb->term_taxonomy.taxonomy = '{$post_taxonomy}' AND $wpdb->terms.term_id NOT IN ( " . implode( ", ", $post_taxonomy_terms ). " ) )";
+            }
+
             if( !empty( $post_status ) ){
                 $query .= " AND $wpdb->posts.post_status IN ( '" .  implode( "', '", $post_status ) . "' )";
             }
@@ -101,15 +128,19 @@ class WPBD_Delete_API {
             if( $delete_end_date != ''){
                 $query .= " AND $wpdb->posts.post_date <= '{$delete_end_date} 23:59:59'";
             }
+            if( $mdelete_start_date != ''){
+                $query .= " AND $wpdb->posts.post_modified >= '{$mdelete_start_date} 00:00:00'";
+            }
+            if( $mdelete_end_date != ''){
+                $query .= " AND $wpdb->posts.post_modified <= '{$mdelete_end_date} 23:59:59'";
+            }
 
             if( !empty( $delete_authors ) ){
                 $query .= " AND $wpdb->posts.post_author IN ( " . implode( ",", $delete_authors ). " )";
             }
 
-            if( $limit_post != '' ){
-                if( is_numeric( $limit_post ) ){
-                    $query .= " LIMIT " . $limit_post;    
-                }                
+            if( is_numeric( $limit_post ) ){
+                $query .= " LIMIT " . $limit_post;
             }
             
             $posts = $wpdb->get_col( $query );
@@ -128,15 +159,30 @@ class WPBD_Delete_API {
 	 * @param array $data Posts Id.
 	 * @return array | deleted posts count.
 	 */
-	public function do_delete_posts( $post_ids = array(), $force_delete = false ) {
-		$post_delete_count = 0;
+	public function do_delete_posts( $post_ids = array(), $force_delete = false, $custom_query = null ) {
+		global $wpdb;
+        $post_delete_count = 0;
 
-		if ( ! empty( $post_ids ) ){
+        set_time_limit(0);
+        $xt_memory_limit = (int)str_replace( 'M', '',ini_get('memory_limit' ) );
+        if( $xt_memory_limit < 512 ){
+            ini_set('memory_limit', '512M');
+        }
 
-			foreach ($post_ids as $post_id ) {
-				wp_delete_post( $post_id, $force_delete );
-			}
-			$post_delete_count = count( $post_ids );
+        if( ! empty( $post_ids ) && count( $post_ids ) > 0 ) {
+            if( $custom_query == 'custom_query' ){
+                $all_posts = implode( ",",$post_ids );
+                $wpdb->query( "DELETE p,pt,pm FROM " . $wpdb->posts . " p LEFT JOIN " . $wpdb->term_relationships . " pt ON pt.object_id = p.ID LEFT JOIN " . $wpdb->postmeta . " pm ON pm.post_id = p.ID WHERE p.ID IN ({$all_posts})" );
+            }else{
+                foreach ($post_ids as $post_id ) {
+                    if( $force_delete === false ){
+                        wp_trash_post( $post_id );
+                    }else{
+                        wp_delete_post( $post_id, true );
+                    }
+                }
+            }
+            $post_delete_count = count( $post_ids );
 
 		}
 		return $post_delete_count;
@@ -439,6 +485,17 @@ class WPBD_Delete_API {
             if( $input_days === "0" || $input_days > 0){
                 $delete_start_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
             }
+        } else if( $date_type === 'onemonth' || $date_type === 'sixmonths' || $date_type === 'oneyear' || $date_type === 'twoyear' ) {
+            $delete_end_date = date( 'Y-m-d', strtotime( current_time('Y-m-d') ) );
+            if( $date_type === 'onemonth' ){
+                $delete_start_date = date('Y-m-d', strtotime("-30 days", strtotime(current_time('Y-m-d'))));
+            }elseif( $date_type === 'sixmonths' ){
+                $delete_start_date = date('Y-m-d', strtotime("-6 months", strtotime(current_time('Y-m-d'))));
+            }elseif( $date_type === 'oneyear' ){
+                $delete_start_date = date('Y-m-d', strtotime("-1 year", strtotime(current_time('Y-m-d'))));
+            }elseif( $date_type === 'twoyear' ){
+                $delete_start_date = date('Y-m-d', strtotime("-2 years", strtotime(current_time('Y-m-d'))));
+            }
         }
 
         // By Usermeta.
@@ -590,10 +647,10 @@ class WPBD_Delete_API {
 
         $query .= " AND $wpdb->users.ID NOT IN ( ".get_current_user_id()." )";
 
-        if( $limit_user != '' ){
+        if( !empty( $limit_user ) ){
             if( is_numeric( $limit_user ) ){
                 $query .= " ORDER BY $wpdb->users.ID ASC LIMIT " . $limit_user;    
-            }                
+            }
         }
         $users = $wpdb->get_col( $query );
         return $users;
@@ -777,6 +834,7 @@ class WPBD_Delete_API {
                 $delete_comment_query .= " AND ( comment_date <= '{$delete_end_date} 23:59:59' )";
             }
             $comment_delete_count = $wpdb->query( $delete_comment_query );
+            delete_transient('wc_count_comments');
         }
         return $comment_delete_count;
     }
@@ -898,6 +956,17 @@ class WPBD_Delete_API {
                 if( $input_days === "0" || $input_days > 0){
                     $delete_start_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
                 }
+            } else if( $date_type === 'onemonth' || $date_type === 'sixmonths' || $date_type === 'oneyear' || $date_type === 'twoyear' ) {
+                $delete_end_date = date( 'Y-m-d', strtotime( current_time('Y-m-d') ) );
+                if( $date_type === 'onemonth' ){
+                    $delete_start_date = date('Y-m-d', strtotime("-30 days", strtotime(current_time('Y-m-d'))));
+                }elseif( $date_type === 'sixmonths' ){
+                    $delete_start_date = date('Y-m-d', strtotime("-6 months", strtotime(current_time('Y-m-d'))));
+                }elseif( $date_type === 'oneyear' ){
+                    $delete_start_date = date('Y-m-d', strtotime("-1 year", strtotime(current_time('Y-m-d'))));
+                }elseif( $date_type === 'twoyear' ){
+                    $delete_start_date = date('Y-m-d', strtotime("-2 years", strtotime(current_time('Y-m-d'))));
+                }
             }
 
             // Post Query Generation.
@@ -982,6 +1051,17 @@ class WPBD_Delete_API {
                 $delete_start_date = $delete_end_date = '';
                 if( $input_days === "0" || $input_days > 0){
                     $delete_start_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+                }
+            } else if( $date_type === 'onemonth' || $date_type === 'sixmonths' || $date_type === 'oneyear' || $date_type === 'twoyear' ) {
+                $delete_end_date = date( 'Y-m-d', strtotime( current_time('Y-m-d') ) );
+                if( $date_type === 'onemonth' ){
+                    $delete_start_date = date('Y-m-d', strtotime("-30 days", strtotime(current_time('Y-m-d'))));
+                }elseif( $date_type === 'sixmonths' ){
+                    $delete_start_date = date('Y-m-d', strtotime("-6 months", strtotime(current_time('Y-m-d'))));
+                }elseif( $date_type === 'oneyear' ){
+                    $delete_start_date = date('Y-m-d', strtotime("-1 year", strtotime(current_time('Y-m-d'))));
+                }elseif( $date_type === 'twoyear' ){
+                    $delete_start_date = date('Y-m-d', strtotime("-2 years", strtotime(current_time('Y-m-d'))));
                 }
             }
 

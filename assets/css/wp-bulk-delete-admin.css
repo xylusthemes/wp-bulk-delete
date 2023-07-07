@@ -151,3 +151,7 @@
     height: 32px;
     margin-bottom: -12px
 }
+/*Upgrade to pro link CSS*/
+.wpbd_upgrade_pro {
+    background: #1da867;
+ }
