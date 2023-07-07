@@ -86,6 +86,7 @@ class WPBD_Delete_API {
             // BY Taxonomy.
             $post_taxonomy =  isset( $data['post_taxonomy'] ) ?  esc_sql( $data['post_taxonomy'] ) : '';
             $post_taxonomy_terms =  isset( $data['post_taxonomy_terms'] ) ? array_map( 'intval', $data['post_taxonomy_terms'] ) : array();
+            $d_selected_category =  isset( $data['delete_selected_category'] ) ? esc_sql( $data['delete_selected_category'] )  : '';            
 
             if( empty( $post_types ) || empty( $post_status ) ){
                 return array();
@@ -106,6 +107,16 @@ class WPBD_Delete_API {
             if( $post_taxonomy != '' && ! empty( $post_taxonomy_terms ) ) {
                 $query .= " AND ( $wpdb->terms.term_id IN ( " . implode( ", ", $post_taxonomy_terms ). " )";
                 $query .= " AND $wpdb->term_taxonomy.taxonomy  = '{$post_taxonomy}' )";
+            }
+
+            if( $post_taxonomy != '' && ! empty( $post_taxonomy_terms ) && !empty( $d_selected_category ) ){
+                $query .= "AND $wpdb->posts.ID NOT IN (
+                    SELECT $wpdb->posts.ID
+                    FROM $wpdb->posts
+                    LEFT JOIN $wpdb->term_relationships ON ($wpdb->posts.ID = $wpdb->term_relationships.object_id)
+                    LEFT JOIN $wpdb->term_taxonomy ON ($wpdb->term_relationships.term_taxonomy_id = $wpdb->term_taxonomy.term_taxonomy_id)
+                    LEFT JOIN $wpdb->terms ON ($wpdb->term_taxonomy.term_id = $wpdb->terms.term_id )
+                    WHERE $wpdb->term_taxonomy.taxonomy = '{$post_taxonomy}' AND $wpdb->terms.term_id NOT IN ( " . implode( ", ", $post_taxonomy_terms ). " ) )";
             }
 
             if( !empty( $post_status ) ){

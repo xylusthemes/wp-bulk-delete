@@ -112,7 +112,7 @@ msgstr ""
 #: includes/ajax-functions.php:337
 #: includes/delele-comments-form-functions.php:31
 #: includes/delele-meta-form-functions.php:43
-#: includes/delele-posts-form-functions.php:60
+#: includes/delele-posts-form-functions.php:62
 #: includes/delele-terms-form-functions.php:29
 #: includes/delele-users-form-functions.php:32
 msgid "You don't have enough permission for this operation."
@@ -126,7 +126,7 @@ msgstr ""
 #: includes/ajax-functions.php:378
 #: includes/delele-comments-form-functions.php:75
 #: includes/delele-meta-form-functions.php:99
-#: includes/delele-posts-form-functions.php:102
+#: includes/delele-posts-form-functions.php:104
 #: includes/delele-terms-form-functions.php:36
 #: includes/delele-users-form-functions.php:75
 msgid "Sorry, Your nonce did not verify."
@@ -293,7 +293,7 @@ msgstr ""
 #: includes/ajax-functions.php:366
 #: includes/delele-comments-form-functions.php:63
 #: includes/delele-meta-form-functions.php:87
-#: includes/delele-posts-form-functions.php:90
+#: includes/delele-posts-form-functions.php:92
 #: includes/delele-terms-form-functions.php:57
 #: includes/delele-users-form-functions.php:63
 msgid "Nothing to delete!!"
@@ -322,47 +322,47 @@ msgstr ""
 msgid "Please select required fields for proceed delete operation."
 msgstr ""
 
-#: includes/class-delete-api.php:305
+#: includes/class-delete-api.php:316
 msgid "%s Revisions Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:315
+#: includes/class-delete-api.php:326
 msgid "%s Auto Drafts Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:325
+#: includes/class-delete-api.php:336
 msgid "%s Trashed Posts Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:341
+#: includes/class-delete-api.php:352
 msgid "%s Orphaned Post Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:356
+#: includes/class-delete-api.php:367
 msgid "%s Orphaned Comment Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:371
+#: includes/class-delete-api.php:382
 msgid "%s Orphaned User Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:386
+#: includes/class-delete-api.php:397
 msgid "%s Orphaned Term Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:399
+#: includes/class-delete-api.php:410
 msgid "%s Duplicated Post Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:411
+#: includes/class-delete-api.php:422
 msgid "%s Duplicated Comment Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:423
+#: includes/class-delete-api.php:434
 msgid "%s Duplicated User Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:435
+#: includes/class-delete-api.php:446
 msgid "%s Duplicated Term Meta Cleaned up"
 msgstr ""
 
@@ -837,7 +837,7 @@ msgstr ""
 msgid "Select the post whose post meta fields you want to delete."
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:85
+#: includes/delele-posts-form-functions.php:87
 msgid "%d Record deleted successfully."
 msgstr ""
 

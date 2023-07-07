@@ -30,6 +30,7 @@ add_action( 'render_form_by_title', 'wpbd_render_common_form', 30 );
 // By Taxonomy.
 add_action( 'render_form_by_taxonomy', 'wpbd_render_form_posttype_dropdown' );
 add_action( 'render_form_by_taxonomy', 'wpbd_render_form_taxonomy' );
+add_action( 'render_form_by_taxonomy', 'wpbd_render_extra_assinged_category' );
 add_action( 'render_form_by_taxonomy', 'wpbd_render_common_form' );
 
 // By Custom Fields
@@ -40,6 +41,7 @@ add_action( 'render_form_by_custom_fields', 'wpbd_render_common_form', 30 );
 // General
 add_action( 'render_form_general', 'wpbd_render_form_posttype_dropdown', 10 );
 add_action( 'render_form_general', 'wpbd_render_form_taxonomy', 20 );
+add_action( 'render_form_general', 'wpbd_render_extra_assinged_category', 20 );
 add_action( 'render_form_general', 'wpbd_render_form_users', 30 );
 add_action( 'render_form_general', 'wpbd_render_form_custom_fields', 40 );
 add_action( 'render_form_general', 'wpbd_render_form_post_contains', 50 );
@@ -242,6 +244,31 @@ function wpbd_render_form_taxonomy(){
             jQuery('#delete_post_type').trigger( 'change' );
         });
     </script>
+    <?php
+}
+
+/**
+ * Render Post Statuses.
+ *
+ * @since 1.0
+ * @return void
+ */
+function wpbd_render_extra_assinged_category(){
+    ?>
+    <tr>
+        <th scope="row">Delete Post From Selected Category Only:</th>
+        <td>
+            <fieldset>
+                <label for="delete_post_status" >
+                    <input name="delete_selected_category" id="delete_selected_category" value="d_s_c" type="checkbox" >
+                    Delete Post From Selected Category Only:
+                </label>
+                <p class="description">
+                    <?php _e( "You can enable this option to delete posts that have not been assigned any other categories from the selected category.",'wp-bulk-delete' ); ?>
+                </p>
+            </fieldset>
+        </td>
+    </tr>
     <?php
 }
 
