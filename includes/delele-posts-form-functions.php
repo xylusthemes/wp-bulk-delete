@@ -134,7 +134,7 @@ function wpbd_render_form_posttype(){
                 if( !empty( $types ) ){
                     foreach( $types as $key_type => $type ){
                         $disable = '';
-                        if( $type === "Orders" || $type == "Coupons" || $type == "Refunds"){
+                        if( ( $type === "Orders" || $type == "Coupons" || $type == "Refunds" ) && !wpbd_is_pro() ){
                             $disable = "disabled";
                         }
                         ?>
