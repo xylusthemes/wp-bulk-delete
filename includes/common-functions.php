@@ -123,10 +123,10 @@ function timeout_memory_limit_is_enough() {
 		</div>
 		<?php
 	}
-	if( $timeout_limit < '600' ){
+	if( $timeout_limit < '300' ){
 		?>
 		<div class="notice notice-warning is-dismissible">
-		<p><strong><?php _e( 'Attention: The server PHP timeout limit is set to '.$timeout_limit.' seconds, which is less than the recommended 600 seconds. This may cause slow deletion progress if deleting large data.', 'wp-bulk-delete' ); ?></strong></p>
+		<p><strong><?php _e( 'Attention: The server PHP timeout limit is set to '.$timeout_limit.' seconds, which is less than the recommended 300 seconds. This may cause slow deletion progress if deleting large data.', 'wp-bulk-delete' ); ?></strong></p>
 		</div>
 		<?php
 	}
