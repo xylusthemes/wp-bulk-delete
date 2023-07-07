@@ -791,6 +791,7 @@ class WPBD_Delete_API {
                 $delete_comment_query .= " AND ( comment_date <= '{$delete_end_date} 23:59:59' )";
             }
             $comment_delete_count = $wpdb->query( $delete_comment_query );
+            delete_transient('wc_count_comments');
         }
         return $comment_delete_count;
     }

@@ -29,6 +29,7 @@ function wpbd_render_cleanup_page(){
                 <div class="notice notice-warning">
                     <p><strong><?php _e( 'WARNING: Before you Cleanup any data please first take Backup, any delete operation done is irreversible. Please use it with caution!', 'wp-bulk-delete' ); ?></strong></p>
                 </div>
+                <?php do_action( 'timeout_memory_is_enough' ); ?>
 
                 <div class="delete_notice"></div>
 
