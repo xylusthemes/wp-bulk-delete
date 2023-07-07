@@ -131,14 +131,21 @@ function wpbd_render_form_posttype(){
                 <?php
                 if( !empty( $types ) ){
                     foreach( $types as $key_type => $type ){
+                        $disable = '';
+                        if( $type === "Orders" || $type == "Coupons" || $type == "Refunds"){
+                            $disable = "disabled";
+                        }
                         ?>
                         <fieldset>
                             <label for="delete_post_type">
-                                <input name="delete_post_type[]" class="delete_post_type" id="<?php echo $key_type; ?>" type="checkbox" value="<?php echo $key_type; ?>" >
+                                <input name="delete_post_type[]" class="delete_post_type" id="<?php echo $key_type; ?>" type="checkbox" value="<?php echo $key_type; ?>" <?php echo $disable; ?> >
                                 <?php printf( __( '%s', 'wp-bulk-delete' ), $type ); ?>
                                 <?php $post_count = wpbd_get_posttype_post_count( $key_type );
                                 if( $post_count >= 0 ){
                                 	echo '('.$post_count .' '. $type .')';
+                                }
+                                if( $disable == "disabled" ){
+                                    do_action( 'wpbd_display_available_in_pro');
                                 }
                                 ?>
                             </label>
