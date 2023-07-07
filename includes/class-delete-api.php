@@ -465,6 +465,9 @@ class WPBD_Delete_API {
         if( empty( $data['delete_user_roles'] ) && ( $data['user_meta_key'] == '' || $data['user_meta_value'] == '' ) ){
             return array();
         }
+        if( empty( $data['delete_user_roles'] ) && $data['user_email'] == '' ){
+            return array();
+        }
         $delete_user_roles = isset( $data['delete_user_roles'] ) ? $data['delete_user_roles'] : array();
         $delete_user_roles = array_map('esc_sql', $delete_user_roles );
         $delete_start_date = isset( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
@@ -500,6 +503,10 @@ class WPBD_Delete_API {
         $user_meta_value =  isset( $data['user_meta_value'] ) ? esc_sql( $data['user_meta_value'] ) : '';
         $user_meta_compare =  isset( $data['user_meta_compare'] ) ? $data['user_meta_compare'] : 'equal_to_str';
             
+        // By Useremail.
+        $user_email =  isset( $data['user_email'] ) ? esc_sql( $data['user_email'] ) : '';
+        $user_email_compare =  isset( $data['user_email_compare'] ) ? $data['user_email_compare'] : 'equal_to_str';
+
         // Query Generation.
         $query = "SELECT DISTINCT $wpdb->users.ID FROM $wpdb->users ";
 
@@ -586,6 +593,42 @@ class WPBD_Delete_API {
             }
         }
 
+        if ( !empty( $user_email ) && !empty( $user_email_compare ) ) {
+            $user_email = preg_replace('/\s+/', '', explode( ",", str_replace( '\r\n', '', $user_email ) ) );
+
+            if( count( $user_email ) > 1 ){
+                $imp = "'" . implode( "','", $user_email ) . "'";
+                switch ( $user_email_compare ) {
+                    case 'equal_to_str':
+                        $query .= " AND $wpdb->users.user_email IN ( $imp )";
+                        break;
+
+                    case 'notequal_to_str':
+                        $query .= " AND $wpdb->users.user_email NOT IN ( $imp )";
+                        break;
+
+                    default:
+                        $query .= " AND $wpdb->users.user_email IN ( $imp )";
+                        break;
+                }
+            }else{
+                $imp = implode( ",", $user_email );
+                switch ( $user_email_compare ) {
+                    case 'equal_to_str':
+                        $query .= " AND ( $wpdb->users.user_email = '{$imp}' )"; 
+                        break;
+
+                    case 'notequal_to_str':
+                        $query .= " AND ( $wpdb->users.user_email != '{$imp}' )"; 
+                        break;
+
+                    default:
+                        $query .= "  AND ( $wpdb->users.user_email = '{$imp}' )";
+                        break;
+                }
+            }
+        }
+
         if( !empty( $delete_user_roles ) ){
             $subquery = array();
             foreach ($delete_user_roles as $delete_user_role ) {
@@ -606,7 +649,7 @@ class WPBD_Delete_API {
 
         if( !empty( $limit_user ) ){
             if( is_numeric( $limit_user ) ){
-                $query .= " ORDER BY $wpdb->users.user_login ASC LIMIT " . $limit_user;    
+                $query .= " ORDER BY $wpdb->users.ID ASC LIMIT " . $limit_user;    
             }
         }
         $users = $wpdb->get_col( $query );

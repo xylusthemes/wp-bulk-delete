@@ -14,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /** Actions *************************************************************/
 add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_userroles', 10 );
 add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_usermeta', 20 );
+add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_useremail', 20 );
 add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_assignuser', 30 );
 add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_date_interval', 40 );
 add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_limit', 50 );
@@ -27,7 +28,7 @@ add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_limit', 50 );
  * @return array | posts ID to be delete.
  */
 function xt_delete_users_form_process( $data ) {
-	$error = array();
+    $error = array();
     if ( ! current_user_can( 'delete_users' ) ) {
         $error[] = esc_html__('You don\'t have enough permission for this operation.', 'wp-bulk-delete' );
     }
@@ -133,6 +134,30 @@ function wpdb_render_delete_users_usermeta(){
             </select>
             <?php esc_html_e( 'Value', 'wp-bulk-delete' ); ?> 
             <input type="text" id="sample3" name="sample3" class="sample3" placeholder="meta_value" disabled="disabled" /><br/>
+            <?php do_action( 'wpbd_display_available_in_pro'); ?>
+        </td>
+    </tr>
+    <?php
+}
+
+/**
+ * Render Userroles checkboxes.
+ *
+ * @since 1.0
+ * @return void
+ */
+function wpdb_render_delete_users_useremail(){
+    ?>
+    <tr>
+        <th scope="row">
+            <?php _e('User Email','wp-bulk-delete'); ?> :
+        </th>
+        <td>
+            <?php esc_html_e( 'User Email', 'wp-bulk-delete' ); ?> 
+            <select name="sample4" disabled="disabled" >
+                <option value="equal_to_str"><?php esc_html_e( 'equal to ( string )', 'wp-bulk-delete' ); ?></option>
+            </select>
+            <textarea name="sample5" id="sample5" cols="59" class="wp_user_email_text" placeholder="You can add multiple emails with comma(,) separator" disabled="disabled" ></textarea><br/>
             <?php do_action( 'wpbd_display_available_in_pro'); ?>
         </td>
     </tr>
