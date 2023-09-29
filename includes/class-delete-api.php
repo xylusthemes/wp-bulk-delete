@@ -460,6 +460,10 @@ class WPBD_Delete_API {
      * @return array | Users Id.
      */
     public function get_delete_user_ids( $data = array() ){
+        if( wpbd_is_pro() && class_exists( 'WPBD_Delete_API_Pro', false ) ){
+            $wpbdpro = new WPBD_Delete_API_Pro();
+            return $wpbdpro->get_delete_user_ids( $data );
+        }
         global $wpdb;
 
         if( empty( $data['delete_user_roles'] ) && ( $data['user_meta_key'] == '' || $data['user_meta_value'] == '' ) ){
