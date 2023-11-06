@@ -114,7 +114,7 @@ function xt_delete_posts_form_process( $data ) {
  */
 function wpbd_render_form_posttype(){
         global $wp_post_types;
-        $ingnore_types = array('attachment','revision','nav_menu_item');
+        $ingnore_types = array( 'attachment','revision','nav_menu_item','custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation' );
         $types = array();
         if( !empty( $wp_post_types ) ){
             foreach( $wp_post_types as $key_type => $post_type ){
@@ -172,7 +172,7 @@ function wpbd_render_form_posttype(){
  */
 function wpbd_render_form_posttype_dropdown(){
         global $wp_post_types;
-        $ingnore_types = array('attachment','revision','nav_menu_item');
+        $ingnore_types = array( 'attachment','revision','nav_menu_item','custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation' );
         $types = array();
         if( !empty( $wp_post_types ) ){
             foreach( $wp_post_types as $key_type => $post_type ){
