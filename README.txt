@@ -4,8 +4,8 @@ Donate link: http://xylusthemes.com
 Tags: delete, bulk, clean, bulk delete, bulk clean, posts delete, delete all, mass delete, posts delete, delete posts, delete comments, delete users, delete meta, delete taxonomy, delete revision, wp clean, clean trash, bulk user delete, delete all, delete all users, delete all comments, delete all posts, trash, clean spam, delete with condition, delete with filter, remove
 Requires at least: 4.9
 Requires PHP: 5.3
-Tested up to: 6.3 
-Stable tag: 1.2.5
+Tested up to: 6.4 
+Stable tag: 1.2.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -166,6 +166,14 @@ We are working on providing more options :)
 15. Scheduled Delete History
 
 == Changelog ==
+
+= 1.2.6 =
+* ADDED: Posts Delete by Content Character Count Filter.(PRO)
+* ADDED: Background Progress Prefix (PRO)
+* FIXED: Delete WP Cron queue when you delete schedule delete.(PRO)
+* IMPROVEMENTS: Post type List Optimized
+* IMPROVEMENTS: Support for WP 6.4
+* IMPROVEMENTS: Added Support for PHP 8.2 and some design and security fixes
 
 = 1.2.5 =
 * ADDED: Delete post of selected category only. If post has multiple category it will not deleted.
