@@ -27,6 +27,7 @@ class WP_Bulk_Delete{
 	 * WP_Bulk_Delete The one true WP_Bulk_Delete.
 	 */
 	private static $instance;
+	public $api;
 
     /**
      * Main WP Bulk Delete Instance.
