@@ -46,6 +46,7 @@ add_action( 'render_form_general', 'wpbd_render_form_users', 30 );
 add_action( 'render_form_general', 'wpbd_render_form_custom_fields', 40 );
 add_action( 'render_form_general', 'wpbd_render_form_post_contains', 50 );
 add_action( 'render_form_general', 'wpbd_render_common_form', 60 );
+add_action( 'render_form_by_charector_count', 'wpbd_render_form_post_contant_count_interval' );
 
 /**
  * Process Delete posts form
@@ -438,6 +439,33 @@ function wpbd_render_form_modified_interval(){
 }
 
 /**
+ * Render Post Contant Count.
+ *
+ * @since 1.2.6
+ * @return void
+ */
+function wpbd_render_form_post_contant_count_interval(){
+    ?>
+    <tr>
+        <th scope="row">
+            <?php _e('Post Content Count :','wp-bulk-delete'); ?>
+        </th>
+        <td>
+            <?php _e('Delete Post with Content Count Limit','wp-bulk-delete'); ?> 
+            <select name="disabled_sample8" disabled="disabled" >
+                <option value="lessthen"><?php _e( 'Less Then.', 'wp-bulk-delete' ); ?> </option>
+                <option value="greaterthen"><?php _e( "Greater Then.", "wp-bulk-delete" ); ?> </option>
+            </select>
+            <div class="mwpbd_date_days wpbd_inline">
+                <input type="number" id="disabled_sample9"  disabled="disabled" name="disabled_sample9" class="limit_post_input" placeholder="0" min="0" /> <?php _e('Character Limit','wp-bulk-delete'); ?>
+            </div>
+            <?php do_action( 'wpbd_display_available_in_pro'); ?>
+        </td>
+    </tr>
+    <?php
+}
+
+/**
  * Render Post title and content contains.
  *
  * @since 1.0
@@ -723,6 +751,12 @@ function wpbd_render_common_form(){
     wpbd_render_form_date_interval();
 
     wpbd_render_form_modified_interval();
+
+    if( wpbd_is_pro() ){
+        do_action( 'render_form_by_charector_count_pro' );
+    }else{
+        do_action( 'render_form_by_charector_count' );
+    }
     
     wpbd_render_form_custom_query();
 
