@@ -312,14 +312,7 @@
 			}
 		});
 
-		jQuery('.delete_frequency').on( 'change', function() {
-	    	var date_type = jQuery(this).val();
-	        if(date_type === 'not_repeat'){
-				jQuery(".wpbd_schedule_name_wrap").hide();
-			}else{
-				jQuery(".wpbd_schedule_name_wrap").show();
-			}
-	    });
+		jQuery(".wpbd_schedule_name_wrap").show();
 	});
 
 	jQuery(document).ready(function(){
