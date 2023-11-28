@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-11-06T07:19:22+00:00\n"
+"POT-Creation-Date: 2023-11-28T13:09:56+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: wp-bulk-delete\n"
@@ -471,19 +471,20 @@ msgstr ""
 msgid "Attention: The server PHP timeout limit is set to "
 msgstr ""
 
-#: includes/common-functions.php:166
+#: includes/common-functions.php:163
 msgid "Scheduled Delete - "
 msgstr ""
 
-#: includes/common-functions.php:177
+#: includes/common-functions.php:176
+#: includes/common-functions.php:193
 msgid "Something went wrong when saving scheduled delete."
 msgstr ""
 
-#: includes/common-functions.php:187
+#: includes/common-functions.php:203
 msgid "Delete scheduled successfully."
 msgstr ""
 
-#: includes/common-functions.php:192
+#: includes/common-functions.php:208
 msgid "Error in scheduled delete."
 msgstr ""
 
