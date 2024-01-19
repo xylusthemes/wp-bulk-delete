@@ -321,4 +321,39 @@
 			timeFormat: 'HH:mm:ss'
 		});
 	});
+
+	jQuery(document).ready(function(){
+		jQuery("#user_who_has_no_order").change(function() {
+			if( jQuery( "#user_who_has_no_order" ).is( ":checked" ) ) {
+				var selectedRoles = [];
+				jQuery( "input[name='delete_user_roles[]']:checked" ).each(function(){
+					selectedRoles.push( jQuery(this).val() );
+				});
+				if( selectedRoles.length > 1 || ( selectedRoles.length === 1 && selectedRoles[0] !== "customer" ) ) {
+					alert('The "User Who Has No order" option only works with the Customer role.');
+				}
+				jQuery( "input[name='delete_user_roles[]']" ).each(function() {
+					if( jQuery(this).val() !== "customer" ) {
+						jQuery(this).prop( "checked", false );
+					}
+				});
+			}
+		});
+		jQuery( "input[name='delete_user_roles[]']" ).change(function() {
+			var userWhoHasNoOrderChecked = jQuery( "#user_who_has_no_order" ).is( ":checked" );
+			if( userWhoHasNoOrderChecked ){
+				if (jQuery(this).val() === "customer") {
+					jQuery("input[name='delete_user_roles[]']").each(function() {
+						if (jQuery(this).val() !== "customer") {
+							jQuery(this).prop("checked", false);
+						}
+					});
+				} else {
+					alert('The "User Who Has No order" option only works with the Customer role.');
+					jQuery('#user_who_has_no_order').prop( 'checked', false ); 
+				}
+			}			
+		});
+	});
+
 })( jQuery );
