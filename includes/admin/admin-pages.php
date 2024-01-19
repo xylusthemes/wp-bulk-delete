@@ -36,5 +36,8 @@ function wpbd_add_menu_pages() {
 	$xt_delete_taxonomy_page = add_submenu_page( 'delete_all_posts', __( 'Cleanup', 'wp-bulk-delete' ), __( 'Cleanup', 'wp-bulk-delete' ), 'manage_options', 'wpbd_cleanup', 'wpbd_render_cleanup_page' );
 
 	$xt_delete_support_page = add_submenu_page( 'delete_all_posts', __( 'Support & Help', 'wp-bulk-delete' ), __( 'Support & Help', 'wp-bulk-delete' ), 'manage_options', 'wpbd_support', 'wpbd_render_support_page' );
+	if( !wpbd_is_pro() ){
+		$xt_delete_support_page = add_submenu_page( 'delete_all_posts', __( 'Upgrade to Pro', 'wp-bulk-delete' ), '<li class="wpbd_upgrade_pro current"> ' . __( 'Upgrade to Pro', 'wp-bulk-delete' ) . '</li>', 'manage_options', esc_url( "https://xylusthemes.com/plugins/wp-bulk-delete/") );
+	}
 }
 add_action( 'admin_menu', 'wpbd_add_menu_pages', 10 );

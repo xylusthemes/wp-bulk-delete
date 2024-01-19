@@ -14,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /** Actions *************************************************************/
 add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_userroles', 10 );
 add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_usermeta', 20 );
+add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_useremail', 20 );
 add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_assignuser', 30 );
 add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_date_interval', 40 );
 add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_limit', 50 );
@@ -27,7 +28,7 @@ add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_limit', 50 );
  * @return array | posts ID to be delete.
  */
 function xt_delete_users_form_process( $data ) {
-	$error = array();
+    $error = array();
     if ( ! current_user_can( 'delete_users' ) ) {
         $error[] = esc_html__('You don\'t have enough permission for this operation.', 'wp-bulk-delete' );
     }
@@ -39,7 +40,7 @@ function xt_delete_users_form_process( $data ) {
 
     	if( empty( $error ) ){
             $delete_time = ( $data['delete_time'] ) ? $data['delete_time'] : 'now';
-            $delete_datetime = ( $data['delete_datetime'] ) ? $data['delete_datetime'] : '';
+            $delete_datetime = isset( $data['delete_datetime'] ) ? $data['delete_datetime'] : '';
             if( $delete_time === 'scheduled' && !empty($delete_datetime) && wpbd_is_pro() ) {
                 $data['delete_entity'] = 'user';
                 return wpbd_save_scheduled_delete($data);
@@ -140,6 +141,30 @@ function wpdb_render_delete_users_usermeta(){
 }
 
 /**
+ * Render Userroles checkboxes.
+ *
+ * @since 1.0
+ * @return void
+ */
+function wpdb_render_delete_users_useremail(){
+    ?>
+    <tr>
+        <th scope="row">
+            <?php _e('User Email','wp-bulk-delete'); ?> :
+        </th>
+        <td>
+            <?php esc_html_e( 'User Email', 'wp-bulk-delete' ); ?> 
+            <select name="sample4" disabled="disabled" >
+                <option value="equal_to_str"><?php esc_html_e( 'equal to ( string )', 'wp-bulk-delete' ); ?></option>
+            </select>
+            <textarea name="sample5" id="sample5" cols="59" class="wp_user_email_text" placeholder="You can add multiple emails with comma(,) separator" disabled="disabled" ></textarea><br/>
+            <?php do_action( 'wpbd_display_available_in_pro'); ?>
+        </td>
+    </tr>
+    <?php
+}
+
+/**
  * Render User registration date interval.
  *
  * @since 1.0
@@ -156,7 +181,13 @@ function wpdb_render_delete_users_date_interval(){
             <select name="date_type" class="date_type">
                 <option value="older_than"><?php _e('older than','wp-bulk-delete'); ?></option>
                 <option value="within_last"><?php _e('registered within last','wp-bulk-delete'); ?></option>
-                <option value="custom_date"><?php _e('registered between','wp-bulk-delete'); ?></option>
+                <?php if( wpbd_is_pro() ) { ?>
+                    <option value="onemonth"><?php _e('1 Month','wp-bulk-delete'); ?></option>
+                    <option value="sixmonths"><?php _e('6 Months','wp-bulk-delete'); ?></option>
+                    <option value="oneyear"><?php _e('1 Year','wp-bulk-delete'); ?></option>
+                    <option value="twoyear"><?php _e('2 Years','wp-bulk-delete'); ?></option>
+                <?php } ?>
+                <option value="custom_date"><?php _e('registered between custom','wp-bulk-delete'); ?></option>
             </select>
             <div class="wpbd_date_days wpbd_inline">
                 <input type="number" id="input_days" name="input_days" class="wpbd_input_days" placeholder="0" min="0" /> <?php _e('days','wp-bulk-delete'); ?>
@@ -168,7 +199,12 @@ function wpdb_render_delete_users_date_interval(){
                 <p class="description">
                     <?php _e('Set the reigration date interval for users to delete ( only delete users register between these dates ) or leave these fields blank to select all users. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
                 </p>
-            </div>            
+            </div>
+            <div class="wpbd_date_range wpbd_inline" style="display:none;">
+                <p class="description">
+                    <?php _e('This option will work well with Scheduled Delete, which will help to delete users of the selected option from the scheduled run date.','wp-bulk-delete'); ?>
+                </p>
+            </div>
         </td>
     </tr>
     <?php
