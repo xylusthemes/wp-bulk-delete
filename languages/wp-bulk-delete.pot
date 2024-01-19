@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-19T06:34:21+00:00\n"
+"POT-Creation-Date: 2024-01-19T09:59:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: wp-bulk-delete\n"
@@ -322,67 +322,67 @@ msgstr ""
 msgid "Please select required fields for proceed delete operation."
 msgstr ""
 
-#: includes/class-delete-api.php:326
+#: includes/class-delete-api.php:335
 msgid "%s Revisions Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:336
+#: includes/class-delete-api.php:345
 msgid "%s Auto Drafts Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:346
+#: includes/class-delete-api.php:355
 msgid "%s Trashed Posts Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:362
+#: includes/class-delete-api.php:371
 msgid "%s Orphaned Post Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:377
+#: includes/class-delete-api.php:386
 msgid "%s Orphaned Comment Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:392
+#: includes/class-delete-api.php:401
 msgid "%s Orphaned User Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:407
+#: includes/class-delete-api.php:416
 msgid "%s Orphaned Term Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:420
+#: includes/class-delete-api.php:429
 msgid "%s Duplicated Post Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:432
+#: includes/class-delete-api.php:441
 msgid "%s Duplicated Comment Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:444
+#: includes/class-delete-api.php:453
 msgid "%s Duplicated User Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:456
+#: includes/class-delete-api.php:465
 msgid "%s Duplicated Term Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:1307
+#: includes/class-delete-api.php:1316
 msgid "WP Event Aggregator"
 msgstr ""
 
-#: includes/class-delete-api.php:1308
+#: includes/class-delete-api.php:1317
 msgid "Import Facebook Events"
 msgstr ""
 
-#: includes/class-delete-api.php:1309
+#: includes/class-delete-api.php:1318
 msgid "Import Eventbrite Events"
 msgstr ""
 
-#: includes/class-delete-api.php:1310
+#: includes/class-delete-api.php:1319
 msgid "Import Meetup Events"
 msgstr ""
 
-#: includes/class-delete-api.php:1311
+#: includes/class-delete-api.php:1320
 msgid "Event Schema / Structured Data"
 msgstr ""
 
@@ -705,7 +705,7 @@ msgid "Meta key (Required)"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:255
-#: includes/delele-posts-form-functions.php:607
+#: includes/delele-posts-form-functions.php:605
 #: includes/delele-users-form-functions.php:134
 #: includes/delele-users-form-functions.php:159
 msgid "equal to ( string )"
@@ -772,7 +772,7 @@ msgid "greater then and equal to ( number )"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:271
-#: includes/delele-posts-form-functions.php:609
+#: includes/delele-posts-form-functions.php:607
 #: includes/delele-users-form-functions.php:136
 msgid "Value"
 msgstr ""
@@ -958,117 +958,117 @@ msgstr ""
 msgid "Authors :"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:579
+#: includes/delele-posts-form-functions.php:577
 #: includes/delele-users-form-functions.php:224
 msgid "Limit :"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:584
+#: includes/delele-posts-form-functions.php:582
 msgid "Set the limit over post delete. It will delete only first limit posts. This option will help you in case of you have lots of posts to delete and script timeout."
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:601
+#: includes/delele-posts-form-functions.php:599
 msgid "Custom fields settings :"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:604
+#: includes/delele-posts-form-functions.php:602
 msgid "Custom Fields Key"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:628
+#: includes/delele-posts-form-functions.php:626
 msgid "Cleanup Posts :"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:634
+#: includes/delele-posts-form-functions.php:632
 msgid "Revisions (%d Revisions)"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:641
+#: includes/delele-posts-form-functions.php:639
 msgid "Trash (Deleted Posts) (%d Trash)"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:648
+#: includes/delele-posts-form-functions.php:646
 msgid "Auto Drafts (%d Auto Drafts)"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:666
+#: includes/delele-posts-form-functions.php:664
 msgid "Delete Time :"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:670
+#: includes/delele-posts-form-functions.php:668
 msgid "Delete now"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:672
+#: includes/delele-posts-form-functions.php:670
 msgid "Schedule delete at"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:675
+#: includes/delele-posts-form-functions.php:673
 msgid "repeat"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:681
+#: includes/delele-posts-form-functions.php:679
 msgid "Timezone: (%s)"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:682
+#: includes/delele-posts-form-functions.php:680
 msgid "Scheduled delete runs using cron and backgroud process. So, its useful for delete huge number of records and repeatative delete."
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:700
+#: includes/delele-posts-form-functions.php:698
 msgid "Don't repeat"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:703
+#: includes/delele-posts-form-functions.php:701
 msgid "10 Minutes"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:706
+#: includes/delele-posts-form-functions.php:704
 msgid "30 Minutes"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:709
+#: includes/delele-posts-form-functions.php:707
 msgid "Once Hourly"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:712
+#: includes/delele-posts-form-functions.php:710
 msgid "Twice Daily"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:715
+#: includes/delele-posts-form-functions.php:713
 msgid "Once Daily"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:718
+#: includes/delele-posts-form-functions.php:716
 msgid "Once Weekly"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:721
+#: includes/delele-posts-form-functions.php:719
 msgid "Once a Month"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:725
+#: includes/delele-posts-form-functions.php:723
 msgid "Save it as "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:726
+#: includes/delele-posts-form-functions.php:724
 msgid "eg: Daily Post Delete"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:743
+#: includes/delele-posts-form-functions.php:741
 msgid "Filter your posts :"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:800
-#: includes/delele-posts-form-functions.php:803
+#: includes/delele-posts-form-functions.php:798
+#: includes/delele-posts-form-functions.php:801
 msgid "Post Links"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:821
+#: includes/delele-posts-form-functions.php:822
 msgid "Delete Post Featured image :"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:826
+#: includes/delele-posts-form-functions.php:828
 msgid "It enables the removal of the featured image of the post, if the image is a featured image of multiple posts, it will not be removed. and If the image is being used in a place other than the featured image, it will be deleted."
 msgstr ""
 
