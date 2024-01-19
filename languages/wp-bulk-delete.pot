@@ -471,19 +471,20 @@ msgstr ""
 msgid "Attention: The server PHP timeout limit is set to "
 msgstr ""
 
-#: includes/common-functions.php:166
+#: includes/common-functions.php:163
 msgid "Scheduled Delete - "
 msgstr ""
 
-#: includes/common-functions.php:177
+#: includes/common-functions.php:176
+#: includes/common-functions.php:193
 msgid "Something went wrong when saving scheduled delete."
 msgstr ""
 
-#: includes/common-functions.php:187
+#: includes/common-functions.php:203
 msgid "Delete scheduled successfully."
 msgstr ""
 
-#: includes/common-functions.php:192
+#: includes/common-functions.php:208
 msgid "Error in scheduled delete."
 msgstr ""
 
