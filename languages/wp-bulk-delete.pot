@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-19T05:59:24+00:00\n"
+"POT-Creation-Date: 2024-01-19T06:34:21+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: wp-bulk-delete\n"
@@ -1060,10 +1060,15 @@ msgid "Filter your posts :"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:800
+#: includes/delele-posts-form-functions.php:803
+msgid "Post Links"
+msgstr ""
+
+#: includes/delele-posts-form-functions.php:821
 msgid "Delete Post Featured image :"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:805
+#: includes/delele-posts-form-functions.php:826
 msgid "It enables the removal of the featured image of the post, if the image is a featured image of multiple posts, it will not be removed. and If the image is being used in a place other than the featured image, it will be deleted."
 msgstr ""
 
