@@ -112,55 +112,55 @@ function xt_delete_posts_form_process( $data ) {
  * @return void
  */
 function wpbd_render_form_posttype(){
-        global $wp_post_types;
-        $ingnore_types = array( 'attachment','revision','nav_menu_item','custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation' );
-        $types = array();
-        if( !empty( $wp_post_types ) ){
-            foreach( $wp_post_types as $key_type => $post_type ){
-                if( in_array( $key_type, $ingnore_types ) ){
-                    continue;
-                }else{
-                    $types[$key_type] = $post_type->labels->name;
-                }
+    global $wp_post_types;
+    $ingnore_types = array( 'attachment','revision','nav_menu_item','custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation' );
+    $types = array();
+    if( !empty( $wp_post_types ) ){
+        foreach( $wp_post_types as $key_type => $post_type ){
+            if( in_array( $key_type, $ingnore_types ) ){
+                continue;
+            }else{
+                $types[$key_type] = $post_type->labels->name;
             }
         }
-        ?>
-        <tr>
-            <th scope="row">
-                <?php _e('Post type of items to delete :','wp-bulk-delete'); ?>
-            </th>
-            <td>
-                <?php
-                if( !empty( $types ) ){
-                    foreach( $types as $key_type => $type ){
-                        $disable = '';
-                        if( ( $type === "Orders" || $type == "Coupons" || $type == "Refunds" ) && !wpbd_is_pro() ){
-                            $disable = "disabled";
-                        }
-                        ?>
-                        <fieldset>
-                            <label for="delete_post_type">
-                                <input name="delete_post_type[]" class="delete_post_type" id="<?php echo $key_type; ?>" type="checkbox" value="<?php echo $key_type; ?>" <?php echo $disable; ?> >
-                                <?php printf( __( '%s', 'wp-bulk-delete' ), $type ); ?>
-                                <?php $post_count = wpbd_get_posttype_post_count( $key_type );
-                                if( $post_count >= 0 ){
-                                	echo '('.$post_count .' '. $type .')';
-                                }
-                                if( $disable == "disabled" ){
-                                    do_action( 'wpbd_display_available_in_pro');
-                                }
-                                ?>
-                            </label>
-                        </fieldset>
-                        <?php
+    }
+    ?>
+    <tr>
+        <th scope="row">
+            <?php _e('Post type of items to delete :','wp-bulk-delete'); ?>
+        </th>
+        <td>
+            <?php
+            if( !empty( $types ) ){
+                foreach( $types as $key_type => $type ){
+                    $disable = '';
+                    if( ( $type === "Orders" || $type == "Coupons" || $type == "Refunds" ) && !wpbd_is_pro() ){
+                        $disable = "disabled";
                     }
-                }else{
-                    _e('No post types are there, WP Bulk Delete will not work.','wp-bulk-delete');
+                    ?>
+                    <fieldset>
+                        <label for="delete_post_type">
+                            <input name="delete_post_type[]" class="delete_post_type" id="<?php echo $key_type; ?>" type="checkbox" value="<?php echo $key_type; ?>" <?php echo $disable; ?> >
+                            <?php printf( __( '%s', 'wp-bulk-delete' ), $type ); ?>
+                            <?php $post_count = wpbd_get_posttype_post_count( $key_type );
+                            if( $post_count >= 0 ){
+                                echo '('.$post_count .' '. $type .')';
+                            }
+                            if( $disable == "disabled" ){
+                                do_action( 'wpbd_display_available_in_pro');
+                            }
+                            ?>
+                        </label>
+                    </fieldset>
+                    <?php
                 }
-                ?>
-            </td>
-        </tr>
-        <?php
+            }else{
+                _e('No post types are there, WP Bulk Delete will not work.','wp-bulk-delete');
+            }
+            ?>
+        </td>
+    </tr>
+    <?php
 }
 
 /**
@@ -170,46 +170,46 @@ function wpbd_render_form_posttype(){
  * @return void
  */
 function wpbd_render_form_posttype_dropdown(){
-        global $wp_post_types;
-        $ingnore_types = array( 'attachment','revision','nav_menu_item','custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation' );
-        $types = array();
-        if( !empty( $wp_post_types ) ){
-            foreach( $wp_post_types as $key_type => $post_type ){
-                if( in_array( $key_type, $ingnore_types ) ){
-                    continue;
-                }else{
-                    $types[$key_type] = $post_type->labels->name;
-                }
+    global $wp_post_types;
+    $ingnore_types = array( 'attachment','revision','nav_menu_item','custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation' );
+    $types = array();
+    if( !empty( $wp_post_types ) ){
+        foreach( $wp_post_types as $key_type => $post_type ){
+            if( in_array( $key_type, $ingnore_types ) ){
+                continue;
+            }else{
+                $types[$key_type] = $post_type->labels->name;
             }
         }
-        ?>
-        <tr>
-            <th scope="row">
-                <?php _e('Post type of items to delete :','wp-bulk-delete'); ?>
-            </th>
-            <td>
-                <select name="delete_post_type" class="delete_post_type" id="delete_post_type" required="required">
-                    <?php
-                    if( !empty( $types ) ){
-                        foreach( $types as $key_type => $type ){
-                            ?>
-                            <fieldset>
-                                <label for="delete_post_type">
-                                    <option value="<?php echo $key_type; ?>">
-                                        <?php printf( __( '%s', 'wp-bulk-delete' ), $type ); ?> 
-                                    </option>
-                                </label>
-                            </fieldset>
-                            <?php
-                        }
-                    }else{
-                        _e('No post types are there, WP Bulk Delete will not work.','wp-bulk-delete');
+    }
+    ?>
+    <tr>
+        <th scope="row">
+            <?php _e('Post type of items to delete :','wp-bulk-delete'); ?>
+        </th>
+        <td>
+            <select name="delete_post_type" class="delete_post_type" id="delete_post_type" required="required">
+                <?php
+                if( !empty( $types ) ){
+                    foreach( $types as $key_type => $type ){
+                        ?>
+                        <fieldset>
+                            <label for="delete_post_type">
+                                <option value="<?php echo $key_type; ?>">
+                                    <?php printf( __( '%s', 'wp-bulk-delete' ), $type ); ?> 
+                                </option>
+                            </label>
+                        </fieldset>
+                        <?php
                     }
-                    ?>
-                </select>
-            </td>
-        </tr>
-        <?php
+                }else{
+                    _e('No post types are there, WP Bulk Delete will not work.','wp-bulk-delete');
+                }
+                ?>
+            </select>
+        </td>
+    </tr>
+    <?php
 }
 
 /**
@@ -471,38 +471,38 @@ function wpbd_render_form_post_contant_count_interval(){
  * @return void
  */
 function wpbd_render_form_post_contains(){
-        ?>
-        <tr>
-            <th scope="row">
-                <?php _e('If Post Title Contains :','wp-bulk-delete'); ?>
-            </th>
-            <td>
-                <input type="text" id="disabled_sample4" name="disabled_sample4" class="disabled_sample4" disabled="disabled" />
-                 <?php _e( 'Then', 'wp-bulk-delete'  ); ?>
-                <select name="disabled_sample5" disabled="disabled">
-                    <option value=""><?php _e( 'Delete It.', 'wp-bulk-delete' ); ?> </option>
-                    <option value=""><?php _e( "Don't delete It.", "wp-bulk-delete" ); ?> </option>
-                </select>
-                <br/>
-                <?php do_action( 'wpbd_display_available_in_pro'); ?>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">
-                <?php _e('If Post Content Contains :','wp-bulk-delete'); ?>
-            </th>
-            <td>
-                <input type="text" id="disabled_sample6" name="disabled_sample6" class="disabled_sample6" disabled="disabled" />
+    ?>
+    <tr>
+        <th scope="row">
+            <?php _e('If Post Title Contains :','wp-bulk-delete'); ?>
+        </th>
+        <td>
+            <input type="text" id="disabled_sample4" name="disabled_sample4" class="disabled_sample4" disabled="disabled" />
                 <?php _e( 'Then', 'wp-bulk-delete'  ); ?>
-                <select name="disabled_sample7" disabled="disabled">
-                    <option value=""><?php _e( 'Delete It.', 'wp-bulk-delete' ); ?> </option>
-                    <option value=""><?php _e( "Don't delete It.", "wp-bulk-delete" ); ?> </option>
-                </select>
-                <br/>
-                <?php do_action( 'wpbd_display_available_in_pro'); ?>
-            </td>
-        </tr>
-        <?php
+            <select name="disabled_sample5" disabled="disabled">
+                <option value=""><?php _e( 'Delete It.', 'wp-bulk-delete' ); ?> </option>
+                <option value=""><?php _e( "Don't delete It.", "wp-bulk-delete" ); ?> </option>
+            </select>
+            <br/>
+            <?php do_action( 'wpbd_display_available_in_pro'); ?>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">
+            <?php _e('If Post Content Contains :','wp-bulk-delete'); ?>
+        </th>
+        <td>
+            <input type="text" id="disabled_sample6" name="disabled_sample6" class="disabled_sample6" disabled="disabled" />
+            <?php _e( 'Then', 'wp-bulk-delete'  ); ?>
+            <select name="disabled_sample7" disabled="disabled">
+                <option value=""><?php _e( 'Delete It.', 'wp-bulk-delete' ); ?> </option>
+                <option value=""><?php _e( "Don't delete It.", "wp-bulk-delete" ); ?> </option>
+            </select>
+            <br/>
+            <?php do_action( 'wpbd_display_available_in_pro'); ?>
+        </td>
+    </tr>
+    <?php
 }
 
 /**
@@ -512,19 +512,19 @@ function wpbd_render_form_post_contains(){
  * @return void
  */
 function wpbd_render_form_delete_type(){
-        ?>
-        <tr>
-            <th scope="row">
-                <?php _e('Post Delete Type :','wp-bulk-delete'); ?>
-            </th>
-            <td>
-                <input type="radio" id="delete_type" name="delete_type" class="delete_type" value="trash" checked="checked"/>
-                <?php _e( 'Move to Trash', 'wp-bulk-delete'  ); ?>
-                &nbsp;&nbsp;<input type="radio" id="delete_type" name="delete_type" class="delete_type" value="permenant" />
-                <?php _e( 'Delete permanently', 'wp-bulk-delete'  ); ?>
-            </td>
-        </tr>
-        <?php
+    ?>
+    <tr>
+        <th scope="row">
+            <?php _e('Post Delete Type :','wp-bulk-delete'); ?>
+        </th>
+        <td>
+            <input type="radio" id="delete_type" name="delete_type" class="delete_type" value="trash" checked="checked"/>
+            <?php _e( 'Move to Trash', 'wp-bulk-delete'  ); ?>
+            &nbsp;&nbsp;<input type="radio" id="delete_type" name="delete_type" class="delete_type" value="permenant" />
+            <?php _e( 'Delete permanently', 'wp-bulk-delete'  ); ?>
+        </td>
+    </tr>
+    <?php
 }
 
 /**
@@ -534,36 +534,34 @@ function wpbd_render_form_delete_type(){
  * @return void
  */
 function wpbd_render_form_users(){
-        ?>
-        <tr>
-            <th scope="row">
-                <?php _e('Authors :','wp-bulk-delete'); ?>
-            </th>
-            <td>
-                <?php $args = array(
-                        'orderby'      => 'display_name',
-                        'order'        => 'ASC',
-                        'fields'       => array( 'display_name', 'ID'),
-                );
-                $authors = get_users( $args );
-                if( !empty($authors) ){
-                    ?>
-                        <select name="delete_authors[]" multiple="multiple">
-                            <?php foreach($authors as $author){
-                                ?>
-                                <option value="<?php echo $author->ID; ?>"><?php printf( __( '%s', 'wp-bulk-delete' ), $author->display_name ) ; ?></option>
-                                <?php
-                            }
-                            ?>
-                        </select>
-                    <?php
-                }
+    ?>
+    <tr>
+        <th scope="row">
+            <?php _e('Authors :','wp-bulk-delete'); ?>
+        </th>
+        <td>
+            <?php $args = array(
+                    'orderby'      => 'display_name',
+                    'order'        => 'ASC',
+                    'fields'       => array( 'display_name', 'ID'),
+            );
+            $authors = get_users( $args );
+            if( !empty($authors) ){
                 ?>
-            </td>
-        </tr>
-
-
-        <?php
+                    <select name="delete_authors[]" multiple="multiple">
+                        <?php foreach($authors as $author){
+                            ?>
+                            <option value="<?php echo $author->ID; ?>"><?php printf( __( '%s', 'wp-bulk-delete' ), $author->display_name ) ; ?></option>
+                            <?php
+                        }
+                        ?>
+                    </select>
+                <?php
+            }
+            ?>
+        </td>
+    </tr>
+    <?php
 }
 
 /**
@@ -573,19 +571,19 @@ function wpbd_render_form_users(){
  * @return void
  */
 function wpbd_render_limit_post(){
-        ?>
-        <tr>
-            <th scope="row">
-                <?php _e('Limit :','wp-bulk-delete'); ?>
-            </th>
-            <td>
-                <input type="number" min="1" id="limit_post" name="limit_post" class="limit_post_input" max="10000" />
-                <p class="description">
-                    <?php _e('Set the limit over post delete. It will delete only first limit posts. This option will help you in case of you have lots of posts to delete and script timeout.','wp-bulk-delete'); ?>
-                </p>
-            </td>
-        </tr>
-        <?php
+    ?>
+    <tr>
+        <th scope="row">
+            <?php _e('Limit :','wp-bulk-delete'); ?>
+        </th>
+        <td>
+            <input type="number" min="1" id="limit_post" name="limit_post" class="limit_post_input" max="10000" />
+            <p class="description">
+                <?php _e('Set the limit over post delete. It will delete only first limit posts. This option will help you in case of you have lots of posts to delete and script timeout.','wp-bulk-delete'); ?>
+            </p>
+        </td>
+    </tr>
+    <?php
 }
 
 /**
@@ -808,8 +806,11 @@ function wpdb_render_delete_users_postlinks(){
             <textarea name="" disabled="disabled"  id="" cols="70" style="height: 30px;" class="" placeholder="You can add multiple post links with comma(,) separator" ></textarea>
             <?php do_action( 'wpbd_display_available_in_pro'); ?>
         </td>
+    </tr>
+    <?php
+}
 
-/ * Render Delete Post Media.
+/* Render Delete Post Media.
  *
  * @since 1.0
  * @return void
@@ -823,7 +824,9 @@ function wpbd_render_form_delete_media(){
         <?php if( wpbd_is_pro() ){ ?>
             <td>
                 <input type="checkbox" id="post_media" name="post_media" class="post_media" value="yes" />
-                <?php _e( 'It enables the removal of the featured image of the post, if the image is a featured image of multiple posts, it will not be removed. and If the image is being used in a place other than the featured image, it will be deleted.', 'wp-bulk-delete'  ); ?>
+                <p class="description" >
+                    <?php _e( 'It enables the removal of the featured image of the post, if the image is a featured image of multiple posts, it will not be removed. and If the image is being used in a place other than the featured image, it will be deleted.', 'wp-bulk-delete'  ); ?>
+                </p>
             </td>
         <?php }else{ ?>
             <td>
