@@ -46,6 +46,7 @@ add_action( 'render_form_general', 'wpbd_render_form_users', 30 );
 add_action( 'render_form_general', 'wpbd_render_form_custom_fields', 40 );
 add_action( 'render_form_general', 'wpbd_render_form_post_contains', 50 );
 add_action( 'render_form_general', 'wpbd_render_common_form', 60 );
+add_action( 'render_form_by_charector_count', 'wpbd_render_form_post_contant_count_interval' );
 
 /**
  * Process Delete posts form
@@ -80,8 +81,7 @@ function xt_delete_posts_form_process( $data ) {
     			if ( $data['delete_type'] === 'permenant' ) {
     				$force_delete = true;
     			}
-       
-    			$post_count = wpbulkdelete()->api->do_delete_posts( $post_ids, $force_delete, $custom_query ); 
+    			$post_count = wpbulkdelete()->api->do_delete_posts( $post_ids, $force_delete, $data, $custom_query ); 
     			return  array(
 	    			'status' => 1,
 	    			'messages' => array( sprintf( esc_html__( '%d Record deleted successfully.', 'wp-bulk-delete' ), $post_count)
@@ -113,7 +113,7 @@ function xt_delete_posts_form_process( $data ) {
  */
 function wpbd_render_form_posttype(){
         global $wp_post_types;
-        $ingnore_types = array('attachment','revision','nav_menu_item');
+        $ingnore_types = array( 'attachment','revision','nav_menu_item','custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation' );
         $types = array();
         if( !empty( $wp_post_types ) ){
             foreach( $wp_post_types as $key_type => $post_type ){
@@ -171,7 +171,7 @@ function wpbd_render_form_posttype(){
  */
 function wpbd_render_form_posttype_dropdown(){
         global $wp_post_types;
-        $ingnore_types = array('attachment','revision','nav_menu_item');
+        $ingnore_types = array( 'attachment','revision','nav_menu_item','custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation' );
         $types = array();
         if( !empty( $wp_post_types ) ){
             foreach( $wp_post_types as $key_type => $post_type ){
@@ -432,6 +432,33 @@ function wpbd_render_form_modified_interval(){
                     <?php _e('Set the modified date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
                 </p>
             </div>
+        </td>
+    </tr>
+    <?php
+}
+
+/**
+ * Render Post Contant Count.
+ *
+ * @since 1.2.6
+ * @return void
+ */
+function wpbd_render_form_post_contant_count_interval(){
+    ?>
+    <tr>
+        <th scope="row">
+            <?php _e('Post Content Count :','wp-bulk-delete'); ?>
+        </th>
+        <td>
+            <?php _e('Delete Post with Content Count Limit','wp-bulk-delete'); ?> 
+            <select name="disabled_sample8" disabled="disabled" >
+                <option value="lessthen"><?php _e( 'Less Then.', 'wp-bulk-delete' ); ?> </option>
+                <option value="greaterthen"><?php _e( "Greater Then.", "wp-bulk-delete" ); ?> </option>
+            </select>
+            <div class="mwpbd_date_days wpbd_inline">
+                <input type="number" id="disabled_sample9"  disabled="disabled" name="disabled_sample9" class="limit_post_input" placeholder="0" min="0" /> <?php _e('Character Limit','wp-bulk-delete'); ?>
+            </div>
+            <?php do_action( 'wpbd_display_available_in_pro'); ?>
         </td>
     </tr>
     <?php
@@ -723,10 +750,18 @@ function wpbd_render_common_form(){
     wpbd_render_form_date_interval();
 
     wpbd_render_form_modified_interval();
+
+    if( wpbd_is_pro() ){
+        do_action( 'render_form_by_charector_count_pro' );
+    }else{
+        do_action( 'render_form_by_charector_count' );
+    }
     
     wpbd_render_form_custom_query();
 
     wpbd_render_form_delete_type();
+
+    wpbd_render_form_delete_media();
 
     wpbd_render_limit_post();
 
@@ -750,4 +785,30 @@ function wpbd_get_timezone_string() {
     $tz_offset = sprintf( '%s%02d:%02d', $sign, $abs_hour, $abs_mins );
  
     return $tz_offset;
+}
+
+/**
+ * Render Delete Post Media.
+ *
+ * @since 1.0
+ * @return void
+ */
+function wpbd_render_form_delete_media(){
+    ?>
+    <tr>
+        <th scope="row">
+            <?php _e('Delete Post Featured image :','wp-bulk-delete'); ?>
+        </th>
+        <?php if( wpbd_is_pro() ){ ?>
+            <td>
+                <input type="checkbox" id="post_media" name="post_media" class="post_media" value="yes" />
+                <?php _e( 'It enables the removal of the featured image of the post, if the image is a featured image of multiple posts, it will not be removed. and If the image is being used in a place other than the featured image, it will be deleted.', 'wp-bulk-delete'  ); ?>
+            </td>
+        <?php }else{ ?>
+            <td>
+                <?php do_action( 'wpbd_display_available_in_pro'); ?>
+            </td>
+        <?php } ?>
+    </tr>
+    <?php
 }
