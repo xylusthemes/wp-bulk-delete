@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-19T09:59:33+00:00\n"
+"POT-Creation-Date: 2024-01-22T05:55:09+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.9.0\n"
 "X-Domain: wp-bulk-delete\n"
@@ -89,7 +89,7 @@ msgid "Custom WordPress Development Services"
 msgstr ""
 
 #: includes/admin/admin-sidebar.php:34
-msgid "From small blog to complex web apps, we push the limits of what's possible with WordPress."
+msgid "From small blogs to complex web apps, we push the limits of what's possible with WordPress."
 msgstr ""
 
 #: includes/admin/admin-sidebar.php:36
@@ -141,7 +141,7 @@ msgid "Run Cleanup"
 msgstr ""
 
 #: includes/admin/cleanup/cleanup-page.php:30
-msgid "WARNING: Before you Cleanup any data please first take Backup, any delete operation done is irreversible. Please use it with caution!"
+msgid "WARNING: Before you clean up any data please first take a Backup, any delete operation done is irreversible. Please use it with caution!"
 msgstr ""
 
 #: includes/admin/comments/display-delete-comments.php:39
@@ -202,7 +202,7 @@ msgid "Getting Support"
 msgstr ""
 
 #: includes/admin/support-page.php:43
-msgid "Thanks you for using Import Facebook Events, We are sincerely appreciate your support and we’re excited to see you using our plugins."
+msgid "Thank you for using Import Facebook Events, We sincerely appreciate your support and we’re excited to see you using our plugins."
 msgstr ""
 
 #: includes/admin/support-page.php:44
@@ -308,7 +308,7 @@ msgstr ""
 #: includes/ajax-functions.php:354
 #: includes/delele-comments-form-functions.php:51
 #: includes/delele-terms-form-functions.php:45
-msgid "Something went wrong pelase try again!!"
+msgid "Something went wrong please try again!!"
 msgstr ""
 
 #: includes/ajax-functions.php:262
@@ -395,7 +395,7 @@ msgid "I found a better plugin"
 msgstr ""
 
 #: includes/class-wpbd-plugin-deactivation.php:51
-msgid "The plugin is great, but I need specific feature that you don't support"
+msgid "The plugin is great, but I need a specific feature that you don't support"
 msgstr ""
 
 #: includes/class-wpbd-plugin-deactivation.php:52
@@ -411,7 +411,7 @@ msgid "Plugin didn't work as expected"
 msgstr ""
 
 #: includes/class-wpbd-plugin-deactivation.php:55
-msgid "It's temporary deactivatation, for debug an issue"
+msgid "It's temporary deactivation, for debugging an issue"
 msgstr ""
 
 #: includes/class-wpbd-plugin-deactivation.php:56
@@ -636,7 +636,7 @@ msgid "%d Meta deleted successfully."
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:122
-msgid "Cleanup Meta :"
+msgid "Cleanup Meta:"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:128
@@ -732,19 +732,19 @@ msgid "not equal to ( date )"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:260
-msgid "less then ( date )"
+msgid "less than ( date )"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:261
-msgid "less then and equal to ( date )"
+msgid "less than and equal to ( date )"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:262
-msgid "greater then ( date )"
+msgid "greater than ( date )"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:263
-msgid "greater then and equal to ( date )"
+msgid "greater than and equal to ( date )"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:264
@@ -756,19 +756,19 @@ msgid "not equal to ( number )"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:266
-msgid "less then ( number )"
+msgid "less than ( number )"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:267
-msgid "less then and equal to ( number )"
+msgid "less than and equal to ( number )"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:268
-msgid "greater then ( number )"
+msgid "greater than ( number )"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:269
-msgid "greater then and equal to ( number )"
+msgid "greater than and equal to ( number )"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:271
@@ -782,7 +782,7 @@ msgid "Meta value (Optional)"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:274
-msgid "Enter the meta key for delete meta, please consider following points in to meta delete."
+msgid "Enter the meta key for delete meta, please consider following points into meta delete."
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:275
@@ -790,7 +790,7 @@ msgid "1. If you want to delete meta by meta key only enter meta key."
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:276
-msgid "2. If you want to delete meta by meta key and meta value then enter both values."
+msgid "2. If you want to delete meta by meta key and meta value than enter both values."
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:294
@@ -798,7 +798,7 @@ msgid "Date interval :"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:297
-msgid "Delete meta for for posts/comments/users which are"
+msgid "Delete meta for posts/comments/users which are"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:300
@@ -810,7 +810,7 @@ msgid "created between custom"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:317
-msgid "Set the date interval for posts/comments/users whose meta fields will be delete, or leave these fields blank to select all meta. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>"
+msgid "Set the date interval for posts/comments/users whose meta fields will be deleted, or leave these fields blank to select all meta. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>"
 msgstr ""
 
 #: includes/delele-meta-form-functions.php:322
@@ -845,12 +845,12 @@ msgstr ""
 
 #: includes/delele-posts-form-functions.php:130
 #: includes/delele-posts-form-functions.php:188
-msgid "Post type of items to delete :"
+msgid "Post type of items to delete:"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:225
 #: includes/delele-terms-form-functions.php:79
-msgid "Post Taxonomy :"
+msgid "Post Taxonomy:"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:267
@@ -888,7 +888,7 @@ msgid "This option will work well with Scheduled Delete, which will help to dele
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:415
-msgid "Post Modified :"
+msgid "Post Modified:"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:422
@@ -900,7 +900,7 @@ msgid "Set the modified date interval for items to delete, or leave these fields
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:450
-msgid "Post Content Count :"
+msgid "Post Content Count:"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:453
@@ -908,7 +908,7 @@ msgid "Delete Post with Content Count Limit"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:455
-msgid "Less Then."
+msgid "Less Than."
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:456
@@ -920,7 +920,7 @@ msgid "Character Limit"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:477
-msgid "If Post Title Contains :"
+msgid "If Post Title Contains:"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:481
@@ -939,11 +939,11 @@ msgid "Don't delete It."
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:492
-msgid "If Post Content Contains :"
+msgid "If Post Content Contains:"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:518
-msgid "Post Delete Type :"
+msgid "Post Delete Type:"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:522
@@ -964,11 +964,11 @@ msgid "Limit :"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:582
-msgid "Set the limit over post delete. It will delete only first limit posts. This option will help you in case of you have lots of posts to delete and script timeout."
+msgid "Set the limit over post delete. It will delete only the first limit posts. This option will help you in case you have lots of posts to delete and script timeout."
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:599
-msgid "Custom fields settings :"
+msgid "Custom fields settings:"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:602
@@ -976,7 +976,7 @@ msgid "Custom Fields Key"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:626
-msgid "Cleanup Posts :"
+msgid "Cleanup Posts:"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:632
@@ -992,7 +992,7 @@ msgid "Auto Drafts (%d Auto Drafts)"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:664
-msgid "Delete Time :"
+msgid "Delete Time:"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:668
@@ -1012,7 +1012,7 @@ msgid "Timezone: (%s)"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:680
-msgid "Scheduled delete runs using cron and backgroud process. So, its useful for delete huge number of records and repeatative delete."
+msgid "Scheduled delete runs using cron and background process. So, it is useful for deleting a huge number of records and repetitive delete."
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:698
@@ -1065,7 +1065,7 @@ msgid "Post Links"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:822
-msgid "Delete Post Featured image :"
+msgid "Delete Post Featured image:"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:828
@@ -1081,7 +1081,7 @@ msgid "Select the post taxonomy whose terms you want to delete."
 msgstr ""
 
 #: includes/delele-users-form-functions.php:37
-msgid "Please select user role or add usermeta key and value."
+msgid "Please select user role or add user meta key and value."
 msgstr ""
 
 #: includes/delele-users-form-functions.php:60
@@ -1102,7 +1102,7 @@ msgid "User Email"
 msgstr ""
 
 #: includes/delele-users-form-functions.php:178
-msgid "User Registration Date :"
+msgid "User Registration Date:"
 msgstr ""
 
 #: includes/delele-users-form-functions.php:181
@@ -1118,7 +1118,7 @@ msgid "registered between custom"
 msgstr ""
 
 #: includes/delele-users-form-functions.php:201
-msgid "Set the reigration date interval for users to delete ( only delete users register between these dates ) or leave these fields blank to select all users. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>"
+msgid "Set the reigration date interval for users to delete ( only delete users registered between these dates ) or leave these fields blank to select all users. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>"
 msgstr ""
 
 #: includes/delele-users-form-functions.php:206
@@ -1126,7 +1126,7 @@ msgid "This option will work well with Scheduled Delete, which will help to dele
 msgstr ""
 
 #: includes/delele-users-form-functions.php:229
-msgid "Set the limit over user delete. It will delete only first limited users. This option will help you in case of you have lots of users to delete and script timeout."
+msgid "Set the limit over user delete. It will delete only the first limited users. This option will help you in case you have lots of users to delete and script timeout."
 msgstr ""
 
 #: includes/delele-users-form-functions.php:246
@@ -1139,11 +1139,11 @@ msgid "Select User"
 msgstr ""
 
 #: includes/delele-users-form-functions.php:261
-msgid "Select user to whom you want to assign deleted user's data."
+msgid "Select the user to whom you want to assign deleted user's data."
 msgstr ""
 
 #: includes/delele-users-form-functions.php:279
-msgid "User Who Has No order"
+msgid "User Who Has No Order"
 msgstr ""
 
 #: includes/delele-users-form-functions.php:285
