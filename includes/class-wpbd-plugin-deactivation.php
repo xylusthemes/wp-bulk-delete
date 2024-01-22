@@ -48,11 +48,11 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
 			return array(
 				'confusing' => __('I couldn\'t understand how to make it work', 'wp-bulk-delete' ),
 				'better_plugin' => __('I found a better plugin', 'wp-bulk-delete' ),
-				'feature_request' => __('The plugin is great, but I need specific feature that you don\'t support', 'wp-bulk-delete' ),
+				'feature_request' => __('The plugin is great, but I need a specific feature that you don\'t support', 'wp-bulk-delete' ),
 				'buggy' => __('Plugin has bugs and it\'s not working', 'wp-bulk-delete' ),
 				'wrong_plugin' => __('It\'s not what I was looking for', 'wp-bulk-delete' ),
 				'not_working' => __('Plugin didn\'t work as expected', 'wp-bulk-delete' ),
-				'temporary' => __('It\'s temporary deactivatation, for debug an issue', 'wp-bulk-delete' ),
+				'temporary' => __('It\'s temporary deactivation, for debugging an issue', 'wp-bulk-delete' ),
 				'other' => __('Other reasons', 'wp-bulk-delete' ),
 			);
         }

@@ -206,7 +206,7 @@ function wpbd_delete_comments_count() {
 	    		if( false === $deletecomment_count ){
 	                $return = array(
 	                    'status' => 0,
-	                    'messages' => array( esc_html__( 'Something went wrong pelase try again!!', 'wp-bulk-delete' ) ),
+	                    'messages' => array( esc_html__( 'Something went wrong please try again!!', 'wp-bulk-delete' ) ),
 	                );
 	            }
 
@@ -351,7 +351,7 @@ function wpbd_delete_terms_count() {
 	    		if( false === $deleteterms_count ){
 	                $return = array(
 	                    'status' => 0,
-	                    'messages' => array( esc_html__( 'Something went wrong pelase try again!!', 'wp-bulk-delete' ) ),
+	                    'messages' => array( esc_html__( 'Something went wrong please try again!!', 'wp-bulk-delete' ) ),
 	                );
 	            }
 

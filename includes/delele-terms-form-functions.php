@@ -42,7 +42,7 @@ function xt_delete_terms_form_process( $data ) {
         if( false === $term_count ){
             return array(
                 'status' => 0,
-                'messages' => array( esc_html__( 'Something went wrong pelase try again!!', 'wp-bulk-delete' ) ),
+                'messages' => array( esc_html__( 'Something went wrong please try again!!', 'wp-bulk-delete' ) ),
             );
         }
 
@@ -76,7 +76,7 @@ function xt_delete_terms_form_process( $data ) {
 function wpbd_render_delete_terms_taxonomy(){?>
     <tr>
         <th scope="row">
-            <?php _e('Post Taxonomy :','wp-bulk-delete'); ?>
+            <?php _e('Post Taxonomy:','wp-bulk-delete'); ?>
         </th>
         <td>
             <div class="post_taxonomy">

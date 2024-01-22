@@ -330,7 +330,7 @@
 					selectedRoles.push( jQuery(this).val() );
 				});
 				if( selectedRoles.length > 1 || ( selectedRoles.length === 1 && selectedRoles[0] !== "customer" ) ) {
-					alert('The "User Who Has No order" option only works with the Customer role.');
+					alert('The "User Who Has No Order" option only works with the Customer role.');
 				}
 				jQuery( "input[name='delete_user_roles[]']" ).each(function() {
 					if( jQuery(this).val() !== "customer" ) {
@@ -349,7 +349,7 @@
 						}
 					});
 				} else {
-					alert('The "User Who Has No order" option only works with the Customer role.');
+					alert('The "User Who Has No Order" option only works with the Customer role.');
 					jQuery('#user_who_has_no_order').prop( 'checked', false ); 
 				}
 			}			

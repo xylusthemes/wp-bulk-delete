@@ -48,7 +48,7 @@ function xt_delete_comments_form_process( $data ) {
             if( false === $comment_count ){
                 return array(
                     'status' => 0,
-                    'messages' => array( esc_html__( 'Something went wrong pelase try again!!', 'wp-bulk-delete' ) ),
+                    'messages' => array( esc_html__( 'Something went wrong please try again!!', 'wp-bulk-delete' ) ),
                 );
             }
 
