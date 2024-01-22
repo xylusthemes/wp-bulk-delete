@@ -40,7 +40,7 @@ function wpbd_render_support_page(){
                     
                     <div class="wpbd_well">
                         <h3><?php esc_attr_e( 'Getting Support', 'wp-bulk-delete' ); ?></h3>
-                        <p><?php _e( 'Thanks you for using Import Facebook Events, We are sincerely appreciate your support and we’re excited to see you using our plugins.','wp-bulk-delete' ); ?> </p>
+                        <p><?php _e( 'Thank you for using Import Facebook Events, We sincerely appreciate your support and we’re excited to see you using our plugins.','wp-bulk-delete' ); ?> </p>
                         <p><?php _e( 'Our support team is always around to help you.','wp-bulk-delete' ); ?></p>
                             
                         <p><strong><?php _e( 'Looking for free support?','wp-bulk-delete' ); ?></strong></p>

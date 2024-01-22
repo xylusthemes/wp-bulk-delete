@@ -31,7 +31,7 @@ function wpbd_admin_sidebar() {
 
 	<div class="upgrade_to_pro">
 		<h2><?php esc_html_e( 'Custom WordPress Development Services','wp-bulk-delete'); ?></h2>
-		<p><?php esc_html_e( "From small blog to complex web apps, we push the limits of what's possible with WordPress.","wp-bulk-delete" ); ?></p>
+		<p><?php esc_html_e( "From small blogs to complex web apps, we push the limits of what's possible with WordPress.","wp-bulk-delete" ); ?></p>
 		<a class="button button-primary upgrade_button" href="<?php echo esc_url('https://xylusthemes.com/contact/?utm_source=insideplugin&utm_medium=web&utm_content=sidebar&utm_campaign=freeplugin'); ?>" target="_blank">
 			<?php esc_html_e( 'Hire Us','wp-bulk-delete'); ?>
 		</a>

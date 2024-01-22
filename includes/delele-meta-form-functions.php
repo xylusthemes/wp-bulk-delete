@@ -119,7 +119,7 @@ function wpbd_render_meta_cleanup(){
     ?>
     <tr>
         <th scope="row">
-            <?php _e('Cleanup Meta :','wp-bulk-delete'); ?>
+            <?php _e('Cleanup Meta:','wp-bulk-delete'); ?>
         </th>
         <td>
             <fieldset>
@@ -257,23 +257,23 @@ function wpbd_render_meta_fields(){
                 <option value="like_str"><?php esc_html_e( 'like ( string )', 'wp-bulk-delete' ); ?></option>
                 <option value="notlike_str"><?php esc_html_e( 'not like ( string )', 'wp-bulk-delete' ); ?></option><option value="equal_to_date"><?php esc_html_e( 'equal to ( date )', 'wp-bulk-delete' ); ?></option>
                 <option value="notequal_to_date"><?php esc_html_e( 'not equal to ( date )', 'wp-bulk-delete' ); ?></option>
-                <option value="lessthen_date"><?php esc_html_e( 'less then ( date )', 'wp-bulk-delete' ); ?></option>
-                <option value="lessthenequal_date"><?php esc_html_e( 'less then and equal to ( date )', 'wp-bulk-delete' ); ?></option>
-                <option value="greaterthen_date"><?php esc_html_e( 'greater then ( date )', 'wp-bulk-delete' ); ?></option>
-                <option value="greaterthenequal_date"><?php esc_html_e( 'greater then and equal to ( date )', 'wp-bulk-delete' ); ?></option>
+                <option value="lessthen_date"><?php esc_html_e( 'less than ( date )', 'wp-bulk-delete' ); ?></option>
+                <option value="lessthenequal_date"><?php esc_html_e( 'less than and equal to ( date )', 'wp-bulk-delete' ); ?></option>
+                <option value="greaterthen_date"><?php esc_html_e( 'greater than ( date )', 'wp-bulk-delete' ); ?></option>
+                <option value="greaterthenequal_date"><?php esc_html_e( 'greater than and equal to ( date )', 'wp-bulk-delete' ); ?></option>
                 <option value="equal_to_number"><?php esc_html_e( 'equal to ( number )', 'wp-bulk-delete' ); ?></option>
                 <option value="notequal_to_number"><?php esc_html_e( 'not equal to ( number )', 'wp-bulk-delete' ); ?></option>
-                <option value="lessthen_number"><?php esc_html_e( 'less then ( number )', 'wp-bulk-delete' ); ?></option>
-                <option value="lessthenequal_number"><?php esc_html_e( 'less then and equal to ( number )', 'wp-bulk-delete' ); ?></option>
-                <option value="greaterthen_number"><?php esc_html_e( 'greater then ( number )', 'wp-bulk-delete' ); ?></option>
-                <option value="greaterthenequal_number"><?php esc_html_e( 'greater then and equal to ( number )', 'wp-bulk-delete' ); ?></option>
+                <option value="lessthen_number"><?php esc_html_e( 'less than ( number )', 'wp-bulk-delete' ); ?></option>
+                <option value="lessthenequal_number"><?php esc_html_e( 'less than and equal to ( number )', 'wp-bulk-delete' ); ?></option>
+                <option value="greaterthen_number"><?php esc_html_e( 'greater than ( number )', 'wp-bulk-delete' ); ?></option>
+                <option value="greaterthenequal_number"><?php esc_html_e( 'greater than and equal to ( number )', 'wp-bulk-delete' ); ?></option>
             </select>
             <?php esc_html_e( 'Value', 'wp-bulk-delete' ); ?> 
             <input type="text" id="custom_field_value" name="custom_field_value" class="custom_field_value" placeholder="<?php esc_html_e( 'Meta value (Optional)', 'wp-bulk-delete' ); ?>" />
             <p class="description">
-                <?php esc_html_e('Enter the meta key for delete meta, please consider following points in to meta delete.','wp-bulk-delete'); ?><br>
+                <?php esc_html_e('Enter the meta key for delete meta, please consider following points into meta delete.','wp-bulk-delete'); ?><br>
                 <?php esc_html_e('1. If you want to delete meta by meta key only enter meta key.','wp-bulk-delete'); ?><br>
-                <?php esc_html_e('2. If you want to delete meta by meta key and meta value then enter both values.','wp-bulk-delete'); ?><br>
+                <?php esc_html_e('2. If you want to delete meta by meta key and meta value than enter both values.','wp-bulk-delete'); ?><br>
             </p>
         </td>
     </tr>
@@ -294,7 +294,7 @@ function wpbd_render_meta_date_interval(){
             <?php _e('Date interval :','wp-bulk-delete'); ?>
         </th>
         <td>
-        <?php _e('Delete meta for for posts/comments/users which are','wp-bulk-delete'); ?> 
+        <?php _e('Delete meta for posts/comments/users which are','wp-bulk-delete'); ?> 
             <select name="date_type" class="date_type">
                 <option value="older_than"><?php _e('older than','wp-bulk-delete'); ?></option>
                 <option value="within_last"><?php _e('created within last','wp-bulk-delete'); ?></option>
@@ -314,7 +314,7 @@ function wpbd_render_meta_date_interval(){
                 -
                 <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" placeholder="<?php _e('End Date','wp-bulk-delete'); ?>" />
                 <p class="description">
-                    <?php _e('Set the date interval for posts/comments/users whose meta fields will be delete, or leave these fields blank to select all meta. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
+                    <?php _e('Set the date interval for posts/comments/users whose meta fields will be deleted, or leave these fields blank to select all meta. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
                 </p>
             </div>
             <div class="wpbd_date_range wpbd_inline" style="display:none;">

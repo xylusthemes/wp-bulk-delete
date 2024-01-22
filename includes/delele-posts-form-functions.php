@@ -127,7 +127,7 @@ function wpbd_render_form_posttype(){
     ?>
     <tr>
         <th scope="row">
-            <?php _e('Post type of items to delete :','wp-bulk-delete'); ?>
+            <?php _e('Post type of items to delete:','wp-bulk-delete'); ?>
         </th>
         <td>
             <?php
@@ -185,7 +185,7 @@ function wpbd_render_form_posttype_dropdown(){
     ?>
     <tr>
         <th scope="row">
-            <?php _e('Post type of items to delete :','wp-bulk-delete'); ?>
+            <?php _e('Post type of items to delete:','wp-bulk-delete'); ?>
         </th>
         <td>
             <select name="delete_post_type" class="delete_post_type" id="delete_post_type" required="required">
@@ -222,7 +222,7 @@ function wpbd_render_form_taxonomy(){
     ?>
     <tr>
         <th scope="row">
-            <?php _e('Post Taxonomy :','wp-bulk-delete'); ?>
+            <?php _e('Post Taxonomy:','wp-bulk-delete'); ?>
         </th>
         <td>
             <div class="post_taxonomy">
@@ -412,7 +412,7 @@ function wpbd_render_form_modified_interval(){
     ?>
     <tr>
         <th scope="row">
-            <?php _e('Post Modified :','wp-bulk-delete'); ?>
+            <?php _e('Post Modified:','wp-bulk-delete'); ?>
         </th>
         <td>
             <?php _e('Delete Posts which are','wp-bulk-delete'); ?> 
@@ -447,12 +447,12 @@ function wpbd_render_form_post_contant_count_interval(){
     ?>
     <tr>
         <th scope="row">
-            <?php _e('Post Content Count :','wp-bulk-delete'); ?>
+            <?php _e('Post Content Count:','wp-bulk-delete'); ?>
         </th>
         <td>
             <?php _e('Delete Post with Content Count Limit','wp-bulk-delete'); ?> 
             <select name="disabled_sample8" disabled="disabled" >
-                <option value="lessthen"><?php _e( 'Less Then.', 'wp-bulk-delete' ); ?> </option>
+                <option value="lessthen"><?php _e( 'Less Than.', 'wp-bulk-delete' ); ?> </option>
                 <option value="greaterthen"><?php _e( "Greater Then.", "wp-bulk-delete" ); ?> </option>
             </select>
             <div class="mwpbd_date_days wpbd_inline">
@@ -474,7 +474,7 @@ function wpbd_render_form_post_contains(){
     ?>
     <tr>
         <th scope="row">
-            <?php _e('If Post Title Contains :','wp-bulk-delete'); ?>
+            <?php _e('If Post Title Contains:','wp-bulk-delete'); ?>
         </th>
         <td>
             <input type="text" id="disabled_sample4" name="disabled_sample4" class="disabled_sample4" disabled="disabled" />
@@ -489,7 +489,7 @@ function wpbd_render_form_post_contains(){
     </tr>
     <tr>
         <th scope="row">
-            <?php _e('If Post Content Contains :','wp-bulk-delete'); ?>
+            <?php _e('If Post Content Contains:','wp-bulk-delete'); ?>
         </th>
         <td>
             <input type="text" id="disabled_sample6" name="disabled_sample6" class="disabled_sample6" disabled="disabled" />
@@ -515,7 +515,7 @@ function wpbd_render_form_delete_type(){
     ?>
     <tr>
         <th scope="row">
-            <?php _e('Post Delete Type :','wp-bulk-delete'); ?>
+            <?php _e('Post Delete Type:','wp-bulk-delete'); ?>
         </th>
         <td>
             <input type="radio" id="delete_type" name="delete_type" class="delete_type" value="trash" checked="checked"/>
@@ -579,7 +579,7 @@ function wpbd_render_limit_post(){
         <td>
             <input type="number" min="1" id="limit_post" name="limit_post" class="limit_post_input" max="10000" />
             <p class="description">
-                <?php _e('Set the limit over post delete. It will delete only first limit posts. This option will help you in case of you have lots of posts to delete and script timeout.','wp-bulk-delete'); ?>
+                <?php _e('Set the limit over post delete. It will delete only the first limit posts. This option will help you in case you have lots of posts to delete and script timeout.','wp-bulk-delete'); ?>
             </p>
         </td>
     </tr>
@@ -596,7 +596,7 @@ function wpbd_render_form_custom_fields(){
     ?>
     <tr>
         <th scope="row">
-            <?php _e('Custom fields settings :','wp-bulk-delete'); ?>
+            <?php _e('Custom fields settings:','wp-bulk-delete'); ?>
         </th>
         <td>
             <?php esc_html_e( 'Custom Fields Key', 'wp-bulk-delete' ); ?> 
@@ -623,7 +623,7 @@ function wpbd_render_post_cleanup(){
     ?>
     <tr>
         <th scope="row">
-            <?php _e('Cleanup Posts :','wp-bulk-delete'); ?>
+            <?php _e('Cleanup Posts:','wp-bulk-delete'); ?>
         </th>
         <td>
             <fieldset>
@@ -661,7 +661,7 @@ function wpbd_render_delete_time(){
     ?>
     <tr>
         <th scope="row">
-            <?php _e('Delete Time :','wp-bulk-delete'); ?>
+            <?php _e('Delete Time:','wp-bulk-delete'); ?>
         </th>
         <td>
             <input type="radio" id="delete_time_now" name="delete_time" class="delete_time" value="now" checked="checked" />
@@ -677,7 +677,7 @@ function wpbd_render_delete_time(){
             ?>
             <p class="description">
                 <strong><?php printf( esc_html__( 'Timezone: (%s)', 'wp-bulk-delete' ), $timezone ); ?></strong><br/>
-                <?php _e('Scheduled delete runs using cron and backgroud process. So, its useful for delete huge number of records and repeatative delete.','wp-bulk-delete'); ?>
+                <?php _e('Scheduled delete runs using cron and background process. So, it is useful for deleting a huge number of records and repetitive delete.','wp-bulk-delete'); ?>
             </p>
         </td>
     </tr>
@@ -819,7 +819,7 @@ function wpbd_render_form_delete_media(){
     ?>
     <tr>
         <th scope="row">
-            <?php _e('Delete Post Featured image :','wp-bulk-delete'); ?>
+            <?php _e('Delete Post Featured image:','wp-bulk-delete'); ?>
         </th>
         <?php if( wpbd_is_pro() ){ ?>
             <td>

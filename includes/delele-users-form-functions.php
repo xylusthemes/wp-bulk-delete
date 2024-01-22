@@ -34,7 +34,7 @@ function xt_delete_users_form_process( $data ) {
         $error[] = esc_html__('You don\'t have enough permission for this operation.', 'wp-bulk-delete' );
     }
     if( empty( $data['delete_user_roles'] ) && ( $data['user_meta_key'] == '' || $data['user_meta_value'] == '' ) ){
-        $error[] = esc_html__('Please select user role or add usermeta key and value.', 'wp-bulk-delete' );   
+        $error[] = esc_html__('Please select user role or add user meta key and value.', 'wp-bulk-delete' );   
     }
 
     if ( isset( $data['_delete_users_wpnonce'] ) && wp_verify_nonce( $data['_delete_users_wpnonce'], 'delete_users_nonce' ) ) {
@@ -175,7 +175,7 @@ function wpdb_render_delete_users_date_interval(){
     ?>
     <tr>
         <th scope="row">
-            <?php _e('User Registration Date :','wp-bulk-delete'); ?>
+            <?php _e('User Registration Date:','wp-bulk-delete'); ?>
         </th>
         <td>
             <?php _e('Delete Users which are','wp-bulk-delete'); ?> 
@@ -198,7 +198,7 @@ function wpdb_render_delete_users_date_interval(){
                 -
                 <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" placeholder="<?php _e('End Date','wp-bulk-delete'); ?>" />
                 <p class="description">
-                    <?php _e('Set the reigration date interval for users to delete ( only delete users register between these dates ) or leave these fields blank to select all users. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
+                    <?php _e('Set the reigration date interval for users to delete ( only delete users registered between these dates ) or leave these fields blank to select all users. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
                 </p>
             </div>
             <div class="wpbd_date_range wpbd_inline" style="display:none;">
@@ -226,7 +226,7 @@ function wpdb_render_delete_users_limit(){
         <td>
             <input type="number" min="1" id="limit_user" name="limit_user" class="limit_user_input" />
             <p class="description">
-                <?php _e('Set the limit over user delete. It will delete only first limited users. This option will help you in case of you have lots of users to delete and script timeout.','wp-bulk-delete'); ?>
+                <?php _e('Set the limit over user delete. It will delete only the first limited users. This option will help you in case you have lots of users to delete and script timeout.','wp-bulk-delete'); ?>
             </p>
         </td>
     </tr>
@@ -258,7 +258,7 @@ function wpdb_render_delete_users_assignuser(){
             }
             ?>
             <p class="description">
-                <?php _e('Select user to whom you want to assign deleted user\'s data.','wp-bulk-delete'); ?>
+                <?php _e('Select the user to whom you want to assign deleted user\'s data.','wp-bulk-delete'); ?>
             </p>
             <?php do_action( 'wpbd_display_available_in_pro'); ?>
         </td>
@@ -276,7 +276,7 @@ function wpdb_render_delete_users_who_has_no_order(){
     ?>
     <tr>
         <th scope="row">
-            <?php _e('User Who Has No order','wp-bulk-delete'); ?> :
+            <?php _e('User Who Has No Order','wp-bulk-delete'); ?> :
         </th>
         <td>
             <fieldset>
