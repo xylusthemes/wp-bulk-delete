@@ -175,9 +175,9 @@ class WPBD_Delete_API {
             if( $custom_query == 'custom_query' ){
                 
                 foreach( $post_ids as $post_id ){
-                    $post_attechment_id = get_post_meta( $post_id, '_thumbnail_id', true );
-                    $attechment_ids     = $wpdb->get_col( "SELECT post_id FROM $wpdb->postmeta WHERE meta_value = $post_attechment_id" );
                     if( isset( $item['post_media'] ) && $item['post_media'] === 'yes' ){
+                        $post_attechment_id = get_post_meta( $post_id, '_thumbnail_id', true );
+                        $attechment_ids     = $wpdb->get_col( "SELECT post_id FROM $wpdb->postmeta WHERE meta_value = $post_attechment_id" );
                         if( count( $attechment_ids ) <= 1 ){
                             wp_delete_attachment( $post_attechment_id, $force_delete );
                         }
@@ -187,9 +187,9 @@ class WPBD_Delete_API {
                 $wpdb->query( "DELETE p,pt,pm FROM " . $wpdb->posts . " p LEFT JOIN " . $wpdb->term_relationships . " pt ON pt.object_id = p.ID LEFT JOIN " . $wpdb->postmeta . " pm ON pm.post_id = p.ID WHERE p.ID IN ({$all_posts})" );
             }else{
                 foreach ($post_ids as $post_id ){
-                    $post_attechment_id = get_post_meta( $post_id, '_thumbnail_id', true );
-                    $attechment_ids     = $wpdb->get_col( "SELECT post_id FROM $wpdb->postmeta WHERE meta_value = $post_attechment_id" );
                     if( isset( $item['post_media'] ) && $item['post_media'] === 'yes' ){
+                        $post_attechment_id = get_post_meta( $post_id, '_thumbnail_id', true );
+                        $attechment_ids     = $wpdb->get_col( "SELECT post_id FROM $wpdb->postmeta WHERE meta_value = $post_attechment_id" );
                         if( count( $attechment_ids ) <= 1 ){
                             wp_delete_attachment( $post_attechment_id, $force_delete );
                         }
