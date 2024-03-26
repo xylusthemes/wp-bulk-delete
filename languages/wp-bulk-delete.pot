@@ -9,30 +9,35 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-22T06:17:56+00:00\n"
+"POT-Creation-Date: 2024-03-26T05:32:16+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: wp-bulk-delete\n"
 
 #. Plugin Name of the plugin
+#: wp-bulk-delete.php
 #: includes/admin/admin-pages.php:23
 #: includes/class-wpbd-plugin-deactivation.php:38
 msgid "WP Bulk Delete"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: wp-bulk-delete.php
 msgid "http://xylusthemes.com/plugins/wp-bulk-delete/"
 msgstr ""
 
 #. Description of the plugin
+#: wp-bulk-delete.php
 msgid "Bulk delete and cleanup anything like posts, comments, users, meta fields, taxonomy terms. with powerful filter options."
 msgstr ""
 
 #. Author of the plugin
+#: wp-bulk-delete.php
 msgid "Xylus Themes"
 msgstr ""
 
 #. Author URI of the plugin
+#: wp-bulk-delete.php
 msgid "http://xylusthemes.com"
 msgstr ""
 
