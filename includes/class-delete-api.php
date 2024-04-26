@@ -175,23 +175,63 @@ class WPBD_Delete_API {
             if( $custom_query == 'custom_query' ){
                 
                 foreach( $post_ids as $post_id ){
-                    $post_attechment_id = get_post_meta( $post_id, '_thumbnail_id', true );
-                    $attechment_ids     = $wpdb->get_col( "SELECT post_id FROM $wpdb->postmeta WHERE meta_value = $post_attechment_id" );
                     if( isset( $item['post_media'] ) && $item['post_media'] === 'yes' ){
-                        if( count( $attechment_ids ) <= 1 ){
-                            wp_delete_attachment( $post_attechment_id, $force_delete );
+                        $post_attachment_id = get_post_meta( $post_id, '_thumbnail_id', true );
+                        if( !empty( $post_attachment_id ) ){
+                            $attachment_ids = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_value = %d", $post_attachment_id ) );
+                            if( !empty( $attachment_ids ) && count( $attachment_ids ) <= 1 ){
+
+                                $attachment_metadata = wp_get_attachment_metadata( $post_attachment_id );
+                                if ( !empty($attachment_metadata['sizes'] ) ) {
+                                    //Getting file path
+                                    $upload_dir = wp_upload_dir();
+                                    $file_path  = $upload_dir['basedir'] . '/' . dirname( $attachment_metadata['file'] ) . '/';
+                                    
+                                    //Removing all image sizes
+                                    foreach( $attachment_metadata['sizes'] as $size_info ){
+                                        $file = $file_path . $size_info['file'];
+                                        //file check and remove it
+                                        if ( file_exists( $file ) ) {
+                                            unlink( $file ); 
+                                        }
+                                    }
+                                }
+
+                                if ( !empty( $attachment_metadata['file'] ) ) {
+                                    $file_path = $upload_dir['basedir'] . '/' . $attachment_metadata['file'];
+                                    //file check and remove it
+                                    if (file_exists($file_path)) {
+                                        unlink($file_path);
+                                    }
+                                }
+                                
+                                $wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->posts} WHERE ID = %d", $post_attachment_id ) );
+                                $wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->postmeta} WHERE post_id = %d", $post_attachment_id ) );
+                            }
                         }
                     }
                 }
-                $all_posts = implode( ",",$post_ids );
-                $wpdb->query( "DELETE p,pt,pm FROM " . $wpdb->posts . " p LEFT JOIN " . $wpdb->term_relationships . " pt ON pt.object_id = p.ID LEFT JOIN " . $wpdb->postmeta . " pm ON pm.post_id = p.ID WHERE p.ID IN ({$all_posts})" );
+
+                $post_ids_sanitized = array_map( 'intval', $post_ids );
+                $placeholders       = implode( ',', array_fill( 0, count( $post_ids_sanitized ), '%d' ) );
+                $query = $wpdb->prepare(
+                    "DELETE p, pt, pm FROM {$wpdb->posts} p 
+                    LEFT JOIN {$wpdb->term_relationships} pt ON pt.object_id = p.ID 
+                    LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID 
+                    WHERE p.ID IN ( $placeholders )",
+                    $post_ids_sanitized
+                );
+                $wpdb->query( $query );
+
             }else{
                 foreach ($post_ids as $post_id ){
-                    $post_attechment_id = get_post_meta( $post_id, '_thumbnail_id', true );
-                    $attechment_ids     = $wpdb->get_col( "SELECT post_id FROM $wpdb->postmeta WHERE meta_value = $post_attechment_id" );
                     if( isset( $item['post_media'] ) && $item['post_media'] === 'yes' ){
-                        if( count( $attechment_ids ) <= 1 ){
-                            wp_delete_attachment( $post_attechment_id, $force_delete );
+                        $post_attachment_id = get_post_meta( $post_id, '_thumbnail_id', true );
+                        if( !empty( $post_attachment_id ) ){
+                            $attachment_ids = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_value = %d", $post_attachment_id ) );
+                            if( count( $attachment_ids ) <= 1 ){
+                                wp_delete_attachment( $post_attachment_id, $force_delete );
+                            }
                         }
                     }
                     if( $force_delete === false ){
