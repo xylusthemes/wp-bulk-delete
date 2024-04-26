@@ -9,30 +9,35 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-01-22T06:17:56+00:00\n"
+"POT-Creation-Date: 2024-04-26T09:27:53+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.9.0\n"
+"X-Generator: WP-CLI 2.10.0\n"
 "X-Domain: wp-bulk-delete\n"
 
 #. Plugin Name of the plugin
+#: wp-bulk-delete.php
 #: includes/admin/admin-pages.php:23
 #: includes/class-wpbd-plugin-deactivation.php:38
 msgid "WP Bulk Delete"
 msgstr ""
 
 #. Plugin URI of the plugin
+#: wp-bulk-delete.php
 msgid "http://xylusthemes.com/plugins/wp-bulk-delete/"
 msgstr ""
 
 #. Description of the plugin
+#: wp-bulk-delete.php
 msgid "Bulk delete and cleanup anything like posts, comments, users, meta fields, taxonomy terms. with powerful filter options."
 msgstr ""
 
 #. Author of the plugin
+#: wp-bulk-delete.php
 msgid "Xylus Themes"
 msgstr ""
 
 #. Author URI of the plugin
+#: wp-bulk-delete.php
 msgid "http://xylusthemes.com"
 msgstr ""
 
@@ -322,67 +327,67 @@ msgstr ""
 msgid "Please select required fields for proceed delete operation."
 msgstr ""
 
-#: includes/class-delete-api.php:335
+#: includes/class-delete-api.php:375
 msgid "%s Revisions Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:345
+#: includes/class-delete-api.php:385
 msgid "%s Auto Drafts Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:355
+#: includes/class-delete-api.php:395
 msgid "%s Trashed Posts Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:371
+#: includes/class-delete-api.php:411
 msgid "%s Orphaned Post Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:386
+#: includes/class-delete-api.php:426
 msgid "%s Orphaned Comment Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:401
+#: includes/class-delete-api.php:441
 msgid "%s Orphaned User Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:416
+#: includes/class-delete-api.php:456
 msgid "%s Orphaned Term Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:429
+#: includes/class-delete-api.php:469
 msgid "%s Duplicated Post Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:441
+#: includes/class-delete-api.php:481
 msgid "%s Duplicated Comment Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:453
+#: includes/class-delete-api.php:493
 msgid "%s Duplicated User Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:465
+#: includes/class-delete-api.php:505
 msgid "%s Duplicated Term Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:1316
+#: includes/class-delete-api.php:1356
 msgid "WP Event Aggregator"
 msgstr ""
 
-#: includes/class-delete-api.php:1317
+#: includes/class-delete-api.php:1357
 msgid "Import Facebook Events"
 msgstr ""
 
-#: includes/class-delete-api.php:1318
+#: includes/class-delete-api.php:1358
 msgid "Import Eventbrite Events"
 msgstr ""
 
-#: includes/class-delete-api.php:1319
+#: includes/class-delete-api.php:1359
 msgid "Import Meetup Events"
 msgstr ""
 
-#: includes/class-delete-api.php:1320
+#: includes/class-delete-api.php:1360
 msgid "Event Schema / Structured Data"
 msgstr ""
 
