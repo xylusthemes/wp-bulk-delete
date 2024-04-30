@@ -248,7 +248,7 @@ function wpdb_render_delete_users_assignuser(){
         <td>
             <?php 
             if( wpbd_is_pro() ) {
-                wp_dropdown_users( array( 'show_option_none' => esc_attr__( 'Select User', 'wp-bulk-delete'), 'name' => 'reassign_user' ) );
+                wp_dropdown_users( array( 'show_option_none' => esc_attr__( 'Select User', 'wp-bulk-delete'), 'name' => 'reassign_user', 'role__in' => array( 'author', 'editor', 'administrator', 'contributor' ) ) );
             } else {
                 ?>
                 <select name="sample_user" disabled="disabled">
