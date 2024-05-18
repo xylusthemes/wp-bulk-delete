@@ -29,6 +29,7 @@ add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_limit', 60 );
  * @return array | posts ID to be delete.
  */
 function xt_delete_users_form_process( $data ) {
+    global $wpdb;
     $error = array();
     if ( ! current_user_can( 'delete_users' ) ) {
         $error[] = esc_html__('You don\'t have enough permission for this operation.', 'wp-bulk-delete' );
@@ -53,7 +54,15 @@ function xt_delete_users_form_process( $data ) {
                 if( !wpbd_is_pro() ){
                     $user_count = wpbulkdelete()->api->do_delete_users( $user_ids );
                 } else {
+
+                    $delete_user_who_has_no_order = isset( $data['user_who_has_no_order'] ) ? $data['user_who_has_no_order'] : 'false';
+                    if( !empty( $delete_user_who_has_no_order ) && $delete_user_who_has_no_order == 'on' ){
+                        foreach( $user_ids as $user_id ) {
+                            $wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->prefix}wc_customer_lookup WHERE user_id = %d", $user_id ) );
+                        }
+                    }
                     $user_count = wpbulkdelete()->api->do_delete_users( $user_ids, (int)$data['reassign_user'] );
+                    $wpdb->query("DELETE FROM {$wpdb->prefix}options WHERE option_name LIKE '%_transient_wc_report_customers_%'");
                 }
     			return  array(
 	    			'status' => 1,
