@@ -768,6 +768,7 @@ class WPBD_Delete_API {
         $delete_end_date = isset( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
         $date_type = isset( $data['date_type'] ) ? esc_sql( $data['date_type'] ) : 'custom_date';
         $input_days = isset( $data['input_days'] ) ? esc_sql( $data['input_days'] ) : '';
+        $limit_comment = isset( $data['limit_comment'] ) ? esc_sql( $data['limit_comment'] ) : 5000;
         if( $date_type === 'older_than') {
             $delete_start_date = $delete_end_date = '';
             if( $input_days === "0" || $input_days > 0){
@@ -807,7 +808,7 @@ class WPBD_Delete_API {
                     
                 }
                 if( !empty( $temp_delete_query ) ) {
-                    $delete_comment_query = "SELECT COUNT(comment_ID) FROM $wpdb->comments WHERE 1=1";
+                    $delete_comment_query = "SELECT comment_ID FROM $wpdb->comments WHERE 1=1";
                     $delete_comment_query .= " AND (" . implode( " OR ", $temp_delete_query ) . ")";
                 }
             }
@@ -818,7 +819,12 @@ class WPBD_Delete_API {
             if( $delete_end_date != ''){
                 $delete_comment_query .= " AND ( comment_date <= '{$delete_end_date} 23:59:59' )";
             }
-            $comment_delete_count = $wpdb->get_var( $delete_comment_query );
+
+            if( is_numeric( $limit_comment ) ){
+                $delete_comment_query .= " LIMIT " . $limit_comment;
+            }
+
+            $comment_delete_count = $wpdb->query( $delete_comment_query );
         }
         return $comment_delete_count;
     }
@@ -845,6 +851,7 @@ class WPBD_Delete_API {
         $delete_end_date = isset( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
         $date_type = isset( $data['date_type'] ) ? esc_sql( $data['date_type'] ) : 'custom_date';
         $input_days = isset( $data['input_days'] ) ? esc_sql( $data['input_days'] ) : '';
+        $limit_comment = isset( $data['limit_comment'] ) ? esc_sql( $data['limit_comment'] ) : 5000;
         if( $date_type === 'older_than') {
             $delete_start_date = $delete_end_date = '';
             if( $input_days === "0" || $input_days > 0){
@@ -895,6 +902,9 @@ class WPBD_Delete_API {
             }
             if( $delete_end_date != ''){
                 $delete_comment_query .= " AND ( comment_date <= '{$delete_end_date} 23:59:59' )";
+            }
+            if( is_numeric( $limit_comment ) ){
+                $delete_comment_query .= " LIMIT " . $limit_comment;
             }
             $comment_delete_count = $wpdb->query( $delete_comment_query );
             delete_transient('wc_count_comments');
