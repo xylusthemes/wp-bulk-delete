@@ -16,6 +16,7 @@ add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_status' );
 add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_users' );
 add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_posts' );
 add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_date_interval' );
+add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_limit' );
 
 /**
  * Process Delete Comments form
@@ -250,6 +251,28 @@ function wpdb_render_delete_comments_posts(){
                 <?php _e('Select comment post whose comment you want to delete.','wp-bulk-delete'); ?>
             </p>
             <?php do_action( 'wpbd_display_available_in_pro'); ?>
+        </td>
+    </tr>
+    <?php
+}
+
+/**
+ * Render Comments limit.
+ *
+ * @since 1.0
+ * @return void
+ */
+function wpdb_render_delete_comments_limit(){
+    ?>
+    <tr>
+        <th scope="row">
+            <?php _e('Limit :','wp-bulk-delete'); ?>
+        </th>
+        <td>
+            <input type="number" min="1" id="limit_comment" name="limit_comment" class="limit_comment_input" max="5000" />
+            <p class="description">
+                <?php _e('Set the limit over comments delete. It will delete only the first limit comments. This option will help you in case you have lots of comments to delete and script timeout.','wp-bulk-delete'); ?>
+            </p>
         </td>
     </tr>
     <?php
