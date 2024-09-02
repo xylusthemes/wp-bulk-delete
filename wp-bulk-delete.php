@@ -135,14 +135,11 @@ class WP_Bulk_Delete{
 		require_once WPBD_PLUGIN_DIR . 'includes/delele-terms-form-functions.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/class-wpbd-plugin-deactivation.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/admin/admin-pages.php';
-		require_once WPBD_PLUGIN_DIR . 'includes/admin/admin-sidebar.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/admin/posts/display-delete-posts.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/admin/comments/display-delete-comments.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/admin/users/display-delete-users.php';
-		require_once WPBD_PLUGIN_DIR . 'includes/admin/meta/display-delete-meta.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/admin/terms/display-delete-terms.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/admin/cleanup/cleanup-form.php';
-		require_once WPBD_PLUGIN_DIR . 'includes/admin/cleanup/cleanup-page.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/admin/support-page.php';
 	}
 

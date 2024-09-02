@@ -13,12 +13,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 /** Actions *************************************************************/
 add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_userroles', 10 );
-add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_usermeta', 20 );
-add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_useremail', 20 );
-add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_assignuser', 30 );
-add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_date_interval', 40 );
-add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_who_has_no_order', 50 );
-add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_limit', 60 );
+add_action( 'wpbd_delete_users_advance_form', 'wpdb_render_delete_users_usermeta', 20 );
+add_action( 'wpbd_delete_users_advance_form', 'wpdb_render_delete_users_useremail', 20 );
+add_action( 'wpbd_delete_users_advance_form', 'wpdb_render_delete_users_assignuser', 20 );
+add_action( 'wpbd_delete_users_date_form', 'wpdb_render_delete_users_date_interval', 40 );
+add_action( 'wpbd_delete_users_woocommerce_form', 'wpdb_render_delete_users_who_has_no_order', 50 );
+add_action( 'wpbd_delete_users_action_limit_form', 'wpdb_render_delete_users_limit', 60 );
 
 /**
  * Process Delete Users form form
@@ -96,30 +96,40 @@ function xt_delete_users_form_process( $data ) {
 function wpdb_render_delete_users_userroles(){
     $userroles = count_users();
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e( 'User roles', 'wp-bulk-delete' ); ?> :
-        </th>
-        <td>
-            <?php
-            if( ! empty( $userroles['avail_roles'] ) ){
-                foreach ($userroles['avail_roles'] as $userrole => $count ) {
-                    if( $userrole != 'none' ){
-                    ?>
-                    <input name="delete_user_roles[]" class="delete_user_roles" id="user_role_<?php echo $userrole; ?>" type="checkbox" value="<?php echo $userrole; ?>" >
-                    <label for="user_role_<?php echo $userrole; ?>">
-                        <?php echo $userrole . ' ' . sprintf( __( '( %s Users )', 'wp-bulk-delete' ), $count ); ?>
-                    </label><br/>
-                    <?php
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('User roles ','wp-bulk-delete'); ?>
+                <span class="wpbd-tooltip" >
+                    <div>
+                        <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                        </svg>
+                        <span class="wpbd-popper">
+                            <?php _e('Select the user roles from which you want to delete users.','wp-bulk-delete'); ?>
+                            <div class="wpbd-popper__arrow"></div>
+                        </span>
+                    </div>
+                </span>
+            </span>
+        </div>
+        <div class="wpbd-inner-section-2">
+            <select name="delete_user_roles[]" class="wpbd_global_multiple_select" id="delete_user_roles_multiple" multiple >
+                <?php
+                if( ! empty( $userroles['avail_roles'] ) ){
+                    foreach ($userroles['avail_roles'] as $userrole => $count ) {
+                        if( $userrole != 'none' ){
+                        ?>
+                        <option value="<?php echo $userrole; ?>" >
+                            <?php echo $userrole . ' ' . sprintf( __( '( %s Users )', 'wp-bulk-delete' ), $count ); ?>
+                        </option>
+                        <?php
+                        }
                     }
                 }
-            }
-            ?>
-            <p class="description">
-                <?php _e('Select the user roles from which you want to delete users.','wp-bulk-delete'); ?>
-            </p>
-        </td>
-    </tr>
+                ?>
+            </select>
+        </div>
+    </div>
     <?php
 }
 
@@ -132,11 +142,11 @@ function wpdb_render_delete_users_userroles(){
  */
 function wpdb_render_delete_users_usermeta(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('User Meta','wp-bulk-delete'); ?> :
-        </th>
-        <td>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('User Meta ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
             <?php esc_html_e( 'User Meta Key', 'wp-bulk-delete' ); ?> 
             <input type="text" id="sample1" name="sample1" class="sample1" placeholder="meta_key" disabled="disabled"/>
             <select name="sample2" disabled="disabled" >
@@ -145,8 +155,8 @@ function wpdb_render_delete_users_usermeta(){
             <?php esc_html_e( 'Value', 'wp-bulk-delete' ); ?> 
             <input type="text" id="sample3" name="sample3" class="sample3" placeholder="meta_value" disabled="disabled" /><br/>
             <?php do_action( 'wpbd_display_available_in_pro'); ?>
-        </td>
-    </tr>
+        </div>
+    </div>
     <?php
 }
 
@@ -158,19 +168,19 @@ function wpdb_render_delete_users_usermeta(){
  */
 function wpdb_render_delete_users_useremail(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('User Email','wp-bulk-delete'); ?> :
-        </th>
-        <td>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('User Email ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
             <?php esc_html_e( 'User Email', 'wp-bulk-delete' ); ?> 
             <select name="sample4" disabled="disabled" >
                 <option value="equal_to_str"><?php esc_html_e( 'equal to ( string )', 'wp-bulk-delete' ); ?></option>
             </select>
             <textarea name="sample5" id="sample5" cols="59" class="wp_user_email_text" placeholder="You can add multiple emails with comma(,) separator" disabled="disabled" ></textarea><br/>
             <?php do_action( 'wpbd_display_available_in_pro'); ?>
-        </td>
-    </tr>
+        </div>
+    </div>
     <?php
 }
 
@@ -182,11 +192,11 @@ function wpdb_render_delete_users_useremail(){
  */
 function wpdb_render_delete_users_date_interval(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('User Registration Date:','wp-bulk-delete'); ?>
-        </th>
-        <td>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('User Registration Date ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
             <?php _e('Delete Users which are','wp-bulk-delete'); ?> 
             <select name="date_type" class="date_type">
                 <option value="older_than"><?php _e('older than','wp-bulk-delete'); ?></option>
@@ -206,17 +216,34 @@ function wpdb_render_delete_users_date_interval(){
                 <input type="text" id="delete_start_date" name="delete_start_date" class="delete_all_datepicker" placeholder="<?php _e('Start Date','wp-bulk-delete'); ?>" />
                 -
                 <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" placeholder="<?php _e('End Date','wp-bulk-delete'); ?>" />
-                <p class="description">
-                    <?php _e('Set the reigration date interval for users to delete ( only delete users registered between these dates ) or leave these fields blank to select all users. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
-                </p>
+
+                <span class="wpbd-tooltip" >
+                    <div>
+                        <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                        </svg>
+                        <span class="wpbd-popper">
+                            <?php _e('Set the reigration date interval for users to delete ( only delete users registered between these dates ) or leave these fields blank to select all users. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
+                            <div class="wpbd-popper__arrow"></div>
+                        </span>
+                    </div>
+                </span>
             </div>
             <div class="wpbd_date_range wpbd_inline" style="display:none;">
-                <p class="description">
-                    <?php _e('This option will work well with Scheduled Delete, which will help to delete users of the selected option from the scheduled run date.','wp-bulk-delete'); ?>
-                </p>
+                <span class="wpbd-tooltip" >
+                    <div>
+                        <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                        </svg>
+                        <span class="wpbd-popper">
+                            <?php _e('This option will work well with Scheduled Delete, which will help to delete users of the selected option from the scheduled run date.','wp-bulk-delete'); ?>
+                            <div class="wpbd-popper__arrow"></div>
+                        </span>
+                    </div>
+                </span>
             </div>
-        </td>
-    </tr>
+        </div>
+    </div>
     <?php
 }
 
@@ -228,17 +255,25 @@ function wpdb_render_delete_users_date_interval(){
  */
 function wpdb_render_delete_users_limit(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Limit :','wp-bulk-delete'); ?>
-        </th>
-        <td>
-            <input type="number" min="1" id="limit_user" name="limit_user" class="limit_user_input" />
-            <p class="description">
-                <?php _e('Set the limit over user delete. It will delete only the first limited users. This option will help you in case you have lots of users to delete and script timeout.','wp-bulk-delete'); ?>
-            </p>
-        </td>
-    </tr>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Limit ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
+            <input type="number" min="1" id="limit_user" name="limit_user" class="limit_user_input" value="500" max="1000"/>
+            <span class="wpbd-tooltip" >
+                <div>
+                    <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                    </svg>
+                    <span class="wpbd-popper">
+                        <?php _e('Set the limit over user delete. It will delete only the first limited users. This option will help you in case you have lots of users to delete and script timeout.','wp-bulk-delete'); ?>
+                        <div class="wpbd-popper__arrow"></div>
+                    </span>
+                </div>
+            </span>
+        </div>
+    </div>
     <?php
 }
 
@@ -250,11 +285,11 @@ function wpdb_render_delete_users_limit(){
  */
 function wpdb_render_delete_users_assignuser(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Assign deleted user\'s data to','wp-bulk-delete'); ?> :
-        </th>
-        <td>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Assign deleted user\'s data to ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
             <?php 
             if( wpbd_is_pro() ) {
                 wp_dropdown_users( array( 'show_option_none' => esc_attr__( 'Select User', 'wp-bulk-delete'), 'name' => 'reassign_user', 'role__in' => array( 'author', 'editor', 'administrator', 'contributor' ) ) );
@@ -266,12 +301,20 @@ function wpdb_render_delete_users_assignuser(){
                 <?php
             }
             ?>
-            <p class="description">
-                <?php _e('Select the user to whom you want to assign deleted user\'s data.','wp-bulk-delete'); ?>
-            </p>
+            <span class="wpbd-tooltip" >
+                <div>
+                    <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                    </svg>
+                    <span class="wpbd-popper">
+                        <?php _e('Select the user to whom you want to assign the deleted user\'s data.','wp-bulk-delete'); ?>
+                        <div class="wpbd-popper__arrow"></div>
+                    </span>
+                </div>
+            </span>
             <?php do_action( 'wpbd_display_available_in_pro'); ?>
-        </td>
-    </tr>
+        </div>
+    </div>
     <?php
 }
 
@@ -283,21 +326,29 @@ function wpdb_render_delete_users_assignuser(){
  */
 function wpdb_render_delete_users_who_has_no_order(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('User Who Has No Order','wp-bulk-delete'); ?> :
-        </th>
-        <td>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('User Who Has No Order','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
             <fieldset>
             <label for="delete_post_status" >
                 <input name="" id="" type="checkbox" <?php echo( ( ! wpbd_is_pro() ) ? 'disabled="disabled"' : '' ); ?> >
                 <?php _e( 'Delete WooCommerce Customer Who has no Order', 'wp-bulk-delete' ); ?>
             </label>
-            <p class="description">
-                <?php _e( "Select users who have no order in WooCommerce ( it's only for the customer role )", 'wp-bulk-delete' ); ?>
-            </p>
+            <span class="wpbd-tooltip" >
+                <div>
+                    <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                    </svg>
+                    <span class="wpbd-popper">
+                        <?php _e( "Select users who have no order in WooCommerce ( it's only for the customer role )", 'wp-bulk-delete' ); ?>
+                        <div class="wpbd-popper__arrow"></div>
+                    </span>
+                </div>
+            </span>
             <?php do_action( 'wpbd_display_available_in_pro'); ?>
-        </td>
-    </tr>
+        </div>
+    </div>
     <?php
 }

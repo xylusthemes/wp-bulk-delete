@@ -16,6 +16,7 @@ add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_status' );
 add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_users' );
 add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_posts' );
 add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_date_interval' );
+add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_limit' );
 
 /**
  * Process Delete Comments form
@@ -41,7 +42,7 @@ function xt_delete_comments_form_process( $data ) {
             $delete_datetime = isset( $data['delete_datetime'] ) ? $data['delete_datetime'] : '';
             if( $delete_time === 'scheduled' && !empty($delete_datetime) && wpbd_is_pro() ) {
                 $data['delete_entity'] = 'comment';
-                return wpbd_save_scheduled_delete($data);
+                return wpbd_save_scheduled_delete( $data );
             }
     		
             $comment_count = wpbulkdelete()->api->do_delete_comments( $data );
@@ -84,37 +85,64 @@ function xt_delete_comments_form_process( $data ) {
  */
 function wpdb_render_delete_comments_status(){
     $comment_status = array(
-                        'pending' => __( 'Pending Comments', 'wp-bulk-delete'),
-                        'spam' => __( 'Spam Comments', 'wp-bulk-delete'),
-                        'trash' => __( 'Trash Comments', 'wp-bulk-delete'),
-                        'approved' => __( 'Approved Comments', 'wp-bulk-delete'),
-                    );
+        'pending' => __( 'Pending Comments', 'wp-bulk-delete'),
+        'spam' => __( 'Spam Comments', 'wp-bulk-delete'),
+        'trash' => __( 'Trash Comments', 'wp-bulk-delete'),
+        'approved' => __( 'Approved Comments', 'wp-bulk-delete'),
+    );
 
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e( 'Comment Status', 'wp-bulk-delete' ); ?> :
-        </th>
-
-        <td>
-            <?php
-            if( ! empty( $comment_status ) ){
-                foreach ($comment_status as $comment_status_value => $comment_status_name ) {
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php _e('Basic Filter ','wp-bulk-delete'); ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret rotated">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="true" style="gap:0;" >
+            <div class="wpbd-inner-main-section">
+                <div class="wpbd-inner-section-1" >
+                    <span class="wpbd-title-text" >
+                        <?php _e('Comment Status ','wp-bulk-delete'); ?>
+                        <span class="wpbd-tooltip">
+                            <div>
+                                <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                                </svg>
+                                <span class="wpbd-popper">
+                                    <?php _e('Select the comment statuses that you want to delete.','wp-bulk-delete'); ?>
+                                    <div class="wpbd-popper__arrow"></div>
+                                </span>
+                            </div>
+                        </span>
+                    </span>
+                </div>
+                <div class="wpbd-inner-section-2">
+                    <?php
+                        if( ! empty( $comment_status ) ){
+                            foreach ($comment_status as $comment_status_value => $comment_status_name ) {
+                                ?>
+                                <div>
+                                    <input name="delete_comment_status[]" class="delete_comment_status" id="comment_status_<?php echo $comment_status_value; ?>" type="checkbox" value="<?php echo $comment_status_value; ?>" >
+                                    <span for="comment_status_<?php echo $comment_status_value; ?>">
+                                        <?php echo $comment_status_name . ' ' . sprintf( __( '( %s Comment(s) )', 'wp-bulk-delete' ), wpbulkdelete()->api->get_comment_count( $comment_status_value ) ); ?>
+                                    </span>
+                                </div>
+                            <?php
+                            }
+                        }
                     ?>
-                    <input name="delete_comment_status[]" class="delete_comment_status" id="comment_status_<?php echo $comment_status_value; ?>" type="checkbox" value="<?php echo $comment_status_value; ?>" >
-                    <label for="comment_status_<?php echo $comment_status_value; ?>">
-                        <?php echo $comment_status_name . ' ' . sprintf( __( '( %s Comment(s) )', 'wp-bulk-delete' ), wpbulkdelete()->api->get_comment_count( $comment_status_value ) ); ?>
-                    </label>
-                    <br/>
-                <?php
-                }
-            }
-            ?>
-            <p class="description">
-                <?php _e('Select the comment statuses which you want to delete.','wp-bulk-delete'); ?>
-            </p>
-        </td>
-    </tr>
+                </div>
+            </div>
+        </div>
+    </div>
     <?php
 }
 
@@ -127,41 +155,77 @@ function wpdb_render_delete_comments_status(){
  */
 function wpdb_render_delete_comments_date_interval(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Comment Date :','wp-bulk-delete'); ?>
-        </th>
-        <td>
-            <?php _e('Delete Comments which are','wp-bulk-delete'); ?> 
-            <select name="date_type" class="date_type">
-                <option value="older_than"><?php _e('older than','wp-bulk-delete'); ?></option>
-                <option value="within_last"><?php _e('submitted within last','wp-bulk-delete'); ?></option>
-                <?php if( wpbd_is_pro() ) { ?>
-                    <option value="onemonth"><?php _e('1 Month','wp-bulk-delete'); ?></option>
-                    <option value="sixmonths"><?php _e('6 Months','wp-bulk-delete'); ?></option>
-                    <option value="oneyear"><?php _e('1 Year','wp-bulk-delete'); ?></option>
-                    <option value="twoyear"><?php _e('2 Years','wp-bulk-delete'); ?></option>
-                <?php } ?>
-                <option value="custom_date"><?php _e('submitted between custom','wp-bulk-delete'); ?></option>
-            </select>
-            <div class="wpbd_date_days wpbd_inline">
-                <input type="number" id="input_days" name="input_days" class="wpbd_input_days" placeholder="0" min="0" /> <?php _e('days','wp-bulk-delete'); ?>
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php _e('Date Filter ','wp-bulk-delete'); ?></span>
+                </div>
+                <div class="header-extra" ></div>
             </div>
-            <div class="wpbd_custom_interval wpbd_inline" style="display:none;">
-                <input type="text" id="delete_start_date" name="delete_start_date" class="delete_all_datepicker" placeholder="<?php _e('Start Date','wp-bulk-delete'); ?>" />
-                -
-                <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" placeholder="<?php _e('End Date','wp-bulk-delete'); ?>" />
-                <p class="description">
-                    <?php _e('Set the date interval for comments to delete ( only delete comments between these dates ) or leave these fields blank to select all comments. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
-                </p>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret rotated">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="true" style="display:none;" >
+            <div class="wpbd-inner-main-section">
+                <div class="wpbd-inner-section-1" >
+                    <span class="wpbd-title-text" >
+                        <?php _e('Comment Date ','wp-bulk-delete'); ?>
+                    </span>
+                </div>
+                <div class="wpbd-inner-section-2">
+                    <?php _e('Delete Comments which are','wp-bulk-delete'); ?> 
+                    <select name="date_type" class="date_type">
+                        <option value="older_than"><?php _e('older than','wp-bulk-delete'); ?></option>
+                        <option value="within_last"><?php _e('submitted within last','wp-bulk-delete'); ?></option>
+                        <?php if( wpbd_is_pro() ) { ?>
+                            <option value="onemonth"><?php _e('1 Month','wp-bulk-delete'); ?></option>
+                            <option value="sixmonths"><?php _e('6 Months','wp-bulk-delete'); ?></option>
+                            <option value="oneyear"><?php _e('1 Year','wp-bulk-delete'); ?></option>
+                            <option value="twoyear"><?php _e('2 Years','wp-bulk-delete'); ?></option>
+                        <?php } ?>
+                        <option value="custom_date"><?php _e('submitted between custom','wp-bulk-delete'); ?></option>
+                    </select>
+                    <div class="wpbd_date_days wpbd_inline">
+                        <input type="number" id="input_days" name="input_days" class="wpbd_input_days" placeholder="0" min="0" /> <?php _e('days','wp-bulk-delete'); ?>
+                    </div>
+                    <div class="wpbd_custom_interval wpbd_inline" style="display:none;">
+                        <input type="text" id="delete_start_date" name="delete_start_date" class="delete_all_datepicker" placeholder="<?php _e('Start Date','wp-bulk-delete'); ?>" />
+                        -
+                        <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" placeholder="<?php _e('End Date','wp-bulk-delete'); ?>" />
+                        <span class="wpbd-tooltip">
+                            <div>
+                                <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                                </svg>
+                                <span class="wpbd-popper">
+                                    <?php _e('Set the date interval for comments to delete ( only delete comments between these dates ) or leave these fields blank to select all comments. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
+                                    <div class="wpbd-popper__arrow"></div>
+                                </span>
+                            </div>
+                        </span>
+
+                    </div>
+                    <div class="wpbd_date_range wpbd_inline" style="display:none;">
+                        <span class="wpbd-tooltip">
+                            <div>
+                                <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                                </svg>
+                                <span class="wpbd-popper">
+                                    <?php _e('This option will work well with Scheduled Delete, which will help to delete comments of the selected option from the scheduled run date.','wp-bulk-delete'); ?>
+                                    <div class="wpbd-popper__arrow"></div>
+                                </span>
+                            </div>
+                        </span>
+                    </div> 
+                </div>
             </div>
-            <div class="wpbd_date_range wpbd_inline" style="display:none;">
-                <p class="description">
-                    <?php _e('This option will work well with Scheduled Delete, which will help to delete comments of the selected option from the scheduled run date.','wp-bulk-delete'); ?>
-                </p>
-            </div> 
-        </td>
-    </tr>
+        </div>
+    </div>
     <?php
 }
 
@@ -174,39 +238,44 @@ function wpdb_render_delete_comments_date_interval(){
 function wpdb_render_delete_comments_users(){
     global $wpdb;
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Comment Author','wp-bulk-delete'); ?> :
-        </th>
-        <td>
+
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php _e('Author Filter ','wp-bulk-delete');  if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="false" style="display:none;" >
             <?php 
-            if( ! wpbd_is_pro() ) { ?>
-                <select name="sample1" class="sample1" disabled="disabled" >
-                    <option value=""><?php esc_attr_e( 'Select author', 'wp-bulk-delete' ); ?></option>
-                </select>
-                <?php
-            } else {
-                $comment_query = "SELECT DISTINCT `comment_author` FROM {$wpdb->comments}";
-                $comment_authors = $wpdb->get_col( $comment_query );
-                if( !empty( $comment_authors ) ){
+                if( wpbd_is_pro() && class_exists( 'WP_Bulk_Delete_Pro_Common' ) ){
+                        $wpdb->common_pro->wpbd_render_delete_comment_author_pro();
+                }else{
                     ?>
-                    <select name="comment_author" class="chosen_select">
-                        <option value=""><?php esc_attr_e( 'Select author', 'wp-bulk-delete' ); ?></option>
-                        <?php
-                        foreach ($comment_authors as $comment_author ) {
-                            echo '<option value="' . $comment_author . '">' . $comment_author . '</option>';
-                        }
-                        ?>
-                    </select>
+                        <div class="wpbd-blur-filter" >
+                            <div class="wpbd-blur" >
+                                <div class="wpbd-blur-filter-option">
+                                    <?php
+                                        wpbd_render_delete_comment_author();
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="wpbd-blur-filter-cta" >
+                                <span style="color: red"><?php echo _e( 'Available in Pro version.', 'wp-bulk-delete' ); ?> </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php echo _e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
+                            </div>
+                        </div>
                     <?php
                 }
-            } ?>
-            <p class="description">
-                <?php _e('Select comment author whose comment you want to delete.','wp-bulk-delete'); ?>
-            </p>
-            <?php do_action( 'wpbd_display_available_in_pro'); ?>
-        </td>
-    </tr>
+            ?>
+        </div>
+    </div>
     <?php
 }
 
@@ -219,38 +288,138 @@ function wpdb_render_delete_comments_users(){
 function wpdb_render_delete_comments_posts(){
     global $wpdb;
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Comment Post','wp-bulk-delete'); ?> :
-        </th>
-        <td>
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php _e('Post Filter ','wp-bulk-delete');  if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="false" style="display:none;" >
             <?php 
-            if( ! wpbd_is_pro() ) { ?>
-                <select name="sample2" class="sample2" disabled="disabled" >
-                    <option value=""><?php esc_attr_e( 'Select post', 'wp-bulk-delete' ); ?></option>
-                </select>
-                <?php
-            } else {
-                $comment_query = "SELECT DISTINCT `comment_post_ID` FROM {$wpdb->comments}";
-                $comment_posts = $wpdb->get_col( $comment_query );
-                if( !empty( $comment_posts ) ){
+                if( wpbd_is_pro() && class_exists( 'WP_Bulk_Delete_Pro_Common' ) ){
+                        $wpdb->common_pro->wpbd_render_delete_comment_posts_pro();
+                }else{
                     ?>
-                    <select name="comment_post" class="chosen_select">
-                        <option value=""><?php esc_attr_e( 'Select post', 'wp-bulk-delete' ); ?></option>
-                        <?php
-                        foreach ($comment_posts as $comment_post ) {
-                            echo '<option value="' . $comment_post . '">' . get_the_title( $comment_post ) . '</option>';
-                        }
-                        ?>
-                    </select>
+                        <div class="wpbd-blur-filter" >
+                            <div class="wpbd-blur" >
+                                <div class="wpbd-blur-filter-option">
+                                    <?php
+                                        wpbd_render_delete_comment_posts();
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="wpbd-blur-filter-cta" >
+                                <span style="color: red"><?php echo _e( 'Available in Pro version.', 'wp-bulk-delete' ); ?> </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php echo _e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
+                            </div>
+                        </div>
                     <?php
                 }
-            } ?>
-            <p class="description">
-                <?php _e('Select comment post whose comment you want to delete.','wp-bulk-delete'); ?>
-            </p>
-            <?php do_action( 'wpbd_display_available_in_pro'); ?>
-        </td>
-    </tr>
+            ?>
+        </div>
+    </div>
+    <?php
+}
+
+/**
+ * Render Comments limit.
+ *
+ * @since 1.0
+ * @return void
+ */
+function wpdb_render_delete_comments_limit(){
+    ?>
+
+
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php _e('Action ','wp-bulk-delete'); ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret rotated">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="true" style="" >
+            <div class="wpbd-inner-main-section">
+                <div class="wpbd-inner-section-1" >
+                    <span class="wpbd-title-text" >
+                        <?php _e('Limit ','wp-bulk-delete'); ?>
+                    </span>
+                </div>
+                <div class="wpbd-inner-section-2">
+                    <input type="number" min="1" id="limit_comment" name="limit_comment" class="limit_comment_input" max="5000" value="1000" />
+                    <span class="wpbd-tooltip" >
+                        <div>
+                            <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                            </svg>
+                            <span class="wpbd-popper">
+                                <?php _e('Set the limit over comments delete. It will delete only the first limit comments. This option will help you in case you have lots of comments to delete and script timeout.','wp-bulk-delete'); ?>
+                                <div class="wpbd-popper__arrow"></div>
+                            </span>
+                        </div>
+                    </span>
+                </div>
+            </div>
+            <?php
+                wpbd_render_delete_time();
+            ?>
+        </div>
+    </div>
+
+    <?php
+}
+
+
+/**
+ * Render Comment Author
+ */
+function wpbd_render_delete_comment_author(){
+    ?>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" >
+                <?php _e('Comment Author ','wp-bulk-delete'); ?>
+            </span>
+        </div>
+        <div class="wpbd-inner-section-2">
+            <select name="sample1" class="comment_author" disabled="disabled" >
+                <option value=""><?php esc_attr_e( 'Select author', 'wp-bulk-delete' ); ?></option>
+            </select>
+        </div>
+    </div>
+    <?php
+}
+
+/**
+ * Render Comment Posts
+ */
+function wpbd_render_delete_comment_posts(){
+    ?>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" >
+                <?php _e('Comment Posts ','wp-bulk-delete'); ?>
+            </span>
+        </div>
+        <div class="wpbd-inner-section-2">
+            <select  name="sample2" class="comment_author" disabled="disabled" >
+                <option value=""><?php esc_attr_e( 'Select post', 'wp-bulk-delete' ); ?></option>
+            </select>
+        </div>
+    </div>
     <?php
 }

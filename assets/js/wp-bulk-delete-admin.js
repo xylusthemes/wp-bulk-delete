@@ -40,6 +40,7 @@
 	jQuery(document).ready(function() {
 	    jQuery('#delete_posts_submit').on( 'click', function() {
 			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled"){
+				jQuery("#delete_posts_form").attr('action', wpBulkDeleteData.siteUrl + '/wp-admin/admin-post.php');
 				jQuery("#delete_posts_form").submit();
 				return;
 			}
@@ -53,9 +54,9 @@
 	            if( response != '' ){
 	                var response = jQuery.parseJSON( response );
 	                if( response.status == 0 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-error"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice notice-error is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                } else if( response.status == 2 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-success"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice notice-success is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
 	                } else if( response.status == 1 ){
 	                    if ( confirm(  response.post_count + ' posts will be delete. Would you like to proceed further?'  ) ){
@@ -115,7 +116,15 @@
 	            	terms_space.html( '' );
 	            }	            
 	        });    
-	    });                    
+	    });
+		
+		jQuery(document).on( 'change', '.taxonomy_terms_select', function() {
+			if (jQuery(this).val().length > 0) {
+				jQuery("#delete_selected_category_section").show();
+			} else {
+				jQuery("#delete_selected_category_section").hide();
+			}
+		});
 	});
 
 
@@ -123,6 +132,7 @@
 	jQuery(document).ready(function() {
 	    jQuery('#delete_users_submit').on( 'click', function() {
 			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled"){
+				jQuery("#delete_users_form").attr('action', wpBulkDeleteData.siteUrl + '/wp-admin/admin-post.php');
 				jQuery("#delete_users_form").submit();
 				return;
 			}
@@ -136,9 +146,9 @@
 	            if( response != '' ){
 	                var response = jQuery.parseJSON( response );
 	                if( response.status == 0 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-error"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice notice-error is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                } else if( response.status == 2 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-success"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice notice-success is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
 	                } else if( response.status == 1 ){
 	                    if ( confirm(  response.post_count + ' users will be delete. Would you like to proceed further?'  ) ){
@@ -155,6 +165,7 @@
 	jQuery(document).ready(function() {
 	    jQuery('#delete_comments_submit').on( 'click', function() {
 			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled"){
+				jQuery("#delete_comments_form").attr('action', wpBulkDeleteData.siteUrl + '/wp-admin/admin-post.php');
 				jQuery("#delete_comments_form").submit();
 				return;
 			}
@@ -168,9 +179,9 @@
 	            if( response != '' ){
 	                var response = jQuery.parseJSON( response );
 	                if( response.status == 0 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-error"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice notice-error is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                } else if( response.status == 2 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-success"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice notice-success is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
 	                } else if( response.status == 1 ){
 	                    if ( confirm(  response.post_count + ' comments will be delete. Would you like to proceed further?'  ) ){
@@ -212,9 +223,9 @@
 	            if( response != '' ){
 	                var response = jQuery.parseJSON( response );
 	                if( response.status == 0 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-error"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice notice-error is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                } else if( response.status == 2 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-success"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice notice-success is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
 	                } else if( response.status == 1 ){
 	                    if ( confirm(  response.post_count + ' meta will be delete. Would you like to proceed further?'  ) ){
@@ -241,9 +252,9 @@
 	            if( response != '' ){
 	                var response = jQuery.parseJSON( response );
 	                if( response.status == 0 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-error"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice notice-error is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                } else if( response.status == 2 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-success"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice notice-success is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
 	                } else if( response.status == 1 ){
 	                    if ( confirm(  response.post_count + ' Terms will be delete. Would you like to proceed further?'  ) ){
@@ -258,8 +269,12 @@
 
 	// 
 	jQuery(document).ready(function(){
-		jQuery("#reassign_user").chosen({max_selected_options: 1});
-		jQuery(".chosen_select").chosen({max_selected_options: 1});
+		jQuery(".wpbd_global_multiple_select").chosen({ 
+			max_selected_options: 100, 
+			placeholder_text_multiple: "Select Multiple options...", 
+			width : '100%', 
+			clearAll: true 
+		});
 	});	
 
 	// Render Dynamic post dropdown.
@@ -324,36 +339,81 @@
 
 	jQuery(document).ready(function(){
 		jQuery("#user_who_has_no_order").change(function() {
-			if( jQuery( "#user_who_has_no_order" ).is( ":checked" ) ) {
-				var selectedRoles = [];
-				jQuery( "input[name='delete_user_roles[]']:checked" ).each(function(){
-					selectedRoles.push( jQuery(this).val() );
-				});
-				if( selectedRoles.length > 1 || ( selectedRoles.length === 1 && selectedRoles[0] !== "customer" ) ) {
-					alert('The "User Who Has No Order" option only works with the Customer role.');
-				}
-				jQuery( "input[name='delete_user_roles[]']" ).each(function() {
-					if( jQuery(this).val() !== "customer" ) {
-						jQuery(this).prop( "checked", false );
-					}
-				});
+			if (jQuery(this).is(":checked")) {
+				jQuery("#delete_user_roles_multiple").val(['customer']).trigger("chosen:updated");
+			} else {
+				jQuery("#delete_user_roles_multiple").trigger("chosen:updated");
 			}
 		});
-		jQuery( "input[name='delete_user_roles[]']" ).change(function() {
-			var userWhoHasNoOrderChecked = jQuery( "#user_who_has_no_order" ).is( ":checked" );
-			if( userWhoHasNoOrderChecked ){
-				if (jQuery(this).val() === "customer") {
-					jQuery("input[name='delete_user_roles[]']").each(function() {
-						if (jQuery(this).val() !== "customer") {
-							jQuery(this).prop("checked", false);
-						}
-					});
-				} else {
-					alert('The "User Who Has No Order" option only works with the Customer role.');
-					jQuery('#user_who_has_no_order').prop( 'checked', false ); 
+
+		jQuery( "#delete_user_roles_multiple" ).change(function() {
+			//here get chosent it's value
+			if( jQuery('#user_who_has_no_order').is(":checked") ){
+				var selectedRoles = jQuery(this).val();
+				console.log( selectedRoles );
+				if (selectedRoles && selectedRoles.length > 0) {
+					var hasOtherRoles = selectedRoles.some(role => role !== "customer");
+		
+					if (hasOtherRoles) {
+						alert('The "User Who Has No Order" option only works with the Customer role.');
+						jQuery(this).val(['customer']).trigger("chosen:updated");
+					}
 				}
-			}			
+			}
 		});
+
+		jQuery('.wpbd-collapsible').on('click', function() {
+			jQuery(this).toggleClass('wpbd-active');
+			jQuery(this).next('.wpbd-collapse-content').slideToggle();
+		});
+
+		jQuery('.header.toggles').on('click', function() {
+			var content = jQuery(this).next('.content');
+			var svgIcon = jQuery(this).find('.wpbd-caret');
+			var isExpanded = content.attr('aria-expanded') === 'true';
+	
+			// Toggle the content visibility
+			content.slideToggle();
+	
+			// Update the aria-expanded attribute
+			content.attr('aria-expanded', !isExpanded);
+	
+			// Toggle the rotated class on the SVG
+			svgIcon.toggleClass('rotated');
+		});
+
+		jQuery('#select_all').change(function() {
+            var isChecked = jQuery(this).is(':checked');
+            jQuery('.cleanup_post_type').prop('checked', isChecked);
+        });
+
+		jQuery('#delete_post_type').on('change', function() {
+			// Check if 'shop_order' is selected
+			var selectedValue = jQuery(this).val();
+    		if (selectedValue.includes('shop_order') || selectedValue.includes('shop_order_lagecy')) {
+				//add shop_order_lagecy
+				jQuery('#woofiltercontent').show();
+				jQuery('#delete_post_status_multiple').prop('disabled', true).trigger("chosen:updated");
+				jQuery('#delete_woo_post_status_multiple').prop('disabled', false).trigger("chosen:updated");
+			} else {
+				jQuery('#woofiltercontent').hide();
+				jQuery('#delete_post_status_multiple').prop('disabled', false).trigger("chosen:updated");
+				jQuery('#delete_woo_post_status_multiple').prop('disabled', true).trigger("chosen:updated");
+			}
+		});
+
+		jQuery('#delete_woo_post_status_multiple').on('change', function() {
+			if ( jQuery(this).val() && jQuery(this).val().length > 0 ) {
+				// jQuery('#delete_post_type').val('shop_order').trigger('chosen:updated');
+				var currentPostType = jQuery('#delete_post_type').val();
+				if (!currentPostType.includes('shop_order') && !currentPostType.includes('shop_order_lagecy')) {
+					jQuery('#delete_post_type').val('shop_order').trigger('chosen:updated');
+				}
+			}
+		});
+
 	});
 
 })( jQuery );
+
+

@@ -13,40 +13,25 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 /** Actions *************************************************************/
 // By Posttype
-add_action( 'render_form_by_posttype', 'wpbd_render_form_posttype', 10 );
 add_action( 'render_form_by_posttype', 'wpbd_render_common_form', 20 );
 
 // By Author
-add_action( 'render_form_by_author', 'wpbd_render_form_posttype', 10 );
-add_action( 'render_form_by_author', 'wpbd_render_form_users', 20 );
 add_action( 'render_form_by_author', 'wpbd_render_common_form', 30 );
 
 // By Title & Content
-add_action( 'render_form_by_title', 'wpbd_render_form_posttype', 10 );
-add_action( 'render_form_by_title', 'wpbd_render_form_post_contains', 20 );
 add_action( 'render_form_by_title', 'wpbd_render_common_form', 30 );
 
 // By Taxonomy.
-add_action( 'render_form_by_taxonomy', 'wpbd_render_form_posttype_dropdown', 10 );
-add_action( 'render_form_by_taxonomy', 'wpbd_render_form_taxonomy', 20 );
-add_action( 'render_form_by_taxonomy', 'wpbd_render_extra_assinged_category', 30 );
 add_action( 'render_form_by_taxonomy', 'wpbd_render_common_form', 40 );
 
 // By Custom Fields
-add_action( 'render_form_by_custom_fields', 'wpbd_render_form_posttype', 10 );
-add_action( 'render_form_by_custom_fields', 'wpbd_render_form_custom_fields', 20 );
 add_action( 'render_form_by_custom_fields', 'wpbd_render_common_form', 30 );
 
 // General
-add_action( 'render_form_general', 'wpbd_render_form_posttype_dropdown', 10 );
-add_action( 'render_form_general', 'wpbd_render_form_taxonomy', 20 );
-add_action( 'render_form_general', 'wpbd_render_extra_assinged_category', 20 );
-add_action( 'render_form_general', 'wpbd_render_form_users', 30 );
-add_action( 'render_form_general', 'wpbd_render_form_custom_fields', 40 );
-add_action( 'render_form_general', 'wpbd_render_form_post_contains', 50 );
 add_action( 'render_form_general', 'wpbd_render_common_form', 60 );
 add_action( 'render_form_by_charector_count', 'wpdb_render_delete_users_postlinks', 10 );
 add_action( 'render_form_by_charector_count', 'wpbd_render_form_post_contant_count_interval', 70 );
+add_action( 'render_form_by_charector_count', 'wpbd_render_form_post_contant_word_count_interval', 80 );
 
 /**
  * Process Delete posts form
@@ -63,7 +48,7 @@ function xt_delete_posts_form_process( $data ) {
         $error[] = esc_html__('You don\'t have enough permission for this operation.', 'wp-bulk-delete' );
     }
 
-    if ( isset( $data['_delete_all_posts_wpnonce'] ) && wp_verify_nonce( $data['_delete_all_posts_wpnonce'], 'delete_posts_nonce' ) ) {
+    if ( isset( $data['_delete_all_actions_wpnonce'] ) && wp_verify_nonce( $data['_delete_all_actions_wpnonce'], 'delete_posts_nonce' ) ) {
 
     	if( empty( $error ) ) {
             $delete_time = ( $data['delete_time'] ) ? $data['delete_time'] : 'now';
@@ -112,54 +97,75 @@ function xt_delete_posts_form_process( $data ) {
  * @return void
  */
 function wpbd_render_form_posttype(){
-    global $wp_post_types;
-    $ingnore_types = array( 'attachment','revision','nav_menu_item','custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation' );
+    global $wp_post_types, $wpdb;
+    $ingnore_types = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation', 'wpbd_scheduled', 'wp_font_face', 'wp_font_family', 'shop_order_refund', 'shop_order_placehold' );
+    $wc_orders     = wpbd_get_wc_order_count();
+    $wc_order      = array();
+    if( !empty( $wc_orders ) ){
+        $wc_order[$wc_orders['type']] = $wc_orders['type_name'];
+    }
+
     $types = array();
     if( !empty( $wp_post_types ) ){
         foreach( $wp_post_types as $key_type => $post_type ){
             if( in_array( $key_type, $ingnore_types ) ){
                 continue;
             }else{
+                if( $key_type == 'shop_order' ){
+                    $key_type = 'shop_order_lagecy';
+                    $post_type->labels->name = $post_type->labels->name . ' Lagecy';
+                }
                 $types[$key_type] = $post_type->labels->name;
             }
         }
     }
+
+    $wc_order = array_filter( $wc_order );
+    if( !empty( $wc_order ) ){
+        $types = array_merge( $wc_order, $types );
+    }
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Post type of items to delete:','wp-bulk-delete'); ?>
-        </th>
-        <td>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Select post type of items to delete ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2" >
             <?php
-            if( !empty( $types ) ){
-                foreach( $types as $key_type => $type ){
-                    $disable = '';
-                    if( ( $type === "Orders" || $type == "Coupons" || $type == "Refunds" ) && !wpbd_is_pro() ){
-                        $disable = "disabled";
-                    }
+                if( !empty( $types ) ){
                     ?>
-                    <fieldset>
-                        <label for="delete_post_type">
-                            <input name="delete_post_type[]" class="delete_post_type" id="<?php echo $key_type; ?>" type="checkbox" value="<?php echo $key_type; ?>" <?php echo $disable; ?> >
-                            <?php printf( __( '%s', 'wp-bulk-delete' ), $type ); ?>
-                            <?php $post_count = wpbd_get_posttype_post_count( $key_type );
-                            if( $post_count >= 0 ){
-                                echo '('.$post_count .' '. $type .')';
-                            }
-                            if( $disable == "disabled" ){
-                                do_action( 'wpbd_display_available_in_pro');
+                        <select name="delete_post_type[]" class="wpbd_global_multiple_select" id="delete_post_type" multiple>
+                            <?php
+                            foreach( $types as $key_type => $type ) {
+                                $disable = $pro = '';
+                                if( ( $key_type === "shop_order_lagecy" || $key_type === "shop_order" || $key_type == "shop_coupon" ) && !wpbd_is_pro() ) {
+                                    $disable = "disabled";
+                                }
+                                $pselect = ( $key_type == 'post' ) ? 'selected' : '';
+                                ?>
+                                <option value="<?php echo $key_type; ?>" <?php echo $disable . $pselect; ?> >
+                                    <?php printf( __( '%s', 'wp-bulk-delete' ), $type ); ?>
+                                    <?php 
+                                    if( $key_type == 'shop_order' ){
+                                        $post_count = isset( $wc_orders['count'] ) ? $wc_orders['count'] : 0;
+                                    }else{
+                                        $post_count = wpbd_get_posttype_post_count( $key_type );
+                                    }
+                                    if( $post_count >= 0 ){
+                                        echo ' ('.$post_count .' '. $type .') ';
+                                    }
+                                    ?>
+                                </option>
+                                <?php
                             }
                             ?>
-                        </label>
-                    </fieldset>
+                        </select>
                     <?php
+                }else{
+                    _e('No post types are there, WP Bulk Delete will not work.','wp-bulk-delete');
                 }
-            }else{
-                _e('No post types are there, WP Bulk Delete will not work.','wp-bulk-delete');
-            }
             ?>
-        </td>
-    </tr>
+        </div>
+    </div>
     <?php
 }
 
@@ -171,7 +177,7 @@ function wpbd_render_form_posttype(){
  */
 function wpbd_render_form_posttype_dropdown(){
     global $wp_post_types;
-    $ingnore_types = array( 'attachment','revision','nav_menu_item','custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation' );
+    $ingnore_types = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation', 'wpbd_scheduled', 'wp_font_face', 'wp_font_family', 'shop_order_refund', 'shop_order_placehold' );
     $types = array();
     if( !empty( $wp_post_types ) ){
         foreach( $wp_post_types as $key_type => $post_type ){
@@ -183,11 +189,11 @@ function wpbd_render_form_posttype_dropdown(){
         }
     }
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Post type of items to delete:','wp-bulk-delete'); ?>
-        </th>
-        <td>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Select Post type ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2" >
             <select name="delete_post_type" class="delete_post_type" id="delete_post_type" required="required">
                 <?php
                 if( !empty( $types ) ){
@@ -207,8 +213,8 @@ function wpbd_render_form_posttype_dropdown(){
                 }
                 ?>
             </select>
-        </td>
-    </tr>
+        </div>
+    </div>
     <?php
 }
 
@@ -220,25 +226,23 @@ function wpbd_render_form_posttype_dropdown(){
  */
 function wpbd_render_form_taxonomy(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Post Taxonomy:','wp-bulk-delete'); ?>
-        </th>
-        <td>
-            <div class="post_taxonomy">
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Post Taxonomy ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
+            <div class="wpbd-texonomy-section" >
+                <div class="post_taxonomy">
+                </div>
+                <div>
+                    <div class="wpbd-inner-section-2">
+                        <div class="post_taxo_terms">
+                        </div>
+                    </div>
+                </div>
             </div>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row" class="taxo_terms_title">
-
-            <?php //_e('Post Taxonomy :','wp-bulk-delete'); ?>
-        </th>
-        <td>
-            <div class="post_taxo_terms">
-            </div>
-        </td>
-    </tr>
+        </div>
+    </div>
     <script>
         jQuery(document).ready(function(){
             jQuery('#delete_post_type').trigger( 'change' );
@@ -255,20 +259,29 @@ function wpbd_render_form_taxonomy(){
  */
 function wpbd_render_extra_assinged_category(){
     ?>
-    <tr>
-        <th scope="row">Delete Post From Selected Category Only:</th>
-        <td>
+    <div class="wpbd-inner-main-section" id="delete_selected_category_section" style="display:none;">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Delete Post From Selected Category Only ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
             <fieldset>
                 <label for="delete_post_status" >
                     <input name="delete_selected_category" id="delete_selected_category" value="d_s_c" type="checkbox" >
-                    Delete Post From Selected Category Only:
                 </label>
-                <p class="description">
-                    <?php _e( "You can enable this option to delete posts that have not been assigned any other categories from the selected category.",'wp-bulk-delete' ); ?>
-                </p>
+                <span class="wpbd-tooltip" >
+                    <div>
+                        <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                        </svg>
+                        <span class="wpbd-popper">
+                            <?php _e( "By selecting this option, only the selected category posts will be deleted, but if the post has another category with the selected category, that post will not be deleted (which means posts that have multiple categories will not be deleted)",'wp-bulk-delete' ); ?>
+                            <div class="wpbd-popper__arrow"></div>
+                        </span>
+                    </div>
+                </span>
             </fieldset>
-        </td>
-    </tr>
+        </div>
+    </div>
     <?php
 }
 
@@ -281,53 +294,23 @@ function wpbd_render_extra_assinged_category(){
 function wpbd_render_form_poststatus(){
     global $wpdb;
         ?>
-        <tr>
-            <th scope="row">Post Status</th>
-            <td>
-                <fieldset>
-                    <label for="delete_post_status" >
-                        <input name="delete_post_status[]" id="publish" value="publish" type="checkbox" checked="checked" >
-                        Published
-                    </label>
-                </fieldset>
-                <fieldset>
-                    <label for="delete_post_status">
-                        <input name="delete_post_status[]" id="future" value="future" type="checkbox">
-                        Scheduled
-                    </label>
-                </fieldset>
-                <fieldset>
-                    <label for="delete_post_status">
-                        <input name="delete_post_status[]" id="draft" value="draft" type="checkbox">
-                        Draft
-                    </label>
-                </fieldset>
-                <fieldset>
-                    <label for="delete_post_status">
-                        <input name="delete_post_status[]" id="pending" value="pending" type="checkbox">
-                        Pending
-                    </label>
-                </fieldset>
-                <fieldset>
-                    <label for="delete_post_status">
-                        <input name="delete_post_status[]" id="private" value="private" type="checkbox">
-                        Private
-                    </label>
-                </fieldset>
-                <fieldset>
-                    <label for="delete_post_status">
-                        <input name="delete_post_status[]" id="trash" value="trash" type="checkbox">
-                        Trash
-                    </label>
-                </fieldset>
-            </td>
-        </tr>
-        <?php
-        if( wpbd_is_pro() && class_exists( 'WP_Bulk_Delete_Pro_Common' ) ){
-            if( $wpdb->common_pro->wpbd_is_woo_active() == true ){
-                $wpdb->common_pro->wpbd_woo_order_detele_by_status();
-            }
-        }
+        <div class="wpbd-inner-main-section">
+            <div class="wpbd-inner-section-1" >
+                <span class="wpbd-title-text" ><?php _e('Post Status ','wp-bulk-delete'); ?></span>
+            </div>
+            <div class="wpbd-inner-section-2">
+                <select name="delete_post_status[]" class="wpbd_global_multiple_select"  id="delete_post_status_multiple" multiple >
+                    <option value="publish" selected>Published</option>
+                    <option value="future">Scheduled</option>
+                    <option value="draft">Draft</option>
+                    <option value="pending">Pending</option>
+                    <option value="private">Private</option>
+                    <option value="trash">Trash</option>
+                </select>
+            </div>
+        </div>
+    <?php
+        
 }
 
 /**
@@ -338,20 +321,52 @@ function wpbd_render_form_poststatus(){
  */
 function wpbd_render_form_custom_query(){
     ?>
-    <tr>
-        <th scope="row">Post Delete from Custom Query:</th>
-        <td>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Post Delete from Custom Query ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
             <fieldset>
                 <label for="delete_post_status" >
                     <input name="with_custom_query" id="with_custom_query" value="custom_query" type="checkbox" >
-                    With Custom Query
+                    <?php _e('With Custom Query','wp-bulk-delete' ); ?>
                 </label>
-                <p class="description">
-                    <?php _e('You can delete posts from custom queries by enabling this option. This option will work only in the "Delete Permanently" option.','wp-bulk-delete' ); ?>
-                </p>
+                <span class="wpbd-tooltip" >
+                    <div>
+                        <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                        </svg>
+                        <span class="wpbd-popper">
+                            <?php _e('Enable this option to delete posts based on custom queries. Note that this option is only effective when using the "Delete Permanently" feature.','wp-bulk-delete' ); ?>
+                            <div class="wpbd-popper__arrow"></div>
+                        </span>
+                    </div>
+                </span>
             </fieldset>
-        </td>
-    </tr>
+        </div>
+    </div>
+    <?php
+}
+
+
+/**
+ * Render Woocommerce Order Statuses.
+ *
+ * @since 1.0
+ * @return void
+ */
+function wpbd_woo_order_detele_by_status_free(){
+    ?>
+        <div class="wpbd-inner-main-section">
+            <div class="wpbd-inner-section-1" >
+                <span class="wpbd-title-text" ><?php _e('WooCommerce Order Status ','wp-bulk-delete'); ?></span>
+            </div>
+            <div class="wpbd-inner-section-2">
+                <select name="" class="wpbd_global_multiple_select" multiple disabled >
+                    <option value=""><?php _e('Available in Pro version.','wp-bulk-delete'); ?></option>
+                </select>
+            </div>
+        </div>
     <?php
 }
 
@@ -364,11 +379,11 @@ function wpbd_render_form_custom_query(){
  */
 function wpbd_render_form_date_interval(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Post Date :','wp-bulk-delete'); ?>
-        </th>
-        <td>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Post Date ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
             <?php _e('Delete Posts which are','wp-bulk-delete'); ?> 
             <select name="date_type" class="date_type">
                 <option value="older_than"><?php _e('older than','wp-bulk-delete'); ?></option>
@@ -388,17 +403,33 @@ function wpbd_render_form_date_interval(){
                 <input type="text" id="delete_start_date" name="delete_start_date" class="delete_all_datepicker" placeholder="<?php _e('Start Date','wp-bulk-delete'); ?>" />
                 -
                 <input type="text" id="delete_end_date" name="delete_end_date" class="delete_all_datepicker" placeholder="<?php _e('End Date','wp-bulk-delete'); ?>" />
-                <p class="description">
-                    <?php _e('Set the date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
-                </p>
+                <span class="wpbd-tooltip" >
+                    <div>
+                        <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                        </svg>
+                        <span class="wpbd-popper">
+                            <?php _e('Set the date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
+                            <div class="wpbd-popper__arrow"></div>
+                        </span>
+                    </div>
+                </span>
             </div>
             <div class="wpbd_date_range wpbd_inline" style="display:none;">
-                <p class="description">
-                    <?php _e('This option will work well with Scheduled Delete, which will help to delete posts of the selected option from the scheduled run date.','wp-bulk-delete'); ?>
-                </p>
+                <span class="wpbd-tooltip" >
+                    <div>
+                        <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                        </svg>
+                        <span class="wpbd-popper">
+                            <?php _e('This option will work well with Scheduled Delete, which will help to delete posts of the selected option from the scheduled run date.','wp-bulk-delete'); ?>
+                            <div class="wpbd-popper__arrow"></div>
+                        </span>
+                    </div>
+                </span>
             </div>
-        </td>
-    </tr>
+        </div>
+    </div>
     <?php
 }
 
@@ -410,11 +441,11 @@ function wpbd_render_form_date_interval(){
  */
 function wpbd_render_form_modified_interval(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Post Modified:','wp-bulk-delete'); ?>
-        </th>
-        <td>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Post Modified ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
             <?php _e('Delete Posts which are','wp-bulk-delete'); ?> 
             <select name="mdate_type" class="mdate_type">
                 <option value="molder_than"><?php _e('older than','wp-bulk-delete'); ?></option>
@@ -428,12 +459,20 @@ function wpbd_render_form_modified_interval(){
                 <input type="text" id="mdelete_start_date" name="mdelete_start_date" class="delete_all_datepicker" placeholder="<?php _e('Start Date','wp-bulk-delete'); ?>" />
                 -
                 <input type="text" id="mdelete_end_date" name="mdelete_end_date" class="delete_all_datepicker" placeholder="<?php _e('End Date','wp-bulk-delete'); ?>" />
-                <p class="description">
-                    <?php _e('Set the modified date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
-                </p>
+                <span class="wpbd-tooltip" >
+                    <div>
+                        <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                        </svg>
+                        <span class="wpbd-popper">
+                            <?php _e('Set the modified date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: <strong>YYYY-MM-DD</strong>','wp-bulk-delete'); ?>
+                            <div class="wpbd-popper__arrow"></div>
+                        </span>
+                    </div>
+                </span>
             </div>
-        </td>
-    </tr>
+        </div>
+    </div>
     <?php
 }
 
@@ -445,11 +484,11 @@ function wpbd_render_form_modified_interval(){
  */
 function wpbd_render_form_post_contant_count_interval(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Post Content Count:','wp-bulk-delete'); ?>
-        </th>
-        <td>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Post Content Count ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
             <?php _e('Delete Post with Content Count Limit','wp-bulk-delete'); ?> 
             <select name="disabled_sample8" disabled="disabled" >
                 <option value="lessthen"><?php _e( 'Less Than.', 'wp-bulk-delete' ); ?> </option>
@@ -458,9 +497,34 @@ function wpbd_render_form_post_contant_count_interval(){
             <div class="mwpbd_date_days wpbd_inline">
                 <input type="number" id="disabled_sample9"  disabled="disabled" name="disabled_sample9" class="limit_post_input" placeholder="0" min="0" /> <?php _e('Character Limit','wp-bulk-delete'); ?>
             </div>
-            <?php do_action( 'wpbd_display_available_in_pro'); ?>
-        </td>
-    </tr>
+        </div>
+    </div>
+    <?php
+}
+
+/**
+ * Render Post Contant Count.
+ *
+ * @since 1.2.6
+ * @return void
+ */
+function wpbd_render_form_post_contant_word_count_interval(){
+    ?>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Post Content Word Count ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
+            <?php _e('Delete Post with Content Count Limit','wp-bulk-delete'); ?> 
+            <select name="disabled_sample10" disabled="disabled" >
+                <option value="lessthen"><?php _e( 'Less Than.', 'wp-bulk-delete' ); ?> </option>
+                <option value="greaterthen"><?php _e( "Greater Then.", "wp-bulk-delete" ); ?> </option>
+            </select>
+            <div class="mwpbd_date_days wpbd_inline">
+                <input type="number" id="disabled_sample11"  disabled="disabled" name="disabled_sample11" class="limit_post_input" placeholder="0" min="0" /> <?php _e('Word Limit','wp-bulk-delete'); ?>
+            </div>
+        </div>
+    </div>
     <?php
 }
 
@@ -472,11 +536,11 @@ function wpbd_render_form_post_contant_count_interval(){
  */
 function wpbd_render_form_post_contains(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('If Post Title Contains:','wp-bulk-delete'); ?>
-        </th>
-        <td>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('If Post Title Contains ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
             <input type="text" id="disabled_sample4" name="disabled_sample4" class="disabled_sample4" disabled="disabled" />
                 <?php _e( 'Then', 'wp-bulk-delete'  ); ?>
             <select name="disabled_sample5" disabled="disabled">
@@ -484,24 +548,21 @@ function wpbd_render_form_post_contains(){
                 <option value=""><?php _e( "Don't delete It.", "wp-bulk-delete" ); ?> </option>
             </select>
             <br/>
-            <?php do_action( 'wpbd_display_available_in_pro'); ?>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row">
-            <?php _e('If Post Content Contains:','wp-bulk-delete'); ?>
-        </th>
-        <td>
+        </div>
+    </div>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('If Post Content Contains ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
             <input type="text" id="disabled_sample6" name="disabled_sample6" class="disabled_sample6" disabled="disabled" />
             <?php _e( 'Then', 'wp-bulk-delete'  ); ?>
             <select name="disabled_sample7" disabled="disabled">
                 <option value=""><?php _e( 'Delete It.', 'wp-bulk-delete' ); ?> </option>
                 <option value=""><?php _e( "Don't delete It.", "wp-bulk-delete" ); ?> </option>
             </select>
-            <br/>
-            <?php do_action( 'wpbd_display_available_in_pro'); ?>
-        </td>
-    </tr>
+        </div>
+    </div>
     <?php
 }
 
@@ -513,17 +574,17 @@ function wpbd_render_form_post_contains(){
  */
 function wpbd_render_form_delete_type(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Post Delete Type:','wp-bulk-delete'); ?>
-        </th>
-        <td>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Post Delete Type ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
             <input type="radio" id="delete_type" name="delete_type" class="delete_type" value="trash" checked="checked"/>
             <?php _e( 'Move to Trash', 'wp-bulk-delete'  ); ?>
             &nbsp;&nbsp;<input type="radio" id="delete_type" name="delete_type" class="delete_type" value="permenant" />
             <?php _e( 'Delete permanently', 'wp-bulk-delete'  ); ?>
-        </td>
-    </tr>
+        </div>
+    </div>
     <?php
 }
 
@@ -535,11 +596,11 @@ function wpbd_render_form_delete_type(){
  */
 function wpbd_render_form_users(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Authors :','wp-bulk-delete'); ?>
-        </th>
-        <td>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Authors ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
             <?php $args = array(
                     'orderby'      => 'display_name',
                     'order'        => 'ASC',
@@ -548,7 +609,7 @@ function wpbd_render_form_users(){
             $authors = get_users( $args );
             if( !empty($authors) ){
                 ?>
-                    <select name="delete_authors[]" multiple="multiple">
+                    <select name="delete_authors[]" class="wpbd_global_multiple_select" id="wpdb_post_author" multiple>
                         <?php foreach($authors as $author){
                             ?>
                             <option value="<?php echo $author->ID; ?>"><?php printf( __( '%s', 'wp-bulk-delete' ), $author->display_name ) ; ?></option>
@@ -559,8 +620,8 @@ function wpbd_render_form_users(){
                 <?php
             }
             ?>
-        </td>
-    </tr>
+        </div>
+    </div>
     <?php
 }
 
@@ -572,17 +633,25 @@ function wpbd_render_form_users(){
  */
 function wpbd_render_limit_post(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Limit :','wp-bulk-delete'); ?>
-        </th>
-        <td>
-            <input type="number" min="1" id="limit_post" name="limit_post" class="limit_post_input" max="10000" />
-            <p class="description">
-                <?php _e('Set the limit over post delete. It will delete only the first limit posts. This option will help you in case you have lots of posts to delete and script timeout.','wp-bulk-delete'); ?>
-            </p>
-        </td>
-    </tr>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Limit ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
+            <input type="number" min="1" id="limit_post" name="limit_post" class="limit_post_input" value="500" max="10000" />
+            <span class="wpbd-tooltip" >
+                <div>
+                    <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                    </svg>
+                    <span class="wpbd-popper">
+                        <?php _e('Set a limit on the number of posts to delete. Only the first set of posts up to this limit will be deleted. This option is useful if you have a large number of posts to delete and want to avoid script timeouts.','wp-bulk-delete'); ?>
+                        <div class="wpbd-popper__arrow"></div>
+                    </span>
+                </div>
+            </span>
+        </div>
+    </div>
     <?php
 }
 
@@ -594,11 +663,11 @@ function wpbd_render_limit_post(){
  */
 function wpbd_render_form_custom_fields(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Custom fields settings:','wp-bulk-delete'); ?>
-        </th>
-        <td>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Custom fields settings ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
             <?php esc_html_e( 'Custom Fields Key', 'wp-bulk-delete' ); ?> 
             <input type="text" id="disabled_sample1" name="disabled_sample1" class="disabled_sample1" disabled="disabled" />
             <select name="disabled_sample2" disabled="disabled">
@@ -607,9 +676,8 @@ function wpbd_render_form_custom_fields(){
             <?php esc_html_e( 'Value', 'wp-bulk-delete' ); ?> 
             <input type="text" id="disabled_sample3" name="disabled_sample3" class="disabled_sample3" disabled="disabled" />
             <br />
-            <span style="color: red">Available in Pro version. </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>">Buy Now</a>
-        </td>
-    </tr>
+        </div>
+    </div>
     <?php
 }
 
@@ -621,33 +689,57 @@ function wpbd_render_form_custom_fields(){
  */
 function wpbd_render_post_cleanup(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Cleanup Posts:','wp-bulk-delete'); ?>
-        </th>
-        <td>
-            <fieldset>
-                <label for="cleanup_post_type">
-                    <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_revision" type="checkbox" value="revision" >
-                    <?php printf( __( 'Revisions (%d Revisions)', 'wp-bulk-delete' ), wpbulkdelete()->api->get_post_count('revision') ); ?>
-                </label>
-            </fieldset>
+    <div class="wpbd-post-form-tbody">
+        <div class="wpbd-card" >
+            <div class="content"  aria-expanded="true" style=" ">
+                <div class="wpbd-inner-main-section">
+                    <div class="wpbd-inner-section-1" >
+                        <span class="wpbd-title-text" ><?php _e('Select all Cleanups ','wp-bulk-delete'); ?></span>
+                    </div>
+                    <div class="wpbd-inner-section-2">
+                        <fieldset>
+                            <label for="cleanup_post_type">
+                                <input class="" id="select_all" type="checkbox" >
+                                <?php _e( 'Select All', 'wp-bulk-delete' ); ?>
+                            </label>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <fieldset>
-                <label for="cleanup_post_type">
-                    <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_trash" type="checkbox" value="trash" >
-                    <?php printf( __( 'Trash (Deleted Posts) (%d Trash)', 'wp-bulk-delete' ),  wpbulkdelete()->api->get_post_count('trash') ); ?>
-                </label>
-            </fieldset>
+        <div class="wpbd-card" >
+            <div class="content"  aria-expanded="true" style=" ">
+                <div class="wpbd-inner-main-section">
+                    <div class="wpbd-inner-section-1" >
+                        <span class="wpbd-title-text" ><?php _e('Cleanup Posts ','wp-bulk-delete'); ?></span>
+                    </div>
+                    <div class="wpbd-inner-section-2">
+                        <fieldset>
+                            <label for="cleanup_post_type">
+                                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_revision" type="checkbox" value="revision" >
+                                <?php printf( __( 'Revisions (%d Revisions)', 'wp-bulk-delete' ), wpbulkdelete()->api->get_post_count('revision') ); ?>
+                            </label>
+                        </fieldset>
 
-            <fieldset>
-                <label for="cleanup_post_type">
-                    <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_revision" type="checkbox" value="auto_drafts" >
-                    <?php printf( __( 'Auto Drafts (%d Auto Drafts)', 'wp-bulk-delete' ),  wpbulkdelete()->api->get_post_count('auto_drafts') ); ?>
-                </label>
-            </fieldset>
-        </td>
-    </tr>
+                        <fieldset>
+                            <label for="cleanup_post_type">
+                                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_trash" type="checkbox" value="trash" >
+                                <?php printf( __( 'Trash (Deleted Posts) (%d Trash)', 'wp-bulk-delete' ),  wpbulkdelete()->api->get_post_count('trash') ); ?>
+                            </label>
+                        </fieldset>
+
+                        <fieldset>
+                            <label for="cleanup_post_type">
+                                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_revision" type="checkbox" value="auto_drafts" >
+                                <?php printf( __( 'Auto Drafts (%d Auto Drafts)', 'wp-bulk-delete' ),  wpbulkdelete()->api->get_post_count('auto_drafts') ); ?>
+                            </label>
+                        </fieldset>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <?php
 }
 
@@ -659,11 +751,11 @@ function wpbd_render_post_cleanup(){
  */
 function wpbd_render_delete_time(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Delete Time:','wp-bulk-delete'); ?>
-        </th>
-        <td>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Delete Time ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
             <input type="radio" id="delete_time_now" name="delete_time" class="delete_time" value="now" checked="checked" />
             <?php _e( 'Delete now', 'wp-bulk-delete'  ); ?><br />
             <input type="radio" id="delete_time_later" name="delete_time" class="delete_time" value="scheduled" <?php echo( ( ! wpbd_is_pro() ) ? 'disabled="disabled"' : '' ); ?>/>
@@ -675,12 +767,22 @@ function wpbd_render_delete_time(){
             do_action( 'wpbd_display_available_in_pro');
             $timezone = wpbd_get_timezone_string();
             ?>
-            <p class="description">
-                <strong><?php printf( esc_html__( 'Timezone: (%s)', 'wp-bulk-delete' ), $timezone ); ?></strong><br/>
-                <?php _e('Scheduled delete runs using cron and background process. So, it is useful for deleting a huge number of records and repetitive delete.','wp-bulk-delete'); ?>
-            </p>
-        </td>
-    </tr>
+            <div>
+                <strong><?php printf( esc_html__( 'Timezone: (%s)', 'wp-bulk-delete' ), $timezone ); ?></strong>
+                <span class="wpbd-tooltip" >
+                    <div>
+                        <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                        </svg>
+                        <span class="wpbd-popper">
+                            <?php _e('Scheduled deletions use cron jobs and background processes, making them ideal for handling large volumes of records or performing repetitive deletions','wp-bulk-delete'); ?>
+                            <div class="wpbd-popper__arrow"></div>
+                        </span>
+                    </div>
+                </span>
+            </div>
+        </div>
+    </div>
     <?php
 }
 
@@ -734,37 +836,302 @@ function wpbd_render_import_frequency( $selected = 'not_repeat' ) {
  * @since 1.0
  * @return void
  */
-function wpbd_render_common_form(){
+function wpbd_render_common_form() {
+    global $wpdb;
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Filter your posts :','wp-bulk-delete'); ?>
-        </th>
-    </tr>
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php _e('Basic Filter ','wp-bulk-delete'); ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret rotated">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="true" style="">
+            <?php 
+                wpbd_render_form_posttype();
+                wpbd_render_form_poststatus();
+                
+            ?>
+        </div>
+    </div>
+
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php _e('WooCommerce Filter ','wp-bulk-delete'); if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="false" id="woofiltercontent" style="display: none;">
+            <?php 
+                if( wpbd_is_pro() && class_exists( 'WP_Bulk_Delete_Pro_Common' ) ){
+                    if( $wpdb->common_pro->wpbd_is_woo_active() == true ){
+                        $wpdb->common_pro->wpbd_woo_order_detele_by_status();
+                    }
+                }else{
+                    ?>
+                        <div class="wpbd-blur-filter" >
+                        <div class="wpbd-blur" >
+                            <div class="wpbd-blur-filter-option">
+                                <?php
+                                     wpbd_woo_order_detele_by_status_free();
+                                ?>
+                            </div>
+                        </div>
+                        <div class="wpbd-blur-filter-cta" >
+                            <span style="color: red"><?php echo _e( 'Available in Pro version.', 'wp-bulk-delete' ); ?> </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php echo _e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
+                        </div>
+                    </div>
+                    <?php
+                }
+            ?>
+        </div>
+    </div> 
+
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php _e('Advanced Category Filter ','wp-bulk-delete'); ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="false" style="display: none;">
+            <?php 
+                wpbd_render_form_taxonomy();
+                wpbd_render_extra_assinged_category();
+            ?>
+        </div>
+    </div>
+
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php _e('Author Filter ','wp-bulk-delete'); ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="false" style="display: none;">
+            <?php 
+                wpbd_render_form_users();
+            ?>
+        </div>
+    </div>
+
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php _e('Advanced Date Filter ','wp-bulk-delete'); ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="false" style="display: none;">
+            <?php
+                wpbd_render_form_date_interval();
+                wpbd_render_form_modified_interval();                
+            ?>
+        </div>
+    </div>
+
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php _e('Delete Post Feature Image Filter ','wp-bulk-delete');  if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="false" style="display: none;">
+            <?php 
+                if( wpbd_is_pro()  ){
+                    wpbd_render_form_delete_media();
+                }else{
+                    ?>
+                        <div class="wpbd-blur-filter" >
+                        <div class="wpbd-blur" >
+                            <div class="wpbd-blur-filter-option">
+                                <?php
+                                    wpbd_render_form_delete_media();
+                                ?>
+                            </div>
+                        </div>
+                        <div class="wpbd-blur-filter-cta" >
+                            <span style="color: red"><?php echo _e( 'Available in Pro version.', 'wp-bulk-delete' ); ?> </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php echo _e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
+                        </div>
+                    </div>
+                    <?php
+                }
+            ?>
+
+        </div>
+    </div>
+
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php _e('Custom Field Filter ','wp-bulk-delete'); if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="false" style="display: none;">
+            <?php 
+                if( !wpbd_is_pro() ){
+                    ?>
+                    <div class="wpbd-blur-filter" >
+                        <div class="wpbd-blur" >
+                            <div class="wpbd-blur-filter-option">
+                                <?php
+                                    wpbd_render_form_custom_fields();
+                                ?>
+                            </div>
+                        </div>
+                        <div class="wpbd-blur-filter-cta" >
+                            <span style="color: red"><?php echo _e( 'Available in Pro version.', 'wp-bulk-delete' ); ?> </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php echo _e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
+                        </div>
+                    </div>
+                    <?php
+                }else{
+                    wpbd_render_form_custom_fields_pro();
+                }
+            ?>
+        </div>
+    </div>
+
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php _e('Advanced Filter ','wp-bulk-delete'); if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="false" style="display: none;">
+            <?php 
+                if( !wpbd_is_pro() ){
+                    ?>
+                    <div class="wpbd-blur-filter" >
+                        <div class="wpbd-blur" >
+                            <div class="wpbd-blur-filter-option">
+                                <?php
+                                    wpbd_render_form_post_contains();
+                                    do_action( 'render_form_by_charector_count' );
+                                ?>
+                            </div>
+                        </div>
+                        <div class="wpbd-blur-filter-cta" >
+                            <span style="color: red"><?php echo _e( 'Available in Pro version.', 'wp-bulk-delete' ); ?> </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php echo _e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
+                        </div>
+                    </div>
+                    <?php
+                }else{
+                    wpbd_render_form_post_contains_pro();
+                    do_action( 'render_form_by_charector_count_pro' );
+                }
+            ?>
+        </div>
+    </div>
+
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php _e('Custom Query Filter ','wp-bulk-delete'); ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="false" style="display: none;">
+            <?php                  
+                wpbd_render_form_custom_query();
+            ?>
+        </div>
+    </div>
+
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php _e('Action ','wp-bulk-delete'); ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret rotated">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="true" style="">
+            <?php
+                wpbd_render_limit_post();
+                wpbd_render_form_delete_type();
+                wpbd_render_delete_time();
+            ?>
+        </div>
+    </div>
     <?php
-
-    wpbd_render_form_poststatus();
-
-    wpbd_render_form_date_interval();
-
-    wpbd_render_form_modified_interval();
-
-    if( wpbd_is_pro() ){
-        do_action( 'render_form_by_charector_count_pro' );
-    }else{
-        do_action( 'render_form_by_charector_count' );
-    }
-    
-    wpbd_render_form_custom_query();
-
-    wpbd_render_form_delete_type();
-
-    wpbd_render_form_delete_media();
-
-    wpbd_render_limit_post();
-
-    wpbd_render_delete_time();
 }
+
+
+
 
 function wpbd_get_timezone_string() {
     $timezone_string = get_option( 'timezone_string' );
@@ -793,20 +1160,18 @@ function wpbd_get_timezone_string() {
  */
 function wpdb_render_delete_users_postlinks(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Post Links','wp-bulk-delete'); ?> :
-        </th>
-        <td style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: center;gap: 10px;">
-            <?php esc_html_e( 'Post Links', 'wp-bulk-delete' ); ?> 
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Post Links ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2" style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: center;gap: 5px;">
             <select name="" disabled="disabled" >
                 <option value=""><?php esc_html_e( 'equal to ( string )', 'wp-bulk-delete-pro' ); ?></option>
                 <option value=""><?php esc_html_e( 'not equal to ( string )', 'wp-bulk-delete-pro' ); ?></option>
             </select>
             <textarea name="" disabled="disabled"  id="" cols="70" style="height: 30px;" class="" placeholder="You can add multiple post links with comma(,) separator" ></textarea>
-            <?php do_action( 'wpbd_display_available_in_pro'); ?>
-        </td>
-    </tr>
+        </div>
+    </div>
     <?php
 }
 
@@ -817,22 +1182,30 @@ function wpdb_render_delete_users_postlinks(){
  */
 function wpbd_render_form_delete_media(){
     ?>
-    <tr>
-        <th scope="row">
-            <?php _e('Delete Post Featured image:','wp-bulk-delete'); ?>
-        </th>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('Delete Post Featured image ','wp-bulk-delete'); ?></span>
+        </div>
         <?php if( wpbd_is_pro() ){ ?>
-            <td>
+            <div class="wpbd-inner-section-2" >
                 <input type="checkbox" id="post_media" name="post_media" class="post_media" value="yes" />
-                <p class="description" >
-                    <?php _e( 'It enables the removal of the featured image of the post, if the image is a featured image of multiple posts, it will not be removed. and If the image is being used in a place other than the featured image, it will be deleted.', 'wp-bulk-delete'  ); ?>
-                </p>
-            </td>
+                <span class="wpbd-tooltip" >
+                    <div>
+                        <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                        </svg>
+                        <span class="wpbd-popper">
+                            <?php _e( 'It enables the removal of the featured image of the post, if the image is a featured image of multiple posts, it will not be removed. and If the image is being used in a place other than the featured image, it will be deleted.', 'wp-bulk-delete'  ); ?>
+                            <div class="wpbd-popper__arrow"></div>
+                        </span>
+                    </div>
+                </span>
+            </div>
         <?php }else{ ?>
-            <td>
+            <div>
                 <?php do_action( 'wpbd_display_available_in_pro'); ?>
-            </td>
+            </div>
         <?php } ?>
-    </tr>
+    </div>
     <?php
 }

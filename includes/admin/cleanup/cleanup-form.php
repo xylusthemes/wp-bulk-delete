@@ -28,11 +28,17 @@ function wpbd_cleanup_form( $type = 'general' ){
         }
 
         if ( isset( $_POST['_run_post_cleanup_wpnonce'] ) && wp_verify_nonce( $_POST['_run_post_cleanup_wpnonce'], 'run_post_cleanup_nonce' ) && empty( $error ) ) {
-            $cleanups = $_POST['cleanup_post_type'];
+            $cleanups = isset( $_POST['cleanup_post_type'] ) ? $_POST['cleanup_post_type'] : '';
             if( ! empty( $cleanups ) ){
                 foreach ($cleanups as $cleanuptype ) {
                     $messages[] = wpbulkdelete()->api->run_cleanup( $cleanuptype );                
                 }
+            }else{
+                ?>
+                <div class="notice notice-success is-dismissible">
+                    <p><strong><?php esc_html_e( 'Nothing to cleanup!!', 'wp-bulk-delete' ); ?></strong></p>
+                </div>
+                <?php
             }
         }else{
             wp_die( esc_html__( 'Sorry, Your nonce did not verify.', 'wp-bulk-delete' ) );
@@ -42,7 +48,7 @@ function wpbd_cleanup_form( $type = 'general' ){
             foreach ( $error as $err ) {
                 ?>
                 <div class="notice notice-error">
-                    <p><strong><?php echo $err; ?></strong></p>
+                    <p><strong><?php esc_html_e( $err, 'wp-bulk-delete' ); ?></strong></p>
                 </div>
                 <?php
             }
@@ -50,7 +56,7 @@ function wpbd_cleanup_form( $type = 'general' ){
         if( ! empty( $messages ) ){
             if (strlen(implode($messages)) == 0 ){
                 ?>
-            <div class="notice notice-success">
+            <div class="notice notice-success is-dismissible">
                 <p><strong><?php esc_html_e( 'Nothing to cleanup!!', 'wp-bulk-delete' ); ?></strong></p>
             </div>
             <?php
@@ -58,8 +64,8 @@ function wpbd_cleanup_form( $type = 'general' ){
                 foreach ( $messages as $message ) {
                     if( $message != '' ){
                         ?>
-                        <div class="notice notice-success">
-                            <p><strong><?php echo $message; ?></strong></p>
+                        <div class="notice notice-success is-dismissible">
+                            <p><strong><?php esc_html_e( $message, 'wp-bulk-delete' ); ?></strong></p>
                         </div>
                         <?php
                     }
@@ -69,31 +75,18 @@ function wpbd_cleanup_form( $type = 'general' ){
     } 
     ?>
     <form method="post" id="cleanup">
-        <table class="form-table">
-            <tbody>
-            <?php
-            if( 'general' == $type ) {
-
-                wpbd_render_post_cleanup();
-                wpbd_render_meta_cleanup();
-
-            }elseif( 'post' == $type ) {
-
-                wpbd_render_post_cleanup();
-                
-            }elseif( 'meta' == $type ) {
-
-                wpbd_render_meta_cleanup();
-                
-            }
-            wp_nonce_field('run_post_cleanup_nonce', '_run_post_cleanup_wpnonce' );
-
-            ?>
-            </tbody>
-        </table>
-        <?php
-            submit_button( __('Run Cleanup','wp-bulk-delete'), 'primary','run_post_cleanup');
-        ?>
+        <div class="form-table">
+            <div>
+                <?php
+                    if( 'general' == $type ) {
+                        wpbd_render_post_cleanup();
+                        wpbd_render_meta_cleanup();
+                    }
+                    wp_nonce_field('run_post_cleanup_nonce', '_run_post_cleanup_wpnonce' );
+                ?>
+            </div>
+        </div>
+        <input type="submit" name="run_post_cleanup" id="run_post_cleanup" class="wpbd_button" value="Run Cleanup">
     </form>
 <?php 
 }

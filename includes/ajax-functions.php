@@ -27,7 +27,7 @@ function wpbd_delete_posts_count() {
 	        $error[] = esc_html__('You don\'t have enough permission for this operation.', 'wp-bulk-delete' );
 	    }
 
-	    if ( isset( $data['_delete_all_posts_wpnonce'] ) && wp_verify_nonce( $data['_delete_all_posts_wpnonce'], 'delete_posts_nonce' ) ) {
+	    if ( isset( $data['_delete_all_actions_wpnonce'] ) && wp_verify_nonce( $data['_delete_all_actions_wpnonce'], 'delete_posts_nonce' ) ) {
 
 	    	if( empty( $error ) ){
 	    		
@@ -75,7 +75,7 @@ add_action( 'wp_ajax_delete_posts_count', 'wpbd_delete_posts_count' );
  */
 function wpbd_render_taxonomy_by_posttype() {
 
-	$post_type  = $_REQUEST['post_type'];
+	$post_type  = isset( $_REQUEST['post_type'] ) ? $_REQUEST['post_type'] : '';
 	$taxonomies = array();
 	if ( $post_type != '' ) {
 		$taxonomies = wpbd_get_taxonomy_by_posttype( $post_type );

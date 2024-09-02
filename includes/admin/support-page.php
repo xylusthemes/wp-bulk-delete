@@ -20,108 +20,154 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return void
  */
 function wpbd_render_support_page(){
-    $open_source_support_url = 'https://wordpress.org/support/plugin/wp-bulk-delete/';
-    $support_url = 'https://xylusthemes.com/support/?utm_source=insideplugin&utm_medium=web&utm_content=sidebar&utm_campaign=freeplugin';
-
-    $review_url = 'https://wordpress.org/support/plugin/wp-bulk-delete/reviews/?rate=5#new-post';
-    $facebook_url = 'https://www.facebook.com/xylusinfo/';
-    $twitter_url = 'https://twitter.com/XylusThemes/';
     ?>
-    <div class="wrap">
-        <h2><?php esc_html_e('Support & Help','wp-bulk-delete'); ?></h2>
-        <div id="poststuff">
-            <div id="post-body" class="metabox-holder columns-2">
-
-                <div id="postbox-container-1" class="postbox-container">
-                    <?php do_action('wpbd_admin_sidebar'); ?>
-                </div>
-
-                <div id="postbox-container-2" class="postbox-container">
-                    
-                    <div class="wpbd_well">
-                        <h3><?php esc_attr_e( 'Getting Support', 'wp-bulk-delete' ); ?></h3>
-                        <p><?php _e( 'Thank you for using Import Facebook Events, We sincerely appreciate your support and we’re excited to see you using our plugins.','wp-bulk-delete' ); ?> </p>
-                        <p><?php _e( 'Our support team is always around to help you.','wp-bulk-delete' ); ?></p>
-                            
-                        <p><strong><?php _e( 'Looking for free support?','wp-bulk-delete' ); ?></strong></p>
-                        <a class="button button-secondary" href="<?php echo $open_source_support_url; ?>" target="_blank" >
-                            <?php _e( 'Open-source forum on WordPress.org','wp-bulk-delete' ); ?>
-                        </a>
-
-                        <p><strong><?php _e( 'Looking for more immediate support?','wp-bulk-delete' ); ?></strong></p>
-                        <p><?php _e( 'We offer premium support on our website with the purchase of our premium plugins.','wp-bulk-delete' ); ?>
-                        </p>
-                        
-                        <a class="button button-primary" href="<?php echo $support_url; ?>" target="_blank" >
-                            <?php _e( 'Contact us directly (Premium Support)','wp-bulk-delete' ); ?>
-                        </a>
-
-                        <p><strong><?php _e( 'Enjoying Import Facebook Events or have feedback?','wp-bulk-delete' ); ?></strong></p>
-                        <a class="button button-secondary" href="<?php echo $review_url; ?>" target="_blank" ><?php _e( 'Leave us a review','wp-bulk-delete' ); ?></a> 
-                        <a class="button button-secondary" href="<?php echo $twitter_url; ?>" target="_blank" ><?php _e( 'Follow us on Twitter','wp-bulk-delete' ); ?></a> 
-                        <a class="button button-secondary" href="<?php echo $facebook_url; ?>" target="_blank" ><?php _e( 'Like us on Facebook','wp-bulk-delete' ); ?></a>
-                    </div>
-
-                    <?php 
-                    $plugins = array();
-                    $plugin_list = wpbulkdelete()->api->get_xyuls_themes_plugins();
-                    if( !empty( $plugin_list ) ){
-                        foreach ($plugin_list as $key => $value) {
-                            $plugins[] = wpbulkdelete()->api->get_wporg_plugin( $key );
-                        }
-                    }
-                    ?>
-                    <div class="" style="margin-top: 20px;">
-                        <h3 class="setting_bar"><?php _e( 'Plugins you should try','wp-bulk-delete' ); ?></h3>
-                        <?php 
-                        if( !empty( $plugins ) ){
-                            foreach ($plugins as $plugin ) {
-                                ?>
-                                <div class="plugin_box">
-                                    <?php if( $plugin->banners['low'] != '' ){ ?>
-                                        <img src="<?php echo $plugin->banners['low']; ?>" class="plugin_img" title="<?php echo $plugin->name; ?>">
-                                    <?php } ?>                    
-                                    <div class="plugin_content">
-                                        <h3><?php echo $plugin->name; ?></h3>
-
-                                        <?php wp_star_rating( array(
-                                        'rating' => $plugin->rating,
-                                        'type'   => 'percent',
-                                        'number' => $plugin->num_ratings,
-                                        ) );?>
-
-                                        <?php if( $plugin->version != '' ){ ?>
-                                            <p><strong><?php _e( 'Version:','wp-bulk-delete' ); ?> </strong><?php echo $plugin->version; ?></p>
-                                        <?php } ?>
-
-                                        <?php if( $plugin->requires != '' ){ ?>
-                                            <p><strong><?php _e( 'Requires:','wp-bulk-delete' ); ?> </strong> <?php _e( 'WordPress ','wp-bulk-delete' ); echo $plugin->requires; ?>+</p>
-                                        <?php } ?>
-
-                                        <?php if( $plugin->active_installs != '' ){ ?>
-                                            <p><strong><?php _e( 'Active Installs:','wp-bulk-delete' ); ?> </strong><?php echo $plugin->active_installs; ?>+</p>
-                                        <?php } ?>
-
-                                        <a class="button button-secondary" href="<?php echo admin_url( 'plugin-install.php?tab=plugin-information&plugin='. $plugin->slug.'&TB_iframe=1&width=772&height=600'); ?>" target="_blank">
-                                            <?php _e( 'Install Now','wp-bulk-delete' ); ?>
-                                        </a>
-                                        <a class="button button-primary" href="<?php echo $plugin->homepage . '?utm_source=crosssell&utm_medium=web&utm_content=supportpage&utm_campaign=freeplugin'; ?>" target="_blank">
-                                            <?php _e( 'Buy Now','wp-bulk-delete' ); ?>
-                                        </a>
+    <div class="wpbd-container">
+        <div class="wpbd-wrap">
+            <div id="poststuff">
+                <div id="post-body" class="metabox-holder columns-2">
+                    <div id="postbox-container-2" class="postbox-container">
+                        <div class="support_well">
+                            <div class="wpbd-support-features">
+                                <div class="wpbd-support-features-card">
+                                    <div class="wpbd-support-features-img">
+                                        <img class="wpbd-support-features-icon" src="<?php echo esc_url( WPBD_PLUGIN_URL.'assets/images/document.svg' ); ?>" alt="<?php esc_attr_e( 'Looking for Something?', 'wp-bulk-delete' ); ?>">
+                                    </div>
+                                    <div class="wpbd-support-features-text">
+                                        <h3 class="wpbd-support-features-title"><?php esc_attr_e( 'Looking for Something?', 'wp-bulk-delete' ); ?></h3>
+                                        <p><?php esc_attr_e( 'We have documentation of how to delete data in bulk.', 'wp-bulk-delete' ); ?></p>
+                                        <a target="_blank" class="button button-primary" href="<?php echo esc_url( 'http://docs.xylusthemes.com/docs/wp-bulk-delete/' ); ?>"><?php esc_attr_e( 'Plugin Documentation', 'wp-bulk-delete' ); ?></a>
                                     </div>
                                 </div>
-                                <?php
-                            }
-                        }
+                                <div class="wpbd-support-features-card">
+                                    <div class="wpbd-support-features-img">
+                                        <img class="wpbd-support-features-icon" src="<?php echo esc_url( WPBD_PLUGIN_URL.'assets/images/call-center.svg' ); ?>" alt="<?php esc_attr_e( 'Need Any Assistance?', 'wp-bulk-delete' ); ?>">
+                                    </div>
+                                    <div class="wpbd-support-features-text">
+                                        <h3 class="wpbd-support-features-title"><?php esc_attr_e( 'Need Any Assistance?', 'wp-bulk-delete' ); ?></h3>
+                                        <p><?php esc_attr_e( 'Our EXPERT Support Team is always ready to help you out.', 'wp-bulk-delete' ); ?></p>
+                                        <a target="_blank" class="button button-primary" href="<?php echo esc_url( 'https://xylusthemes.com/support/' ); ?>"><?php esc_attr_e( 'Contact Support', 'wp-bulk-delete' ); ?></a>
+                                    </div>
+                                </div>
+                                <div class="wpbd-support-features-card">
+                                    <div class="wpbd-support-features-img">
+                                        <img class="wpbd-support-features-icon"  src="<?php echo esc_url( WPBD_PLUGIN_URL.'assets/images/bug.svg' ); ?>" alt="<?php esc_attr_e( 'Found Any Bugs?', 'wp-bulk-delete' ); ?>" />
+                                    </div>
+                                    <div class="wpbd-support-features-text">
+                                        <h3 class="wpbd-support-features-title"><?php esc_attr_e( 'Found Any Bugs?', 'wp-bulk-delete' ); ?></h3>
+                                        <p><?php esc_attr_e( 'Report any Bug that you Discovered, and get Instant Solutions.', 'wp-bulk-delete' ); ?></p>
+                                        <a target="_blank" class="button button-primary" href="<?php echo esc_url( 'https://github.com/xylusthemes/wp-bulk-delete' ); ?>"><?php esc_attr_e( 'Report to GitHub', 'wp-bulk-delete' ); ?></a>
+                                    </div>
+                                </div>
+                                <div class="wpbd-support-features-card">
+                                    <div class="wpbd-support-features-img">
+                                        <img class="wpbd-support-features-icon" src="<?php echo esc_url( WPBD_PLUGIN_URL.'assets/images/tools.svg' ); ?>" alt="<?php esc_attr_e( 'Require Customization?', 'wp-bulk-delete' ); ?>" />
+                                    </div>
+                                    <div class="wpbd-support-features-text">
+                                        <h3 class="wpbd-support-features-title"><?php esc_attr_e( 'Require Customization?', 'wp-bulk-delete' ); ?></h3>
+                                        <p><?php esc_attr_e( 'We would love to hear your Integration and Customization Ideas.', 'wp-bulk-delete' ); ?></p>
+                                        <a target="_blank" class="button button-primary" href="<?php echo esc_url( 'https://xylusthemes.com/what-we-do/' ); ?>"><?php esc_attr_e( 'Connect Our Service', 'wp-bulk-delete' ); ?></a>
+                                    </div>
+                                </div>
+                                <div class="wpbd-support-features-card">
+                                    <div class="wpbd-support-features-img">
+                                        <img class="wpbd-support-features-icon" src="<?php echo esc_url( WPBD_PLUGIN_URL.'assets/images/like.svg' ); ?>" alt="<?php esc_attr_e( 'Like The Plugin?', 'wp-bulk-delete' ); ?>" />
+                                    </div>
+                                    <div class="wpbd-support-features-text">
+                                        <h3 class="wpbd-support-features-title"><?php esc_attr_e( 'Like The Plugin?', 'wp-bulk-delete' ); ?></h3>
+                                        <p><?php esc_attr_e( 'Your Review is very important to us as it helps us to grow more.', 'wp-bulk-delete' ); ?></p>
+                                        <a target="_blank" class="button button-primary" href="<?php echo esc_url( 'https://wordpress.org/support/plugin/wp-bulk-delete/reviews/?rate=5#new-post' ); ?>"><?php esc_attr_e( 'Review Us on WP.org', 'wp-bulk-delete' ); ?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <?php 
+                            $plugin_list = array();
+                            $plugin_list = wpbulkdelete()->api->get_xyuls_themes_plugins();
                         ?>
-                        <div style="clear: both;">
+                        <div class="" style="margin-top: 20px;">
+                            <h3 class="setting_bar"><?php _e( 'Plugins you should try','wp-bulk-delete' ); ?></h3>
+                            <div class="wpbd-about-us-plugins">
+                                <!-- <div class="wpbd-row"> -->
+                                <div class="wpbd-support-features2">
+                                
+                                    <?php 
+                                        if( !empty( $plugin_list ) ){
+                                            foreach ($plugin_list as $key => $plugin ) {
+
+                                                $plugin_slug = ucwords( str_replace( '-', ' ', $key ) );
+                                                $plugin_name =  $plugin['plugin_name'];
+                                                $plugin_description =  $plugin['description'];
+                                                if( $key == 'wp-event-aggregator' ){
+                                                    $plugin_icon = 'https://ps.w.org/'.$key.'/assets/icon-256x256.jpg';
+                                                } else {
+                                                    $plugin_icon = 'https://ps.w.org/'.$key.'/assets/icon-256x256.png';
+                                                }
+
+                                                // Check if the plugin is installed
+                                                $plugin_installed = false;
+                                                $plugin_active = false;
+                                                include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+                                                $all_plugins = get_plugins();
+                                                $plugin_path = $key . '/' . $key . '.php';
+
+                                                if (isset($all_plugins[$plugin_path])) {
+                                                    $plugin_installed = true;
+                                                    $plugin_active = is_plugin_active($plugin_path);
+                                                }
+
+                                                // Determine the status text
+                                                $status_text = 'Not Installed';
+                                                if ($plugin_installed) {
+                                                    $status_text = $plugin_active ? 'Active' : 'Installed (Inactive)';
+                                                }
+                                                
+                                                ?>
+                                                <div class="wpbd-support-features-card2 wpbd-plugin">
+                                                    <div class="wpbd-plugin-main">
+                                                        <div>
+                                                            <img alt="<?php _e( $plugin_slug . ' Image', 'wp-bulk-delete' ); ?>" src="<?php echo esc_url( $plugin_icon ); ?>">
+                                                        </div>
+                                                        <div>
+                                                            <div class="wpbd-main-name"><?php _e( $plugin_slug, 'wp-bulk-delete' ); ?></div>
+                                                            <div><?php _e( $plugin_description, 'wp-bulk-delete' ); ?></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="wpbd-plugin-footer">
+                                                        <div class="wpbd-footer-status">
+                                                            <div class="wpbd-footer-status-label"><?php _e( 'Status : ', 'wp-bulk-delete' ); ?></div>
+                                                            <div class="wpbd-footer-status wpbd-footer-status-<?php echo strtolower(str_replace(' ', '-', $status_text)); ?>">
+                                                                <span <?php echo ( $status_text == 'Active' ) ? 'style="color:green;"' : ''; ?>>
+                                                                    <?php echo $status_text; ?>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="wpbd-footer-action">
+                                                            <?php if (!$plugin_installed): ?>
+                                                                <a href="<?php echo esc_url( admin_url( 'plugin-install.php?s=xylus&tab=search&type=term' ) ); ?>" type="button" class="button button-primary">Install Free Plugin</a>
+                                                            <?php elseif (!$plugin_active): ?>
+                                                                <?php 
+                                                                    $activate_nonce = wp_create_nonce('activate_plugin_' . $plugin_slug); 
+                                                                    $activation_url = add_query_arg(array( 'action' => 'activate_plugin', 'plugin_slug' => $plugin_slug, 'nonce' => $activate_nonce, ), admin_url('admin.php?page=delete_all_actions&tab=by_support_help'));
+                                                                ?>
+                                                                <a href="<?php echo esc_url( admin_url( 'plugins.php?s='. $plugin_name ) ); ?>" class="button button-primary">Activate Plugin</a>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <?php
+                                            }
+                                        }
+                                    ?>
+                                </div>
+                            </div>
+                            <div style="clear: both;">
+                        </div>
                     </div>
-
                 </div>
+                <br class="clear">
             </div>
-            <br class="clear">
         </div>
-
-    </div><!-- /.wrap -->
+    </div>
     <?php
 }

@@ -21,67 +21,155 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return void
  */
 function wpbd_delete_posts_page(){
+	global $wpdb;
+	// Set Default Tab to Posts
+	$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'by_posts';
+	$gettab     = str_replace( 'by_', '', $active_tab );
+	$gettab     = ucwords( str_replace( '_', ' & ', $gettab ) );
+	if( $active_tab == 'by_schedule-delete' ){
+		$gettab     = ucwords( str_replace( '-', ' ', $gettab ) );
+		$page_title = $gettab;
+	}elseif( $active_tab == 'by_schedule-delete-history' ){
+		$page_title = 'Schedule Delete History';
+	}elseif( $active_tab == 'by_support_help' ){
+		$page_title = 'Support & Help';
+	}elseif( $active_tab == 'wpbdpro-license' ){
+		$page_title = 'License';
+	}else{
+		$page_title = "Delete " . $gettab;
+	}
+	$posts_header_result = wpdb_render_common_header( $page_title );
+	echo $posts_header_result;
 	?>
-	<div class="wrap">
-		<h2><?php esc_html_e('Delete Posts','wp-bulk-delete'); ?></h2>
-		<?php
-		// Set Default Tab to Cleanup
-		$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'cleanup';
-		?>
-		<div id="poststuff">
-			<div id="post-body" class="metabox-holder columns-2">
+	
+	<div class="wpbd-container" style="margin-top: 60px;">
+		<div class="wpbd-wrap" >
+			<div id="poststuff">
+				<div id="post-body" class="metabox-holder columns-2">
+					<div class="notice notice-warning">
+						<p><strong><?php _e( 'WARNING: Before you delete any data, please take a backup; and the deletion operation is irreversible. Please use it with caution!', 'wp-bulk-delete' ); ?></strong></p>
+					</div>
+					<?php 
+						do_action( 'timeout_memory_is_enough'); 
+						if ( wpbd_is_pro() ) {
+							if ( isset($wpdb->admin_pro) && is_object($wpdb->admin_pro) && method_exists( $wpdb->admin_pro, 'wpbd_schedule_delete_page' ) ) {
+								do_action( 'display_success_messages_pro'); 
+								$wpdb->admin_pro->display_success_messages();
+							}
+						}
 
-				<div class="notice notice-warning">
-					<p><strong><?php _e( 'WARNING: Before you delete any post please first take Backup, any delete operation done is irreversible. Please use it with caution!', 'wp-bulk-delete' ); ?></strong></p>
-				</div>
-				<?php do_action( 'timeout_memory_is_enough'); ?>
-
-				<div class="delete_notice"></div>
-
-				<div id="postbox-container-1" class="postbox-container">
-					<?php do_action('wpbd_admin_sidebar'); ?>
-				</div>
-
-				<div id="postbox-container-2" class="postbox-container">
-
-					<h1 class="nav-tab-wrapper" style="padding-bottom: 0px">
-						<a href="?page=delete_all_posts&tab=cleanup" class="nav-tab <?php echo $active_tab == 'cleanup' ? 'nav-tab-active' : ''; ?>">
-							<?php esc_attr_e( 'Cleanup', 'wp-bulk-delete' ); ?>
-						</a>
-						<a href="?page=delete_all_posts&tab=by_posttype" class="nav-tab <?php echo $active_tab == 'by_posttype' ? 'nav-tab-active' : ''; ?>">
-							<?php esc_attr_e( 'By Posttype', 'wp-bulk-delete' ); ?>
-						</a>
-						<a href="?page=delete_all_posts&tab=by_taxonomy" class="nav-tab <?php echo $active_tab == 'by_taxonomy' ? 'nav-tab-active' : ''; ?>">
-							<?php esc_attr_e( 'By Taxonomy', 'wp-bulk-delete' ); ?>								
-						</a>
-						<a href="?page=delete_all_posts&tab=by_author" class="nav-tab <?php echo $active_tab == 'by_author' ? 'nav-tab-active' : ''; ?>">
-							<?php esc_attr_e( 'By Author', 'wp-bulk-delete' ); ?>
-						</a>
-						<a href="?page=delete_all_posts&tab=by_title" class="nav-tab <?php echo $active_tab == 'by_title' ? 'nav-tab-active' : ''; ?>">
-							<?php esc_attr_e( 'By Title or Content', 'wp-bulk-delete' ); ?>
-						</a>
-						<a href="?page=delete_all_posts&tab=by_customfield" class="nav-tab <?php echo $active_tab == 'by_customfield' ? 'nav-tab-active' : ''; ?>">
-							<?php esc_attr_e( 'By Custom fields', 'wp-bulk-delete' ); ?>
-						</a>
-						<a href="?page=delete_all_posts&tab=general" class="nav-tab <?php echo $active_tab == 'general' ? 'nav-tab-active' : ''; ?>">
-							<?php esc_attr_e( 'General (By All)', 'wp-bulk-delete' ); ?>
-						</a>
-					</h1>
-
-					<?php
-					if( $active_tab == 'general' || $active_tab == 'by_taxonomy' || $active_tab == 'by_author' || $active_tab == 'by_title' || $active_tab == 'by_posttype' || $active_tab == 'by_customfield' ) {					
-						// load General Post Delete Form
-						require_once WPBD_PLUGIN_DIR . 'includes/admin/posts/wp-bulk-delete-posts.php';
-					}
-					if( $active_tab == 'cleanup' ){
-						wpbd_cleanup_form( 'post' );
-					}
+						if( ! empty( $_POST ) || ( isset( $_GET['message'] ) && !empty( $_GET['message'] ) ) ){
+							do_action( 'delete_pctu_notice'); 
+						}
 					?>
-				</div>
-			</div>
-			<br class="clear">
-		</div>
+					<div class="delete_notice"></div>
+					<div id="postbox-container-2" class="postbox-container">
+						<div class="wpbd-app">
+							<div class="wpbd-tabs">
+								<div class="tabs-scroller">
+									<div class="var-tabs var-tabs--item-horizontal var-tabs--layout-horizontal-padding">
+										<div class="var-tabs__tab-wrap var-tabs--layout-horizontal">
+											<a href="?page=delete_all_actions&tab=by_cleanup" class="var-tab <?php echo $active_tab == 'by_cleanup' ? 'var-tab--active' : 'var-tab--inactive'; ?>">
+												<span class="tab-label"><?php esc_attr_e( 'Cleanup', 'wp-bulk-delete' ); ?></span>
+											</a>
+											<a href="?page=delete_all_actions&tab=by_posts" class="var-tab <?php echo $active_tab == 'by_posts' ? 'var-tab--active' : 'var-tab--inactive'; ?>">
+												<span class="tab-label"><?php esc_attr_e( 'Delete Posts', 'wp-bulk-delete' ); ?></span>
+											</a>
+											<a href="?page=delete_all_actions&tab=by_comments" class="var-tab <?php echo $active_tab == 'by_comments' ? 'var-tab--active' : 'var-tab--inactive'; ?>">
+												<span class="tab-label"><?php esc_attr_e( 'Delete Comments', 'wp-bulk-delete' ); ?></span>
+											</a>
+											<a href="?page=delete_all_actions&tab=by_users" class="var-tab <?php echo $active_tab == 'by_users' ? 'var-tab--active' : 'var-tab--inactive'; ?>">
+												<span class="tab-label"><?php esc_attr_e( 'Delete Users', 'wp-bulk-delete' ); ?></span>
+											</a>
+											<!-- <a href="?page=delete_all_actions&tab=by_meta_fields" class="var-tab <?php //echo $active_tab == 'by_meta_fields' ? 'var-tab--active' : 'var-tab--inactive'; ?>">
+												<span class="tab-label"><?php //esc_attr_e( 'Delete Meta Fields', 'wp-bulk-delete' ); ?></span>
+											</a> -->
+											<a href="?page=delete_all_actions&tab=by_terms" class="var-tab <?php echo $active_tab == 'by_terms' ? 'var-tab--active' : 'var-tab--inactive'; ?>">
+												<span class="tab-label"><?php esc_attr_e( 'Delete Category', 'wp-bulk-delete' ); ?></span>
+											</a>
+											<a href="?page=delete_all_actions&tab=by_schedule-delete" class="var-tab <?php echo ( $active_tab == 'by_schedule-delete' || $active_tab == 'by_schedule-delete-history' )  ? 'var-tab--active' : 'var-tab--inactive'; ?>">
+												<span class="tab-label"><?php esc_attr_e( 'Schedule Delete', 'wp-bulk-delete' ); if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } ?></span>
+											</a>
+											<?php 
+											if( wpbd_is_pro() ){ ?>
+												<a href="?page=delete_all_actions&tab=wpbdpro-license" class="var-tab <?php echo $active_tab == 'wpbdpro-license' ? 'var-tab--active' : 'var-tab--inactive'; ?>">
+													<span class="tab-label"><?php esc_attr_e( 'License', 'wp-bulk-delete' ); ?></span>
+												</a>
+												<?php 
+											}
+											do_action( 'wpbd_pro_tabs' );
+											?>
+											<a href="?page=delete_all_actions&tab=by_support_help" class="var-tab <?php echo $active_tab == 'by_support_help' ? 'var-tab--active' : 'var-tab--inactive'; ?>">
+												<span class="tab-label"><?php esc_attr_e( 'Support & Help', 'wp-bulk-delete' ); ?></span>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
 
-	</div><!-- /.wrap -->
+						<?php
+						$valid_tabs = [ 'by_posts', 'by_comments', 'by_users', 'by_meta_fields', 'by_terms', 'by_cleanup','by_support_help', 'by_schedule-delete', 'wpbdpro-license' ];
+
+						if( $active_tab == 'by_posts' ){
+								require_once WPBD_PLUGIN_DIR . 'includes/admin/posts/wp-bulk-delete-posts.php';
+						}elseif( $active_tab == 'by_comments' ){
+							wpbd_delete_comments_page();
+						}elseif( $active_tab == 'by_users' ){
+							wpbd_delete_users_page();
+						// }elseif( $active_tab == 'by_meta_fields' ){
+						// 	wpbd_delete_meta_page();
+						}elseif( $active_tab == 'by_terms' ){
+							wpbd_delete_terms_page();
+						}elseif( $active_tab == 'by_cleanup' ){
+							wpbd_cleanup_form();
+						}elseif( $active_tab == 'by_support_help' ){
+							wpbd_render_support_page();
+						}elseif( $active_tab == 'by_schedule-delete' || $active_tab == 'by_schedule-delete-history' ){
+
+							if ( wpbd_is_pro() ) {
+								if ( isset($wpdb->admin_pro) && is_object($wpdb->admin_pro) && method_exists( $wpdb->admin_pro, 'wpbd_schedule_delete_page' ) ) {
+									$wpdb->admin_pro->wpbd_schedule_delete_page();
+								}
+							} else {
+								?>
+								<div class="wpbd-container">
+									<div class="wpbd-wrap">
+										<div id="poststuff">
+											<div id="post-body" class="metabox-holder columns-2">
+												<div id="postbox-container-2" class="postbox-container">
+													<div class="wp-bulk-delete-pro-page">
+														<div class="wpbd-blur-filter" >
+															<div class="wpbd-blur"  >
+																<div class="wpbd-blur-filter-option">
+																</div>
+															</div>
+															<div class="wpbd-blur-filter-cta" style="top: 40px;" >
+																<span style="color: red"><?php echo _e( 'Available in Pro version.', 'wp-bulk-delete' ); ?>  </span><a href="<?php echo esc_url( WPBD_PLUGIN_BUY_NOW_URL ); ?>"><?php echo _e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<?php
+							}
+
+						}elseif( $active_tab == 'wpbdpro-license' ){
+							if ( wpbd_is_pro() ) {
+								wpbd_pro_license_page();
+							}
+						}
+						?>
+					</div>
+				</div>
+				<br class="clear">
+			</div>
+		</div>
+	</div>
 	<?php
+	$posts_footer_result = wpdb_render_common_footer();
+	echo $posts_footer_result;
 }
