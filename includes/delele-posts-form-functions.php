@@ -98,7 +98,7 @@ function xt_delete_posts_form_process( $data ) {
  */
 function wpbd_render_form_posttype(){
     global $wp_post_types, $wpdb;
-    $ingnore_types = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation', 'wpbd_scheduled', 'wp_font_face', 'wp_font_family', 'shop_order_refund' );
+    $ingnore_types = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation', 'wpbd_scheduled', 'wp_font_face', 'wp_font_family', 'shop_order_refund', 'shop_order_placehold' );
     $wc_orders     = wpbd_get_wc_order_count();
     $wc_order      = array();
     if( !empty( $wc_orders ) ){
@@ -119,7 +119,11 @@ function wpbd_render_form_posttype(){
             }
         }
     }
-    $types = array_merge( $wc_order, $types );
+
+    $wc_order = array_filter( $wc_order );
+    if( !empty( $wc_order ) ){
+        $types = array_merge( $wc_order, $types );
+    }
     ?>
     <div class="wpbd-inner-main-section">
         <div class="wpbd-inner-section-1" >
@@ -173,7 +177,7 @@ function wpbd_render_form_posttype(){
  */
 function wpbd_render_form_posttype_dropdown(){
     global $wp_post_types;
-    $ingnore_types = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation', 'wpbd_scheduled', 'wp_font_face', 'wp_font_family', 'shop_order_refund' );
+    $ingnore_types = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation', 'wpbd_scheduled', 'wp_font_face', 'wp_font_family', 'shop_order_refund', 'shop_order_placehold' );
     $types = array();
     if( !empty( $wp_post_types ) ){
         foreach( $wp_post_types as $key_type => $post_type ){
@@ -239,15 +243,6 @@ function wpbd_render_form_taxonomy(){
             </div>
         </div>
     </div>
-    <!-- <div>
-        <div class="taxo_terms_title">
-            <?php //_e('Post Taxonomy :','wp-bulk-delete'); ?>
-        </div>
-        <div>
-            <div class="post_taxo_terms">
-            </div>
-        </div>
-    </div> -->
     <script>
         jQuery(document).ready(function(){
             jQuery('#delete_post_type').trigger( 'change' );

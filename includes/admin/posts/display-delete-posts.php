@@ -52,7 +52,7 @@ function wpbd_delete_posts_page(){
 					<?php 
 						do_action( 'timeout_memory_is_enough'); 
 						if ( wpbd_is_pro() ) {
-							if ( method_exists( $wpdb->admin_pro, 'wpbd_schedule_delete_page' ) ) {
+							if ( isset($wpdb->admin_pro) && is_object($wpdb->admin_pro) && method_exists( $wpdb->admin_pro, 'wpbd_schedule_delete_page' ) ) {
 								do_action( 'display_success_messages_pro'); 
 								$wpdb->admin_pro->display_success_messages();
 							}
@@ -128,7 +128,7 @@ function wpbd_delete_posts_page(){
 						}elseif( $active_tab == 'by_schedule-delete' || $active_tab == 'by_schedule-delete-history' ){
 
 							if ( wpbd_is_pro() ) {
-								if ( method_exists( $wpdb->admin_pro, 'wpbd_schedule_delete_page' ) ) {
+								if ( isset($wpdb->admin_pro) && is_object($wpdb->admin_pro) && method_exists( $wpdb->admin_pro, 'wpbd_schedule_delete_page' ) ) {
 									$wpdb->admin_pro->wpbd_schedule_delete_page();
 								}
 							} else {

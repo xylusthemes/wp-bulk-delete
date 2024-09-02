@@ -389,7 +389,9 @@
 
 		jQuery('#delete_post_type').on('change', function() {
 			// Check if 'shop_order' is selected
-			if (jQuery(this).val().includes('shop_order')) {
+			var selectedValue = jQuery(this).val();
+    		if (selectedValue.includes('shop_order') || selectedValue.includes('shop_order_lagecy')) {
+				//add shop_order_lagecy
 				jQuery('#woofiltercontent').show();
 				jQuery('#delete_post_status_multiple').prop('disabled', true).trigger("chosen:updated");
 				jQuery('#delete_woo_post_status_multiple').prop('disabled', false).trigger("chosen:updated");
@@ -402,7 +404,11 @@
 
 		jQuery('#delete_woo_post_status_multiple').on('change', function() {
 			if ( jQuery(this).val() && jQuery(this).val().length > 0 ) {
-				jQuery('#delete_post_type').val('shop_order').trigger('chosen:updated');
+				// jQuery('#delete_post_type').val('shop_order').trigger('chosen:updated');
+				var currentPostType = jQuery('#delete_post_type').val();
+				if (!currentPostType.includes('shop_order') && !currentPostType.includes('shop_order_lagecy')) {
+					jQuery('#delete_post_type').val('shop_order').trigger('chosen:updated');
+				}
 			}
 		});
 
