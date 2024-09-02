@@ -5,7 +5,7 @@ Tags: delete, bulk, clean, bulk delete, bulk clean, posts delete, delete all, ma
 Requires at least: 4.9
 Requires PHP: 5.3
 Tested up to: 6.6 
-Stable tag: 1.2.9
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -173,6 +173,11 @@ We are working on providing more options :)
 15. Scheduled Delete History
 
 == Changelog ==
+
+= 1.3.0 =
+* ADDED: Limit in Comment Delete Section
+* ADDED: New filter to delete posts based on word count in post content.
+* IMPROVEMENTS: Plugin's New Interface
 
 = 1.2.9 =
 * IMPROVEMENTS: Support for WP 6.6
