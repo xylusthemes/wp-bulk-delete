@@ -116,7 +116,13 @@ function wpbd_delete_users_page(){
 										<div class="text" >
 											<div class="header-icon" ></div>
 											<div class="header-title" >
-												<span><?php _e('WooCommerce Filter ','wp-bulk-delete'); if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } ?></span>
+												<span>
+													<?php 
+														_e('WooCommerce Filter ','wp-bulk-delete'); 
+														if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } 
+														echo wp_kses_post( check_wc_is_activated() );
+													?>
+												</span>
 											</div>
 											<div class="header-extra" ></div>
 										</div>

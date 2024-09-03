@@ -279,7 +279,7 @@
 }
 
 .wpbd-pro-badge {
-    margin-left: 10px;
+    margin-left: 5px;
     height: 22px;
     border-radius: 3px;
     background: #005AE0;
@@ -494,10 +494,6 @@ a.var-tab.var--box.var-tab--inactive:focus {
     height: var(--tabs-indicator-size)
 }
 
-[dir=ltr] .wpbd-app .var-tabs--layout-horizontal-indicator {
-    left: 0
-}
-
 .wpbd-app .var-tabs--layout-horizontal-indicator {
     right: 0
 }
@@ -505,10 +501,6 @@ a.var-tab.var--box.var-tab--inactive:focus {
 .wpbd-app .var-tabs--layout-horizontal-reverse-indicator {
     top: 0;
     height: var(--tabs-indicator-size)
-}
-
-[dir=ltr] .wpbd-app .var-tabs--layout-horizontal-reverse-indicator {
-    left: 0
 }
 
 .wpbd-app .var-tabs--layout-horizontal-reverse-indicator {
@@ -542,10 +534,6 @@ a.var-tab.var--box.var-tab--inactive:focus {
     width: var(--tabs-indicator-size)
 }
 
-[dir=ltr] .wpbd-app .var-tabs--layout-vertical-indicator {
-    left: 0
-}
-
 .wpbd-app .var-tabs--layout-vertical-indicator {
     right: 0
 }
@@ -553,10 +541,6 @@ a.var-tab.var--box.var-tab--inactive:focus {
 .wpbd-app .var-tabs--layout-vertical-reverse-indicator {
     top: 0;
     width: var(--tabs-indicator-size)
-}
-
-[dir=ltr] .wpbd-app .var-tabs--layout-vertical-reverse-indicator {
-    right: 0
 }
 
 .wpbd-app .var-tabs--layout-vertical-reverse-indicator {
@@ -581,10 +565,6 @@ a.var-tab.var--box.var-tab--inactive:focus {
     width: 100%;
     bottom: 0;
     z-index: 99
-}
-
-[dir=ltr] .wpbd-app .var-tabs--fixed-bottom {
-    left: 0
 }
 
 .wpbd-app .var-tabs--fixed-bottom {
@@ -667,11 +647,6 @@ a.var-tab.var--box.var-tab--inactive:focus {
     position: absolute
 }
 
-[dir=ltr] .wpbd-app .wpbd-tabs .button-right,
-[dir=ltr] .wpbd-app .wpbd-tabs .tabs-extra {
-    right: 0
-}
-
 .wpbd-app .wpbd-tabs .button-right,
 .wpbd-app .wpbd-tabs .tabs-extra {
     left: 0
@@ -682,10 +657,6 @@ a.var-tab.var--box.var-tab--inactive:focus {
     font-weight: 700;
     line-height: normal;
     font-size: 12px
-}
-
-[dir=ltr] .wpbd-app .wpbd-tabs .tab-score {
-    padding-left: 12px
 }
 
 .wpbd-app .wpbd-tabs .tab-score {
@@ -708,10 +679,6 @@ a.var-tab.var--box.var-tab--inactive:focus {
     display: inline
 }
 
-[dir=ltr] .wpbd-app .wpbd-tabs .tab-score svg {
-    margin-right: 4px
-}
-
 .wpbd-app .wpbd-tabs .tab-score svg {
     margin-left: 4px
 }
@@ -725,10 +692,6 @@ a.var-tab.var--box.var-tab--inactive:focus {
     top: 2px;
     display: inline;
     color: #f18200 !important
-}
-
-[dir=ltr] .wpbd-app .wpbd-tabs .warning svg {
-    left: 5px
 }
 
 .wpbd-app .wpbd-tabs .warning svg {
@@ -755,10 +718,6 @@ a.var-tab.var--box.var-tab--inactive:focus {
     position: relative
 }
 
-[dir=ltr] .wpbd-app .wpbd-mobile-tabs .active-tab {
-    padding-left: var(--spacing-x)
-}
-
 .wpbd-app .wpbd-mobile-tabs .active-tab {
     padding-right: var(--spacing-x)
 }
@@ -775,11 +734,6 @@ a.var-tab.var--box.var-tab--inactive:focus {
     z-index: 10
 }
 
-[dir=ltr] .wpbd-app .wpbd-mobile-tabs .active-tab div span {
-    left: 0;
-    right: calc(var(--spacing-x) * -2)
-}
-
 .wpbd-app .wpbd-mobile-tabs .active-tab div span {
     right: 0;
     left: calc(var(--spacing-x) * -2)
@@ -792,11 +746,6 @@ a.var-tab.var--box.var-tab--inactive:focus {
     top: calc(50% - var(--caret-size) / 2);
     transition: transform .3s;
     width: var(--caret-size)
-}
-
-[dir=ltr] .wpbd-app .wpbd-mobile-tabs .active-tab svg.wpbd-caret {
-    left: 100%;
-    transform: rotate(180deg)
 }
 
 .wpbd-app .wpbd-mobile-tabs .active-tab svg.wpbd-caret {
@@ -855,10 +804,6 @@ a.var-tab.var--box.var-tab--inactive:focus {
     stroke: #005ae0
 }
 
-[dir=ltr] .wpbd-percent-circle .wpbd-percent-circle-score__circle {
-    transform: rotate(-90deg)
-}
-
 .wpbd-percent-circle .wpbd-percent-circle-score__circle {
     transform: rotate(90deg)
 }
@@ -906,16 +851,8 @@ a.var-tab.var--box.var-tab--inactive:focus {
     z-index: 1001
 }
 
-[dir=ltr] .wpbd-processing-popup {
-    right: 20px
-}
-
 .wpbd-processing-popup {
     left: 20px
-}
-
-[dir=ltr] .wpbd-processing-popup>div {
-    margin-right: 20px
 }
 
 .wpbd-processing-popup>div {
@@ -931,10 +868,6 @@ a.var-tab.var--box.var-tab--inactive:focus {
     height: 10px;
     min-width: 10px;
     min-height: 10px
-}
-
-[dir=ltr] .wpbd-processing-popup>svg {
-    right: 12px
 }
 
 .wpbd-processing-popup>svg {
@@ -991,10 +924,6 @@ a.var-tab.var--box.var-tab--inactive:focus {
     width: 20px;
     height: 20px;
     min-width: 20px
-}
-
-[dir=ltr] .wpbd-app .wpbd-upgrade-bar svg.wpbd-logo-gear {
-    margin-right: 14px
 }
 
 .wpbd-app .wpbd-upgrade-bar svg.wpbd-logo-gear {
@@ -1111,10 +1040,6 @@ html:not([data-scroll="0"]) .wpbd-header {
     background: #d0d1d7
 }
 
-[dir=ltr] .wpbd-header .wpbd-header-content .spacer {
-    transform: rotate(-70deg)
-}
-
 .wpbd-header .wpbd-header-content .spacer {
     transform: rotate(70deg)
 }
@@ -1143,10 +1068,6 @@ html:not([data-scroll="0"]) .wpbd-header {
     transition: background-color .2s ease
 }
 
-[dir=ltr] .wpbd-header .wpbd-header-content .header-actions .round {
-    margin-left: 10px
-}
-
 .wpbd-header .wpbd-header-content .header-actions .round {
     margin-right: 10px
 }
@@ -1172,11 +1093,6 @@ html:not([data-scroll="0"]) .wpbd-header {
     margin: 0;
     animation: bounce 2s 5;
     will-change: transform
-}
-
-[dir=ltr] .wpbd-header .wpbd-header-content .header-actions .number {
-    left: 50%;
-    transform: translate(-50%)
 }
 
 .wpbd-header .wpbd-header-content .header-actions .number {
@@ -1275,10 +1191,6 @@ html:not([data-scroll="0"]) .wpbd-header {
     height: 24px
 }
 
-[dir=ltr] .wpbd-card>.header .text .header-icon svg {
-    margin-right: 16px
-}
-
 .wpbd-card>.header .text .header-icon svg {
     margin-left: 16px
 }
@@ -1299,12 +1211,8 @@ html:not([data-scroll="0"]) .wpbd-header {
     height: 17px
 }
 
-[dir=ltr] .wpbd-card>.header .text .wpbd-pro-badge {
-    margin-left: 10px
-}
-
 .wpbd-card>.header .text .wpbd-pro-badge {
-    margin-right: 10px
+    margin-right: 5px
 }
 
 .wpbd-card>.header .text .card-score {
@@ -1313,10 +1221,6 @@ html:not([data-scroll="0"]) .wpbd-header {
     align-items: center;
     justify-content: flex-end;
     font-size: 12px
-}
-
-[dir=ltr] .wpbd-card>.header .text .card-score {
-    padding-right: 10px
 }
 
 .wpbd-card>.header .text .card-score {
@@ -1335,10 +1239,6 @@ html:not([data-scroll="0"]) .wpbd-header {
     color: #df2a4a
 }
 
-[dir=ltr] .wpbd-card>.header .text .card-score svg {
-    margin-right: 4px
-}
-
 .wpbd-card>.header .text .card-score svg {
     margin-left: 4px
 }
@@ -1348,10 +1248,6 @@ html:not([data-scroll="0"]) .wpbd-header {
     height: 24px;
     cursor: pointer;
     transition: transform .3s
-}
-
-[dir=ltr] .wpbd-card>.header svg.wpbd-caret {
-    transform: rotate(-180deg)
 }
 
 .wpbd-card>.header svg.wpbd-caret {
