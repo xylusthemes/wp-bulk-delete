@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-09-02T12:54:09+00:00\n"
+"POT-Creation-Date: 2024-09-03T09:11:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-bulk-delete\n"
@@ -59,7 +59,7 @@ msgstr ""
 
 #: includes/admin/admin-pages.php:28
 #: includes/admin/posts/display-delete-posts.php:82
-#: includes/admin/users/display-delete-users.php:180
+#: includes/admin/users/display-delete-users.php:186
 msgid "Delete Users"
 msgstr ""
 
@@ -127,28 +127,28 @@ msgstr ""
 
 #: includes/admin/posts/display-delete-posts.php:148
 #: includes/admin/users/display-delete-users.php:103
-#: includes/admin/users/display-delete-users.php:141
+#: includes/admin/users/display-delete-users.php:147
 #: includes/common-functions.php:101
 #: includes/delele-comments-form-functions.php:271
 #: includes/delele-comments-form-functions.php:320
 #: includes/delele-posts-form-functions.php:366
-#: includes/delele-posts-form-functions.php:896
-#: includes/delele-posts-form-functions.php:999
-#: includes/delele-posts-form-functions.php:1036
-#: includes/delele-posts-form-functions.php:1075
+#: includes/delele-posts-form-functions.php:902
+#: includes/delele-posts-form-functions.php:1005
+#: includes/delele-posts-form-functions.php:1042
+#: includes/delele-posts-form-functions.php:1081
 msgid "Available in Pro version."
 msgstr ""
 
 #: includes/admin/posts/display-delete-posts.php:148
 #: includes/admin/users/display-delete-users.php:103
-#: includes/admin/users/display-delete-users.php:141
+#: includes/admin/users/display-delete-users.php:147
 #: includes/common-functions.php:102
 #: includes/delele-comments-form-functions.php:271
 #: includes/delele-comments-form-functions.php:320
-#: includes/delele-posts-form-functions.php:896
-#: includes/delele-posts-form-functions.php:999
-#: includes/delele-posts-form-functions.php:1036
-#: includes/delele-posts-form-functions.php:1075
+#: includes/delele-posts-form-functions.php:902
+#: includes/delele-posts-form-functions.php:1005
+#: includes/delele-posts-form-functions.php:1042
+#: includes/delele-posts-form-functions.php:1081
 msgid "Buy Now"
 msgstr ""
 
@@ -242,14 +242,14 @@ msgstr ""
 msgid "Advance Users Filter "
 msgstr ""
 
-#: includes/admin/users/display-delete-users.php:119
-#: includes/delele-posts-form-functions.php:870
+#: includes/admin/users/display-delete-users.php:121
+#: includes/delele-posts-form-functions.php:872
 msgid "WooCommerce Filter "
 msgstr ""
 
-#: includes/admin/users/display-delete-users.php:157
+#: includes/admin/users/display-delete-users.php:163
 #: includes/delele-comments-form-functions.php:346
-#: includes/delele-posts-form-functions.php:1113
+#: includes/delele-posts-form-functions.php:1119
 msgid "Action "
 msgstr ""
 
@@ -437,40 +437,40 @@ msgstr ""
 msgid "Attention: The server PHP timeout limit is set to "
 msgstr ""
 
-#: includes/common-functions.php:207
+#: includes/common-functions.php:210
 msgid "Scheduled Delete - "
 msgstr ""
 
-#: includes/common-functions.php:220
-#: includes/common-functions.php:237
+#: includes/common-functions.php:223
+#: includes/common-functions.php:240
 msgid "Something went wrong when saving scheduled delete."
 msgstr ""
 
-#: includes/common-functions.php:247
+#: includes/common-functions.php:250
 msgid "Delete scheduled successfully."
 msgstr ""
 
-#: includes/common-functions.php:252
+#: includes/common-functions.php:255
 msgid "Error in scheduled delete."
 msgstr ""
 
-#: includes/common-functions.php:287
+#: includes/common-functions.php:290
 msgid "Made with ♥ by the Xylus Themes"
 msgstr ""
 
-#: includes/common-functions.php:289
+#: includes/common-functions.php:292
 msgid "Support"
 msgstr ""
 
-#: includes/common-functions.php:291
+#: includes/common-functions.php:294
 msgid "Docs"
 msgstr ""
 
-#: includes/common-functions.php:293
+#: includes/common-functions.php:296
 msgid "Free Plugins"
 msgstr ""
 
-#: includes/common-functions.php:372
+#: includes/common-functions.php:375
 msgid "Dashboard"
 msgstr ""
 
@@ -588,7 +588,7 @@ msgid "This option will work well with Scheduled Delete, which will help to dele
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:247
-#: includes/delele-posts-form-functions.php:932
+#: includes/delele-posts-form-functions.php:938
 msgid "Author Filter "
 msgstr ""
 
@@ -933,39 +933,39 @@ msgstr ""
 msgid "eg: Daily Post Delete"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:910
+#: includes/delele-posts-form-functions.php:916
 msgid "Advanced Category Filter "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:953
+#: includes/delele-posts-form-functions.php:959
 msgid "Advanced Date Filter "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:975
+#: includes/delele-posts-form-functions.php:981
 msgid "Delete Post Feature Image Filter "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:1014
+#: includes/delele-posts-form-functions.php:1020
 msgid "Custom Field Filter "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:1052
+#: includes/delele-posts-form-functions.php:1058
 msgid "Advanced Filter "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:1092
+#: includes/delele-posts-form-functions.php:1098
 msgid "Custom Query Filter "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:1165
+#: includes/delele-posts-form-functions.php:1171
 msgid "Post Links "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:1187
+#: includes/delele-posts-form-functions.php:1193
 msgid "Delete Post Featured image "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:1198
+#: includes/delele-posts-form-functions.php:1204
 msgid "It enables the removal of the featured image of the post, if the image is a featured image of multiple posts, it will not be removed. and If the image is being used in a place other than the featured image, it will be deleted."
 msgstr ""
 
