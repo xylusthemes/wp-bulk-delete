@@ -5,7 +5,7 @@ Tags: delete, bulk, clean, bulk delete, bulk clean, posts delete, delete all, ma
 Requires at least: 4.9
 Requires PHP: 5.3
 Tested up to: 6.6 
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,15 +80,6 @@ WP bulk Delete support below powerfull conditions and filters.
 * Assign deleted user data to another user. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Delete Users who don't have an order. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Scheduled Delete [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-
-
-#### Delete Meta fields
-
-* Delete Post Meta fields
-* Delete User meta fields
-* Delete Comment meta fields
-* Delete Taxonomy terms
- 
 
 ####  Database Cleanup 
 
@@ -173,6 +164,13 @@ We are working on providing more options :)
 15. Scheduled Delete History
 
 == Changelog ==
+
+= 1.3.1 =
+* ADDED: WooCommerce Order Trash Status
+* FIX: Multiple Schedule Delete Running bug
+* IMPROVEMENTS: Allowed CPT's Post Status
+* IMPROVEMENTS: Comments Page Loading Speed
+* IMPROVEMENTS: Merged CleanUp options
 
 = 1.3.0 =
 * ADDED: Limit in Comment Delete Section
