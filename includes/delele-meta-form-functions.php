@@ -18,15 +18,6 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return void
  */
 function wpbd_render_meta_cleanup(){
-    // Counts
-    $orphan_postmeta_count        = wpbulkdelete()->api->get_post_count('orphan_postmeta');
-    $duplicated_postmeta_count    = wpbulkdelete()->api->get_post_count('duplicated_postmeta');
-    $orphan_commentmeta_count     = wpbulkdelete()->api->get_post_count('orphan_commentmeta');
-    $duplicated_commentmeta_count = wpbulkdelete()->api->get_post_count('duplicated_commentmeta');
-    $orphan_usermeta_count        = wpbulkdelete()->api->get_post_count('orphan_usermeta');
-    $duplicated_usermeta_count    = wpbulkdelete()->api->get_post_count('duplicated_usermeta');
-    $orphan_termmeta_count        = wpbulkdelete()->api->get_post_count('orphan_termmeta');
-    $duplicated_termmeta_count    = wpbulkdelete()->api->get_post_count('duplicated_termmeta');
     ?>
 
 
@@ -34,64 +25,26 @@ function wpbd_render_meta_cleanup(){
         <div class="content"  aria-expanded="true" style=" ">
             <div class="wpbd-inner-main-section">
                 <div class="wpbd-inner-section-1" >
-                    <span class="wpbd-title-text" ><?php _e('Cleanup Metas ','wp-bulk-delete'); ?></span>
+                    <span class="wpbd-title-text" ><?php _e('Cleanup Meta ','wp-bulk-delete'); ?></span>
                 </div>
                 <div class="wpbd-inner-section-2">
-                    <fieldset>
-                        <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_orphan_postmeta" type="checkbox" value="orphan_postmeta" >
-                        <label for="cleanup_orphan_postmeta">                    
-                            <?php printf( __( 'Orphaned Post Meta (%d Post Meta)', 'wp-bulk-delete' ), $orphan_postmeta_count ); ?>
+                    <div class="cleanups_section" >
+                        <input name="cleanup_post_type[]" class="cleanup_post_type" id="all_orphan_duplicate" type="checkbox" value="all_orphan_duplicate" >
+                        <label for="all_orphan_duplicate">                    
+                            <?php _e( 'Clear All Metadata Cleanup', 'wp-bulk-delete' ); ?>
                         </label>
-                    </fieldset>
-
-                    <fieldset>
-                        <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_duplicated_postmeta" type="checkbox" value="duplicated_postmeta" >
-                        <label for="cleanup_duplicated_postmeta">                    
-                            <?php printf( __( 'Duplicated Post Meta (%d Post Meta)', 'wp-bulk-delete' ), $duplicated_postmeta_count ); ?>
-                        </label>
-                    </fieldset>
-
-                    <fieldset>
-                        <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_orphan_commentmeta" type="checkbox" value="orphan_commentmeta" >
-                        <label for="cleanup_orphan_commentmeta">                    
-                            <?php printf( __( 'Orphaned Comment Meta (%d Comment Meta)', 'wp-bulk-delete' ), $orphan_commentmeta_count ); ?>
-                        </label>
-                    </fieldset>
-
-                    <fieldset>
-                        <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_duplicated_commentmeta" type="checkbox" value="duplicated_commentmeta" >
-                        <label for="cleanup_duplicated_commentmeta">                    
-                            <?php printf( __( 'Duplicated Comment Meta (%d Comment Meta)', 'wp-bulk-delete' ), $duplicated_commentmeta_count ); ?>
-                        </label>
-                    </fieldset>
-
-                    <fieldset>
-                        <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_orphan_usermeta" type="checkbox" value="orphan_usermeta" >
-                        <label for="cleanup_orphan_usermeta">                    
-                            <?php printf( __( 'Orphaned User Meta (%d User Meta)', 'wp-bulk-delete' ), $orphan_usermeta_count ); ?>
-                        </label>
-                    </fieldset>
-
-                    <fieldset>
-                        <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_duplicated_usermeta" type="checkbox" value="duplicated_usermeta" >
-                        <label for="cleanup_duplicated_usermeta">                    
-                            <?php printf( __( 'Duplicated User Meta (%d User Meta)', 'wp-bulk-delete' ), $duplicated_usermeta_count ); ?>
-                        </label>
-                    </fieldset>
-
-                    <fieldset>
-                        <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_orphan_termmeta" type="checkbox" value="orphan_termmeta" >
-                        <label for="cleanup_orphan_termmeta">                    
-                            <?php printf( __( 'Orphaned Term Meta (%d Term Meta)', 'wp-bulk-delete' ), $orphan_commentmeta_count ); ?>
-                        </label>
-                    </fieldset>
-
-                    <fieldset>
-                        <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_duplicated_termmeta" type="checkbox" value="duplicated_termmeta" >
-                        <label for="cleanup_duplicated_termmeta">                    
-                            <?php printf( __( 'Duplicated Term Meta (%d Term Meta)', 'wp-bulk-delete' ), $duplicated_termmeta_count ); ?>
-                        </label>
-                    </fieldset>
+                        <span class="wpbd-tooltip" >
+                            <div>
+                                <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                                </svg>
+                                <span class="wpbd-popper">
+                                    <?php _e('Check all metadata to delete cleanup including options are given below <br><strong>Orphan post meta, <br> Duplicate post meta, <br> Orphan comment meta, <br> Duplicate comment meta, <br> Orphan user meta, <br> Duplicate user meta, <br> Orphan term meta, <br> Duplicate term meta </strong>.','wp-bulk-delete'); ?>
+                                    <div class="wpbd-popper__arrow"></div>
+                                </span>
+                            </div>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
