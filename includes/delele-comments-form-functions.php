@@ -85,7 +85,7 @@ function xt_delete_comments_form_process( $data ) {
  */
 function wpdb_render_delete_comments_status(){
     $comment_status = array(
-        'pending' => __( 'Pending Comments', 'wp-bulk-delete'),
+        'moderated' => __( 'Pending Comments', 'wp-bulk-delete'),
         'spam' => __( 'Spam Comments', 'wp-bulk-delete'),
         'trash' => __( 'Trash Comments', 'wp-bulk-delete'),
         'approved' => __( 'Approved Comments', 'wp-bulk-delete'),
@@ -126,13 +126,16 @@ function wpdb_render_delete_comments_status(){
                 </div>
                 <div class="wpbd-inner-section-2">
                     <?php
+                        //get comments counts
+                        $get_counts = wp_count_comments();
+
                         if( ! empty( $comment_status ) ){
                             foreach ($comment_status as $comment_status_value => $comment_status_name ) {
                                 ?>
                                 <div>
                                     <input name="delete_comment_status[]" class="delete_comment_status" id="comment_status_<?php echo $comment_status_value; ?>" type="checkbox" value="<?php echo $comment_status_value; ?>" >
                                     <span for="comment_status_<?php echo $comment_status_value; ?>">
-                                        <?php echo $comment_status_name . ' ' . sprintf( __( '( %s Comment(s) )', 'wp-bulk-delete' ), wpbulkdelete()->api->get_comment_count( $comment_status_value ) ); ?>
+                                        <?php echo $comment_status_name . ' ' . sprintf( __( '( %s Comment(s) )', 'wp-bulk-delete' ), $get_counts->$comment_status_value ); ?>
                                     </span>
                                 </div>
                             <?php
@@ -165,7 +168,7 @@ function wpdb_render_delete_comments_date_interval(){
                 <div class="header-extra" ></div>
             </div>
             <svg viewBox="0 0 24 24" fill="none"
-                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret rotated">
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
                 <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
             </svg>
         </div>

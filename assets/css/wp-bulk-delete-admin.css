@@ -1363,7 +1363,7 @@ html:not([data-scroll="0"]) .wpbd-header {
 }
 
 .wpbd-card>.header svg.wpbd-caret.rotated {
-    transform: rotate(90deg)
+    transform: rotate(360deg)
 }
 
 .wpbd-card>.header svg.wpbd-close {
@@ -1737,4 +1737,10 @@ html:not([data-scroll="0"]) .wpbd-header {
     border-radius: 0;
     color: #424242 !important;
     font-family: unset !important;
+}
+
+.cleanups_section{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }

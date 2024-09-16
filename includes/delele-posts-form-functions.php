@@ -293,6 +293,9 @@ function wpbd_render_extra_assinged_category(){
  */
 function wpbd_render_form_poststatus(){
     global $wpdb;
+        //Get Post Status
+        $get_post_status = get_wp_post_status();
+
         ?>
         <div class="wpbd-inner-main-section">
             <div class="wpbd-inner-section-1" >
@@ -300,12 +303,12 @@ function wpbd_render_form_poststatus(){
             </div>
             <div class="wpbd-inner-section-2">
                 <select name="delete_post_status[]" class="wpbd_global_multiple_select"  id="delete_post_status_multiple" multiple >
-                    <option value="publish" selected>Published</option>
-                    <option value="future">Scheduled</option>
-                    <option value="draft">Draft</option>
-                    <option value="pending">Pending</option>
-                    <option value="private">Private</option>
-                    <option value="trash">Trash</option>
+                    <?php
+                        foreach ($get_post_status as $status => $label) {
+                            $selected = ($status == 'publish') ? 'selected' : '';
+                            echo '<option value="' . esc_attr($status) . '" ' . $selected . '>' . esc_html(ucwords(str_replace('-', ' ', $label))) . '</option>';
+                        }
+                    ?>
                 </select>
             </div>
         </div>
@@ -697,12 +700,12 @@ function wpbd_render_post_cleanup(){
                         <span class="wpbd-title-text" ><?php _e('Select all Cleanups ','wp-bulk-delete'); ?></span>
                     </div>
                     <div class="wpbd-inner-section-2">
-                        <fieldset>
+                        <div class="cleanups_section" >
                             <label for="cleanup_post_type">
                                 <input class="" id="select_all" type="checkbox" >
                                 <?php _e( 'Select All', 'wp-bulk-delete' ); ?>
                             </label>
-                        </fieldset>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -715,26 +718,26 @@ function wpbd_render_post_cleanup(){
                         <span class="wpbd-title-text" ><?php _e('Cleanup Posts ','wp-bulk-delete'); ?></span>
                     </div>
                     <div class="wpbd-inner-section-2">
-                        <fieldset>
+                        <div class="cleanups_section" >
                             <label for="cleanup_post_type">
                                 <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_revision" type="checkbox" value="revision" >
                                 <?php printf( __( 'Revisions (%d Revisions)', 'wp-bulk-delete' ), wpbulkdelete()->api->get_post_count('revision') ); ?>
                             </label>
-                        </fieldset>
+                        </div>
 
-                        <fieldset>
+                        <div class="cleanups_section" >
                             <label for="cleanup_post_type">
                                 <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_trash" type="checkbox" value="trash" >
                                 <?php printf( __( 'Trash (Deleted Posts) (%d Trash)', 'wp-bulk-delete' ),  wpbulkdelete()->api->get_post_count('trash') ); ?>
                             </label>
-                        </fieldset>
+                        </div>
 
-                        <fieldset>
+                        <div class="cleanups_section" >
                             <label for="cleanup_post_type">
                                 <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_revision" type="checkbox" value="auto_drafts" >
                                 <?php printf( __( 'Auto Drafts (%d Auto Drafts)', 'wp-bulk-delete' ),  wpbulkdelete()->api->get_post_count('auto_drafts') ); ?>
                             </label>
-                        </fieldset>
+                        </div>
                     </div>
                 </div>
             </div>
