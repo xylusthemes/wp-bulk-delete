@@ -98,8 +98,8 @@ function wpbd_display_admin_notice( $notice_result = array() ) {
 function wpbd_display_available_in_pro() {
 	if( !wpbd_is_pro() ) {
 		?>
-		<span style="color: red"><?php _e('Available in Pro version.','wp-bulk-delete'); ?></span>
-		<a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php _e('Buy Now','wp-bulk-delete'); ?></a>
+		<span style="color: red"><?php esc_html_e('Available in Pro version.','wp-bulk-delete'); ?></span>
+		<a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php esc_html_e('Buy Now','wp-bulk-delete'); ?></a>
 		<?php
 	}
 }
@@ -118,14 +118,14 @@ function timeout_memory_limit_is_enough() {
 	if( $memory_limit < '512' ){
 		?>
 		<div class="notice notice-warning is-dismissible">
-			<p><strong><?php _e( 'Attention: The server PHP memory limit is set to '.$memory_limit.'M, which is less than the recommended 512M. This may cause slow deletion progress if deleting large data.', 'wp-bulk-delete' ); ?></strong></p>
+			<p><strong><?php esc_html_e( 'Attention: The server PHP memory limit is set to '.$memory_limit.'M, which is less than the recommended 512M. This may cause slow deletion progress if deleting large data.', 'wp-bulk-delete' ); ?></strong></p>
 		</div>
 		<?php
 	}
 	if( $timeout_limit < '300' ){
 		?>
 		<div class="notice notice-warning is-dismissible">
-		<p><strong><?php _e( 'Attention: The server PHP timeout limit is set to '.$timeout_limit.' seconds, which is less than the recommended 300 seconds. This may cause slow deletion progress if deleting large data.', 'wp-bulk-delete' ); ?></strong></p>
+		<p><strong><?php esc_html_e( 'Attention: The server PHP timeout limit is set to '.$timeout_limit.' seconds, which is less than the recommended 300 seconds. This may cause slow deletion progress if deleting large data.', 'wp-bulk-delete' ); ?></strong></p>
 		</div>
 		<?php
 	}
@@ -274,7 +274,7 @@ function wp_p( $data, $exit = false ){
 	if ( is_array( $data ) || is_object( $data ) ){
 		print_r( $data );
 	} else {
-		echo $data; 
+		echo esc_attr__( $data );
 	}
 	echo '</pre>';
 	if ( $exit ) {
@@ -359,7 +359,7 @@ function wpbd_render_common_notice(){
 	}
 
 	if( !empty( $_GET['message'] ) ){
-		$get_message      = $_GET['message'];
+		$get_message      = sanitize_text_field( wp_unslash( $_GET['message'] ) );
 		$schedule_message = array( 'status' => 1, 'messages' => array( esc_html__( $get_message, 'wp-bulk-delete' ) ) );
 		wpbd_display_admin_notice( $schedule_message );
 	}
@@ -378,9 +378,9 @@ function wpdb_render_common_header( $page_title  ){
     <div class="wpbd-header" >
         <div class="wpbd-container" >
             <div class="wpbd-header-content" >
-                <span style="font-size:18px;"><?php _e('Dashboard','wp-bulk-delete'); ?></span>
+                <span style="font-size:18px;"><?php esc_html_e('Dashboard','wp-bulk-delete'); ?></span>
                 <span class="spacer"></span>
-                <span class="page-name"><?php _e( $page_title,'wp-bulk-delete'); ?></span></span>
+                <span class="page-name"><?php esc_html_e( $page_title,'wp-bulk-delete'); ?></span></span>
                 <div class="header-actions" >
                     <span class="round">
                         <a href="<?php echo esc_url( 'https://docs.xylusthemes.com/docs/wp-bulk-delete/' ); ?>" target="_blank">

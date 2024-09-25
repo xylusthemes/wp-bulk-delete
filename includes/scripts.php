@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return void
  */
 function wpbd_enqueue_admin_scripts( $hook ) {
-	$page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
+	$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 	if( 'delete_all_actions' == $page ){
 		$js_dir  = WPBD_PLUGIN_URL . 'assets/js/';
 		wp_register_script( 'jquery-chosen', $js_dir . 'chosen.jquery.min.js', array('jquery'), WPBD_VERSION );
@@ -45,7 +45,7 @@ function wpbd_enqueue_admin_scripts( $hook ) {
  * @return void
  */
 function wpbd_enqueue_admin_styles( $hook ) {
-	$page = isset( $_GET['page'] ) ? sanitize_text_field( $_GET['page'] ) : '';
+	$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
 	if( 'delete_all_actions' == $page || 'delete_all_comments' == $page || 'delete_all_users' == $page || 'delete_all_meta' == $page || 'wpbd_delete_terms' == $page || 'wpbd_cleanup' == $page || 'wpbd_support' == $page || 'wpbd_schedule' == $page ){
 	  	$css_dir = WPBD_PLUGIN_URL . 'assets/css/';
 	 	wp_enqueue_style('jquery-ui', $css_dir . 'jquery-ui.css', false, "1.12.0" );

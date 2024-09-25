@@ -50,7 +50,7 @@ add_action( 'admin_menu', 'wpbd_add_menu_pages', 10 );
 function get_selected_tab_submenu( $submenu_file ){
 	if( !empty( $_GET['page'] ) && sanitize_text_field( wp_unslash( $_GET['page'] ) ) == 'delete_all_actions' ){
 		$allowed_tabs = array( 'by_posts', 'by_comments', 'by_users', 'by_terms', 'by_cleanup', 'by_support_help', 'by_schedule-delete', 'by_schedule-delete-history', 'wpbdpro-license' );
-		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'by_cleanup';
+		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'by_cleanup';
 
 		if( $tab == 'by_schedule-delete-history' ){
 			$tab = 'by_schedule-delete';

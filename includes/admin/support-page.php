@@ -86,7 +86,7 @@ function wpbd_render_support_page(){
                             $plugin_list = wpbulkdelete()->api->get_xyuls_themes_plugins();
                         ?>
                         <div class="" style="margin-top: 20px;">
-                            <h3 class="setting_bar"><?php _e( 'Plugins you should try','wp-bulk-delete' ); ?></h3>
+                            <h3 class="setting_bar"><?php esc_html_e( 'Plugins you should try','wp-bulk-delete' ); ?></h3>
                             <div class="wpbd-about-us-plugins">
                                 <!-- <div class="wpbd-row"> -->
                                 <div class="wpbd-support-features2">
@@ -126,19 +126,19 @@ function wpbd_render_support_page(){
                                                 <div class="wpbd-support-features-card2 wpbd-plugin">
                                                     <div class="wpbd-plugin-main">
                                                         <div>
-                                                            <img alt="<?php _e( $plugin_slug . ' Image', 'wp-bulk-delete' ); ?>" src="<?php echo esc_url( $plugin_icon ); ?>">
+                                                            <img alt="<?php esc_html_e( $plugin_slug . ' Image', 'wp-bulk-delete' ); ?>" src="<?php echo esc_url( $plugin_icon ); ?>">
                                                         </div>
                                                         <div>
-                                                            <div class="wpbd-main-name"><?php _e( $plugin_slug, 'wp-bulk-delete' ); ?></div>
-                                                            <div><?php _e( $plugin_description, 'wp-bulk-delete' ); ?></div>
+                                                            <div class="wpbd-main-name"><?php esc_html_e( $plugin_slug, 'wp-bulk-delete' ); ?></div>
+                                                            <div><?php esc_html_e( $plugin_description, 'wp-bulk-delete' ); ?></div>
                                                         </div>
                                                     </div>
                                                     <div class="wpbd-plugin-footer">
                                                         <div class="wpbd-footer-status">
-                                                            <div class="wpbd-footer-status-label"><?php _e( 'Status : ', 'wp-bulk-delete' ); ?></div>
-                                                            <div class="wpbd-footer-status wpbd-footer-status-<?php echo strtolower(str_replace(' ', '-', $status_text)); ?>">
+                                                            <div class="wpbd-footer-status-label"><?php esc_html_e( 'Status : ', 'wp-bulk-delete' ); ?></div>
+                                                            <div class="wpbd-footer-status wpbd-footer-status-<?php echo esc_attr__( strtolower(str_replace(' ', '-', $status_text) ) ); ?>">
                                                                 <span <?php echo ( $status_text == 'Active' ) ? 'style="color:green;"' : ''; ?>>
-                                                                    <?php echo $status_text; ?>
+                                                                    <?php echo esc_attr__( $status_text ); ?>
                                                                 </span>
                                                             </div>
                                                         </div>
