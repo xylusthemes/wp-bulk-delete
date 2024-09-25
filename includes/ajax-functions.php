@@ -83,7 +83,7 @@ function wpbd_render_taxonomy_by_posttype() {
 	if( ! empty( $taxonomies ) ){
 		foreach ($taxonomies as $slug => $name ) {
 			?>
-			<input type="radio" name="post_taxonomy" value="<?php echo $slug;?>" class="post_taxonomy_radio" title="<?php echo $name; ?>"><?php echo $name; ?> <br />
+			<input type="radio" name="post_taxonomy" value="<?php echo esc_attr__( $slug ); ?>" class="post_taxonomy_radio" title="<?php echo esc_attr__( $name ); ?>"><?php echo esc_attr__( $name ); ?> <br />
 			<?php	
 		}		
 	}
@@ -113,7 +113,7 @@ function wpbd_render_terms_by_taxonomy() {
 			<?php
 			foreach ($terms as $term ) {
 				?>
-				<option value="<?php echo $term->term_id ?>"><?php echo $term->name; ?></option>
+				<option value="<?php echo esc_attr__( $term->term_id ); ?>"><?php echo esc_attr__( $term->name ); ?></option>
 				<?php	
 			} ?>
 		</select>
@@ -412,7 +412,7 @@ function wpbd_render_postdropdown_by_posttype() {
 			<?php
 			foreach ($posts as $post ) {
 				?>
-				<option value="<?php echo $post->ID; ?>"><?php echo $post->post_title; ?></option>
+				<option value="<?php echo esc_attr__( $post->ID ); ?>"><?php echo esc_attr__( $post->post_title ); ?></option>
 				<?php	
 			} ?>
 		</select>

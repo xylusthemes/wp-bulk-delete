@@ -35,7 +35,7 @@ function wpbd_delete_users_page(){
 										<div class="text" >
 											<div class="header-icon" ></div>
 											<div class="header-title" >
-												<span><?php _e('Users Filter ','wp-bulk-delete'); ?></span>
+												<span><?php esc_html_e('Users Filter ','wp-bulk-delete'); ?></span>
 											</div>
 											<div class="header-extra" ></div>
 										</div>
@@ -56,7 +56,7 @@ function wpbd_delete_users_page(){
 										<div class="text" >
 											<div class="header-icon" ></div>
 											<div class="header-title" >
-												<span><?php _e('Date Filter ','wp-bulk-delete'); ?></span>
+												<span><?php esc_html_e('Date Filter ','wp-bulk-delete'); ?></span>
 											</div>
 											<div class="header-extra" ></div>
 										</div>
@@ -77,7 +77,7 @@ function wpbd_delete_users_page(){
 										<div class="text" >
 											<div class="header-icon" ></div>
 											<div class="header-title" >
-												<span><?php _e('Advance Users Filter ','wp-bulk-delete'); if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } ?></span>
+												<span><?php esc_html_e('Advance Users Filter ','wp-bulk-delete'); if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } ?></span>
 											</div>
 											<div class="header-extra" ></div>
 										</div>
@@ -100,7 +100,7 @@ function wpbd_delete_users_page(){
 														</div>
 													</div>
 													<div class="wpbd-blur-filter-cta" >
-													<span style="color: red"><?php echo _e( 'Available in Pro version.', 'wp-bulk-delete' ); ?>  </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php echo _e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
+													<span style="color: red"><?php echo esc_html_e( 'Available in Pro version.', 'wp-bulk-delete' ); ?>  </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php echo esc_html_e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
 													</div>
 												</div>
 												<?php
@@ -118,7 +118,7 @@ function wpbd_delete_users_page(){
 											<div class="header-title" >
 												<span>
 													<?php 
-														_e('WooCommerce Filter ','wp-bulk-delete'); 
+														esc_html_e('WooCommerce Filter ','wp-bulk-delete'); 
 														if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } 
 														echo wp_kses_post( check_wc_is_activated() );
 													?>
@@ -144,7 +144,7 @@ function wpbd_delete_users_page(){
 														</div>
 													</div>
 													<div class="wpbd-blur-filter-cta" >
-													<span style="color: red"><?php echo _e( 'Available in Pro version.', 'wp-bulk-delete' ); ?>  </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php echo _e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
+													<span style="color: red"><?php echo esc_html_e( 'Available in Pro version.', 'wp-bulk-delete' ); ?>  </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php echo esc_html_e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
 													</div>
 												</div>
 												<?php
@@ -160,7 +160,7 @@ function wpbd_delete_users_page(){
 										<div class="text" >
 											<div class="header-icon" ></div>
 											<div class="header-title" >
-												<span><?php _e('Action ','wp-bulk-delete'); ?></span>
+												<span><?php esc_html_e('Action ','wp-bulk-delete'); ?></span>
 											</div>
 											<div class="header-extra" ></div>
 										</div>
@@ -179,7 +179,7 @@ function wpbd_delete_users_page(){
 
 							</div>
 							<?php
-							echo wp_nonce_field('delete_users_nonce', '_delete_users_wpnonce' );
+							esc_attr__( wp_nonce_field('delete_users_nonce', '_delete_users_wpnonce' ) );
 							?>
 							<p class="submit">
 								<input type="hidden" name="action" value="wpbd_delete_post">

@@ -35,7 +35,7 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
          * @since    1.0.0
          */
         public function __construct() {
-			$this->plugin_name =  __('WP Bulk Delete', 'wp-bulk-delete' );
+			$this->plugin_name =  esc_attr__('WP Bulk Delete', 'wp-bulk-delete' );
 			if ( defined( 'WPBD_VERSION' ) ) {
 				$this->plugin_version = WPBD_VERSION;
 			}
@@ -46,14 +46,14 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
 
 		public function get_deactivation_reasons() {
 			return array(
-				'confusing' => __('I couldn\'t understand how to make it work', 'wp-bulk-delete' ),
-				'better_plugin' => __('I found a better plugin', 'wp-bulk-delete' ),
-				'feature_request' => __('The plugin is great, but I need a specific feature that you don\'t support', 'wp-bulk-delete' ),
-				'buggy' => __('Plugin has bugs and it\'s not working', 'wp-bulk-delete' ),
-				'wrong_plugin' => __('It\'s not what I was looking for', 'wp-bulk-delete' ),
-				'not_working' => __('Plugin didn\'t work as expected', 'wp-bulk-delete' ),
-				'temporary' => __('It\'s temporary deactivation, for debugging an issue', 'wp-bulk-delete' ),
-				'other' => __('Other reasons', 'wp-bulk-delete' ),
+				'confusing' => esc_attr__('I couldn\'t understand how to make it work', 'wp-bulk-delete' ),
+				'better_plugin' => esc_attr__('I found a better plugin', 'wp-bulk-delete' ),
+				'feature_request' => esc_attr__('The plugin is great, but I need a specific feature that you don\'t support', 'wp-bulk-delete' ),
+				'buggy' => esc_attr__('Plugin has bugs and it\'s not working', 'wp-bulk-delete' ),
+				'wrong_plugin' => esc_attr__('It\'s not what I was looking for', 'wp-bulk-delete' ),
+				'not_working' => esc_attr__('Plugin didn\'t work as expected', 'wp-bulk-delete' ),
+				'temporary' => esc_attr__('It\'s temporary deactivation, for debugging an issue', 'wp-bulk-delete' ),
+				'other' => esc_attr__('Other reasons', 'wp-bulk-delete' ),
 			);
         }
 
@@ -132,7 +132,7 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
 			$response = wp_remote_post( $url, $args );
             if ( is_wp_error( $response ) ) {
                 $error_message = $response->get_error_message();
-                echo "Something went wrong: $error_message";
+                echo esc_attr__( "Something went wrong: $error_message" );
                 exit();
             }
 
@@ -155,35 +155,35 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
 
             <script>
                 jQuery(document).ready(function() {
-					var dataReason = jQuery('input:radio[name="<?php echo $this->prefix; ?>deactivatation_reason_radio"]').val();
+					var dataReason = jQuery('input:radio[name="<?php echo esc_attr__( $this->prefix ); ?>deactivatation_reason_radio"]').val();
                     jQuery('a[aria-label="Deactivate WP Bulk Delete"]').on('click', function (e) {
                         e.preventDefault();
                         var pluginDeactivateURL = jQuery(this).attr('href');
-                        jQuery('#<?php echo $this->slug; ?>-deactivate-dialog' ).dialog({
-                            'dialogClass'   : '<?php echo $this->slug . "-deactivate-dialog"; ?>',
+                        jQuery('#<?php echo esc_attr__( $this->prefix ); ?>-deactivate-dialog' ).dialog({
+                            'dialogClass'   : '<?php echo esc_attr__( $this->prefix ) . "-deactivate-dialog"; ?>',
                             'modal'         : true,
                             'closeOnEscape' : true,
                             width: 600,
                             'buttons'       : [
                                 {
                                     text: "<?php _e('Submit & Deactivate', 'wp-bulk-delete' ); ?>",
-                                    class: 'button button-primary <?php echo $this->prefix . "deactivate_button"; ?>',
+                                    class: 'button button-primary <?php echo esc_attr__( $this->prefix ) . "deactivate_button"; ?>',
                                     click: function() {
 										var that = this;
-										var dataQuery = jQuery('#<?php echo $this->prefix; ?>customer_query').val();
+										var dataQuery = jQuery('#<?php echo esc_attr__( $this->prefix ); ?>customer_query').val();
 										if(dataReason == 'other' && !dataQuery){
-											jQuery('#<?php echo $this->prefix; ?>customer_query').focus();
+											jQuery('#<?php echo esc_attr__( $this->prefix ); ?>customer_query').focus();
 											return false;
 										}
-										jQuery('#<?php echo $this->prefix; ?>deactivatation_form').hide();
-										jQuery('.<?php echo $this->prefix; ?>deactivatation_loading').show();
-                                        jQuery('button.<?php echo $this->prefix; ?>deactivate_button').prop('disabled', true);
+										jQuery('#<?php echo esc_attr__( $this->prefix ); ?>deactivatation_form').hide();
+										jQuery('.<?php echo esc_attr__( $this->prefix ); ?>deactivatation_loading').show();
+                                        jQuery('button.<?php echo esc_attr__( $this->prefix ); ?>deactivate_button').prop('disabled', true);
                                         jQuery.ajax({
                                             type : "post",
                                             dataType : "json",
-                                            url : "<?php echo admin_url('admin-ajax.php?action='.$this->prefix.'plugin_deactivation_feedback&nonce='.wp_create_nonce($this->prefix.'plugin_deactivation_feedback')); ?>",
+                                            url : "<?php echo admin_url('admin-ajax.php?action='.esc_attr__( $this->prefix ).'plugin_deactivation_feedback&nonce='.wp_create_nonce(esc_attr__( $this->prefix ).'plugin_deactivation_feedback') ); ?>",
                                             data : {
-                                                action: "<?php echo $this->prefix; ?>plugin_deactivation_feedback",
+                                                action: "<?php echo esc_attr__( $this->prefix ); ?>plugin_deactivation_feedback",
                                                 reason: dataReason,
                                                 customerQuery: dataQuery
                                             },
@@ -194,7 +194,7 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
                                     }
                                 },
                                 {
-                                    text: "<?php _e('Skip', 'wp-bulk-delete' ); ?>",
+                                    text: "<?php esc_html_e('Skip', 'wp-bulk-delete' ); ?>",
                                     class: 'button',
                                     click: function() {
                                         jQuery( this ).dialog( "close" );
@@ -205,74 +205,74 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
                         });
                     });
 
-                    jQuery('input:radio[name="<?php echo $this->prefix; ?>deactivatation_reason_radio"]').click(function () {
+                    jQuery('input:radio[name="<?php echo esc_attr__( $this->prefix ); ?>deactivatation_reason_radio"]').click(function () {
                         var reason = jQuery(this).val();
 						dataReason = jQuery(this).val();
-                        var customerQuery = jQuery('#<?php echo $this->prefix; ?>customer_query');
+                        var customerQuery = jQuery('#<?php echo esc_attr__( $this->prefix ); ?>customer_query');
                         customerQuery.removeAttr('required');
                         if (reason === "confusing") {
-                            customerQuery.attr("placeholder", "<?php _e('Finding it confusing? let us know so that we can improve the interface', 'wp-bulk-delete' ); ?>");
+                            customerQuery.attr("placeholder", "<?php esc_html_e('Finding it confusing? let us know so that we can improve the interface', 'wp-bulk-delete' ); ?>");
 
                         } else if (reason === "other") {
-                            customerQuery.attr("placeholder", "<?php _e('Can you let us know the reason for deactivation (Required)', 'wp-bulk-delete' ); ?>");
+                            customerQuery.attr("placeholder", "<?php esc_html_e('Can you let us know the reason for deactivation (Required)', 'wp-bulk-delete' ); ?>");
                             customerQuery.prop('required', true);
 
                         } else if (reason === "buggy" || reason === 'not_working') {
-                            customerQuery.attr("placeholder", "<?php _e('Can you please let us know about the bug/issue in detail?', 'wp-bulk-delete' ); ?>");
+                            customerQuery.attr("placeholder", "<?php esc_html_e('Can you please let us know about the bug/issue in detail?', 'wp-bulk-delete' ); ?>");
 
                         } else if (reason === "better_plugin") {
-                            customerQuery.attr("placeholder", "<?php _e('Can you please let us know which plugin you found helpful', 'wp-bulk-delete' ); ?>");
+                            customerQuery.attr("placeholder", "<?php esc_html_e('Can you please let us know which plugin you found helpful', 'wp-bulk-delete' ); ?>");
 
                         } else if (reason === "feature_request") {
-                            customerQuery.attr("placeholder", "<?php _e('Can you please let us know more about the feature you want', 'wp-bulk-delete' ); ?>");
+                            customerQuery.attr("placeholder", "<?php esc_html_e('Can you please let us know more about the feature you want', 'wp-bulk-delete' ); ?>");
 
                         }  else if (reason === "wrong_plugins") {
-                            customerQuery.attr("placeholder", "<?php _e('Can you please let us know more about your requirement', 'wp-bulk-delete' ); ?>");
+                            customerQuery.attr("placeholder", "<?php esc_html_e('Can you please let us know more about your requirement', 'wp-bulk-delete' ); ?>");
 
                         } else if (reason === "temporary") {
-                            customerQuery.attr("placeholder", "<?php _e('Write your query here', 'wp-bulk-delete'); ?>");
+                            customerQuery.attr("placeholder", "<?php esc_html_e('Write your query here', 'wp-bulk-delete'); ?>");
                         }
                     });
                 });
             </script>
 			<style>
-			<?php echo '.'.$this->slug; ?>-deactivate-dialog .ui-dialog-titlebar{
+			<?php echo '.'.esc_attr__( $this->prefix ); ?>-deactivate-dialog .ui-dialog-titlebar{
 				display: none;
 			}
-            .ui-widget.<?php echo $this->slug; ?>-deactivate-dialog{
+            .ui-widget.<?php echo esc_attr__( $this->prefix ); ?>-deactivate-dialog{
                 font-family: inherit;
                 font-size: 14px;
                 font-weight: inherit;
                 line-height: inherit;
             }
-            .ui-widget.<?php echo $this->slug; ?>-deactivate-dialog textarea{
+            .ui-widget.<?php echo esc_attr__( $this->prefix ); ?>-deactivate-dialog textarea{
                 font-family: inherit;
                 font-size: 14px;
                 width: 100%;
             }
-            <?php echo '#'.$this->slug; ?>-deactivate-dialog {
+            <?php echo '#'.esc_attr__( $this->prefix ); ?>-deactivate-dialog {
                 display : none;
             }
 			</style>
-            <div id="<?php echo $this->slug; ?>-deactivate-dialog">
-                <h3><?php _e('If you have a moment, please let us know why you are deactivating:', 'wp-bulk-delete'); ?></h3>
-                <form method="post" action="" id="<?php echo $this->prefix; ?>deactivatation_form">
+            <div id="<?php echo esc_attr__( $this->prefix ); ?>-deactivate-dialog">
+                <h3><?php esc_html_e('If you have a moment, please let us know why you are deactivating:', 'wp-bulk-delete'); ?></h3>
+                <form method="post" action="" id="<?php echo esc_attr__( $this->prefix ); ?>deactivatation_form">
                     <div>
                     <?php
                         foreach ( $deactivate_reasons as $key => $deactivate_reason ) {
                             ?>
                             <div class="radio" style="padding:1px;margin-left:2%">
-                                <label for="<?php echo $key; ?>">
-                                    <input type="radio" name="<?php echo $this->prefix; ?>deactivatation_reason_radio" id="<?php echo $key; ?>" value="<?php echo $key; ?>" required <?php if($key === 'confusing') { echo "checked"; } ?>> <?php echo $deactivate_reason; ?>
+                                <label for="<?php echo esc_attr__( $key ); ?>">
+                                    <input type="radio" name="<?php echo esc_attr__( $this->prefix ); ?>deactivatation_reason_radio" id="<?php echo esc_attr__( $key ); ?>" value="<?php echo esc_attr__( $key ); ?>" required <?php if( $key === 'confusing') { echo "checked"; } ?>> <?php echo esc_attr__( $deactivate_reason ); ?>
                                 </label>
                             </div>
                         <?php } ?>
                         <br>
-                        <textarea id="<?php echo $this->prefix; ?>customer_query" name="<?php echo $this->prefix; ?>customer_query" rows="4" placeholder="<?php _e('Write your query here', 'wp-bulk-delete'); ?>"></textarea>
+                        <textarea id="<?php echo esc_attr__( $this->prefix ); ?>customer_query" name="<?php echo esc_attr__( $this->prefix ); ?>customer_query" rows="4" placeholder="<?php esc_html_e('Write your query here', 'wp-bulk-delete'); ?>"></textarea>
                     </div>
                 </form>
-				<div class="<?php echo $this->prefix; ?>deactivatation_loading" style="width: 100%;text-align: center; display:none;">
-					<img src="<?php echo admin_url('images/spinner.gif'); ?>" />
+				<div class="<?php echo esc_attr__( $this->prefix ); ?>deactivatation_loading" style="width: 100%;text-align: center; display:none;">
+					<img src="<?php echo esc_url( admin_url('images/spinner.gif') ); ?>" />
 				</div>
             </div>
             <?php

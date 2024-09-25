@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function wpbd_delete_posts_page(){
 	global $wpdb;
 	// Set Default Tab to Posts
-	$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'by_posts';
+	$active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) )  : 'by_posts';
 	$gettab     = str_replace( 'by_', '', $active_tab );
 	$gettab     = ucwords( str_replace( '_', ' & ', $gettab ) );
 	if( $active_tab == 'by_schedule-delete' ){
@@ -39,7 +39,7 @@ function wpbd_delete_posts_page(){
 		$page_title = "Delete " . $gettab;
 	}
 	$posts_header_result = wpdb_render_common_header( $page_title );
-	echo $posts_header_result;
+	echo esc_attr_e( $posts_header_result );
 	?>
 	
 	<div class="wpbd-container" style="margin-top: 60px;">
@@ -47,7 +47,7 @@ function wpbd_delete_posts_page(){
 			<div id="poststuff">
 				<div id="post-body" class="metabox-holder columns-2">
 					<div class="notice notice-warning">
-						<p><strong><?php _e( 'WARNING: Before you delete any data, please take a backup; and the deletion operation is irreversible. Please use it with caution!', 'wp-bulk-delete' ); ?></strong></p>
+						<p><strong><?php esc_html_e( 'WARNING: Before you delete any data, please take a backup; and the deletion operation is irreversible. Please use it with caution!', 'wp-bulk-delete' ); ?></strong></p>
 					</div>
 					<?php 
 						do_action( 'timeout_memory_is_enough'); 
@@ -81,9 +81,6 @@ function wpbd_delete_posts_page(){
 											<a href="?page=delete_all_actions&tab=by_users" class="var-tab <?php echo $active_tab == 'by_users' ? 'var-tab--active' : 'var-tab--inactive'; ?>">
 												<span class="tab-label"><?php esc_attr_e( 'Delete Users', 'wp-bulk-delete' ); ?></span>
 											</a>
-											<!-- <a href="?page=delete_all_actions&tab=by_meta_fields" class="var-tab <?php //echo $active_tab == 'by_meta_fields' ? 'var-tab--active' : 'var-tab--inactive'; ?>">
-												<span class="tab-label"><?php //esc_attr_e( 'Delete Meta Fields', 'wp-bulk-delete' ); ?></span>
-											</a> -->
 											<a href="?page=delete_all_actions&tab=by_terms" class="var-tab <?php echo $active_tab == 'by_terms' ? 'var-tab--active' : 'var-tab--inactive'; ?>">
 												<span class="tab-label"><?php esc_attr_e( 'Delete Category', 'wp-bulk-delete' ); ?></span>
 											</a>
@@ -145,7 +142,7 @@ function wpbd_delete_posts_page(){
 																</div>
 															</div>
 															<div class="wpbd-blur-filter-cta" style="top: 40px;" >
-																<span style="color: red"><?php echo _e( 'Available in Pro version.', 'wp-bulk-delete' ); ?>  </span><a href="<?php echo esc_url( WPBD_PLUGIN_BUY_NOW_URL ); ?>"><?php echo _e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
+																<span style="color: red"><?php echo esc_html_e( 'Available in Pro version.', 'wp-bulk-delete' ); ?>  </span><a href="<?php echo esc_url( WPBD_PLUGIN_BUY_NOW_URL ); ?>"><?php echo esc_html_e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
 															</div>
 														</div>
 													</div>
@@ -171,5 +168,5 @@ function wpbd_delete_posts_page(){
 	</div>
 	<?php
 	$posts_footer_result = wpdb_render_common_footer();
-	echo $posts_footer_result;
+	echo esc_attr_e( $posts_footer_result );
 }
