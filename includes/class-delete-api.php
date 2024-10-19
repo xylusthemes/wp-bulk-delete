@@ -167,8 +167,8 @@ class WPBD_Delete_API {
         $post_type         = isset( $item['delete_post_type'] ) ? $item['delete_post_type'] : '';
         $wcpost_statis     = isset( $item['delete_woo_post_status'] ) ? $item['delete_woo_post_status'] : '';
 
-        if( in_array( 'shop_order', $post_type ) && !empty( $wcpost_statis ) ){
-            $wc_order_del  = true;
+        if ( ( is_array( $post_type ) && in_array( 'shop_order', $post_type ) ) || ( !is_array( $post_type ) && $post_type === 'shop_order' ) && !empty( $wcpost_statis ) ) {
+            $wc_order_del = true;
         }
 
         set_time_limit(0);
