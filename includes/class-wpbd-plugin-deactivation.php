@@ -93,7 +93,6 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
             $client_id = $credentials->client_id;
             $client_secret = $credentials->client_secret;
             $customer_email = $user->user_email;
-            $customer_name = $user->display_name;
             if(empty($customer_name)){
                 $customer_name = $user->user_firstname. ' '.$user->user_lastname;
             }
@@ -194,7 +193,7 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
                                     }
                                 },
                                 {
-                                    text: "<?php esc_html_e('Skip', 'wp-bulk-delete' ); ?>",
+                                    text: "<?php _e('Skip & Deactivate', 'wp-bulk-delete' ); ?>",
                                     class: 'button',
                                     click: function() {
                                         jQuery( this ).dialog( "close" );
@@ -255,7 +254,13 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
             }
 			</style>
             <div id="<?php echo esc_attr__( $this->prefix ); ?>-deactivate-dialog">
-                <h3><?php esc_html_e('If you have a moment, please let us know why you are deactivating:', 'wp-bulk-delete'); ?></h3>
+                <div class="ui-dialog-headerbar"  >
+                    <div>
+                        <h2 style="margin:5px 0 15px 0;"><?php esc_html_e('Quick Feedback', 'wp-bulk-delete'); ?></h2>
+                    </div>
+                </div>               
+                <div style="border-top: 1px solid #dcdcde;"></div>
+                <h3 style="font-size: 16px;" ><?php esc_html_e('Could you please share why you are deactivating WP Bulk Delete plugin ?', 'wp-bulk-delete'); ?></h3>
                 <form method="post" action="" id="<?php echo esc_attr__( $this->prefix ); ?>deactivatation_form">
                     <div>
                     <?php
@@ -269,6 +274,11 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
                         <?php } ?>
                         <br>
                         <textarea id="<?php echo esc_attr__( $this->prefix ); ?>customer_query" name="<?php echo esc_attr__( $this->prefix ); ?>customer_query" rows="4" placeholder="<?php esc_html_e('Write your query here', 'wp-bulk-delete'); ?>"></textarea>
+                    </div>
+                    <div style="text-align: center;">
+                        <p style="font-size: 12px;margin: 2px 0 -10px 0;">
+                            <?php echo esc_attr__( '* By submitting this form, you will also be sending us your email address &amp; website URL.', 'wp-bulk-delete' ); ?>
+                        </p>
                     </div>
                 </form>
 				<div class="<?php echo esc_attr__( $this->prefix ); ?>deactivatation_loading" style="width: 100%;text-align: center; display:none;">
