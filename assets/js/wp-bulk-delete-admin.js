@@ -393,10 +393,12 @@
     		if (selectedValue.includes('shop_order') || selectedValue.includes('shop_order_lagecy')) {
 				//add shop_order_lagecy
 				jQuery('#woofiltercontent').show();
+				jQuery('#delete_post_status_multiple').val('').trigger("chosen:updated");
 				jQuery('#delete_post_status_multiple').prop('disabled', true).trigger("chosen:updated");
 				jQuery('#delete_woo_post_status_multiple').prop('disabled', false).trigger("chosen:updated");
 			} else {
 				jQuery('#woofiltercontent').hide();
+				jQuery('#delete_woo_post_status_multiple').val('').trigger("chosen:updated");
 				jQuery('#delete_post_status_multiple').prop('disabled', false).trigger("chosen:updated");
 				jQuery('#delete_woo_post_status_multiple').prop('disabled', true).trigger("chosen:updated");
 			}
