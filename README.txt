@@ -33,9 +33,9 @@ WP bulk Delete support below powerfull conditions and filters.
 * Delete Posts by Modified date interval
 * Delete Posts by custom Taxonomy
 * Delete Posts by authors
-* Delete Post by meta fields
-* Delete Post by Content Count
-* Delete Post by Custom Query
+* Delete Post by meta fields [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
+* Delete Post by Content Count [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
+* Delete Post by Custom Query [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Delete Posts by title or content. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Delete Posts by URL. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Delete the image along with the pos. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
@@ -73,10 +73,9 @@ WP bulk Delete support below powerfull conditions and filters.
 
 * Delete Users
 * Delete Users by user roles
-* Delete Users by user Email
-* Delete Users by date interval
+* Delete Users by user Email [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Delete users based on their registered date
-* Delete Users by user meta fields
+* Delete Users by user meta fields [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Assign deleted user data to another user. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Delete Users who don't have an order. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Scheduled Delete [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
