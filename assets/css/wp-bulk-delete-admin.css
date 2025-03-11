@@ -959,8 +959,6 @@ a.var-tab.var--box.var-tab--inactive:focus {
 }
 
 .wpbd-container {
-    /* padding: 0;
-    width: calc(100% - 20px * 2); */
     max-width: 1240px;
 }
 
@@ -1577,39 +1575,6 @@ html:not([data-scroll="0"]) .wpbd-header {
   }
 /*end new support page*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Main container for the Chosen dropdown */
-
-
-
 /* Selected options */
 .chosen-container .chosen-choices {
     border-radius: 5px;   
@@ -1618,7 +1583,7 @@ html:not([data-scroll="0"]) .wpbd-header {
 .chosen-container-active .chosen-choices {
     box-shadow: none !important;
 }
-#reassign_user, .delete_post_type, .comment_author{
+#reassign_user, .delete_post_type, .comment_author, .comment_type{
     max-width: 100% !important;
     width: 95%;
 }
@@ -1638,5 +1603,11 @@ html:not([data-scroll="0"]) .wpbd-header {
 .cleanups_section{
     display: flex;
     flex-direction: row;
+    align-items: center;
+}
+
+.wpbd_posts_id_section{
+    display: flex;
+    gap: 10px;
     align-items: center;
 }

@@ -585,6 +585,32 @@ function wpbd_render_form_post_contains(){
     <?php
 }
 
+
+/**
+ * Render Post ID
+ *
+ * @since 1.0
+ * @return void
+ */
+function wpbd_render_form_post_ids(){
+    ?>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php esc_html_e('Post IDs ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
+            <textarea name="" disabled="disabled"  id="" cols="70" style="height: 30px;" class="" placeholder="You can add multiple post IDs with comma(,) separator" ></textarea>
+            <?php esc_html_e( 'Then', 'wp-bulk-delete'  ); ?>
+            <select name="disabled_sample5" disabled="disabled">
+                <option value=""><?php esc_html_e( 'Delete It.', 'wp-bulk-delete' ); ?> </option>
+                <option value=""><?php esc_html_e( "Don't delete It.", "wp-bulk-delete" ); ?> </option>
+            </select>
+            <br/>
+        </div>
+    </div>
+    <?php
+}
+
 /**
  * Render Delete type.
  *
@@ -695,6 +721,36 @@ function wpbd_render_form_custom_fields(){
             <?php esc_html_e( 'Value', 'wp-bulk-delete' ); ?> 
             <input type="text" id="disabled_sample3" name="disabled_sample3" class="disabled_sample3" disabled="disabled" />
             <br />
+        </div>
+    </div>
+    <?php
+}
+
+/**
+ * Render Custom Fields.
+ *
+ * @since 1.0
+ * @return void
+ */
+function wpbd_render_form_duplicate_posts(){
+    ?>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php esc_html_e('Duplicate Posts ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2" >
+            <input type="checkbox" id="post_media" name="" class="" />
+            <span class="wpbd-tooltip" >
+                <div>
+                    <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
+                    </svg>
+                    <span class="wpbd-popper">
+                        <?php esc_html_e( 'It enables removing duplicate posts/pages/custom post types. This option filters out duplicate posts by post titles.', 'wp-bulk-delete' ); ?>
+                        <div class="wpbd-popper__arrow"></div>
+                    </span>
+                </div>
+            </span>
         </div>
     </div>
     <?php
@@ -1064,6 +1120,82 @@ function wpbd_render_common_form() {
                     <?php
                 }else{
                     wpbd_render_form_custom_fields_pro();
+                }
+            ?>
+        </div>
+    </div>
+
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php esc_html_e('Post IDs Filter ','wp-bulk-delete'); if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="false" style="display: none;">
+            <?php 
+                if( !wpbd_is_pro() ){
+                    ?>
+                    <div class="wpbd-blur-filter" >
+                        <div class="wpbd-blur" >
+                            <div class="wpbd-blur-filter-option">
+                                <?php
+                                    wpbd_render_form_post_ids();
+                                ?>
+                            </div>
+                        </div>
+                        <div class="wpbd-blur-filter-cta" >
+                            <span style="color: red"><?php echo esc_html_e( 'Available in Pro version.', 'wp-bulk-delete' ); ?> </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php echo esc_html_e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
+                        </div>
+                    </div>
+                    <?php
+                }else{
+                    wpbd_render_form_post_ids_pro();
+                }
+            ?>
+        </div>
+    </div>
+
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php esc_html_e('Duplicate Posts Filter ','wp-bulk-delete'); if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="false" style="display: none;">
+            <?php 
+                if( !wpbd_is_pro() ){
+                    ?>
+                    <div class="wpbd-blur-filter" >
+                        <div class="wpbd-blur" >
+                            <div class="wpbd-blur-filter-option">
+                                <?php
+                                    wpbd_render_form_duplicate_posts();
+                                ?>
+                            </div>
+                        </div>
+                        <div class="wpbd-blur-filter-cta" >
+                            <span style="color: red"><?php echo esc_html_e( 'Available in Pro version.', 'wp-bulk-delete' ); ?> </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php echo esc_html_e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
+                        </div>
+                    </div>
+                    <?php
+                }else{
+                    wpbd_render_form_duplicate_posts_pro();
                 }
             ?>
         </div>
