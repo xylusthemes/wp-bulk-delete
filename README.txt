@@ -5,7 +5,7 @@ Tags: delete, bulk, clean, bulk delete, bulk clean, posts delete, delete all, ma
 Requires at least: 4.9
 Requires PHP: 5.3
 Tested up to: 6.7 
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -163,6 +163,11 @@ We are working on providing more options :)
 15. Scheduled Delete History
 
 == Changelog ==
+
+= 1.3.4 =
+* ADDED: Delete Post by IDs Filter ( PRO )
+* ADDED: Delete Duplicate Post/Page/Any Cpts Filter ( PRO )
+* ADDED: Comment Type Filter ( PRO )
 
 = 1.3.3 =
 * IMPROVEMENTS: Text changed and Added Feedback from the header
