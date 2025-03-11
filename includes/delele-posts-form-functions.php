@@ -585,6 +585,32 @@ function wpbd_render_form_post_contains(){
     <?php
 }
 
+
+/**
+ * Render Post ID
+ *
+ * @since 1.0
+ * @return void
+ */
+function wpbd_render_form_post_ids(){
+    ?>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php esc_html_e('Post IDs ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
+            <textarea name="" disabled="disabled"  id="" cols="70" style="height: 30px;" class="" placeholder="You can add multiple post IDs with comma(,) separator" ></textarea>
+            <?php esc_html_e( 'Then', 'wp-bulk-delete'  ); ?>
+            <select name="disabled_sample5" disabled="disabled">
+                <option value=""><?php esc_html_e( 'Delete It.', 'wp-bulk-delete' ); ?> </option>
+                <option value=""><?php esc_html_e( "Don't delete It.", "wp-bulk-delete" ); ?> </option>
+            </select>
+            <br/>
+        </div>
+    </div>
+    <?php
+}
+
 /**
  * Render Delete type.
  *
@@ -1094,6 +1120,44 @@ function wpbd_render_common_form() {
                     <?php
                 }else{
                     wpbd_render_form_custom_fields_pro();
+                }
+            ?>
+        </div>
+    </div>
+
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php esc_html_e('Post IDs Filter ','wp-bulk-delete'); if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="false" style="display: none;">
+            <?php 
+                if( !wpbd_is_pro() ){
+                    ?>
+                    <div class="wpbd-blur-filter" >
+                        <div class="wpbd-blur" >
+                            <div class="wpbd-blur-filter-option">
+                                <?php
+                                    wpbd_render_form_post_ids();
+                                ?>
+                            </div>
+                        </div>
+                        <div class="wpbd-blur-filter-cta" >
+                            <span style="color: red"><?php echo esc_html_e( 'Available in Pro version.', 'wp-bulk-delete' ); ?> </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php echo esc_html_e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
+                        </div>
+                    </div>
+                    <?php
+                }else{
+                    wpbd_render_form_post_ids_pro();
                 }
             ?>
         </div>
