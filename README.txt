@@ -5,7 +5,7 @@ Tags: delete, bulk, clean, bulk delete, bulk clean, posts delete, delete all, ma
 Requires at least: 4.9
 Requires PHP: 5.3
 Tested up to: 6.7 
-Stable tag: 1.3.2
+Stable tag: 1.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -33,9 +33,9 @@ WP bulk Delete support below powerfull conditions and filters.
 * Delete Posts by Modified date interval
 * Delete Posts by custom Taxonomy
 * Delete Posts by authors
-* Delete Post by meta fields
-* Delete Post by Content Count
-* Delete Post by Custom Query
+* Delete Post by meta fields [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
+* Delete Post by Content Count [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
+* Delete Post by Custom Query [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Delete Posts by title or content. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Delete Posts by URL. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Delete the image along with the pos. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
@@ -73,10 +73,9 @@ WP bulk Delete support below powerfull conditions and filters.
 
 * Delete Users
 * Delete Users by user roles
-* Delete Users by user Email
-* Delete Users by date interval
+* Delete Users by user Email [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Delete users based on their registered date
-* Delete Users by user meta fields
+* Delete Users by user meta fields [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Assign deleted user data to another user. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Delete Users who don't have an order. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
 * Scheduled Delete [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
@@ -164,6 +163,9 @@ We are working on providing more options :)
 15. Scheduled Delete History
 
 == Changelog ==
+
+= 1.3.3 =
+* IMPROVEMENTS: Text changed and Added Feedback from the header
 
 = 1.3.2 =
 * IMPROVEMENTS: XSS Security Bugs
