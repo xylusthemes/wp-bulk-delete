@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-03-11T09:16:06+00:00\n"
+"POT-Creation-Date: 2025-03-11T09:18:13+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-bulk-delete\n"
@@ -146,12 +146,13 @@ msgstr ""
 #: includes/admin/users/display-delete-users.php:147
 #: includes/common-functions.php:102
 #: includes/delele-comments-form-functions.php:188
-#: includes/delele-comments-form-functions.php:3
+#: includes/delele-comments-form-functions.php:331
 #: includes/delele-comments-form-functions.php:380
-#: includes/delele-posts-form-functions.php:921
-#: includes/delele-posts-form-functions.php:1024
-#: includes/delele-posts-form-functions.php:1061
-#: includes/delele-posts-form-functions.php:1100
+#: includes/delele-posts-form-functions.php:951
+#: includes/delele-posts-form-functions.php:1054
+#: includes/delele-posts-form-functions.php:1091
+#: includes/delele-posts-form-functions.php:1129
+#: includes/delele-posts-form-functions.php:1168
 msgid "Buy Now"
 msgstr ""
 
@@ -252,7 +253,7 @@ msgstr ""
 
 #: includes/admin/users/display-delete-users.php:163
 #: includes/delele-comments-form-functions.php:406
-#: includes/delele-posts-form-functions.php:1138
+#: includes/delele-posts-form-functions.php:1206
 msgid "Action "
 msgstr ""
 
@@ -478,7 +479,7 @@ msgid "Approved Comments"
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:101
-#: includes/delele-posts-form-functions.php:866
+#: includes/delele-posts-form-functions.php:896
 msgid "Basic Filter "
 msgstr ""
 
@@ -576,7 +577,7 @@ msgid "This option will work well with Scheduled Delete, which will help to dele
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:307
-#: includes/delele-posts-form-functions.php:957
+#: includes/delele-posts-form-functions.php:987
 msgid "Author Filter "
 msgstr ""
 
