@@ -168,6 +168,7 @@ We are working on providing more options :)
 * ADDED: Delete Post by IDs Filter ( PRO )
 * ADDED: Delete Duplicate Post/Page/Any Cpts Filter ( PRO )
 * ADDED: Comment Type Filter ( PRO )
+* IMPROVEMENTS: Support for WP 6.7
 
 = 1.3.3 =
 * IMPROVEMENTS: Text changed and Added Feedback from the header
