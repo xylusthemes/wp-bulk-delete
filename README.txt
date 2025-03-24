@@ -1,7 +1,7 @@
 === WP Bulk Delete ===
 Contributors: xylus, dharm1025, rajat1192  
 Donate link: http://xylusthemes.com  
-Tags: delete, bulk, clean databae, bulk delete, bulk clean
+Tags: delete, bulk, clean database, bulk delete, bulk clean
 Requires at least: 4.9
 Requires PHP: 5.3
 Tested up to: 6.7 
@@ -271,9 +271,7 @@ posts delete, delete all, mass delete, delete posts, delete comments, delete use
 * ⭐ Like the plugin? Leave a review on our [WordPress plugin page](https://wordpress.org/support/plugin/wp-bulk-delete/reviews/).
 * 💼 Explore more [WordPress Plugins](https://xylusthemes.com/plugins/) by XylusThemes.
 
-== WP Bulk Delete [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/) ==
-
-### Upgrade to the PRO version for advanced features like:
+### Upgrade to the [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/) for advanced features like:
 * 🔄 Scheduled deletion of posts, comments, and users.
 * 📂 Delete posts by Meta Fields.
 * 🔗 Delete posts by IDs.
