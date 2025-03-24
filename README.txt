@@ -1,11 +1,11 @@
 === WP Bulk Delete ===
-Contributors: xylus,dharm1025,rajat1192
-Donate link: http://xylusthemes.com
-Tags: delete, bulk, clean, bulk delete, bulk clean, posts delete, delete all, mass delete, posts delete, delete posts, delete comments, delete users, delete meta, delete taxonomy, delete revision, wp clean, clean trash, bulk user delete, delete all, delete all users, delete all comments, delete all posts, trash, clean spam, delete with condition, delete with filter, remove
+Contributors: xylus, dharm1025, rajat1192  
+Donate link: http://xylusthemes.com  
+Tags: delete, bulk, clean databae bulk delete, bulk clean
 Requires at least: 4.9
 Requires PHP: 5.3
 Tested up to: 6.7 
-Stable tag: 1.3.4
+Stable tag: 1.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,156 +13,149 @@ Delete posts, pages, comments, users, taxonomy terms and meta fields in bulk wit
 
 == Description ==
 
-WP Bulk Delete is a WordPress Plugin that allows you to delete posts, pages, comments, users, taxonomy terms and meta fields in bulk based with different powerful filters and conditions. WP bulk delete helps in finding and mass deleting unnecessary data clean up. It also helps in imporving Speed and reducing database load. 
+WP Bulk Delete is a powerful WordPress plugin designed to help you delete posts, pages, comments, users, taxonomy terms, and meta fields in bulk with flexible filters and conditions. It helps in managing unnecessary data, improving website performance, and reducing database load.  
+
+posts delete, delete all, mass delete, delete posts, delete comments, delete users, delete meta, delete taxonomy, delete revision, wp clean, clean trash, bulk user delete, clean spam, delete with condition, delete with filter, remove  
+
+## 🔒 Powerful Features ##
+
+## 💻 Database Cleanup
+* ✅ Delete Auto Drafts, Trash Posts, and Revisions
+* ✅ Delete Orphaned and Duplicate Meta:
+   * 🗃️ Post Meta:
+        * Orphan Post Meta
+        * Duplicate Post Meta
+   * 💬 Comment Meta:
+        * Orphan Comment Meta
+        * Duplicate Comment Meta
+   * 👥 User Meta:
+        * Orphan User Meta
+        * Duplicate User Meta
+    * 🔖 Term Meta:
+        * Orphan Term Meta
+        * Duplicate Term Meta
+
+## 📂 Deleting Posts
+* ✅ Delete Posts by Post Type.
+* ✅ Delete Posts by Status.
+* ✅ Delete Posts by Category.
+* ✅ Delete Posts by Tag.
+* ✅ Delete Posts by Authors.
+* ✅ Delete Posts by Post Registered Date.
+* ✅ Delete Posts by Post Modified Date.
+* ✅ Delete Images Along with Posts [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Posts by Meta Fields [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Posts by Ids. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Posts by Duplicate Post. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Posts by Title Contains [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Posts by Content Contains [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Posts by Post Link. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Posts by Content Character Count [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Posts by Content Word Count [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Posts by Custom Query.
+* ✅ Schedule Post Deletion [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+
+## 📝 Deleting Comments
+* ✅ Delete Comments by Status.
+* ✅ Delete Comments by Types. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Comments by Authors. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Comments by Post. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Comments by Registration Date.
+* ✅ Schedule automatic comment deletion [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+
+## 👤 Deleting Users
+* ✅ Delete Users by Roles.
+* ✅ Delete Users by Registration Date.
+* ✅ Assign deleted user data to another user [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Users by User Meta. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Users by Email. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Schedule automatic user deletion [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+
+## 🗃️ Deleting Categories and Tags
+* ✅ Delete Entire Categories or Tags for Any Post Type
+* ✅ Select the post type (Posts, Pages, or Custom Post Types)
+    * Choose the taxonomy:
+        * ➡️ Categories
+        * ➡️ Tags
+    * Delete all terms in bulk with a single click
 
 
-###Powerfull Features
-WP bulk Delete support below powerfull conditions and filters.
+### 🛒 WooCommerce ([PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/))
+##📦 Delete WooCommerce Orders
+* ✅ Delete Order by Status.
+* ✅ Delete Order by Order Date
+* ✅ Delete Order by Total( min, max, equal ).
+* ✅ Delete Order by Payment Method Filter  
 
-#### Deleting posts
+### 👥 WooCommerce Users
+* ✅ Delete User by Roles  
+* ✅ Delete User by Registered Date.
+* ✅ Delete User by User Meta.
+* ✅ Delete User by Emails.
+* ✅ Delete Users Who Have No Orders. 
 
-* Delete Posts.
-* Delete WooCommerce Order [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Delete Posts by custom query
-* Delete posts by category
-* Delete posts by Selected category
-* Delete posts by tag
-* Delete Posts by custom post type
-* Delete Posts by post status
-* Delete Posts by date interval
-* Delete Posts by Modified date interval
-* Delete Posts by custom Taxonomy
-* Delete Posts by authors
-* Delete Post by meta fields [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Delete Post by Content Count [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Delete Post by Custom Query [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Delete Posts by title or content. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Delete Posts by URL. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Delete the image along with the pos. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Delete Posts by custom fields.  [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Delete Posts by any filters.  [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Delete Posts by any conditions.  [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Scheduled Delete [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-
-#### Delete post by conditions & filters
-
-* Post date greater than X days
-* Post date less than X days
-* Post in date range 
-* Only public posts
-* Only private posts
-* Restrict to first N posts
-* Delete permanently or just move to trash
-* Schedule deletion of posts automatically
-* Post by Category 
-* Post by Author 
-* Post by status published,pending etc
-* Delete Duplicate Post   (comming soon)
-
-#### Delete Comments
-
-* Delete Comments
-* Delete Comments by status
-* Delete Comments by date interval
-* Delete Comments by comment author. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Delete Comments by comment post.  [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Delete Comments by conditions & filters  [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Scheduled Delete [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-
-#### Delete users
-
-* Delete Users
-* Delete Users by user roles
-* Delete Users by user Email [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Delete users based on their registered date
-* Delete Users by user meta fields [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Assign deleted user data to another user. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Delete Users who don't have an order. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-* Scheduled Delete [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
-
-####  Database Cleanup 
-
-* Delete Auto Drafts
-* Delete Trash post 
-* Delete Revisions 
-* Delete Orphaned Meta 
-* Delete Duplicate Meta 
-* Bulk Delete Post
-* Mass Delete Post 
-
-
-#### Deleting pages
-
-* Delete all published pages
-* Delete all draft pages
-* Delete all pending pages
-* Delete all private pages
-* Delete all scheduled pages
-* Delete all pages from trash
-* Delete all revisions pages  
-* Delete all trash pages 
-
-#### Deleting post revisions
-
-* Delete all post revisions
-* Delete all page revisions
-* Delete all Custom Post Type Revisions 
-
-#### WP Bulk Delete [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/) 
-
-
-We are working on providing more options :) 
-
-#### Support
-
-* If you have found a bug/issue or have a feature request, then post them in [Support ticket][1]
-* If you have a question about plugin or need help to troubleshoot plugin, then post about it in our [WP Bulk delete Support][1]
-* If you like the Plugin, then kindly leave a review/feedback at [WordPress repo page][2]. This will help more people to discover the plugin.
-* Checkout other [WordPress Plugins][3] that we have written
-
-
-[1]: https://xylusthemes.com/support/
-[2]: https://wordpress.org/support/plugin/wp-bulk-delete/reviews/
-[3]: https://xylusthemes.com/plugins/
-
-
+## ⚙️ WooCommerce General
+* ✅ Delete Inactive Users.
+* ✅ Delete User Who is Not Listed in WordPress but Exist in WooCommerce( who has no order )
 
 == Installation ==
 
-**This plugin can be installed directly from your site.**
+### 🔄 Install via WordPress Admin:
+1. Log in to WordPress and navigate to "Plugins" > "Add New".
+2. Search for "WP Bulk Delete" and click "Install Now".
+3. Click "Activate" to enable the plugin.
 
-1. Log in and navigate to Plugins & Add New.
-2. Type "WP Bulk Delete" into the Search input and click the "Search" button.
-3. Locate the "WP Bulk Delete" in the list of search results and click "Install Now".
-4. Click the "Activate Plugin" link at the bottom of the install screen.
+### 🔄 Manual Installation:
+1. Download "WP Bulk Delete" from WordPress.org.
+2. Unzip the file and upload it to `wp-content/plugins/`.
+3. Go to "Plugins" in WordPress and activate it.
 
-**It can also be installed manually.**
+== Frequently Asked Questions ==
 
-1. Download the "WP Bulk Delete" plugin from WordPress.org.
-2. Unzip the package and move to your plugins directory.
-3. Log into WordPress and navigate to the "Plugins" screen.
-4. Locate "WP Bulk Delete" in the list and click the "Activate" link.
+= Can this plugin delete custom post types? =
+✅ Yes, the plugin supports deleting any custom post type (CPTs).
+
+= Does this plugin support scheduled deletions? =
+✅ Yes, with the PRO version, you can schedule post, comment, and user deletions.
+
+= Can I delete posts by custom fields or meta values? =
+✅ Yes, the PRO version allows you to delete posts based on custom field values and meta conditions.
+
+= Does this plugin support bulk deletion of posts, comments and users? =
+✅ Yes, you can delete posts, comments and users in bulk using multiple filters.
+
+= Can I delete categories and tags in bulk? =
+✅ Yes, you can delete entire categories and tags for any post type in bulk with a single click.
+
+= Can I undo the deletion process? =
+❌ No, the deletion process is permanent. Once the posts, comments, or users are deleted, they cannot be restored. It is recommended to take a backup before performing bulk deletions.
+
+= Can I delete images and media along with posts? =
+✅ Yes, with the PRO version, you can choose to delete attached media files when deleting posts, freeing up server space.
+
+= Can I delete WooCommerce customers without orders? =
+✅ Yes, with the PRO version, you can delete WooCommerce customers who have no orders or only have failed/canceled orders, helping you keep your customer list clean.
+
+= Can I bulk delete posts by custom post type (CPT)? =
+✅ Yes, you can delete custom post types (CPTs), including WooCommerce products, events, or any CPT registered on your WordPress site.
 
 == Screenshots ==
 
-
-1. Delete posts by post types.
-2. Delete posts by taxonomy.
-3. Delete posts by authors.
-4. Delete posts by title and content.
-5. Delete posts by custom fields.
-6. Delete posts by all (general).
-7. Delete Comments
-8. Delete Users
-9. Delete Postmeta
-10. Delete Usermeta
-11. Delete Commentmeta
-12. Delete Taxonomy Terms
-13. Cleanup
-14. Scheduled Delete
-15. Scheduled Delete History
+1. 🧹 Cleanup
+2. 🗂️ Delete Posts
+3. 💬 Delete Comments
+4. 👤 Delete Users
+5. 🔖 Delete Taxonomies & Tags
+6. ⏱️ Scheduled Delete
+7. 📜 Scheduled Delete History
+8. 🛒 Delete WooCommerce Orders
+9. 👥 Delete WooCommerce Users
+10. 🔍 Delete WooCommerce General Filter
 
 == Changelog ==
+
+= 1.3.5 =
+* ADDED: Added WooCommerce Section Separately( PRO )
 
 = 1.3.4 =
 * ADDED: Delete Post by IDs Filter ( PRO )
@@ -271,3 +264,42 @@ We are working on providing more options :)
 
 = 1.0.0 =
 * Initial Version.
+
+== Support ==
+
+* 🔧 Found a bug or have a feature request? Open a [Support Ticket](https://xylusthemes.com/support/).
+* ⭐ Like the plugin? Leave a review on our [WordPress plugin page](https://wordpress.org/support/plugin/wp-bulk-delete/reviews/).
+* 💼 Explore more [WordPress Plugins](https://xylusthemes.com/plugins/) by XylusThemes.
+
+== WP Bulk Delete [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/) ==
+
+### Upgrade to the PRO version for advanced features like:
+* 🔄 Scheduled deletion of posts, comments, and users.
+* 📂 Delete posts by Meta Fields.
+* 🔗 Delete posts by IDs.
+* 🔁 Delete duplicate posts/pages/CPTs.
+* 🔍 Delete posts by Title Contains.
+* ✍️ Delete posts by Content Contains.
+* 🔗 Delete posts by Post Link.
+* 🔢 Delete posts by Content Character Count.
+* 🔠 Delete posts by Content Word Count.
+* 📅 Schedule automatic comment deletion.
+* 👥 Advanced user deletion filters.
+* 👤 Delete users by Meta Fields.
+* 📧 Delete users by Emails.
+* 🔀 Assign deleted user data to another user.
+* 🛒 Delete WooCommerce orders by:
+    * Status.
+    * Order Date.
+    * Order Total (min, max, equal).
+    * Payment Method.
+* 👥 Delete WooCommerce users by:
+    * Roles.
+    * Registered Date.
+    * User Meta.
+    * Emails.
+    * Users with no orders.
+* ⚙️ Delete inactive users.
+* 🔍 Delete users not listed in WordPress but existing in WooCommerce.
+* 🗃️ Delete images along with posts.
+* 🚀 And much more!
