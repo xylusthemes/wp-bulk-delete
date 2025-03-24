@@ -49,7 +49,7 @@ function xt_delete_terms_form_process( $data ) {
 		if ( ! empty( $term_count ) && $term_count > 0 ) {
 			return  array(
     			'status' => 1,
-    			'messages' => array( sprintf( esc_html_e( '%d Term(s) deleted successfully.', 'wp-bulk-delete' ), $term_count )
+    			'messages' => array( sprintf( esc_html__( '%d Term(s) deleted successfully.', 'wp-bulk-delete' ), $term_count )
     		) );
         } else {                
             return  array(

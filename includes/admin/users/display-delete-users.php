@@ -116,50 +116,6 @@ function wpbd_delete_users_page(){
 										<div class="text" >
 											<div class="header-icon" ></div>
 											<div class="header-title" >
-												<span>
-													<?php 
-														esc_html_e('WooCommerce Filter ','wp-bulk-delete'); 
-														if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } 
-														echo wp_kses_post( check_wc_is_activated() );
-													?>
-												</span>
-											</div>
-											<div class="header-extra" ></div>
-										</div>
-										<svg viewBox="0 0 24 24" fill="none"
-											xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
-											<path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
-										</svg>
-									</div>
-									<div class="content"  aria-expanded="false" style="display:none;">
-										<?php 
-											if( !wpbd_is_pro() ){
-												?>
-												<div class="wpbd-blur-filter" >
-													<div class="wpbd-blur" >
-														<div class="wpbd-blur-filter-option">
-															<?php
-																do_action( 'wpbd_delete_users_woocommerce_form' );
-															?>
-														</div>
-													</div>
-													<div class="wpbd-blur-filter-cta" >
-													<span style="color: red"><?php echo esc_html_e( 'Available in Pro version.', 'wp-bulk-delete' ); ?>  </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php echo esc_html_e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
-													</div>
-												</div>
-												<?php
-											}else{
-												do_action( 'wpbd_delete_users_woocommerce_form' );
-											}
-										?>
-									</div>
-								</div>
-
-								<div class="wpbd-card" style="margin-top:10px;">
-									<div class="header toggles" >
-										<div class="text" >
-											<div class="header-icon" ></div>
-											<div class="header-title" >
 												<span><?php esc_html_e('Action ','wp-bulk-delete'); ?></span>
 											</div>
 											<div class="header-extra" ></div>

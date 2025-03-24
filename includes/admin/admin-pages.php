@@ -27,6 +27,9 @@ function wpbd_add_menu_pages(){
 	$submenu['delete_all_actions'][] = array( __( 'Delete Comments', 'wp-bulk-delete' ), 'manage_options',admin_url( 'admin.php?page=delete_all_actions&tab=by_comments' ) );
 	$submenu['delete_all_actions'][] = array( __( 'Delete Users', 'wp-bulk-delete' ), 'manage_options',admin_url( 'admin.php?page=delete_all_actions&tab=by_users' ));
 	$submenu['delete_all_actions'][] = array( __( 'Delete Category', 'wp-bulk-delete' ), 'manage_options',admin_url( 'admin.php?page=delete_all_actions&tab=by_terms' ));
+	
+	do_action( 'wpbd_add_addon_menu', $submenu );
+	
 	$submenu['delete_all_actions'][] = array( __( 'Scheduled Delete', 'wp-bulk-delete' ), 'manage_options',admin_url( 'admin.php?page=delete_all_actions&tab=by_schedule-delete' ));
 	if( wpbd_is_pro() ){
 		$submenu['delete_all_actions'][] = array( __( 'License', 'wp-bulk-delete' ), 'manage_options',admin_url( 'admin.php?page=delete_all_actions&tab=wpbdpro-license' ) );
@@ -62,3 +65,54 @@ function get_selected_tab_submenu( $submenu_file ){
 	return $submenu_file;
 }
 add_filter( 'submenu_file', 'get_selected_tab_submenu' );
+
+
+function add_wpbd_wca_menu_free() {
+	global $submenu;
+	if( !wpbd_is_pro() ) {
+		if ( isset( $submenu['delete_all_actions'] ) ) {
+			add_submenu_page(
+				'delete_all_actions',
+				__('WooCommerce', 'wp-bulk-delete-pro'),
+				__('WooCommerce', 'wp-bulk-delete-pro') . '<span style="margin-left: 5px;height: 22px;border-radius: 3px;background: #005AE0;color: #FFF;font-size: 12px;line-height: 18px;font-weight: 600;display: inline-flex;padding: 0 4px;align-items: center;" >PRO</span>',
+				'manage_options',
+				'wpbd_wca_free',
+				'wpbd_wca_callback_free'
+			);
+		}
+	}
+}
+add_action( 'wpbd_add_addon_menu', 'add_wpbd_wca_menu_free' );
+
+function wpbd_wca_callback_free(){
+	$posts_header_result = wpdb_render_common_header( 'WooCommerce' );
+	echo esc_attr_e( $posts_header_result );
+	?>
+	
+	<div class="wpbd-container" style="margin-top: 60px;">
+		<div class="wpbd-wrap" >
+			<div id="poststuff">
+				<div id="post-body" class="metabox-holder columns-2">
+					<div class="wpbd-container">
+						<div class="wpbd-wrap">
+							<div id="poststuff">
+								<div class="wpbd-blur-filter" >
+									<div class="wpbd-blur"  >
+										<div class="wpbd-blur-filter-option">
+										</div>
+									</div>
+									<div class="wpbd-blur-filter-cta" style="top: 40px;" >
+										<span style="color: red"><?php echo esc_html_e( 'Available in Pro version.', 'wp-bulk-delete' ); ?>  </span><a href="<?php echo esc_url( WPBD_PLUGIN_BUY_NOW_URL ); ?>"><?php echo esc_html_e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<?php
+	$posts_footer_result = wpdb_render_common_footer();
+	echo esc_attr_e( $posts_footer_result );
+}

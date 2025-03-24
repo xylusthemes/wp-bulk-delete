@@ -1611,3 +1611,10 @@ html:not([data-scroll="0"]) .wpbd-header {
     gap: 10px;
     align-items: center;
 }
+
+.notice{
+    display: none;
+}
+.wpbd-notice{
+    display: block;
+}
