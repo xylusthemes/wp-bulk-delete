@@ -68,7 +68,7 @@ function wpbd_display_admin_notice( $notice_result = array() ) {
         if( !empty( $notice_result['messages'] ) ){
             foreach ( $notice_result['messages'] as $smessages ) {
                 ?>
-                <div class="notice notice-success is-dismissible">
+                <div class="notice wpbd-notice notice-success is-dismissible">
                     <p><strong><?php echo esc_html__( $smessages, 'wp-bulk-delete' ); ?></strong></p>
                 </div>
                 <?php
@@ -79,7 +79,7 @@ function wpbd_display_admin_notice( $notice_result = array() ) {
         if( !empty( $notice_result['messages'] ) ){
             foreach ( $notice_result['messages'] as $emessages ) {
                 ?>
-                <div class="notice notice-error is-dismissible">
+                <div class="notice wpbd-notice notice-error is-dismissible">
                     <p><strong><?php echo esc_html__( $emessages, 'wp-bulk-delete' ); ?></strong></p>
                 </div>
                 <?php
@@ -117,14 +117,14 @@ function timeout_memory_limit_is_enough() {
 	$timeout_limit = ini_get( 'max_execution_time' );
 	if( $memory_limit < '512' ){
 		?>
-		<div class="notice notice-warning is-dismissible">
+		<div class="notice wpbd-notice notice-warning is-dismissible">
 			<p><strong><?php esc_html_e( 'Attention: The server PHP memory limit is set to '.$memory_limit.'M, which is less than the recommended 512M. This may cause slow deletion progress if deleting large data.', 'wp-bulk-delete' ); ?></strong></p>
 		</div>
 		<?php
 	}
 	if( $timeout_limit < '300' ){
 		?>
-		<div class="notice notice-warning is-dismissible">
+		<div class="notice wpbd-notice notice-warning is-dismissible">
 		<p><strong><?php esc_html_e( 'Attention: The server PHP timeout limit is set to '.$timeout_limit.' seconds, which is less than the recommended 300 seconds. This may cause slow deletion progress if deleting large data.', 'wp-bulk-delete' ); ?></strong></p>
 		</div>
 		<?php
@@ -161,45 +161,14 @@ function handle_delete_posts() {
  * @since 1.0
  * @return void
  */
-function wpbd_get_posttype_post_count( $posttye ){
-	if( $posttye != '' ){
+function wpbd_get_posttype_post_count( $posttype ){
+	if( $posttype != '' ){
 		global $wpdb;
 
-		if( $posttye == 'shop_order_lagecy' ){
-			$posttye = 'shop_order';
-		}
-
-		$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_type = %s AND `post_status` NOT IN ('trash', 'auto-draft')", esc_attr( $posttye ) ) );
+		$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_type = %s AND `post_status` NOT IN ('trash', 'auto-draft')", esc_attr( $posttype ) ) );
 		return $count;
 	}
 	return 0;
-}
-
-/**
- * Return post count from posttype
- *
- * @since 1.0
- * @return void
- */
-function wpbd_get_wc_order_count(){
-	global $wpdb;
-	//Get WC order type with count
-	$results  = array();
-	$table_name = $wpdb->prefix . 'wc_orders';
-	$table_exists = $wpdb->get_var("SHOW TABLES LIKE '{$table_name}'");
-
-	if ( $table_exists ) {
-		$query    = "SELECT COUNT(`id`) as `count`, `type`, REPLACE(`type`, 'shop_', '') as `type_name` FROM `{$wpdb->prefix}wc_orders` WHERE `type` = 'shop_order' ";
-		$results  = $wpdb->get_results($query);
-		$results  = (array)reset($results);
-		
-		if( isset( $results['type_name'] ) && !empty( $results['type_name'] ) ){
-			$results['type_name'] = ucfirst( $results['type_name'] ). '';
-		}
-		return $results;
-	}else{
-		return $results;
-	}
 }
 
 /**
@@ -395,19 +364,6 @@ function wpdb_render_common_header( $page_title  ){
     </div>
     <?php
     
-}
-
-function check_wc_is_activated() {
-    // Define the WooCommerce plugin file path
-    $woocommerce_plugin_path = 'woocommerce/woocommerce.php';
-    // Check if WooCommerce is activated
-    if ( is_plugin_active($woocommerce_plugin_path) ) {
-        return '';
-    }elseif(file_exists(WP_PLUGIN_DIR . '/' . $woocommerce_plugin_path)) {
-        return '<div class="wpbd-pro-badge">WooCommerce Not Activated</div>';
-    }else{
-        return '<div class="wpbd-pro-badge">WooCommerce Not Installed</div>';
-    }
 }
 
 /**

@@ -46,7 +46,7 @@ function wpbd_delete_posts_page(){
 		<div class="wpbd-wrap" >
 			<div id="poststuff">
 				<div id="post-body" class="metabox-holder columns-2">
-					<div class="notice notice-warning">
+					<div class="notice wpbd-notice notice-warning">
 						<p><strong><?php esc_html_e( 'WARNING: Before you delete any data, please take a backup; and the deletion operation is irreversible. Please use it with caution!', 'wp-bulk-delete' ); ?></strong></p>
 					</div>
 					<?php 
@@ -88,6 +88,9 @@ function wpbd_delete_posts_page(){
 												<span class="tab-label"><?php esc_attr_e( 'Schedule Delete', 'wp-bulk-delete' ); if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } ?></span>
 											</a>
 											<?php 
+											
+											do_action( 'wpbd_add_addon_tabs', $active_tab );
+
 											if( wpbd_is_pro() ){ ?>
 												<a href="?page=delete_all_actions&tab=wpbdpro-license" class="var-tab <?php echo $active_tab == 'wpbdpro-license' ? 'var-tab--active' : 'var-tab--inactive'; ?>">
 													<span class="tab-label"><?php esc_attr_e( 'License', 'wp-bulk-delete' ); ?></span>
@@ -159,6 +162,7 @@ function wpbd_delete_posts_page(){
 								wpbd_pro_license_page();
 							}
 						}
+						do_action( 'wpbd_add_addon_tab_page', $active_tab );
 						?>
 					</div>
 				</div>

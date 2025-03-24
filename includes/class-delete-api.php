@@ -163,13 +163,6 @@ class WPBD_Delete_API {
 	public function do_delete_posts( $post_ids = array(), $force_delete = false, $item = array(), $custom_query = null ) {
 		global $wpdb;
         $post_delete_count = 0;
-        $wc_order_del      = false;
-        $post_type         = isset( $item['delete_post_type'] ) ? $item['delete_post_type'] : '';
-        $wcpost_statis     = isset( $item['delete_woo_post_status'] ) ? $item['delete_woo_post_status'] : '';
-
-        if ( ( is_array( $post_type ) && in_array( 'shop_order', $post_type ) ) || ( !is_array( $post_type ) && $post_type === 'shop_order' ) && !empty( $wcpost_statis ) ) {
-            $wc_order_del = true;
-        }
 
         set_time_limit(0);
         $xt_memory_limit = (int)str_replace( 'M', '',ini_get('memory_limit' ) );
@@ -219,23 +212,16 @@ class WPBD_Delete_API {
                     }
                 }
 
-                if( $wc_order_del ){
-                    foreach( $post_ids as $order_id ){
-                        $order = wc_get_order( $order_id );
-                        $order->delete( true );
-                    }
-                }else{
-                    $post_ids_sanitized = array_map( 'intval', $post_ids );
-                    $placeholders       = implode( ',', array_fill( 0, count( $post_ids_sanitized ), '%d' ) );
-                    $query = $wpdb->prepare(
-                        "DELETE p, pt, pm FROM {$wpdb->posts} p 
-                        LEFT JOIN {$wpdb->term_relationships} pt ON pt.object_id = p.ID 
-                        LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID 
-                        WHERE p.ID IN ( $placeholders )",
-                        $post_ids_sanitized
-                    );
-                    $wpdb->query( $query );
-                }
+                $post_ids_sanitized = array_map( 'intval', $post_ids );
+                $placeholders       = implode( ',', array_fill( 0, count( $post_ids_sanitized ), '%d' ) );
+                $query = $wpdb->prepare(
+                    "DELETE p, pt, pm FROM {$wpdb->posts} p 
+                    LEFT JOIN {$wpdb->term_relationships} pt ON pt.object_id = p.ID 
+                    LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID 
+                    WHERE p.ID IN ( $placeholders )",
+                    $post_ids_sanitized
+                );
+                $wpdb->query( $query );
 
             }else{
                 foreach ($post_ids as $post_id ){
@@ -248,21 +234,11 @@ class WPBD_Delete_API {
                             }
                         }
                     }
-                    if( $wc_order_del ){
-                        if( $force_delete === false ){
-                            $order = wc_get_order( $post_id );
-                            $order->delete( false );
-                        }else{
-                            $order = wc_get_order( $post_id );
-                            $order->delete( true );
-                        }
-
+                
+                    if( $force_delete === false ){
+                        wp_trash_post( $post_id );
                     }else{
-                        if( $force_delete === false ){
-                            wp_trash_post( $post_id );
-                        }else{
-                            wp_delete_post( $post_id, true );
-                        }
+                        wp_delete_post( $post_id, true );
                     }
                 }
             }

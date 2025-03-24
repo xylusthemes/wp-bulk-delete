@@ -98,31 +98,16 @@ function xt_delete_posts_form_process( $data ) {
  */
 function wpbd_render_form_posttype(){
     global $wp_post_types, $wpdb;
-    $ingnore_types = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation', 'wpbd_scheduled', 'wp_font_face', 'wp_font_family', 'shop_order_refund', 'shop_order_placehold' );
-    $wc_orders     = wpbd_get_wc_order_count();
-    $wc_order      = array();
-    if( !empty( $wc_orders ) ){
-        $wc_order[$wc_orders['type']] = $wc_orders['type_name'];
-    }
-
+    $ingnore_types = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation', 'wpbd_scheduled', 'wp_font_face', 'wp_font_family', 'shop_order_refund', 'shop_order_placehold', 'shop_order', 'shop_order_lagecy' );
     $types = array();
     if( !empty( $wp_post_types ) ){
         foreach( $wp_post_types as $key_type => $post_type ){
             if( in_array( $key_type, $ingnore_types ) ){
                 continue;
             }else{
-                if( $key_type == 'shop_order' ){
-                    $key_type = 'shop_order_lagecy';
-                    $post_type->labels->name = $post_type->labels->name . ' Lagecy';
-                }
                 $types[$key_type] = $post_type->labels->name;
             }
         }
-    }
-
-    $wc_order = array_filter( $wc_order );
-    if( !empty( $wc_order ) ){
-        $types = array_merge( $wc_order, $types );
     }
     ?>
     <div class="wpbd-inner-main-section">
@@ -136,23 +121,15 @@ function wpbd_render_form_posttype(){
                         <select name="delete_post_type[]" class="wpbd_global_multiple_select" id="delete_post_type" multiple>
                             <?php
                             foreach( $types as $key_type => $type ) {
-                                $disable = $pro = '';
-                                if( ( $key_type === "shop_order_lagecy" || $key_type === "shop_order" || $key_type == "shop_coupon" ) && !wpbd_is_pro() ) {
-                                    $disable = "disabled";
-                                }
                                 $pselect = ( $key_type == 'post' ) ? 'selected' : '';
                                 ?>
-                                <option value="<?php echo esc_attr__( $key_type ); ?>" <?php echo esc_attr__( $disable )  . esc_attr__( $pselect ); ?> >
+                                <option value="<?php echo esc_attr__( $key_type ); ?>" <?php echo esc_attr__( $pselect ); ?> >
                                     <?php printf( esc_attr__( '%s', 'wp-bulk-delete' ), esc_attr__( $type ) ); ?>
                                     <?php 
-                                    if( $key_type == 'shop_order' ){
-                                        $post_count = isset( $wc_orders['count'] ) ? $wc_orders['count'] : 0;
-                                    }else{
                                         $post_count = wpbd_get_posttype_post_count( $key_type );
-                                    }
-                                    if( $post_count >= 0 ){
-                                        echo esc_attr__( ' ('.$post_count .' '. $type .') ' );
-                                    }
+                                        if( $post_count >= 0 ){
+                                            echo esc_attr__( ' ('.$post_count .' '. $type .') ' );
+                                        }
                                     ?>
                                 </option>
                                 <?php
@@ -177,7 +154,7 @@ function wpbd_render_form_posttype(){
  */
 function wpbd_render_form_posttype_dropdown(){
     global $wp_post_types;
-    $ingnore_types = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation', 'wpbd_scheduled', 'wp_font_face', 'wp_font_family', 'shop_order_refund', 'shop_order_placehold' );
+    $ingnore_types = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation', 'wpbd_scheduled', 'wp_font_face', 'wp_font_family', 'shop_order_refund', 'shop_order_placehold', 'shop_order', 'shop_order_lagecy' );
     $types = array();
     if( !empty( $wp_post_types ) ){
         foreach( $wp_post_types as $key_type => $post_type ){
@@ -348,28 +325,6 @@ function wpbd_render_form_custom_query(){
             </fieldset>
         </div>
     </div>
-    <?php
-}
-
-
-/**
- * Render Woocommerce Order Statuses.
- *
- * @since 1.0
- * @return void
- */
-function wpbd_woo_order_detele_by_status_free(){
-    ?>
-        <div class="wpbd-inner-main-section">
-            <div class="wpbd-inner-section-1" >
-                <span class="wpbd-title-text" ><?php esc_html_e('WooCommerce Order Status ','wp-bulk-delete'); ?></span>
-            </div>
-            <div class="wpbd-inner-section-2">
-                <select name="" class="wpbd_global_multiple_select" multiple disabled >
-                    <option value=""><?php esc_html_e('Available in Pro version.','wp-bulk-delete'); ?></option>
-                </select>
-            </div>
-        </div>
     <?php
 }
 
@@ -933,52 +888,6 @@ function wpbd_render_common_form() {
                 wpbd_render_form_posttype();
                 wpbd_render_form_poststatus();
                 
-            ?>
-        </div>
-    </div>
-
-    <div class="wpbd-card" >
-        <div class="header toggles" >
-            <div class="text" >
-                <div class="header-icon" ></div>
-                <div class="header-title" >
-                    <span>
-                        <?php 
-                            esc_html_e('WooCommerce Filter ','wp-bulk-delete'); 
-                            if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } 
-                            echo wp_kses_post( check_wc_is_activated() );
-                        ?>
-                    </span>
-                </div>
-                <div class="header-extra" ></div>
-            </div>
-            <svg viewBox="0 0 24 24" fill="none"
-                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
-                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
-            </svg>
-        </div>
-        <div class="content"  aria-expanded="false" id="woofiltercontent" style="display: none;">
-            <?php 
-                if( wpbd_is_pro() && class_exists( 'WP_Bulk_Delete_Pro_Common' ) ){
-                    if( $wpdb->common_pro->wpbd_is_woo_active() == true ){
-                        $wpdb->common_pro->wpbd_woo_order_detele_by_status();
-                    }
-                }else{
-                    ?>
-                        <div class="wpbd-blur-filter" >
-                        <div class="wpbd-blur" >
-                            <div class="wpbd-blur-filter-option">
-                                <?php
-                                     wpbd_woo_order_detele_by_status_free();
-                                ?>
-                            </div>
-                        </div>
-                        <div class="wpbd-blur-filter-cta" >
-                            <span style="color: red"><?php echo esc_html_e( 'Available in Pro version.', 'wp-bulk-delete' ); ?> </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php echo esc_html_e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
-                        </div>
-                    </div>
-                    <?php
-                }
             ?>
         </div>
     </div> 

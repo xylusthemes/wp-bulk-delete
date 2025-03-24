@@ -35,7 +35,7 @@ function wpbd_cleanup_form( $type = 'general' ){
                 }
             }else{
                 ?>
-                <div class="notice notice-success is-dismissible">
+                <div class="notice wpbd-notice notice-success is-dismissible">
                     <p><strong><?php esc_html_e( 'Nothing to cleanup!!', 'wp-bulk-delete' ); ?></strong></p>
                 </div>
                 <?php
@@ -47,7 +47,7 @@ function wpbd_cleanup_form( $type = 'general' ){
         if( !empty( $error ) ){
             foreach ( $error as $err ) {
                 ?>
-                <div class="notice notice-error">
+                <div class="notice wpbd-notice notice-error">
                     <p><strong><?php esc_html_e( $err, 'wp-bulk-delete' ); ?></strong></p>
                 </div>
                 <?php
@@ -56,7 +56,7 @@ function wpbd_cleanup_form( $type = 'general' ){
         if( ! empty( $messages ) ){
             if (strlen(implode($messages)) == 0 ){
                 ?>
-            <div class="notice notice-success is-dismissible">
+            <div class="notice wpbd-notice notice-success is-dismissible">
                 <p><strong><?php esc_html_e( 'Nothing to cleanup!!', 'wp-bulk-delete' ); ?></strong></p>
             </div>
             <?php
@@ -64,7 +64,7 @@ function wpbd_cleanup_form( $type = 'general' ){
                 foreach ( $messages as $message ) {
                     if( $message != '' ){
                         ?>
-                        <div class="notice notice-success is-dismissible">
+                        <div class="notice wpbd-notice notice-success is-dismissible">
                             <p><strong><?php esc_html_e( $message, 'wp-bulk-delete' ); ?></strong></p>
                         </div>
                         <?php

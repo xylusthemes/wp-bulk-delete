@@ -54,9 +54,9 @@
 	            if( response != '' ){
 	                var response = jQuery.parseJSON( response );
 	                if( response.status == 0 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-error is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice wpbd-notice notice-error is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                } else if( response.status == 2 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-success is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice wpbd-notice notice-success is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
 	                } else if( response.status == 1 ){
 	                    if ( confirm(  response.post_count + ' posts will be delete. Would you like to proceed further?'  ) ){
@@ -146,9 +146,9 @@
 	            if( response != '' ){
 	                var response = jQuery.parseJSON( response );
 	                if( response.status == 0 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-error is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice wpbd-notice notice-error is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                } else if( response.status == 2 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-success is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice wpbd-notice notice-success is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
 	                } else if( response.status == 1 ){
 	                    if ( confirm(  response.post_count + ' users will be delete. Would you like to proceed further?'  ) ){
@@ -179,9 +179,9 @@
 	            if( response != '' ){
 	                var response = jQuery.parseJSON( response );
 	                if( response.status == 0 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-error is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice wpbd-notice notice-error is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                } else if( response.status == 2 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-success is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice wpbd-notice notice-success is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
 	                } else if( response.status == 1 ){
 	                    if ( confirm(  response.post_count + ' comments will be delete. Would you like to proceed further?'  ) ){
@@ -223,9 +223,9 @@
 	            if( response != '' ){
 	                var response = jQuery.parseJSON( response );
 	                if( response.status == 0 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-error is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice wpbd-notice wpbd-notice notice-error is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                } else if( response.status == 2 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-success is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice wpbd-notice wpbd-notice notice-success is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
 	                } else if( response.status == 1 ){
 	                    if ( confirm(  response.post_count + ' meta will be delete. Would you like to proceed further?'  ) ){
@@ -252,9 +252,9 @@
 	            if( response != '' ){
 	                var response = jQuery.parseJSON( response );
 	                if( response.status == 0 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-error is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice wpbd-notice notice-error is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                } else if( response.status == 2 ){
-	                    jQuery(".delete_notice").html('<div class="notice notice-success is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
+	                    jQuery(".delete_notice").html('<div class="notice wpbd-notice notice-success is-dismissible"><p><strong>' + response.messages + '</strong></p></div>');
 	                    jQuery("html, body").animate({ scrollTop: 0 }, "slow");
 	                } else if( response.status == 1 ){
 	                    if ( confirm(  response.post_count + ' Terms will be delete. Would you like to proceed further?'  ) ){
@@ -386,34 +386,6 @@
             var isChecked = jQuery(this).is(':checked');
             jQuery('.cleanup_post_type').prop('checked', isChecked);
         });
-
-		jQuery('#delete_post_type').on('change', function() {
-			// Check if 'shop_order' is selected
-			var selectedValue = jQuery(this).val();
-    		if (selectedValue.includes('shop_order') || selectedValue.includes('shop_order_lagecy')) {
-				//add shop_order_lagecy
-				jQuery('#woofiltercontent').show();
-				jQuery('#delete_post_status_multiple').val('').trigger("chosen:updated");
-				jQuery('#delete_post_status_multiple').prop('disabled', true).trigger("chosen:updated");
-				jQuery('#delete_woo_post_status_multiple').prop('disabled', false).trigger("chosen:updated");
-			} else {
-				jQuery('#woofiltercontent').hide();
-				jQuery('#delete_woo_post_status_multiple').val('').trigger("chosen:updated");
-				jQuery('#delete_post_status_multiple').prop('disabled', false).trigger("chosen:updated");
-				jQuery('#delete_woo_post_status_multiple').prop('disabled', true).trigger("chosen:updated");
-			}
-		});
-
-		jQuery('#delete_woo_post_status_multiple').on('change', function() {
-			if ( jQuery(this).val() && jQuery(this).val().length > 0 ) {
-				// jQuery('#delete_post_type').val('shop_order').trigger('chosen:updated');
-				var currentPostType = jQuery('#delete_post_type').val();
-				if (!currentPostType.includes('shop_order') && !currentPostType.includes('shop_order_lagecy')) {
-					jQuery('#delete_post_type').val('shop_order').trigger('chosen:updated');
-				}
-			}
-		});
-
 	});
 
 })( jQuery );
