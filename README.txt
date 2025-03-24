@@ -1,7 +1,7 @@
 === WP Bulk Delete ===
 Contributors: xylus, dharm1025, rajat1192  
 Donate link: http://xylusthemes.com  
-Tags: delete, bulk, clean databae bulk delete, bulk clean
+Tags: delete, bulk, clean databae, bulk delete, bulk clean
 Requires at least: 4.9
 Requires PHP: 5.3
 Tested up to: 6.7 
