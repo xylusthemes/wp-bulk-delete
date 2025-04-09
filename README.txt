@@ -4,7 +4,7 @@ Donate link: http://xylusthemes.com
 Tags: delete, bulk, clean database, bulk delete, bulk clean
 Requires at least: 4.9
 Requires PHP: 5.3
-Tested up to: 6.7 
+Tested up to: 6.8 
 Stable tag: 1.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
