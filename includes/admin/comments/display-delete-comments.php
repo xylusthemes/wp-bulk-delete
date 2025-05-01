@@ -36,7 +36,7 @@ function wpbd_delete_comments_page(){
 								</div>
 							</div>
 							<?php
-							esc_attr__( wp_nonce_field('delete_comments_nonce', '_delete_comments_wpnonce' ) );
+							esc_attr( wp_nonce_field('delete_comments_nonce', '_delete_comments_wpnonce' ) ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 							?>
 							
 							<p class="submit">

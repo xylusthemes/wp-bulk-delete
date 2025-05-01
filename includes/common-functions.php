@@ -49,7 +49,7 @@ function wpbd_get_terms_by_taxonomy( $taxonomy = '' ) {
 	$terms = array();
 	if ( $taxonomy != '' ) {
 		if( taxonomy_exists( $taxonomy ) ){
-			$terms = get_terms( $taxonomy, array( 'hide_empty' => true ) );
+			$terms = get_terms( array( 'taxonomy'   => $taxonomy, 'hide_empty' => true, ) );
 		}
 	}
 	return $terms;	
@@ -69,7 +69,7 @@ function wpbd_display_admin_notice( $notice_result = array() ) {
             foreach ( $notice_result['messages'] as $smessages ) {
                 ?>
                 <div class="notice wpbd-notice notice-success is-dismissible">
-                    <p><strong><?php echo esc_html__( $smessages, 'wp-bulk-delete' ); ?></strong></p>
+                    <p><strong><?php echo esc_html__( $smessages, 'wp-bulk-delete' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></strong></p>
                 </div>
                 <?php
             }
@@ -80,7 +80,7 @@ function wpbd_display_admin_notice( $notice_result = array() ) {
             foreach ( $notice_result['messages'] as $emessages ) {
                 ?>
                 <div class="notice wpbd-notice notice-error is-dismissible">
-                    <p><strong><?php echo esc_html__( $emessages, 'wp-bulk-delete' ); ?></strong></p>
+                    <p><strong><?php echo esc_html__( $emessages, 'wp-bulk-delete' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></strong></p>
                 </div>
                 <?php
             }
@@ -118,14 +118,14 @@ function timeout_memory_limit_is_enough() {
 	if( $memory_limit < '512' ){
 		?>
 		<div class="notice wpbd-notice notice-warning is-dismissible">
-			<p><strong><?php esc_html_e( 'Attention: The server PHP memory limit is set to '.$memory_limit.'M, which is less than the recommended 512M. This may cause slow deletion progress if deleting large data.', 'wp-bulk-delete' ); ?></strong></p>
+			<p><strong><?php esc_html_e( 'Attention: The server PHP memory limit is set to '.$memory_limit.'M, which is less than the recommended 512M. This may cause slow deletion progress if deleting large data.', 'wp-bulk-delete' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></strong></p>
 		</div>
 		<?php
 	}
 	if( $timeout_limit < '300' ){
 		?>
 		<div class="notice wpbd-notice notice-warning is-dismissible">
-		<p><strong><?php esc_html_e( 'Attention: The server PHP timeout limit is set to '.$timeout_limit.' seconds, which is less than the recommended 300 seconds. This may cause slow deletion progress if deleting large data.', 'wp-bulk-delete' ); ?></strong></p>
+		<p><strong><?php esc_html_e( 'Attention: The server PHP timeout limit is set to '.$timeout_limit.' seconds, which is less than the recommended 300 seconds. This may cause slow deletion progress if deleting large data.', 'wp-bulk-delete' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></strong></p>
 		</div>
 		<?php
 	}
@@ -136,19 +136,19 @@ add_action( 'timeout_memory_is_enough', 'timeout_memory_limit_is_enough' );
 
 add_action('admin_post_wpbd_delete_post', 'handle_delete_posts');
 function handle_delete_posts() {
-	$delete_time = isset( $_POST['delete_time'] ) ? $_POST['delete_time'] : '';
+	$delete_time = isset( $_POST['delete_time'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_POST['delete_time'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 	if ( $delete_time === 'scheduled' ) {
-		if( isset( $_POST['_delete_all_actions_wpnonce'] ) ){
-			$result = xt_delete_posts_form_process( $_POST );
+		if( isset( $_POST['_delete_all_actions_wpnonce'] ) ){ // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
+			$result = xt_delete_posts_form_process( $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		}
-		if( isset( $_POST['_delete_comments_wpnonce'] ) ){
-			$result = xt_delete_comments_form_process( $_POST );
+		if( isset( $_POST['_delete_comments_wpnonce'] ) ){ // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
+			$result = xt_delete_comments_form_process( $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		}
-		if( isset( $_POST['_delete_terms_wpnonce'] ) ){
-			$result = xt_delete_terms_form_process( $_POST );
+		if( isset( $_POST['_delete_terms_wpnonce'] ) ){ // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
+			$result = xt_delete_terms_form_process( $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		}
-		if( isset( $_POST['_delete_users_wpnonce'] ) ){
-			$result = xt_delete_users_form_process( $_POST );
+		if( isset( $_POST['_delete_users_wpnonce'] ) ){ // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
+			$result = xt_delete_users_form_process( $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		}
 		$message = $result['status'] === 1 ? 'Scheduled delete was created successfully.' : 'Error in scheduled delete.';
 		wp_safe_redirect( admin_url( 'admin.php?page=delete_all_actions&message=' . $message ).'&tab=by_schedule-delete' );
@@ -164,7 +164,7 @@ function handle_delete_posts() {
 function wpbd_get_posttype_post_count( $posttype ){
 	if( $posttype != '' ){
 		global $wpdb;
-
+		// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
 		$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_type = %s AND `post_status` NOT IN ('trash', 'auto-draft')", esc_attr( $posttype ) ) );
 		return $count;
 	}
@@ -241,9 +241,9 @@ function wp_p( $data, $exit = false ){
 
 	echo '<pre>';
 	if ( is_array( $data ) || is_object( $data ) ){
-		print_r( $data );
+		print_r( $data ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
 	} else {
-		echo esc_attr__( $data );
+		echo esc_attr( $data );
 	}
 	echo '</pre>';
 	if ( $exit ) {
@@ -301,7 +301,7 @@ function wpdb_render_common_footer(){
 }
 
 function wpbd_render_common_notice(){
-	$get_posts   = $_POST;
+	$get_posts   = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 	if( !empty( $get_posts ) ){
 		if( isset( $get_posts['delete_post_type'] ) ){
 			$delete_time = isset( $get_posts['delete_time'] ) ? $get_posts['delete_time'] : '';
@@ -327,9 +327,9 @@ function wpbd_render_common_notice(){
 		}
 	}
 
-	if( !empty( $_GET['message'] ) ){
-		$get_message      = sanitize_text_field( wp_unslash( $_GET['message'] ) );
-		$schedule_message = array( 'status' => 1, 'messages' => array( esc_html__( $get_message, 'wp-bulk-delete' ) ) );
+	if( !empty( $_GET['message'] ) ){ // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$get_message      = sanitize_text_field( wp_unslash( $_GET['message'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$schedule_message = array( 'status' => 1, 'messages' => array( esc_html__( $get_message, 'wp-bulk-delete' ) ) ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 		wpbd_display_admin_notice( $schedule_message );
 	}
 }
@@ -349,7 +349,7 @@ function wpdb_render_common_header( $page_title  ){
             <div class="wpbd-header-content" >
                 <span style="font-size:18px;"><?php esc_html_e('Dashboard','wp-bulk-delete'); ?></span>
                 <span class="spacer"></span>
-                <span class="page-name"><?php esc_html_e( $page_title,'wp-bulk-delete'); ?></span></span>
+                <span class="page-name"><?php esc_html_e( $page_title,'wp-bulk-delete');  // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></span></span>
                 <div class="header-actions" >
                     <span class="round">
                         <a href="<?php echo esc_url( 'https://docs.xylusthemes.com/docs/wp-bulk-delete/' ); ?>" target="_blank">

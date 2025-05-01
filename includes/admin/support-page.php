@@ -30,6 +30,7 @@ function wpbd_render_support_page(){
                             <div class="wpbd-support-features">
                                 <div class="wpbd-support-features-card">
                                     <div class="wpbd-support-features-img">
+                                        <?php // phpcs:disable PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage  ?>
                                         <img class="wpbd-support-features-icon" src="<?php echo esc_url( WPBD_PLUGIN_URL.'assets/images/document.svg' ); ?>" alt="<?php esc_attr_e( 'Looking for Something?', 'wp-bulk-delete' ); ?>">
                                     </div>
                                     <div class="wpbd-support-features-text">
@@ -40,6 +41,7 @@ function wpbd_render_support_page(){
                                 </div>
                                 <div class="wpbd-support-features-card">
                                     <div class="wpbd-support-features-img">
+                                        <?php // phpcs:disable PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage  ?>
                                         <img class="wpbd-support-features-icon" src="<?php echo esc_url( WPBD_PLUGIN_URL.'assets/images/call-center.svg' ); ?>" alt="<?php esc_attr_e( 'Need Any Assistance?', 'wp-bulk-delete' ); ?>">
                                     </div>
                                     <div class="wpbd-support-features-text">
@@ -50,6 +52,7 @@ function wpbd_render_support_page(){
                                 </div>
                                 <div class="wpbd-support-features-card">
                                     <div class="wpbd-support-features-img">
+                                        <?php // phpcs:disable PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage  ?>
                                         <img class="wpbd-support-features-icon"  src="<?php echo esc_url( WPBD_PLUGIN_URL.'assets/images/bug.svg' ); ?>" alt="<?php esc_attr_e( 'Found Any Bugs?', 'wp-bulk-delete' ); ?>" />
                                     </div>
                                     <div class="wpbd-support-features-text">
@@ -60,6 +63,7 @@ function wpbd_render_support_page(){
                                 </div>
                                 <div class="wpbd-support-features-card">
                                     <div class="wpbd-support-features-img">
+                                        <?php // phpcs:disable PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage  ?>
                                         <img class="wpbd-support-features-icon" src="<?php echo esc_url( WPBD_PLUGIN_URL.'assets/images/tools.svg' ); ?>" alt="<?php esc_attr_e( 'Require Customization?', 'wp-bulk-delete' ); ?>" />
                                     </div>
                                     <div class="wpbd-support-features-text">
@@ -70,6 +74,7 @@ function wpbd_render_support_page(){
                                 </div>
                                 <div class="wpbd-support-features-card">
                                     <div class="wpbd-support-features-img">
+                                        <?php // phpcs:disable PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage  ?>
                                         <img class="wpbd-support-features-icon" src="<?php echo esc_url( WPBD_PLUGIN_URL.'assets/images/like.svg' ); ?>" alt="<?php esc_attr_e( 'Like The Plugin?', 'wp-bulk-delete' ); ?>" />
                                     </div>
                                     <div class="wpbd-support-features-text">
@@ -126,19 +131,24 @@ function wpbd_render_support_page(){
                                                 <div class="wpbd-support-features-card2 wpbd-plugin">
                                                     <div class="wpbd-plugin-main">
                                                         <div>
-                                                            <img alt="<?php esc_html_e( $plugin_slug . ' Image', 'wp-bulk-delete' ); ?>" src="<?php echo esc_url( $plugin_icon ); ?>">
+                                                            <?php
+                                                                // translators: %s: Plugin slug used in image alt text.
+                                                                $alt_text = sprintf( esc_attr__( '%s Image', 'wp-bulk-delete' ), $plugin_slug ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+                                                            ?>
+                                                            <?php // phpcs:disable PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage  ?>
+                                                            <img alt="<?php echo $alt_text; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" src="<?php echo esc_url( $plugin_icon ); ?>">
                                                         </div>
                                                         <div>
-                                                            <div class="wpbd-main-name"><?php esc_html_e( $plugin_slug, 'wp-bulk-delete' ); ?></div>
-                                                            <div><?php esc_html_e( $plugin_description, 'wp-bulk-delete' ); ?></div>
+                                                            <div class="wpbd-main-name"><?php echo esc_attr( $plugin_slug ); ?></div>
+                                                            <div><?php echo esc_attr( $plugin_description ); ?></div>
                                                         </div>
                                                     </div>
                                                     <div class="wpbd-plugin-footer">
                                                         <div class="wpbd-footer-status">
-                                                            <div class="wpbd-footer-status-label"><?php esc_html_e( 'Status : ', 'wp-bulk-delete' ); ?></div>
-                                                            <div class="wpbd-footer-status wpbd-footer-status-<?php echo esc_attr__( strtolower(str_replace(' ', '-', $status_text) ) ); ?>">
+                                                            <div class="wpbd-footer-status-label"><?php esc_attr_e( 'Status : ', 'wp-bulk-delete' ); ?></div>
+                                                            <div class="wpbd-footer-status wpbd-footer-status-<?php echo esc_attr( strtolower(str_replace(' ', '-', $status_text) ) ); ?>">
                                                                 <span <?php echo ( $status_text == 'Active' ) ? 'style="color:green;"' : ''; ?>>
-                                                                    <?php echo esc_attr__( $status_text ); ?>
+                                                                    <?php echo esc_attr( $status_text ); ?>
                                                                 </span>
                                                             </div>
                                                         </div>

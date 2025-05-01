@@ -59,12 +59,12 @@ class WPBD_Delete_API {
             if( $date_type === 'older_than') {
                 $delete_start_date = $delete_end_date = '';
                 if( $input_days === "0" || $input_days > 0){
-                    $delete_end_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+                    $delete_end_date = gmdate('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
                 }
             } else if( $date_type === 'within_last') {
                 $delete_start_date = $delete_end_date = '';
                 if( $input_days === "0" || $input_days > 0){
-                    $delete_start_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+                    $delete_start_date = gmdate('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
                 }
             }
 
@@ -75,12 +75,12 @@ class WPBD_Delete_API {
             if( $mdate_type === 'molder_than') {
                 $mdelete_start_date = $mdelete_end_date = '';
                 if( $minput_days === "0" || $minput_days > 0){
-                    $mdelete_end_date = date('Y-m-d', strtotime("-{$minput_days} days", strtotime(current_time('Y-m-d'))));
+                    $mdelete_end_date = gmdate('Y-m-d', strtotime("-{$minput_days} days", strtotime(current_time('Y-m-d'))));
                 }
             } else if( $mdate_type === 'mwithin_last') {
                 $mdelete_start_date = $mdelete_end_date = '';
                 if( $minput_days === "0" || $minput_days > 0){
-                    $mdelete_start_date = date('Y-m-d', strtotime("-{$minput_days} days", strtotime(current_time('Y-m-d'))));
+                    $mdelete_start_date = gmdate('Y-m-d', strtotime("-{$minput_days} days", strtotime(current_time('Y-m-d'))));
                 }
             }
 
@@ -143,7 +143,7 @@ class WPBD_Delete_API {
             if( is_numeric( $limit_post ) ){
                 $query .= " LIMIT " . $limit_post;
             }
-            
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
             $posts = $wpdb->get_col( $query );
             return $posts;
 
@@ -164,10 +164,10 @@ class WPBD_Delete_API {
 		global $wpdb;
         $post_delete_count = 0;
 
-        set_time_limit(0);
+        set_time_limit(0); // phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged
         $xt_memory_limit = (int)str_replace( 'M', '',ini_get('memory_limit' ) );
         if( $xt_memory_limit < 512 ){
-            ini_set('memory_limit', '512M');
+            ini_set('memory_limit', '512M'); // phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged
         }
 
         if( ! empty( $post_ids ) && count( $post_ids ) > 0 ) {
@@ -178,6 +178,7 @@ class WPBD_Delete_API {
                     if( isset( $item['post_media'] ) && $item['post_media'] === 'yes' ){
                         $post_attachment_id = get_post_meta( $post_id, '_thumbnail_id', true );
                         if( !empty( $post_attachment_id ) ){
+                            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                             $attachment_ids = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_value = %d", $post_attachment_id ) );
                             if( !empty( $attachment_ids ) && count( $attachment_ids ) <= 1 ){
 
@@ -192,7 +193,7 @@ class WPBD_Delete_API {
                                         $file = $file_path . $size_info['file'];
                                         //file check and remove it
                                         if ( file_exists( $file ) ) {
-                                            unlink( $file ); 
+                                            wp_delete_file( $file );
                                         }
                                     }
                                 }
@@ -201,11 +202,12 @@ class WPBD_Delete_API {
                                     $file_path = $upload_dir['basedir'] . '/' . $attachment_metadata['file'];
                                     //file check and remove it
                                     if (file_exists($file_path)) {
-                                        unlink($file_path);
+                                        wp_delete_file($file_path);
                                     }
                                 }
-                                
+                                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                                 $wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->posts} WHERE ID = %d", $post_attachment_id ) );
+                                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                                 $wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->postmeta} WHERE post_id = %d", $post_attachment_id ) );
                             }
                         }
@@ -214,13 +216,15 @@ class WPBD_Delete_API {
 
                 $post_ids_sanitized = array_map( 'intval', $post_ids );
                 $placeholders       = implode( ',', array_fill( 0, count( $post_ids_sanitized ), '%d' ) );
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                 $query = $wpdb->prepare(
                     "DELETE p, pt, pm FROM {$wpdb->posts} p 
                     LEFT JOIN {$wpdb->term_relationships} pt ON pt.object_id = p.ID 
                     LEFT JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID 
-                    WHERE p.ID IN ( $placeholders )",
+                    WHERE p.ID IN ( $placeholders )", /// phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQLPlaceholders.UnfinishedPrepare
                     $post_ids_sanitized
                 );
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                 $wpdb->query( $query );
 
             }else{
@@ -228,6 +232,7 @@ class WPBD_Delete_API {
                     if( isset( $item['post_media'] ) && $item['post_media'] === 'yes' ){
                         $post_attachment_id = get_post_meta( $post_id, '_thumbnail_id', true );
                         if( !empty( $post_attachment_id ) ){
+                            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                             $attachment_ids = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_value = %d", $post_attachment_id ) );
                             if( count( $attachment_ids ) <= 1 ){
                                 wp_delete_attachment( $post_attachment_id, $force_delete );
@@ -263,12 +268,15 @@ class WPBD_Delete_API {
 
         switch( $counttype ) {
             case 'revision':
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                 $count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_type = %s", 'revision' ) );
                 break;
             case 'auto_drafts':
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                 $count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_status = %s", 'auto-draft' ) );
                 break;
             case 'trash':
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                 $count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_status = %s", 'trash' ) );
                 break;
         }
@@ -289,32 +297,38 @@ class WPBD_Delete_API {
 
         switch( $cleanuptype ) {
             case 'revision':
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                 $posts = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = %s", 'revision' ) );
                 if( $posts ) {
                     foreach ( $posts as $id ) {
                         wp_delete_post_revision( intval( $id ) );
                     }
 
+                    // translators: %s: Number Of Revisions Cleaned up.
                     $message = sprintf( __( '%s Revisions Cleaned up', 'wp-bulk-delete' ), number_format_i18n( sizeof( $posts ) ) );
                 }
                 break;
             case 'auto_drafts':
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                 $posts = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_status = %s", 'auto-draft' ) );
                 if( $posts ) {
                     foreach ( $posts as $id ) {
                         wp_delete_post( intval( $id ), true );
                     }
 
+                    // translators: %s: Number Of Auto Drafts Cleaned up.
                     $message = sprintf( __( '%s Auto Drafts Cleaned up', 'wp-bulk-delete' ), number_format_i18n( sizeof( $posts ) ) );
                 }
                 break;
             case 'trash':
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                 $posts = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_status = %s", 'trash' ) );
                 if( $posts ) {
                     foreach ( $posts as $id ) {
                         wp_delete_post( $id, true );
                     }
 
+                    // translators: %s: Number Of Posts Cleaned up.
                     $message = sprintf( __( '%s Trashed Posts Cleaned up', 'wp-bulk-delete' ), number_format_i18n( sizeof( $posts ) ) );
                 }
                 break;
@@ -322,11 +336,13 @@ class WPBD_Delete_API {
             //Delete all orphan and duplicate
             case 'all_orphan_duplicate':
                 $dp = $ocm = $oum = $otm = $dpm = $dcm = $dum = $dtm = 0;
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                 $query1 = $wpdb->get_results( "SELECT post_id, meta_key FROM $wpdb->postmeta WHERE post_id NOT IN (SELECT ID FROM $wpdb->posts)" );
                 if( $query1 ) {
                     foreach ( $query1 as $meta ) {
                         $post_id = intval( $meta->post_id );
                         if( $post_id === 0 ) {
+                            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                             $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->postmeta WHERE post_id = %d AND meta_key = %s", $post_id, $meta->meta_key ) );
                         } else {
                             delete_post_meta( $post_id, $meta->meta_key );
@@ -336,11 +352,13 @@ class WPBD_Delete_API {
                 }
 
                 //Orphan Comment Meta
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                 $query2 = $wpdb->get_results( "SELECT comment_id, meta_key FROM $wpdb->commentmeta WHERE comment_id NOT IN (SELECT comment_ID FROM $wpdb->comments)" );
                 if( $query2 ) {
                     foreach ( $query2 as $meta ) {
                         $comment_id = intval( $meta->comment_id );
                         if( $comment_id === 0 ) {
+                            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                             $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->commentmeta WHERE comment_id = %d AND meta_key = %s", $comment_id, $meta->meta_key ) );
                         } else {
                             delete_comment_meta( $comment_id, $meta->meta_key );
@@ -350,11 +368,13 @@ class WPBD_Delete_API {
                 }
 
                 //Orphan User Meta
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                 $query3 = $wpdb->get_results( "SELECT user_id, meta_key FROM $wpdb->usermeta WHERE user_id NOT IN (SELECT ID FROM $wpdb->users)" );
                 if( $query3 ) {
                     foreach ( $query3 as $meta ) {
                         $user_id = intval( $meta->user_id );
                         if( $user_id === 0 ) {
+                            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                             $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE user_id = %d AND meta_key = %s", $user_id, $meta->meta_key ) );
                         } else {
                             delete_user_meta( $user_id, $meta->meta_key );
@@ -364,11 +384,13 @@ class WPBD_Delete_API {
                 }
                 
                 //Orphan Term Meta
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                 $query4 = $wpdb->get_results( "SELECT term_id, meta_key FROM $wpdb->termmeta WHERE term_id NOT IN (SELECT term_id FROM $wpdb->terms)" );
                 if( $query4 ) {
                     foreach ( $query4 as $meta ) {
                         $term_id = intval( $meta->term_id );
                         if( $term_id === 0 ) {
+                            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                             $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->termmeta WHERE term_id = %d AND meta_key = %s", $term_id, $meta->meta_key ) );
                         } else {
                             delete_term_meta( $term_id, $meta->meta_key );
@@ -378,49 +400,58 @@ class WPBD_Delete_API {
                 }
             
                 //Duplicate Post Meta
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                 $query5 = $wpdb->get_results( $wpdb->prepare( "SELECT GROUP_CONCAT(meta_id ORDER BY meta_id DESC) AS ids, post_id, COUNT(*) AS count FROM $wpdb->postmeta GROUP BY post_id, meta_key, meta_value HAVING count > %d", 1 ) );
                 if( $query5 ) {
                     foreach ( $query5 as $meta ) {
                         $ids = array_map( 'intval', explode( ',', $meta->ids ) );
                         array_pop( $ids );
+                        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                         $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->postmeta WHERE meta_id IN (" . implode( ',', $ids ) . ") AND post_id = %d", intval( $meta->post_id ) ) );
                     }
                     $dpm = number_format_i18n( sizeof( $query5 ) );
                 }
 
                 //Duplicate Comment Meta
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                 $query6 = $wpdb->get_results( $wpdb->prepare( "SELECT GROUP_CONCAT(meta_id ORDER BY meta_id DESC) AS ids, comment_id, COUNT(*) AS count FROM $wpdb->commentmeta GROUP BY comment_id, meta_key, meta_value HAVING count > %d", 1 ) );
                 if( $query6 ) {
                     foreach ( $query6 as $meta ) {
                         $ids = array_map( 'intval', explode( ',', $meta->ids ) );
                         array_pop( $ids );
+                        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                         $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->commentmeta WHERE meta_id IN (" . implode( ',', $ids ) . ") AND comment_id = %d", intval( $meta->comment_id ) ) );
                     }
                     $dcm = number_format_i18n( sizeof( $query6 ) );
                 }
 
                 //Duplicate user Meta
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                 $query7 = $wpdb->get_results( $wpdb->prepare( "SELECT GROUP_CONCAT(umeta_id ORDER BY umeta_id DESC) AS ids, user_id, COUNT(*) AS count FROM $wpdb->usermeta GROUP BY user_id, meta_key, meta_value HAVING count > %d", 1 ) );
                 if( $query7 ) {
                     foreach ( $query7 as $meta ) {
                         $ids = array_map( 'intval', explode( ',', $meta->ids ) );
                         array_pop( $ids );
+                        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                         $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE umeta_id IN (" . implode( ',', $ids ) . ") AND user_id = %d", intval( $meta->user_id ) ) );
                     }
                     $dum = number_format_i18n( sizeof( $query7 ) );
                 }
 
                 //Duplicate term Meta
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                 $query8 = $wpdb->get_results( $wpdb->prepare( "SELECT GROUP_CONCAT(meta_id ORDER BY meta_id DESC) AS ids, term_id, COUNT(*) AS count FROM $wpdb->termmeta GROUP BY term_id, meta_key, meta_value HAVING count > %d", 1 ) );
                 if( $query8 ) {
                     foreach ( $query8 as $meta ) {
                         $ids = array_map( 'intval', explode( ',', $meta->ids ) );
                         array_pop( $ids );
+                        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                         $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->termmeta WHERE meta_id IN (" . implode( ',', $ids ) . ") AND term_id = %d", intval( $meta->term_id ) ) );
                     }
                     $dtm = number_format_i18n( sizeof( $query7 ) );
                 }
                 $odsum = $dp + $ocm + $oum + $otm + $dpm + $dcm + $dum + $dtm;
+                // translators: %s: Number Of Orphan and Duplicate Meta Cleaned up.
                 $message = sprintf( __( '%s Orphan and Duplicate Meta Cleaned up', 'wp-bulk-delete' ), number_format_i18n( $odsum ) );
                 break;
 
@@ -459,23 +490,23 @@ class WPBD_Delete_API {
         if( $date_type === 'older_than') {
             $delete_start_date = $delete_end_date = '';
             if( $input_days === "0" || $input_days > 0){
-                $delete_end_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+                $delete_end_date = gmdate('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
             }
         } else if( $date_type === 'within_last') {
             $delete_start_date = $delete_end_date = '';
             if( $input_days === "0" || $input_days > 0){
-                $delete_start_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+                $delete_start_date = gmdate('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
             }
         } else if( $date_type === 'onemonth' || $date_type === 'sixmonths' || $date_type === 'oneyear' || $date_type === 'twoyear' ) {
-            $delete_end_date = date( 'Y-m-d', strtotime( current_time('Y-m-d') ) );
+            $delete_end_date = gmdate( 'Y-m-d', strtotime( current_time('Y-m-d') ) );
             if( $date_type === 'onemonth' ){
-                $delete_start_date = date('Y-m-d', strtotime("-30 days", strtotime(current_time('Y-m-d'))));
+                $delete_start_date = gmdate('Y-m-d', strtotime("-30 days", strtotime(current_time('Y-m-d'))));
             }elseif( $date_type === 'sixmonths' ){
-                $delete_start_date = date('Y-m-d', strtotime("-6 months", strtotime(current_time('Y-m-d'))));
+                $delete_start_date = gmdate('Y-m-d', strtotime("-6 months", strtotime(current_time('Y-m-d'))));
             }elseif( $date_type === 'oneyear' ){
-                $delete_start_date = date('Y-m-d', strtotime("-1 year", strtotime(current_time('Y-m-d'))));
+                $delete_start_date = gmdate('Y-m-d', strtotime("-1 year", strtotime(current_time('Y-m-d'))));
             }elseif( $date_type === 'twoyear' ){
-                $delete_start_date = date('Y-m-d', strtotime("-2 years", strtotime(current_time('Y-m-d'))));
+                $delete_start_date = gmdate('Y-m-d', strtotime("-2 years", strtotime(current_time('Y-m-d'))));
             }
         }
 
@@ -633,6 +664,7 @@ class WPBD_Delete_API {
                 $query .= " ORDER BY $wpdb->users.ID ASC LIMIT " . $limit_user;    
             }
         }
+        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
         $users = $wpdb->get_col( $query );
         return $users;
     }
@@ -690,12 +722,12 @@ class WPBD_Delete_API {
         if( $date_type === 'older_than') {
             $delete_start_date = $delete_end_date = '';
             if( $input_days === "0" || $input_days > 0){
-                $delete_end_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+                $delete_end_date = gmdate('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
             }
         } else if( $date_type === 'within_last') {
             $delete_start_date = $delete_end_date = '';
             if( $input_days === "0" || $input_days > 0){
-                $delete_start_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+                $delete_start_date = gmdate('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
             }
         }
 
@@ -740,7 +772,7 @@ class WPBD_Delete_API {
             if( is_numeric( $limit_comment ) ){
                 $delete_comment_query .= " LIMIT " . $limit_comment;
             }
-
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
             $comment_delete_count = $wpdb->query( $delete_comment_query );
         }
         return $comment_delete_count;
@@ -772,12 +804,12 @@ class WPBD_Delete_API {
         if( $date_type === 'older_than') {
             $delete_start_date = $delete_end_date = '';
             if( $input_days === "0" || $input_days > 0){
-                $delete_end_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+                $delete_end_date = gmdate('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
             }
         } else if( $date_type === 'within_last') {
             $delete_start_date = $delete_end_date = '';
             if( $input_days === "0" || $input_days > 0){
-                $delete_start_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+                $delete_start_date = gmdate('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
             }
         }
 
@@ -824,6 +856,7 @@ class WPBD_Delete_API {
                 $delete_comment_query .= " LIMIT " . $limit_comment;
             }
 
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
             $comment_delete_count = $wpdb->query( $delete_comment_query );
             delete_transient('wc_count_comments');
         }
@@ -854,12 +887,12 @@ class WPBD_Delete_API {
             if( $date_type === 'older_than') {
                 $delete_start_date = $delete_end_date = '';
                 if( $input_days === "0" || $input_days > 0){
-                    $delete_end_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+                    $delete_end_date = gmdate('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
                 }
             } else if( $date_type === 'within_last') {
                 $delete_start_date = $delete_end_date = '';
                 if( $input_days === "0" || $input_days > 0){
-                    $delete_start_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+                    $delete_start_date = gmdate('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
                 }
             }
 
@@ -887,6 +920,7 @@ class WPBD_Delete_API {
             if( $metaQuery == '' ){
                 return array();
             }
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
             $meta_results = $wpdb->get_results( $metaQuery );
             return $meta_results;
         }else{
@@ -910,6 +944,7 @@ class WPBD_Delete_API {
             foreach ($meta_results as $meta ) {
                 $post_id = intval( $meta->post_id );
                 if( $post_id === 0 ) {
+                    // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                     $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->postmeta WHERE post_id = %d AND meta_key = %s", $post_id, $meta->meta_key ) );
                 } else {
                     delete_post_meta( $post_id, $meta->meta_key );
@@ -940,23 +975,23 @@ class WPBD_Delete_API {
             if( $date_type === 'older_than') {
                 $delete_start_date = $delete_end_date = '';
                 if( $input_days === "0" || $input_days > 0){
-                    $delete_end_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+                    $delete_end_date = gmdate('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
                 }
             } else if( $date_type === 'within_last') {
                 $delete_start_date = $delete_end_date = '';
                 if( $input_days === "0" || $input_days > 0){
-                    $delete_start_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+                    $delete_start_date = gmdate('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
                 }
             } else if( $date_type === 'onemonth' || $date_type === 'sixmonths' || $date_type === 'oneyear' || $date_type === 'twoyear' ) {
-                $delete_end_date = date( 'Y-m-d', strtotime( current_time('Y-m-d') ) );
+                $delete_end_date = gmdate( 'Y-m-d', strtotime( current_time('Y-m-d') ) );
                 if( $date_type === 'onemonth' ){
-                    $delete_start_date = date('Y-m-d', strtotime("-30 days", strtotime(current_time('Y-m-d'))));
+                    $delete_start_date = gmdate('Y-m-d', strtotime("-30 days", strtotime(current_time('Y-m-d'))));
                 }elseif( $date_type === 'sixmonths' ){
-                    $delete_start_date = date('Y-m-d', strtotime("-6 months", strtotime(current_time('Y-m-d'))));
+                    $delete_start_date = gmdate('Y-m-d', strtotime("-6 months", strtotime(current_time('Y-m-d'))));
                 }elseif( $date_type === 'oneyear' ){
-                    $delete_start_date = date('Y-m-d', strtotime("-1 year", strtotime(current_time('Y-m-d'))));
+                    $delete_start_date = gmdate('Y-m-d', strtotime("-1 year", strtotime(current_time('Y-m-d'))));
                 }elseif( $date_type === 'twoyear' ){
-                    $delete_start_date = date('Y-m-d', strtotime("-2 years", strtotime(current_time('Y-m-d'))));
+                    $delete_start_date = gmdate('Y-m-d', strtotime("-2 years", strtotime(current_time('Y-m-d'))));
                 }
             }
 
@@ -982,6 +1017,7 @@ class WPBD_Delete_API {
             if( $metaQuery == '' ){
                 return array();
             }
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
             $meta_results = $wpdb->get_results( $metaQuery );
             return $meta_results;
         }else{
@@ -1005,6 +1041,7 @@ class WPBD_Delete_API {
             foreach ($meta_results as $meta ) {
                 $comment_id = intval( $meta->comment_id );
                 if( $comment_id === 0 ) {
+                    // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                     $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->commentmeta WHERE comment_id = %d AND meta_key = %s", $comment_id, $meta->meta_key ) );
                 } else {
                     delete_comment_meta( $comment_id, $meta->meta_key );
@@ -1036,23 +1073,23 @@ class WPBD_Delete_API {
             if( $date_type === 'older_than') {
                 $delete_start_date = $delete_end_date = '';
                 if( $input_days === "0" || $input_days > 0){
-                    $delete_end_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+                    $delete_end_date = gmdate('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
                 }
             } else if( $date_type === 'within_last') {
                 $delete_start_date = $delete_end_date = '';
                 if( $input_days === "0" || $input_days > 0){
-                    $delete_start_date = date('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
+                    $delete_start_date = gmdate('Y-m-d', strtotime("-{$input_days} days", strtotime(current_time('Y-m-d'))));
                 }
             } else if( $date_type === 'onemonth' || $date_type === 'sixmonths' || $date_type === 'oneyear' || $date_type === 'twoyear' ) {
-                $delete_end_date = date( 'Y-m-d', strtotime( current_time('Y-m-d') ) );
+                $delete_end_date = gmdate( 'Y-m-d', strtotime( current_time('Y-m-d') ) );
                 if( $date_type === 'onemonth' ){
-                    $delete_start_date = date('Y-m-d', strtotime("-30 days", strtotime(current_time('Y-m-d'))));
+                    $delete_start_date = gmdate('Y-m-d', strtotime("-30 days", strtotime(current_time('Y-m-d'))));
                 }elseif( $date_type === 'sixmonths' ){
-                    $delete_start_date = date('Y-m-d', strtotime("-6 months", strtotime(current_time('Y-m-d'))));
+                    $delete_start_date = gmdate('Y-m-d', strtotime("-6 months", strtotime(current_time('Y-m-d'))));
                 }elseif( $date_type === 'oneyear' ){
-                    $delete_start_date = date('Y-m-d', strtotime("-1 year", strtotime(current_time('Y-m-d'))));
+                    $delete_start_date = gmdate('Y-m-d', strtotime("-1 year", strtotime(current_time('Y-m-d'))));
                 }elseif( $date_type === 'twoyear' ){
-                    $delete_start_date = date('Y-m-d', strtotime("-2 years", strtotime(current_time('Y-m-d'))));
+                    $delete_start_date = gmdate('Y-m-d', strtotime("-2 years", strtotime(current_time('Y-m-d'))));
                 }
             }
 
@@ -1101,6 +1138,7 @@ class WPBD_Delete_API {
             if( $metaQuery == '' ){
                 return array();
             }
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
             $meta_results = $wpdb->get_results( $metaQuery );
             return $meta_results;
 
@@ -1124,6 +1162,7 @@ class WPBD_Delete_API {
             foreach ($meta_results as $meta ) {
                 $user_id = intval( $meta->user_id );
                 if( $user_id === 0 ) {
+                    // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                     $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE user_id = %d AND meta_key = %s", $user_id, $meta->meta_key ) );
                 } else {
                     delete_user_meta( $user_id, $meta->meta_key );
@@ -1149,7 +1188,7 @@ class WPBD_Delete_API {
             return 0; 
         }
 
-        return $numTerms = wp_count_terms( $data['post_taxonomy'], array( 'hide_empty'=> false ) );
+        return $numTerms = wp_count_terms( $data['post_taxonomy'] );
 
     }
 
@@ -1169,7 +1208,7 @@ class WPBD_Delete_API {
                 return $terms_delete_count;
             }
 
-            $terms = get_terms( $data['post_taxonomy'], array( 'fields' => 'ids', 'hide_empty' => false ) );
+            $terms = get_terms( array( 'taxonomy'   => $data['post_taxonomy'], 'fields' => 'ids', 'hide_empty' => false ) );
             foreach ( $terms as $value ) {
                wp_delete_term( $value, $data['post_taxonomy'] );
             }

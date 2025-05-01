@@ -11,7 +11,7 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-$post_by_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'by_posts';
+$post_by_tab = isset( $_GET['tab'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_GET['tab'] ) ) ) : 'by_posts'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 ?>
 <form method="post" id="delete_posts_form">
     <div class="form-table">

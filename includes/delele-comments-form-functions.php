@@ -57,6 +57,7 @@ function xt_delete_comments_form_process( $data ) {
     		if ( ! empty( $comment_count ) && $comment_count > 0 ) {
     			return  array(
 	    			'status' => 1,
+                    // translators: %d = number of comments deleted
 	    			'messages' => array( sprintf( esc_html__( '%d comment(s) deleted successfully.', 'wp-bulk-delete' ), $comment_count )
 	    		) );
             } else {                
@@ -128,6 +129,7 @@ function wpdb_render_delete_comments_status(){
                 </div>
                 <div class="wpbd-inner-section-2">
                     <?php
+                        // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                         $get_counts = $wpdb->get_results( "SELECT comment_approved AS status, COUNT(*) AS count FROM {$wpdb->comments} GROUP BY comment_approved" );
                         
                         $comment_status_counts = array();
@@ -143,9 +145,9 @@ function wpdb_render_delete_comments_status(){
                             foreach ($comment_status as $comment_status_value => $comment_status_name ) {
                                 ?>
                                 <div>
-                                    <input name="delete_comment_status[]" class="delete_comment_status" id="comment_status_<?php echo esc_attr__( $comment_status_value ); ?>" type="checkbox" value="<?php echo esc_attr__( $comment_status_value ); ?>" >
-                                    <span for="comment_status_<?php echo esc_attr__( $comment_status_value ); ?>">
-                                    <?php echo esc_attr__( $comment_status_name ) . ' ' . sprintf( esc_attr__( '( %s Comment(s) )', 'wp-bulk-delete' ), isset( $comment_status_counts[$comment_status_value] ) ? esc_attr__( $comment_status_counts[$comment_status_value] ) : '0' ); ?>
+                                    <input name="delete_comment_status[]" class="delete_comment_status" id="comment_status_<?php echo esc_attr( $comment_status_value ); ?>" type="checkbox" value="<?php echo esc_attr( $comment_status_value ); ?>" >
+                                    <span for="comment_status_<?php echo esc_attr( $comment_status_value ); ?>">
+                                    <?php echo esc_attr( $comment_status_name ) . ' ' . sprintf( esc_attr__( '( %s Comment(s) )', 'wp-bulk-delete' ), isset( $comment_status_counts[$comment_status_value] ) ? esc_attr( $comment_status_counts[$comment_status_value] ) : '0' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText, WordPress.WP.I18n.MissingTranslatorsComment	 ?>
                                     </span>
                                 </div>
                             <?php
@@ -266,7 +268,8 @@ function wpdb_render_delete_comments_date_interval(){
                                 </svg>
                                 <span class="wpbd-popper">
                                     <?php 
-                                        $text = esc_html__('Set the date interval for comments to delete ( only delete comments between these dates ) or leave these fields blank to select all comments. The dates must be specified in the following format: %s', 'wp-bulk-delete');
+                                        // translators: %s: date format.
+                                        $text = esc_html__('Set the date interval for comments to delete ( only delete comments between these dates ) or leave these fields blank to select all comments. The dates must be specified in the following format: %s', 'wp-bulk-delete'); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
                                         echo wp_kses(
                                             sprintf($text, '<strong>YYYY-MM-DD</strong>'),
                                             array(

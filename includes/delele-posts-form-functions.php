@@ -69,6 +69,7 @@ function xt_delete_posts_form_process( $data ) {
     			$post_count = wpbulkdelete()->api->do_delete_posts( $post_ids, $force_delete, $data, $custom_query ); 
     			return  array(
 	    			'status' => 1,
+                    // translators: %d: Number of Record deleted.
 	    			'messages' => array( sprintf( esc_html__( '%d Record deleted successfully.', 'wp-bulk-delete' ), $post_count)
 	    		) );
             } else {                
@@ -123,12 +124,13 @@ function wpbd_render_form_posttype(){
                             foreach( $types as $key_type => $type ) {
                                 $pselect = ( $key_type == 'post' ) ? 'selected' : '';
                                 ?>
-                                <option value="<?php echo esc_attr__( $key_type ); ?>" <?php echo esc_attr__( $pselect ); ?> >
-                                    <?php printf( esc_attr__( '%s', 'wp-bulk-delete' ), esc_attr__( $type ) ); ?>
+                                <option value="<?php echo esc_attr( $key_type ); ?>" <?php echo esc_attr( $pselect ); ?> >
+                                    <?php echo esc_attr( $type ); ?>
                                     <?php 
                                         $post_count = wpbd_get_posttype_post_count( $key_type );
                                         if( $post_count >= 0 ){
-                                            echo esc_attr__( ' ('.$post_count .' '. $type .') ' );
+                                            // translators: %d: Number of posts.
+                                            printf( esc_attr__( ' (%d)', 'wp-bulk-delete' ), esc_attr( $post_count ) );
                                         }
                                     ?>
                                 </option>
@@ -178,8 +180,11 @@ function wpbd_render_form_posttype_dropdown(){
                         ?>
                         <fieldset>
                             <label for="delete_post_type">
-                                <option value="<?php echo esc_attr__( $key_type ); ?>">
-                                    <?php printf( esc_attr__( '%s', 'wp-bulk-delete' ), esc_attr__( $type ) ); ?> 
+                                <option value="<?php echo esc_attr( $key_type ); ?>">
+                                    <?php 
+                                        // translators: %s: post types.
+                                        printf( esc_attr__( '%s', 'wp-bulk-delete' ), esc_attr__( $type, 'wp-bulk-delete' ) ); // phpcs:ignore WordPress.WP.I18n.NoEmptyStrings, WordPress.WP.I18n.NonSingularStringLiteralText
+                                    ?> 
                                 </option>
                             </label>
                         </fieldset>
@@ -283,7 +288,7 @@ function wpbd_render_form_poststatus(){
                     <?php
                         foreach ($get_post_status as $status => $label) {
                             $selected = ($status == 'publish') ? 'selected' : '';
-                            echo '<option value="' . esc_attr($status) . '" ' . esc_attr__( $selected ) . '>' . esc_html(ucwords(str_replace('-', ' ', $label))) . '</option>';
+                            echo '<option value="' . esc_attr($status) . '" ' . esc_attr__( $selected, 'wp-bulk-delete' ) . '>' . esc_html(ucwords(str_replace('-', ' ', $label))) . '</option>'; // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
                         }
                     ?>
                 </select>
@@ -368,7 +373,7 @@ function wpbd_render_form_date_interval(){
                         </svg>
                         <span class="wpbd-popper">
                             <?php 
-                                $text = esc_html__('Set the date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: %s', 'wp-bulk-delete');
+                                $text = esc_html__('Set the date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: %s', 'wp-bulk-delete'); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
                                 echo wp_kses(
                                     sprintf($text, '<strong>YYYY-MM-DD</strong>'),
                                     array(
@@ -432,7 +437,7 @@ function wpbd_render_form_modified_interval(){
                         </svg>
                         <span class="wpbd-popper">
                             <?php 
-                                $text = esc_html__('Set the modified date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: %s', 'wp-bulk-delete');
+                                $text = esc_html__('Set the modified date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: %s', 'wp-bulk-delete'); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
                                 echo wp_kses(
                                     sprintf($text, '<strong>YYYY-MM-DD</strong>'),
                                     array(
@@ -612,7 +617,7 @@ function wpbd_render_form_users(){
                     <select name="delete_authors[]" class="wpbd_global_multiple_select" id="wpdb_post_author" multiple>
                         <?php foreach($authors as $author){
                             ?>
-                            <option value="<?php echo esc_attr__( $author->ID ); ?>"><?php printf( esc_attr__( '%s', 'wp-bulk-delete' ), esc_attr__( $author->display_name ) ) ; ?></option>
+                            <option value="<?php echo esc_attr( $author->ID ); ?>"><?php printf( esc_attr__( '%s', 'wp-bulk-delete' ), esc_attr__( $author->display_name, 'wp-bulk-delete' ) ) ; // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText, WordPress.WP.I18n.MissingTranslatorsComment, WordPress.WP.I18n.NoEmptyStrings, WordPress.WP.I18n.NonSingularStringLiteralText ?></option>
                             <?php
                         }
                         ?>
@@ -748,21 +753,21 @@ function wpbd_render_post_cleanup(){
                         <div class="cleanups_section" >
                             <label for="cleanup_post_type">
                                 <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_revision" type="checkbox" value="revision" >
-                                <?php printf( esc_attr__( 'Revisions (%d Revisions)', 'wp-bulk-delete' ), esc_attr__( wpbulkdelete()->api->get_post_count('revision') ) ); ?>
+                                <?php printf( esc_attr__( 'Revisions (%d Revisions)', 'wp-bulk-delete' ), esc_attr__( wpbulkdelete()->api->get_post_count('revision'), 'wp-bulk-delete' ) ); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment, WordPress.WP.I18n.NonSingularStringLiteralText ?>
                             </label>
                         </div>
 
                         <div class="cleanups_section" >
                             <label for="cleanup_post_type">
                                 <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_trash" type="checkbox" value="trash" >
-                                <?php printf( esc_attr__( 'Trash (Deleted Posts) (%d Trash)', 'wp-bulk-delete' ),  esc_attr__( wpbulkdelete()->api->get_post_count('trash') ) ); ?>
+                                <?php printf( esc_attr__( 'Trash (Deleted Posts) (%d Trash)', 'wp-bulk-delete' ),  esc_attr__( wpbulkdelete()->api->get_post_count('trash'), 'wp-bulk-delete' ) ); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment, WordPress.WP.I18n.NonSingularStringLiteralText ?>
                             </label>
                         </div>
 
                         <div class="cleanups_section" >
                             <label for="cleanup_post_type">
                                 <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_revision" type="checkbox" value="auto_drafts" >
-                                <?php printf( esc_attr__( 'Auto Drafts (%d Auto Drafts)', 'wp-bulk-delete' ),  esc_attr__( wpbulkdelete()->api->get_post_count('auto_drafts') ) ); ?>
+                                <?php printf( esc_attr__( 'Auto Drafts (%d Auto Drafts)', 'wp-bulk-delete' ),  esc_attr__( wpbulkdelete()->api->get_post_count('auto_drafts'), 'wp-bulk-delete' ) ); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment, WordPress.WP.I18n.NonSingularStringLiteralText ?>
                             </label>
                         </div>
                     </div>
@@ -798,7 +803,7 @@ function wpbd_render_delete_time(){
             $timezone = wpbd_get_timezone_string();
             ?>
             <div>
-                <strong><?php printf( esc_html__( 'Timezone: (%s)', 'wp-bulk-delete' ), esc_attr__( $timezone ) ); ?></strong>
+                <strong><?php printf( esc_html__( 'Timezone: (%s)', 'wp-bulk-delete' ), esc_attr__( $timezone, 'wp-bulk-delete' ) ); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment, WordPress.WP.I18n.NonSingularStringLiteralText ?></strong>
                 <span class="wpbd-tooltip" >
                     <div>
                         <svg viewBox="0 0 20 20" fill="#000" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
@@ -1232,8 +1237,8 @@ function wpdb_render_delete_users_postlinks(){
         </div>
         <div class="wpbd-inner-section-2" style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: center;gap: 5px;">
             <select name="" disabled="disabled" >
-                <option value=""><?php esc_html_e( 'equal to ( string )', 'wp-bulk-delete-pro' ); ?></option>
-                <option value=""><?php esc_html_e( 'not equal to ( string )', 'wp-bulk-delete-pro' ); ?></option>
+                <option value=""><?php esc_html_e( 'equal to ( string )', 'wp-bulk-delete' ); ?></option>
+                <option value=""><?php esc_html_e( 'not equal to ( string )', 'wp-bulk-delete' ); ?></option>
             </select>
             <textarea name="" disabled="disabled"  id="" cols="70" style="height: 30px;" class="" placeholder="You can add multiple post links with comma(,) separator" ></textarea>
         </div>

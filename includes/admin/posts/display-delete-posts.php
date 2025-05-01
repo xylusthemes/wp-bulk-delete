@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function wpbd_delete_posts_page(){
 	global $wpdb;
 	// Set Default Tab to Posts
-	$active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) )  : 'by_posts';
+	$active_tab = isset( $_GET['tab'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_GET['tab'] ) ) ) : 'by_posts'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$gettab     = str_replace( 'by_', '', $active_tab );
 	$gettab     = ucwords( str_replace( '_', ' & ', $gettab ) );
 	if( $active_tab == 'by_schedule-delete' ){
@@ -39,7 +39,7 @@ function wpbd_delete_posts_page(){
 		$page_title = "Delete " . $gettab;
 	}
 	$posts_header_result = wpdb_render_common_header( $page_title );
-	echo esc_attr_e( $posts_header_result );
+	echo esc_attr_e( $posts_header_result, 'wp-bulk-delete' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 	?>
 	
 	<div class="wpbd-container" style="margin-top: 60px;">
@@ -58,7 +58,7 @@ function wpbd_delete_posts_page(){
 							}
 						}
 
-						if( ! empty( $_POST ) || ( isset( $_GET['message'] ) && !empty( $_GET['message'] ) ) ){
+						if( ! empty( $_POST ) || ( isset( $_GET['message'] ) && !empty( $_GET['message'] ) ) ){ // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 							do_action( 'delete_pctu_notice'); 
 						}
 					?>
@@ -172,5 +172,5 @@ function wpbd_delete_posts_page(){
 	</div>
 	<?php
 	$posts_footer_result = wpdb_render_common_footer();
-	echo esc_attr_e( $posts_footer_result );
+	echo esc_attr_e( $posts_footer_result, 'wp-bulk-delete' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 }

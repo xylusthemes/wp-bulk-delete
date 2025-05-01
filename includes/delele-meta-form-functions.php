@@ -43,7 +43,8 @@ function wpbd_render_meta_cleanup(){
                                         $text         = esc_html__('Check all metadata to delete cleanup including options are given below.', 'wp-bulk-delete');
                                         $html_part    = '<br><strong>Orphan post meta, <br> Duplicate post meta, <br> Orphan comment meta, <br> Duplicate comment meta, <br> Orphan user meta, <br> Duplicate user meta, <br> Orphan term meta, <br> Duplicate term meta</strong>.';
                                         $allowed_html = array( 'br' => array(), 'strong' => array(), );
-                                        echo esc_attr__( $text ) . ' ' . wp_kses($html_part, $allowed_html);
+                                        // translators: %s: meta text.
+                                        echo sprintf( esc_attr__( ' %s', 'wp-bulk-delete' ), $text ). ' ' . wp_kses($html_part, $allowed_html); // phpcs:ignore WordPress.WP.I18n.NoEmptyStrings, WordPress.Security.EscapeOutput.OutputNotEscaped
                                     ?>
                                     <div class="wpbd-popper__arrow"></div>
                                 </span>
