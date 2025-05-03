@@ -201,11 +201,11 @@ function wpbd_render_form_posttype_dropdown(){
  * @since 1.0
  * @return void
  */
-function wpbd_render_form_taxonomy(){
+function wpbd_render_form_taxonomy( $type = 'Posts' ){
     ?>
     <div class="wpbd-inner-main-section">
         <div class="wpbd-inner-section-1" >
-            <span class="wpbd-title-text" ><?php esc_html_e('Post Taxonomy ','wp-bulk-delete'); ?></span>
+            <span class="wpbd-title-text" ><?php esc_html_e( $type ) . esc_html_e(' Taxonomy ','wp-bulk-delete'); ?></span>
         </div>
         <div class="wpbd-inner-section-2">
             <div class="wpbd-texonomy-section" >
@@ -234,11 +234,11 @@ function wpbd_render_form_taxonomy(){
  * @since 1.0
  * @return void
  */
-function wpbd_render_extra_assinged_category(){
+function wpbd_render_extra_assinged_category( $type = 'Posts' ){
     ?>
     <div class="wpbd-inner-main-section" id="delete_selected_category_section" style="display:none;">
         <div class="wpbd-inner-section-1" >
-            <span class="wpbd-title-text" ><?php esc_html_e('Delete Post From Selected Category Only ','wp-bulk-delete'); ?></span>
+            <span class="wpbd-title-text" ><?php printf( esc_html__('Delete %s From Selected Category Only', 'wp-bulk-delete'), esc_html( $type ) ); ?></span>
         </div>
         <div class="wpbd-inner-section-2">
             <fieldset>
@@ -251,7 +251,15 @@ function wpbd_render_extra_assinged_category(){
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
                         </svg>
                         <span class="wpbd-popper">
-                            <?php esc_html_e( "By selecting this option, only the selected category posts will be deleted, but if the post has another category with the selected category, that post will not be deleted (which means posts that have multiple categories will not be deleted)",'wp-bulk-delete' ); ?>
+                            <?php
+                                printf(
+                                    esc_html__(
+                                        'By selecting this option, only the selected category %1$s will be deleted, but if the %1$s has another category with the selected category, that %1$s will not be deleted (which means %1$s that have multiple categories will not be deleted)',
+                                        'wp-bulk-delete'
+                                    ),
+                                    esc_html( $type )
+                                );
+                            ?>
                             <div class="wpbd-popper__arrow"></div>
                         </span>
                     </div>
@@ -335,14 +343,14 @@ function wpbd_render_form_custom_query(){
  * @since 1.0
  * @return void
  */
-function wpbd_render_form_date_interval(){
+function wpbd_render_form_date_interval( $type = 'Posts' ){
     ?>
     <div class="wpbd-inner-main-section">
         <div class="wpbd-inner-section-1" >
-            <span class="wpbd-title-text" ><?php esc_html_e('Post Date ','wp-bulk-delete'); ?></span>
+            <span class="wpbd-title-text" ><?php esc_html_e( $type ) . esc_html_e(' Date ','wp-bulk-delete'); ?></span>
         </div>
         <div class="wpbd-inner-section-2">
-            <?php esc_html_e('Delete Posts which are','wp-bulk-delete'); ?> 
+            <?php printf( esc_html__( 'Delete %s which are', 'wp-bulk-delete' ), esc_html( $type ) ); ?>
             <select name="date_type" class="date_type">
                 <option value="older_than"><?php esc_html_e('older than','wp-bulk-delete'); ?></option>
                 <option value="within_last"><?php esc_html_e('posted within last','wp-bulk-delete'); ?></option>
@@ -368,9 +376,13 @@ function wpbd_render_form_date_interval(){
                         </svg>
                         <span class="wpbd-popper">
                             <?php 
-                                $text = esc_html__('Set the date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: %s', 'wp-bulk-delete');
+                                $text = esc_html__( 'Set the date interval for items to delete, or leave these fields blank to select all %1$s. The dates must be specified in the following format: %2$s', 'wp-bulk-delete' );
                                 echo wp_kses(
-                                    sprintf($text, '<strong>YYYY-MM-DD</strong>'),
+                                    sprintf(
+                                        $text,
+                                        esc_html( $type ),
+                                        '<strong>YYYY-MM-DD</strong>'
+                                    ),
                                     array(
                                         'strong' => array(),
                                     )
@@ -388,7 +400,15 @@ function wpbd_render_form_date_interval(){
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M1.6665 10.0001C1.6665 5.40008 5.39984 1.66675 9.99984 1.66675C14.5998 1.66675 18.3332 5.40008 18.3332 10.0001C18.3332 14.6001 14.5998 18.3334 9.99984 18.3334C5.39984 18.3334 1.6665 14.6001 1.6665 10.0001ZM10.8332 13.3334V15.0001H9.1665V13.3334H10.8332ZM9.99984 16.6667C6.32484 16.6667 3.33317 13.6751 3.33317 10.0001C3.33317 6.32508 6.32484 3.33341 9.99984 3.33341C13.6748 3.33341 16.6665 6.32508 16.6665 10.0001C16.6665 13.6751 13.6748 16.6667 9.99984 16.6667ZM6.6665 8.33341C6.6665 6.49175 8.15817 5.00008 9.99984 5.00008C11.8415 5.00008 13.3332 6.49175 13.3332 8.33341C13.3332 9.40251 12.6748 9.97785 12.0338 10.538C11.4257 11.0695 10.8332 11.5873 10.8332 12.5001H9.1665C9.1665 10.9824 9.9516 10.3806 10.6419 9.85148C11.1834 9.43642 11.6665 9.06609 11.6665 8.33341C11.6665 7.41675 10.9165 6.66675 9.99984 6.66675C9.08317 6.66675 8.33317 7.41675 8.33317 8.33341H6.6665Z" fill="currentColor"></path>
                         </svg>
                         <span class="wpbd-popper">
-                            <?php esc_html_e('This option will work well with Scheduled Delete, which will help to delete posts of the selected option from the scheduled run date.','wp-bulk-delete'); ?>
+                            <?php 
+                                printf(
+                                    esc_html__(
+                                        'This option will work well with Scheduled Delete, which will help to delete %s of the selected option from the scheduled run date.',
+                                        'wp-bulk-delete'
+                                    ),
+                                    esc_html( $type )
+                                );
+                            ?>
                             <div class="wpbd-popper__arrow"></div>
                         </span>
                     </div>
@@ -405,14 +425,14 @@ function wpbd_render_form_date_interval(){
  * @since 1.0
  * @return void
  */
-function wpbd_render_form_modified_interval(){
+function wpbd_render_form_modified_interval( $type = 'Posts' ){
     ?>
     <div class="wpbd-inner-main-section">
         <div class="wpbd-inner-section-1" >
-            <span class="wpbd-title-text" ><?php esc_html_e('Post Modified ','wp-bulk-delete'); ?></span>
+            <span class="wpbd-title-text" ><?php esc_html_e( $type ) . esc_html_e(' Modified ','wp-bulk-delete'); ?></span>
         </div>
         <div class="wpbd-inner-section-2">
-            <?php esc_html_e('Delete Posts which are','wp-bulk-delete'); ?> 
+            <?php printf( esc_html__( 'Delete %s which are', 'wp-bulk-delete' ), esc_html( $type ) ); ?>
             <select name="mdate_type" class="mdate_type">
                 <option value="molder_than"><?php esc_html_e('older than','wp-bulk-delete'); ?></option>
                 <option value="mwithin_last"><?php esc_html_e('posted within last','wp-bulk-delete'); ?></option>
@@ -432,9 +452,13 @@ function wpbd_render_form_modified_interval(){
                         </svg>
                         <span class="wpbd-popper">
                             <?php 
-                                $text = esc_html__('Set the modified date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: %s', 'wp-bulk-delete');
+                                $text = esc_html__( 'Set the modified date interval for items to delete, or leave these fields blank to select all %1$s. The dates must be specified in the following format: %2$s', 'wp-bulk-delete' );
                                 echo wp_kses(
-                                    sprintf($text, '<strong>YYYY-MM-DD</strong>'),
+                                    sprintf(
+                                        $text,
+                                        esc_html( $type ),
+                                        '<strong>YYYY-MM-DD</strong>'
+                                    ),
                                     array(
                                         'strong' => array(),
                                     )
