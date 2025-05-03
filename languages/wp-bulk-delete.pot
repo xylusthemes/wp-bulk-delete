@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-01T10:48:05+00:00\n"
+"POT-Creation-Date: 2025-05-03T05:15:31+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: wp-bulk-delete\n"
@@ -98,11 +98,11 @@ msgstr ""
 #: includes/delele-comments-form-functions.php:203
 #: includes/delele-comments-form-functions.php:345
 #: includes/delele-comments-form-functions.php:394
-#: includes/delele-posts-form-functions.php:994
-#: includes/delele-posts-form-functions.php:1031
-#: includes/delele-posts-form-functions.php:1069
-#: includes/delele-posts-form-functions.php:1107
-#: includes/delele-posts-form-functions.php:1146
+#: includes/delele-posts-form-functions.php:1018
+#: includes/delele-posts-form-functions.php:1055
+#: includes/delele-posts-form-functions.php:1093
+#: includes/delele-posts-form-functions.php:1131
+#: includes/delele-posts-form-functions.php:1170
 msgid "Available in Pro version."
 msgstr ""
 
@@ -113,11 +113,11 @@ msgstr ""
 #: includes/delele-comments-form-functions.php:203
 #: includes/delele-comments-form-functions.php:345
 #: includes/delele-comments-form-functions.php:394
-#: includes/delele-posts-form-functions.php:994
-#: includes/delele-posts-form-functions.php:1031
-#: includes/delele-posts-form-functions.php:1069
-#: includes/delele-posts-form-functions.php:1107
-#: includes/delele-posts-form-functions.php:1146
+#: includes/delele-posts-form-functions.php:1018
+#: includes/delele-posts-form-functions.php:1055
+#: includes/delele-posts-form-functions.php:1093
+#: includes/delele-posts-form-functions.php:1131
+#: includes/delele-posts-form-functions.php:1170
 msgid "Buy Now"
 msgstr ""
 
@@ -256,8 +256,8 @@ msgid "Advance Users Filter "
 msgstr ""
 
 #: includes/admin/users/display-delete-users.php:119
-#: includes/delele-comments-form-functions.php:417
-#: includes/delele-posts-form-functions.php:1203
+#: includes/delele-comments-form-functions.php:420
+#: includes/delele-posts-form-functions.php:1208
 msgid "Action "
 msgstr ""
 
@@ -479,8 +479,8 @@ msgstr ""
 msgid "Approved Comments"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:102
-#: includes/delele-posts-form-functions.php:901
+#: includes/delele-comments-form-functions.php:103
+#: includes/delele-posts-form-functions.php:906
 msgid "Basic Filter "
 msgstr ""
 
@@ -509,10 +509,10 @@ msgstr ""
 msgid "Delete Comments which are"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:245
-#: includes/delele-posts-form-functions.php:355
-#: includes/delele-posts-form-functions.php:437
-#: includes/delele-users-form-functions.php:201
+#: includes/delele-comments-form-functions.php:247
+#: includes/delele-posts-form-functions.php:360
+#: includes/delele-posts-form-functions.php:442
+#: includes/delele-users-form-functions.php:207
 msgid "older than"
 msgstr ""
 
@@ -521,25 +521,25 @@ msgid "submitted within last"
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:250
-#: includes/delele-posts-form-functions.php:355
+#: includes/delele-posts-form-functions.php:363
 #: includes/delele-users-form-functions.php:210
 msgid "1 Month"
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:251
-#: includes/delele-posts-form-functions.php:356
+#: includes/delele-posts-form-functions.php:364
 #: includes/delele-users-form-functions.php:211
 msgid "6 Months"
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:252
-#: includes/delele-posts-form-functions.php:357
+#: includes/delele-posts-form-functions.php:365
 #: includes/delele-users-form-functions.php:212
 msgid "1 Year"
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:253
-#: includes/delele-posts-form-functions.php:358
+#: includes/delele-posts-form-functions.php:366
 #: includes/delele-users-form-functions.php:213
 msgid "2 Years"
 msgstr ""
@@ -549,22 +549,22 @@ msgid "submitted between custom"
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:258
-#: includes/delele-posts-form-functions.php:363
-#: includes/delele-posts-form-functions.php:427
+#: includes/delele-posts-form-functions.php:371
+#: includes/delele-posts-form-functions.php:447
 #: includes/delele-users-form-functions.php:218
 msgid "days"
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:261
-#: includes/delele-posts-form-functions.php:366
-#: includes/delele-posts-form-functions.php:430
+#: includes/delele-posts-form-functions.php:374
+#: includes/delele-posts-form-functions.php:450
 #: includes/delele-users-form-functions.php:221
 msgid "Start Date"
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:263
-#: includes/delele-posts-form-functions.php:368
-#: includes/delele-posts-form-functions.php:432
+#: includes/delele-posts-form-functions.php:376
+#: includes/delele-posts-form-functions.php:452
 #: includes/delele-users-form-functions.php:223
 msgid "End Date"
 msgstr ""
@@ -579,7 +579,7 @@ msgid "This option will work well with Scheduled Delete, which will help to dele
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:321
-#: includes/delele-posts-form-functions.php:927
+#: includes/delele-posts-form-functions.php:951
 msgid "Author Filter "
 msgstr ""
 
@@ -588,7 +588,7 @@ msgid "Post Filter "
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:433
-#: includes/delele-posts-form-functions.php:643
+#: includes/delele-posts-form-functions.php:667
 #: includes/delele-users-form-functions.php:274
 msgid "Limit "
 msgstr ""
@@ -659,325 +659,328 @@ msgstr ""
 
 #. translators: %s: post types.
 #: includes/delele-posts-form-functions.php:186
-#: includes/delele-posts-form-functions.php:620
+#: includes/delele-posts-form-functions.php:644
 msgid "%s"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:213
-#: includes/delele-terms-form-functions.php:81
-msgid "Post Taxonomy "
+msgid " Taxonomy "
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:246
-msgid "Delete Post From Selected Category Only "
+msgid "Delete %s From Selected Category Only"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:259
-msgid "By selecting this option, only the selected category posts will be deleted, but if the post has another category with the selected category, that post will not be deleted (which means posts that have multiple categories will not be deleted)"
+#: includes/delele-posts-form-functions.php:261
+msgid "By selecting this option, only the selected category %1$s will be deleted, but if the %1$s has another category with the selected category, that %1$s will not be deleted (which means %1$s that have multiple categories will not be deleted)"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:284
+#: includes/delele-posts-form-functions.php:292
 msgid "Post Status "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:311
+#: includes/delele-posts-form-functions.php:319
 msgid "Post Delete from Custom Query "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:317
+#: includes/delele-posts-form-functions.php:325
 msgid "With Custom Query"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:325
+#: includes/delele-posts-form-functions.php:333
 msgid "Enable this option to delete posts based on custom queries. Note that this option is only effective when using the \"Delete Permanently\" feature."
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:347
-msgid "Post Date "
+#: includes/delele-posts-form-functions.php:355
+msgid " Date "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:350
-#: includes/delele-posts-form-functions.php:420
-msgid "Delete Posts which are"
+#: includes/delele-posts-form-functions.php:358
+#: includes/delele-posts-form-functions.php:440
+msgid "Delete %s which are"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:353
-#: includes/delele-posts-form-functions.php:423
+#: includes/delele-posts-form-functions.php:361
+#: includes/delele-posts-form-functions.php:443
 msgid "posted within last"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:360
+#: includes/delele-posts-form-functions.php:368
 msgid "posted between custom"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:376
-msgid "Set the date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: %s"
+#: includes/delele-posts-form-functions.php:384
+msgid "Set the date interval for items to delete, or leave these fields blank to select all %1$s. The dates must be specified in the following format: %2$s"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:396
-msgid "This option will work well with Scheduled Delete, which will help to delete posts of the selected option from the scheduled run date."
+#: includes/delele-posts-form-functions.php:410
+msgid "This option will work well with Scheduled Delete, which will help to delete %s of the selected option from the scheduled run date."
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:417
-msgid "Post Modified "
+#: includes/delele-posts-form-functions.php:437
+msgid " Modified "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:424
+#: includes/delele-posts-form-functions.php:444
 msgid "posted between"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:440
-msgid "Set the modified date interval for items to delete, or leave these fields blank to select all posts. The dates must be specified in the following format: %s"
+#: includes/delele-posts-form-functions.php:460
+msgid "Set the modified date interval for items to delete, or leave these fields blank to select all %1$s. The dates must be specified in the following format: %2$s"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:468
+#: includes/delele-posts-form-functions.php:492
 msgid "Post Content Count "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:471
-#: includes/delele-posts-form-functions.php:497
+#: includes/delele-posts-form-functions.php:495
+#: includes/delele-posts-form-functions.php:521
 msgid "Delete Post with Content Count Limit"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:473
-#: includes/delele-posts-form-functions.php:499
+#: includes/delele-posts-form-functions.php:497
+#: includes/delele-posts-form-functions.php:523
 msgid "Less Than."
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:474
-#: includes/delele-posts-form-functions.php:500
+#: includes/delele-posts-form-functions.php:498
+#: includes/delele-posts-form-functions.php:524
 msgid "Greater Then."
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:477
+#: includes/delele-posts-form-functions.php:501
 msgid "Character Limit"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:494
+#: includes/delele-posts-form-functions.php:518
 msgid "Post Content Word Count "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:503
+#: includes/delele-posts-form-functions.php:527
 msgid "Word Limit"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:520
+#: includes/delele-posts-form-functions.php:544
 msgid "If Post Title Contains "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:524
-#: includes/delele-posts-form-functions.php:538
-#: includes/delele-posts-form-functions.php:563
+#: includes/delele-posts-form-functions.php:548
+#: includes/delele-posts-form-functions.php:562
+#: includes/delele-posts-form-functions.php:587
 msgid "Then"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:526
-#: includes/delele-posts-form-functions.php:540
-#: includes/delele-posts-form-functions.php:565
+#: includes/delele-posts-form-functions.php:550
+#: includes/delele-posts-form-functions.php:564
+#: includes/delele-posts-form-functions.php:589
 msgid "Delete It."
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:527
-#: includes/delele-posts-form-functions.php:541
-#: includes/delele-posts-form-functions.php:566
+#: includes/delele-posts-form-functions.php:551
+#: includes/delele-posts-form-functions.php:565
+#: includes/delele-posts-form-functions.php:590
 msgid "Don't delete It."
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:534
+#: includes/delele-posts-form-functions.php:558
 msgid "If Post Content Contains "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:559
+#: includes/delele-posts-form-functions.php:583
 msgid "Post IDs "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:584
+#: includes/delele-posts-form-functions.php:608
 msgid "Post Delete Type "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:588
+#: includes/delele-posts-form-functions.php:612
 msgid "Move to Trash"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:590
+#: includes/delele-posts-form-functions.php:614
 msgid "Delete permanently"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:606
+#: includes/delele-posts-form-functions.php:630
 msgid "Authors "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:653
+#: includes/delele-posts-form-functions.php:677
 msgid "Set a limit on the number of posts to delete. Only the first set of posts up to this limit will be deleted. This option is useful if you have a large number of posts to delete and want to avoid script timeouts."
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:673
+#: includes/delele-posts-form-functions.php:697
 msgid "Custom fields settings "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:676
+#: includes/delele-posts-form-functions.php:700
 msgid "Custom Fields Key"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:679
-#: includes/delele-posts-form-functions.php:1240
+#: includes/delele-posts-form-functions.php:703
+#: includes/delele-posts-form-functions.php:1264
 #: includes/delele-users-form-functions.php:158
 #: includes/delele-users-form-functions.php:183
 msgid "equal to ( string )"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:681
+#: includes/delele-posts-form-functions.php:705
 #: includes/delele-users-form-functions.php:160
 msgid "Value"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:699
+#: includes/delele-posts-form-functions.php:723
 msgid "Duplicate Posts "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:709
+#: includes/delele-posts-form-functions.php:733
 msgid "It enables removing duplicate posts/pages/custom post types. This option filters out duplicate posts by post titles."
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:732
+#: includes/delele-posts-form-functions.php:756
 msgid "Select all Cleanups "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:738
+#: includes/delele-posts-form-functions.php:762
 msgid "Select All"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:750
+#: includes/delele-posts-form-functions.php:774
 msgid "Cleanup Posts "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:756
+#: includes/delele-posts-form-functions.php:780
 msgid "Revisions (%d Revisions)"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:763
+#: includes/delele-posts-form-functions.php:787
 msgid "Trash (Deleted Posts) (%d Trash)"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:770
+#: includes/delele-posts-form-functions.php:794
 msgid "Auto Drafts (%d Auto Drafts)"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:791
+#: includes/delele-posts-form-functions.php:815
 msgid "Delete Time "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:795
+#: includes/delele-posts-form-functions.php:819
 msgid "Delete now"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:797
+#: includes/delele-posts-form-functions.php:821
 msgid "Schedule delete at"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:800
+#: includes/delele-posts-form-functions.php:824
 msgid "repeat"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:806
+#: includes/delele-posts-form-functions.php:830
 msgid "Timezone: (%s)"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:813
+#: includes/delele-posts-form-functions.php:837
 msgid "Scheduled deletions use cron jobs and background processes, making them ideal for handling large volumes of records or performing repetitive deletions"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:835
+#: includes/delele-posts-form-functions.php:859
 msgid "Don't repeat"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:838
+#: includes/delele-posts-form-functions.php:862
 msgid "10 Minutes"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:841
+#: includes/delele-posts-form-functions.php:865
 msgid "30 Minutes"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:844
+#: includes/delele-posts-form-functions.php:868
 msgid "Once Hourly"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:847
+#: includes/delele-posts-form-functions.php:871
 msgid "Twice Daily"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:850
+#: includes/delele-posts-form-functions.php:874
 msgid "Once Daily"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:853
+#: includes/delele-posts-form-functions.php:877
 msgid "Once Weekly"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:856
+#: includes/delele-posts-form-functions.php:880
 msgid "Once a Month"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:860
+#: includes/delele-posts-form-functions.php:884
 msgid "Save it as "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:861
+#: includes/delele-posts-form-functions.php:885
 msgid "eg: Daily Post Delete"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:905
+#: includes/delele-posts-form-functions.php:929
 msgid "Advanced Category Filter "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:948
+#: includes/delele-posts-form-functions.php:972
 msgid "Advanced Date Filter "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:970
+#: includes/delele-posts-form-functions.php:994
 msgid "Delete Post Feature Image Filter "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:1009
+#: includes/delele-posts-form-functions.php:1033
 msgid "Custom Field Filter "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:1047
+#: includes/delele-posts-form-functions.php:1071
 msgid "Post IDs Filter "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:1085
+#: includes/delele-posts-form-functions.php:1109
 msgid "Duplicate Posts Filter "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:1123
+#: includes/delele-posts-form-functions.php:1147
 msgid "Advanced Filter "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:1163
+#: includes/delele-posts-form-functions.php:1187
 msgid "Custom Query Filter "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:1236
+#: includes/delele-posts-form-functions.php:1260
 msgid "Post Links "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:1241
+#: includes/delele-posts-form-functions.php:1265
 msgid "not equal to ( string )"
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:1258
+#: includes/delele-posts-form-functions.php:1282
 msgid "Delete Post Featured image "
 msgstr ""
 
-#: includes/delele-posts-form-functions.php:1269
+#: includes/delele-posts-form-functions.php:1293
 msgid "It enables the removal of the featured image of the post, if the image is a featured image of multiple posts, it will not be removed. and If the image is being used in a place other than the featured image, it will be deleted."
 msgstr ""
 
 #. translators: %d: Number of terms deleted.
 #: includes/delele-terms-form-functions.php:53
 msgid "%d Term(s) deleted successfully."
+msgstr ""
+
+#: includes/delele-terms-form-functions.php:81
+msgid "Post Taxonomy "
 msgstr ""
 
 #: includes/delele-terms-form-functions.php:88
