@@ -256,8 +256,8 @@ msgid "Advance Users Filter "
 msgstr ""
 
 #: includes/admin/users/display-delete-users.php:119
-#: includes/delele-comments-form-functions.php:420
-#: includes/delele-posts-form-functions.php:1184
+#: includes/delele-comments-form-functions.php:417
+#: includes/delele-posts-form-functions.php:1203
 msgid "Action "
 msgstr ""
 
@@ -479,8 +479,8 @@ msgstr ""
 msgid "Approved Comments"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:103
-#: includes/delele-posts-form-functions.php:882
+#: includes/delele-comments-form-functions.php:102
+#: includes/delele-posts-form-functions.php:901
 msgid "Basic Filter "
 msgstr ""
 
@@ -509,10 +509,10 @@ msgstr ""
 msgid "Delete Comments which are"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:247
-#: includes/delele-posts-form-functions.php:352
-#: includes/delele-posts-form-functions.php:422
-#: includes/delele-users-form-functions.php:207
+#: includes/delele-comments-form-functions.php:245
+#: includes/delele-posts-form-functions.php:355
+#: includes/delele-posts-form-functions.php:437
+#: includes/delele-users-form-functions.php:201
 msgid "older than"
 msgstr ""
 
