@@ -210,7 +210,7 @@ function wpbd_render_form_taxonomy( $type = 'Posts' ){
     ?>
     <div class="wpbd-inner-main-section">
         <div class="wpbd-inner-section-1" >
-            <span class="wpbd-title-text" ><?php esc_html_e( $type ) . esc_html_e(' Taxonomy ','wp-bulk-delete'); ?></span>
+            <span class="wpbd-title-text" ><?php echo esc_attr( $type ) . esc_html_e(' Taxonomy ','wp-bulk-delete'); ?></span>
         </div>
         <div class="wpbd-inner-section-2">
             <div class="wpbd-texonomy-section" >
@@ -243,7 +243,7 @@ function wpbd_render_extra_assinged_category( $type = 'Posts' ){
     ?>
     <div class="wpbd-inner-main-section" id="delete_selected_category_section" style="display:none;">
         <div class="wpbd-inner-section-1" >
-            <span class="wpbd-title-text" ><?php printf( esc_html__('Delete %s From Selected Category Only', 'wp-bulk-delete'), esc_html( $type ) ); ?></span>
+            <span class="wpbd-title-text" ><?php printf( esc_html__('Delete %s From Selected Category Only', 'wp-bulk-delete'), esc_attr( $type ) ); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?></span>
         </div>
         <div class="wpbd-inner-section-2">
             <fieldset>
@@ -258,11 +258,12 @@ function wpbd_render_extra_assinged_category( $type = 'Posts' ){
                         <span class="wpbd-popper">
                             <?php
                                 printf(
+                                    // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment	
                                     esc_html__(
                                         'By selecting this option, only the selected category %1$s will be deleted, but if the %1$s has another category with the selected category, that %1$s will not be deleted (which means %1$s that have multiple categories will not be deleted)',
                                         'wp-bulk-delete'
                                     ),
-                                    esc_html( $type )
+                                    esc_attr( $type )
                                 );
                             ?>
                             <div class="wpbd-popper__arrow"></div>
@@ -352,10 +353,10 @@ function wpbd_render_form_date_interval( $type = 'Posts' ){
     ?>
     <div class="wpbd-inner-main-section">
         <div class="wpbd-inner-section-1" >
-            <span class="wpbd-title-text" ><?php esc_html_e( $type ) . esc_html_e(' Date ','wp-bulk-delete'); ?></span>
+            <span class="wpbd-title-text" ><?php echo esc_attr( $type ) . esc_html_e(' Date ','wp-bulk-delete'); ?></span>
         </div>
         <div class="wpbd-inner-section-2">
-            <?php printf( esc_html__( 'Delete %s which are', 'wp-bulk-delete' ), esc_html( $type ) ); ?>
+            <?php printf( esc_html__( 'Delete %s which are', 'wp-bulk-delete' ), esc_attr( $type ) );  // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?>
             <select name="date_type" class="date_type">
                 <option value="older_than"><?php esc_html_e('older than','wp-bulk-delete'); ?></option>
                 <option value="within_last"><?php esc_html_e('posted within last','wp-bulk-delete'); ?></option>
@@ -407,6 +408,7 @@ function wpbd_render_form_date_interval( $type = 'Posts' ){
                         <span class="wpbd-popper">
                             <?php 
                                 printf(
+                                    // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment
                                     esc_html__(
                                         'This option will work well with Scheduled Delete, which will help to delete %s of the selected option from the scheduled run date.',
                                         'wp-bulk-delete'
@@ -434,10 +436,10 @@ function wpbd_render_form_modified_interval( $type = 'Posts' ){
     ?>
     <div class="wpbd-inner-main-section">
         <div class="wpbd-inner-section-1" >
-            <span class="wpbd-title-text" ><?php esc_html_e( $type ) . esc_html_e(' Modified ','wp-bulk-delete'); ?></span>
+            <span class="wpbd-title-text" ><?php echo esc_attr( $type ) . esc_html_e(' Modified ','wp-bulk-delete'); ?></span>
         </div>
         <div class="wpbd-inner-section-2">
-            <?php printf( esc_html__( 'Delete %s which are', 'wp-bulk-delete' ), esc_html( $type ) ); ?>
+            <?php printf( esc_html__( 'Delete %s which are', 'wp-bulk-delete' ), esc_attr( $type ) ); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment ?>
             <select name="mdate_type" class="mdate_type">
                 <option value="molder_than"><?php esc_html_e('older than','wp-bulk-delete'); ?></option>
                 <option value="mwithin_last"><?php esc_html_e('posted within last','wp-bulk-delete'); ?></option>
