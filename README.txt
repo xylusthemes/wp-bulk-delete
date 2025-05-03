@@ -155,7 +155,7 @@ posts delete, delete all, mass delete, delete posts, delete comments, delete use
 == Changelog ==
 
 = 1.3.6 =
-* ADDED: WooCommerce Products Section ( PRO )
+* ADDED: Delete WooCommerce Products Section ( PRO )
 * IMPROVEMENTS: Improved security and compatibility with WordPress coding standards.
 * IMPROVEMENTS: Support for WP 6.8
 
