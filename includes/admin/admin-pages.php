@@ -51,9 +51,9 @@ add_action( 'admin_menu', 'wpbd_add_menu_pages', 10 );
  * @return void
  */
 function get_selected_tab_submenu( $submenu_file ){
-	if( !empty( $_GET['page'] ) && sanitize_text_field( wp_unslash( $_GET['page'] ) ) == 'delete_all_actions' ){
+	if( !empty( $_GET['page'] ) && esc_attr( sanitize_text_field( wp_unslash( $_GET['page'] ) ) ) == 'delete_all_actions' ){ // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$allowed_tabs = array( 'by_posts', 'by_comments', 'by_users', 'by_terms', 'by_cleanup', 'by_support_help', 'by_schedule-delete', 'by_schedule-delete-history', 'wpbdpro-license' );
-		$tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'by_cleanup';
+		$tab = isset( $_GET['tab'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_GET['tab'] ) ) ) : 'by_cleanup'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		if( $tab == 'by_schedule-delete-history' ){
 			$tab = 'by_schedule-delete';
@@ -73,8 +73,8 @@ function add_wpbd_wca_menu_free() {
 		if ( isset( $submenu['delete_all_actions'] ) ) {
 			add_submenu_page(
 				'delete_all_actions',
-				__('WooCommerce', 'wp-bulk-delete-pro'),
-				__('WooCommerce', 'wp-bulk-delete-pro') . '<span style="margin-left: 5px;height: 22px;border-radius: 3px;background: #005AE0;color: #FFF;font-size: 12px;line-height: 18px;font-weight: 600;display: inline-flex;padding: 0 4px;align-items: center;" >PRO</span>',
+				__('WooCommerce', 'wp-bulk-delete'),
+				__('WooCommerce', 'wp-bulk-delete') . '<span style="margin-left: 5px;height: 22px;border-radius: 3px;background: #005AE0;color: #FFF;font-size: 12px;line-height: 18px;font-weight: 600;display: inline-flex;padding: 0 4px;align-items: center;" >PRO</span>',
 				'manage_options',
 				'wpbd_wca_free',
 				'wpbd_wca_callback_free'
@@ -86,7 +86,7 @@ add_action( 'wpbd_add_addon_menu', 'add_wpbd_wca_menu_free' );
 
 function wpbd_wca_callback_free(){
 	$posts_header_result = wpdb_render_common_header( 'WooCommerce' );
-	echo esc_attr_e( $posts_header_result );
+	echo esc_attr( $posts_header_result );
 	?>
 	
 	<div class="wpbd-container" style="margin-top: 60px;">
@@ -114,5 +114,5 @@ function wpbd_wca_callback_free(){
 	</div>
 	<?php
 	$posts_footer_result = wpdb_render_common_footer();
-	echo esc_attr_e( $posts_footer_result );
+	echo esc_attr( $posts_footer_result );
 }

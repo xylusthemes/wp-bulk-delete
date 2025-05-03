@@ -135,7 +135,7 @@ function wpbd_delete_users_page(){
 
 							</div>
 							<?php
-							esc_attr__( wp_nonce_field('delete_users_nonce', '_delete_users_wpnonce' ) );
+							esc_attr( wp_nonce_field('delete_users_nonce', '_delete_users_wpnonce' ) ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 							?>
 							<p class="submit">
 								<input type="hidden" name="action" value="wpbd_delete_post">

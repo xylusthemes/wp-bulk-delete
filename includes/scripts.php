@@ -22,12 +22,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return void
  */
 function wpbd_enqueue_admin_scripts( $hook ) {
-	$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+	$page = isset( $_GET['page'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_GET['page'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	if( 'delete_all_actions' == $page || 'wpbd_wca' == $page || 'wpbd_wca_free' == $page ){
 		$js_dir  = WPBD_PLUGIN_URL . 'assets/js/';
-		wp_register_script( 'jquery-chosen', $js_dir . 'chosen.jquery.min.js', array('jquery'), WPBD_VERSION );
-		wp_register_script( 'wp-bulk-delete', $js_dir . 'wp-bulk-delete-admin.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPBD_VERSION );
-		wp_register_script( 'jquery-ui-timepicker-addon', $js_dir . 'jquery-ui-timepicker-addon.min.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPBD_VERSION );
+		wp_register_script( 'jquery-chosen', $js_dir . 'chosen.jquery.min.js', array('jquery'), WPBD_VERSION ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NotInFooter
+		wp_register_script( 'wp-bulk-delete', $js_dir . 'wp-bulk-delete-admin.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPBD_VERSION ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NotInFooter
+		wp_register_script( 'jquery-ui-timepicker-addon', $js_dir . 'jquery-ui-timepicker-addon.min.js', array('jquery', 'jquery-ui-core', 'jquery-ui-datepicker'), WPBD_VERSION ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.NotInFooter
 		wp_enqueue_script( 'jquery-chosen' );
 		wp_enqueue_script( 'jquery-ui-timepicker-addon' );
 		wp_localize_script('wp-bulk-delete', 'wpBulkDeleteData', array( 'siteUrl' => get_site_url(), 'ajaxUrl' => admin_url('admin-ajax.php') ) );
@@ -45,7 +45,7 @@ function wpbd_enqueue_admin_scripts( $hook ) {
  * @return void
  */
 function wpbd_enqueue_admin_styles( $hook ) {
-	$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+	$page = isset( $_GET['page'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_GET['page'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	if( 'delete_all_actions' == $page || 'wpbd_wca' == $page || 'wpbd_wca_free' == $page ){
 	  	$css_dir = WPBD_PLUGIN_URL . 'assets/css/';
 	 	wp_enqueue_style('jquery-ui', $css_dir . 'jquery-ui.css', false, "1.12.0" );

@@ -34,7 +34,7 @@ function wpbd_delete_terms_page(){
 								</div>
 							</div>
 							<?php
-								esc_attr__( wp_nonce_field('delete_terms_nonce', '_delete_terms_wpnonce' ) );
+								esc_attr( wp_nonce_field('delete_terms_nonce', '_delete_terms_wpnonce' ) ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText
 							?>
 							<p class="submit">
 								<input name="delete_terms_submit" id="delete_terms_submit" class="wpbd_button" value="<?php esc_html_e('Delete Terms', 'wp-bulk-delete');?>" type="button">

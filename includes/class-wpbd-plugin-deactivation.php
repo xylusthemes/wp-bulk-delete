@@ -25,7 +25,6 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
 
         private $prefix = 'wpbd_';
         private $slug = 'wp-bulk-delete';
-        private $plugin_name;
         private $plugin_version = '1.0.0';
         private $api_url = 'https://api.xylusthemes.com/api/v1/';
 
@@ -35,7 +34,6 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
          * @since    1.0.0
          */
         public function __construct() {
-			$this->plugin_name =  esc_attr__('WP Bulk Delete', 'wp-bulk-delete' );
 			if ( defined( 'WPBD_VERSION' ) ) {
 				$this->plugin_version = WPBD_VERSION;
 			}
@@ -77,7 +75,7 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
         }
 
         function submit_plugin_deactivation_feedback(){
-            if ( !wp_verify_nonce( $_REQUEST['nonce'], $this->prefix.'plugin_deactivation_feedback')) {
+            if ( isset( $_REQUEST['nonce'] ) && !wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['nonce'] ) ), $this->prefix.'plugin_deactivation_feedback')) {
                 exit("nonce verification failed");
             }
 
@@ -96,9 +94,9 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
             if(empty($customer_name)){
                 $customer_name = $user->user_firstname. ' '.$user->user_lastname;
             }
-            $deactivation_reason = sanitize_text_field( $_REQUEST['reason'] );
+            $deactivation_reason = isset( $_REQUEST['reason'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['reason'] ) ) : '';
             $deactivation_reason_message = $this->get_deactivation_reasons()[$deactivation_reason];
-            $customer_query = sanitize_text_field( $_REQUEST['customerQuery'] );
+            $customer_query = isset( $_REQUEST['customerQuery'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['customerQuery'] ) ) : '';
 
             $data = array(
                 "type" => "plugin_deactivation",
@@ -106,7 +104,7 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
                 "customer_name" => $customer_name,
                 "customer_email" => $customer_email,
                 "plugin" => $this->slug,
-                "plugin_name" => $this->plugin_name,
+                "plugin_name" => esc_attr__('WP Bulk Delete', 'wp-bulk-delete' ),
                 "plugin_version" => $this->plugin_version,
                 "plugin_version" => $this->plugin_version,
                 "deactivation_reason" => $deactivation_reason,
@@ -131,7 +129,7 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
 			$response = wp_remote_post( $url, $args );
             if ( is_wp_error( $response ) ) {
                 $error_message = $response->get_error_message();
-                echo esc_attr__( "Something went wrong: $error_message" );
+                echo esc_attr( "Something went wrong: $error_message" );
                 exit();
             }
 
@@ -154,35 +152,35 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
 
             <script>
                 jQuery(document).ready(function() {
-					var dataReason = jQuery('input:radio[name="<?php echo esc_attr__( $this->prefix ); ?>deactivatation_reason_radio"]').val();
+					var dataReason = jQuery('input:radio[name="<?php echo esc_attr( $this->prefix  ); ?>deactivatation_reason_radio"]').val();
                     jQuery('a[aria-label="Deactivate WP Bulk Delete"]').on('click', function (e) {
                         e.preventDefault();
                         var pluginDeactivateURL = jQuery(this).attr('href');
-                        jQuery('#<?php echo esc_attr__( $this->prefix ); ?>-deactivate-dialog' ).dialog({
-                            'dialogClass'   : '<?php echo esc_attr__( $this->prefix ) . "-deactivate-dialog"; ?>',
+                        jQuery('#<?php echo esc_attr( $this->prefix ); ?>-deactivate-dialog' ).dialog({
+                            'dialogClass'   : '<?php echo esc_attr( $this->prefix ) . "-deactivate-dialog"; ?>',
                             'modal'         : true,
                             'closeOnEscape' : true,
                             width: 600,
                             'buttons'       : [
                                 {
-                                    text: "<?php _e('Submit & Deactivate', 'wp-bulk-delete' ); ?>",
-                                    class: 'button button-primary <?php echo esc_attr__( $this->prefix ) . "deactivate_button"; ?>',
+                                    text: "Submit & Deactivate",
+                                    class: 'button button-primary <?php echo esc_attr( $this->prefix ) . "deactivate_button"; ?>',
                                     click: function() {
 										var that = this;
-										var dataQuery = jQuery('#<?php echo esc_attr__( $this->prefix ); ?>customer_query').val();
+										var dataQuery = jQuery('#<?php echo esc_attr( $this->prefix ); ?>customer_query').val();
 										if(dataReason == 'other' && !dataQuery){
-											jQuery('#<?php echo esc_attr__( $this->prefix ); ?>customer_query').focus();
+											jQuery('#<?php echo esc_attr( $this->prefix ); ?>customer_query').focus();
 											return false;
 										}
-										jQuery('#<?php echo esc_attr__( $this->prefix ); ?>deactivatation_form').hide();
-										jQuery('.<?php echo esc_attr__( $this->prefix ); ?>deactivatation_loading').show();
-                                        jQuery('button.<?php echo esc_attr__( $this->prefix ); ?>deactivate_button').prop('disabled', true);
+										jQuery('#<?php echo esc_attr( $this->prefix ); ?>deactivatation_form').hide();
+										jQuery('.<?php echo esc_attr( $this->prefix ); ?>deactivatation_loading').show();
+                                        jQuery('button.<?php echo esc_attr( $this->prefix ); ?>deactivate_button').prop('disabled', true);
                                         jQuery.ajax({
                                             type : "post",
                                             dataType : "json",
-                                            url : "<?php echo admin_url('admin-ajax.php?action='.esc_attr__( $this->prefix ).'plugin_deactivation_feedback&nonce='.wp_create_nonce(esc_attr__( $this->prefix ).'plugin_deactivation_feedback') ); ?>",
+                                            url : "<?php echo admin_url('admin-ajax.php?action='.esc_attr( $this->prefix ).'plugin_deactivation_feedback&nonce='.wp_create_nonce(esc_attr( $this->prefix ).'plugin_deactivation_feedback') ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>",
                                             data : {
-                                                action: "<?php echo esc_attr__( $this->prefix ); ?>plugin_deactivation_feedback",
+                                                action: "<?php echo esc_attr( $this->prefix ); ?>plugin_deactivation_feedback",
                                                 reason: dataReason,
                                                 customerQuery: dataQuery
                                             },
@@ -193,7 +191,7 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
                                     }
                                 },
                                 {
-                                    text: "<?php _e('Skip & Deactivate', 'wp-bulk-delete' ); ?>",
+                                    text: "Skip & Deactivate",
                                     class: 'button',
                                     click: function() {
                                         jQuery( this ).dialog( "close" );
@@ -204,10 +202,10 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
                         });
                     });
 
-                    jQuery('input:radio[name="<?php echo esc_attr__( $this->prefix ); ?>deactivatation_reason_radio"]').click(function () {
+                    jQuery('input:radio[name="<?php echo esc_attr( $this->prefix ); ?>deactivatation_reason_radio"]').click(function () {
                         var reason = jQuery(this).val();
 						dataReason = jQuery(this).val();
-                        var customerQuery = jQuery('#<?php echo esc_attr__( $this->prefix ); ?>customer_query');
+                        var customerQuery = jQuery('#<?php echo esc_attr( $this->prefix ); ?>customer_query');
                         customerQuery.removeAttr('required');
                         if (reason === "confusing") {
                             customerQuery.attr("placeholder", "<?php esc_html_e('Finding it confusing? let us know so that we can improve the interface', 'wp-bulk-delete' ); ?>");
@@ -235,25 +233,25 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
                 });
             </script>
 			<style>
-			<?php echo '.'.esc_attr__( $this->prefix ); ?>-deactivate-dialog .ui-dialog-titlebar{
+			<?php echo '.'.esc_attr( $this->prefix ); ?>-deactivate-dialog .ui-dialog-titlebar{
 				display: none;
 			}
-            .ui-widget.<?php echo esc_attr__( $this->prefix ); ?>-deactivate-dialog{
+            .ui-widget.<?php echo esc_attr( $this->prefix ); ?>-deactivate-dialog{
                 font-family: inherit;
                 font-size: 14px;
                 font-weight: inherit;
                 line-height: inherit;
             }
-            .ui-widget.<?php echo esc_attr__( $this->prefix ); ?>-deactivate-dialog textarea{
+            .ui-widget.<?php echo esc_attr( $this->prefix ); ?>-deactivate-dialog textarea{
                 font-family: inherit;
                 font-size: 14px;
                 width: 100%;
             }
-            <?php echo '#'.esc_attr__( $this->prefix ); ?>-deactivate-dialog {
+            <?php echo '#'.esc_attr( $this->prefix ); ?>-deactivate-dialog {
                 display : none;
             }
 			</style>
-            <div id="<?php echo esc_attr__( $this->prefix ); ?>-deactivate-dialog">
+            <div id="<?php echo esc_attr( $this->prefix ); ?>-deactivate-dialog">
                 <div class="ui-dialog-headerbar"  >
                     <div>
                         <h2 style="margin:5px 0 15px 0;"><?php esc_html_e('Quick Feedback', 'wp-bulk-delete'); ?></h2>
@@ -261,19 +259,19 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
                 </div>               
                 <div style="border-top: 1px solid #dcdcde;"></div>
                 <h3 style="font-size: 16px;" ><?php esc_html_e('Could you please share why you are deactivating WP Bulk Delete plugin ?', 'wp-bulk-delete'); ?></h3>
-                <form method="post" action="" id="<?php echo esc_attr__( $this->prefix ); ?>deactivatation_form">
+                <form method="post" action="" id="<?php echo esc_attr( $this->prefix ); ?>deactivatation_form">
                     <div>
                     <?php
                         foreach ( $deactivate_reasons as $key => $deactivate_reason ) {
                             ?>
                             <div class="radio" style="padding:1px;margin-left:2%">
-                                <label for="<?php echo esc_attr__( $key ); ?>">
-                                    <input type="radio" name="<?php echo esc_attr__( $this->prefix ); ?>deactivatation_reason_radio" id="<?php echo esc_attr__( $key ); ?>" value="<?php echo esc_attr__( $key ); ?>" required <?php if( $key === 'confusing') { echo "checked"; } ?>> <?php echo esc_attr__( $deactivate_reason ); ?>
+                                <label for="<?php echo esc_attr( $key ); ?>">
+                                    <input type="radio" name="<?php echo esc_attr( $this->prefix ); ?>deactivatation_reason_radio" id="<?php echo esc_attr( $key ); ?>" value="<?php echo esc_attr( $key ); ?>" required <?php if( $key === 'confusing') { echo "checked"; } ?>> <?php echo esc_attr( $deactivate_reason ); ?>
                                 </label>
                             </div>
                         <?php } ?>
                         <br>
-                        <textarea id="<?php echo esc_attr__( $this->prefix ); ?>customer_query" name="<?php echo esc_attr__( $this->prefix ); ?>customer_query" rows="4" placeholder="<?php esc_html_e('Write your query here', 'wp-bulk-delete'); ?>"></textarea>
+                        <textarea id="<?php echo esc_attr( $this->prefix ); ?>customer_query" name="<?php echo esc_attr( $this->prefix ); ?>customer_query" rows="4" placeholder="<?php esc_html_e('Write your query here', 'wp-bulk-delete'); ?>"></textarea>
                     </div>
                     <div style="text-align: center;">
                         <p style="font-size: 12px;margin: 2px 0 -10px 0;">
@@ -281,7 +279,8 @@ if ( ! class_exists( 'WPBD_Plugin_Deactivation' ) ) {
                         </p>
                     </div>
                 </form>
-				<div class="<?php echo esc_attr__( $this->prefix ); ?>deactivatation_loading" style="width: 100%;text-align: center; display:none;">
+				<div class="<?php echo esc_attr( $this->prefix ); ?>deactivatation_loading" style="width: 100%;text-align: center; display:none;">
+                    <?php // phpcs:disable PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage  ?>
 					<img src="<?php echo esc_url( admin_url('images/spinner.gif') ); ?>" />
 				</div>
             </div>

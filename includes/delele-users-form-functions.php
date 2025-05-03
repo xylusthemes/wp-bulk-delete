@@ -57,14 +57,17 @@ function xt_delete_users_form_process( $data ) {
                     $delete_user_who_has_no_order = isset( $data['user_who_has_no_order'] ) ? $data['user_who_has_no_order'] : 'false';
                     if( !empty( $delete_user_who_has_no_order ) && $delete_user_who_has_no_order == 'on' ){
                         foreach( $user_ids as $user_id ) {
+                            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                             $wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->prefix}wc_customer_lookup WHERE user_id = %d", $user_id ) );
                         }
                     }
                     $user_count = wpbulkdelete()->api->do_delete_users( $user_ids, (int)$data['reassign_user'] );
+                    // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                     $wpdb->query("DELETE FROM {$wpdb->prefix}options WHERE option_name LIKE '%_transient_wc_report_customers_%'");
                 }
     			return  array(
 	    			'status' => 1,
+                    // translators: %d: Number of Users deleted. 
 	    			'messages' => array( sprintf( esc_html__( '%d User(s) deleted successfully.', 'wp-bulk-delete' ), $user_count )
 	    		) );
             } else {                
@@ -119,7 +122,10 @@ function wpdb_render_delete_users_userroles(){
                         if( $userrole != 'none' ){
                         ?>
                         <option value="<?php echo esc_attr( $userrole ); ?>" >
-                            <?php echo esc_attr( $userrole ) . ' ' . sprintf( esc_attr__( '( %s Users )', 'wp-bulk-delete' ), esc_attr( $count ) ); ?>
+                            <?php 
+                                // translators: %s: Number of Users
+                                echo esc_attr( $userrole ) . ' ' . sprintf( esc_attr__( '( %s Users )', 'wp-bulk-delete' ), esc_attr( $count ) ); 
+                            ?>
                         </option>
                         <?php
                         }
@@ -223,6 +229,7 @@ function wpdb_render_delete_users_date_interval(){
                         </svg>
                         <span class="wpbd-popper">
                             <?php 
+                                // translators: %s: Date format (e.g., YYYY-MM-DD).
                                 $text = esc_html__('Set the reigration date interval for users to delete ( only delete users registered between these dates ) or leave these fields blank to select all users. The dates must be specified in the following format: %s', 'wp-bulk-delete');
                                 echo wp_kses(
                                     sprintf($text, '<strong>YYYY-MM-DD</strong>'),

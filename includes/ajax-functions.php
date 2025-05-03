@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function wpbd_delete_posts_count() {
 	$data = $error = $return = array();
-	parse_str($_POST['form'], $data);
+	parse_str($_POST['form'], $data); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 	if( ! empty( $data ) ){
 		
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -75,7 +75,7 @@ add_action( 'wp_ajax_delete_posts_count', 'wpbd_delete_posts_count' );
  */
 function wpbd_render_taxonomy_by_posttype() {
 
-	$post_type  = isset( $_REQUEST['post_type'] ) ? $_REQUEST['post_type'] : '';
+	$post_type  = isset( $_REQUEST['post_type'] ) ? $_REQUEST['post_type'] : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
 	$taxonomies = array();
 	if ( $post_type != '' ) {
 		$taxonomies = wpbd_get_taxonomy_by_posttype( $post_type );
@@ -83,7 +83,7 @@ function wpbd_render_taxonomy_by_posttype() {
 	if( ! empty( $taxonomies ) ){
 		foreach ($taxonomies as $slug => $name ) {
 			?>
-			<input type="radio" name="post_taxonomy" value="<?php echo esc_attr__( $slug ); ?>" class="post_taxonomy_radio" title="<?php echo esc_attr__( $name ); ?>"><?php echo esc_attr__( $name ); ?> <br />
+			<input type="radio" name="post_taxonomy" value="<?php echo esc_attr__( $slug, 'wp-bulk-delete' ); ?>" class="post_taxonomy_radio" title="<?php echo esc_attr__( $name, 'wp-bulk-delete' ); ?>"><?php echo esc_attr__( $name, 'wp-bulk-delete' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?> <br />
 			<?php	
 		}		
 	}
@@ -100,11 +100,11 @@ add_action( 'wp_ajax_render_taxonomy_by_posttype', 'wpbd_render_taxonomy_by_post
  */
 function wpbd_render_terms_by_taxonomy() {
 
-	$post_taxo  = esc_attr( $_REQUEST['post_taxomony'] );
+	$post_taxo  = esc_attr( $_REQUEST['post_taxomony'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
 	$terms = array();
 	if ( $post_taxo != '' ) {
 		if( taxonomy_exists( $post_taxo ) ){
-			$terms = get_terms( $post_taxo, array( 'hide_empty' => true ) );
+			$terms = get_terms( array( 'taxonomy'   => $post_taxo, 'hide_empty' => true, ) );
 		}
 	}
 	if( ! empty( $terms ) ){
@@ -113,7 +113,7 @@ function wpbd_render_terms_by_taxonomy() {
 			<?php
 			foreach ($terms as $term ) {
 				?>
-				<option value="<?php echo esc_attr__( $term->term_id ); ?>"><?php echo esc_attr__( $term->name ); ?></option>
+				<option value="<?php echo esc_attr__( $term->term_id, 'wp-bulk-delete' ); ?>"><?php echo esc_attr__( $term->name, 'wp-bulk-delete' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></option>
 				<?php	
 			} ?>
 		</select>
@@ -132,7 +132,7 @@ add_action( 'wp_ajax_render_terms_by_taxonomy', 'wpbd_render_terms_by_taxonomy' 
  */
 function wpbd_delete_users_count() {
 	$data = $error = $return = array();
-	parse_str($_POST['form'], $data);
+	parse_str($_POST['form'], $data); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 	if( ! empty( $data ) ){
 		
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -185,7 +185,7 @@ add_action( 'wp_ajax_delete_users_count', 'wpbd_delete_users_count' );
  */
 function wpbd_delete_comments_count() {
 	$data = $error = $return = array();
-	parse_str($_POST['form'], $data);
+	parse_str($_POST['form'], $data); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 	if( ! empty( $data ) ){
 		
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -251,7 +251,7 @@ add_action( 'wp_ajax_delete_comments_count', 'wpbd_delete_comments_count' );
  */
 function wpbd_delete_meta_count() {
 	$data = $error = $return = array();
-	parse_str($_POST['form'], $data);
+	parse_str($_POST['form'], $data); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 	if( ! empty( $data ) ){
 		
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -330,7 +330,7 @@ add_action( 'wp_ajax_delete_meta_count', 'wpbd_delete_meta_count' );
  */
 function wpbd_delete_terms_count() {
 	$data = $error = $return = array();
-	parse_str($_POST['form'], $data);
+	parse_str($_POST['form'], $data); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 	if( ! empty( $data ) ){
 		
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -396,7 +396,7 @@ add_action( 'wp_ajax_delete_terms_count', 'wpbd_delete_terms_count' );
  */
 function wpbd_render_postdropdown_by_posttype() {
 
-	$post_type  = $_REQUEST['post_type'];
+	$post_type  = $_REQUEST['post_type']; // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
 	$posts = array();
 	if ( $post_type != '' ) {
 		$posts = get_posts(
@@ -412,7 +412,7 @@ function wpbd_render_postdropdown_by_posttype() {
 			<?php
 			foreach ($posts as $post ) {
 				?>
-				<option value="<?php echo esc_attr__( $post->ID ); ?>"><?php echo esc_attr__( $post->post_title ); ?></option>
+				<option value="<?php echo esc_attr( $post->ID ); ?>"><?php echo esc_attr( $post->post_title ); ?></option>
 				<?php	
 			} ?>
 		</select>

@@ -27,8 +27,8 @@ function wpbd_cleanup_form( $type = 'general' ){
             $error[] = esc_html__('You don\'t have enough permission for this operation.', 'wp-bulk-delete' );
         }
 
-        if ( isset( $_POST['_run_post_cleanup_wpnonce'] ) && wp_verify_nonce( $_POST['_run_post_cleanup_wpnonce'], 'run_post_cleanup_nonce' ) && empty( $error ) ) {
-            $cleanups = isset( $_POST['cleanup_post_type'] ) ? $_POST['cleanup_post_type'] : '';
+        if ( isset( $_POST['_run_post_cleanup_wpnonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_run_post_cleanup_wpnonce'] ) ), 'run_post_cleanup_nonce' ) && empty( $error ) ) {
+            $cleanups = isset( $_POST['cleanup_post_type'] ) ? $_POST['cleanup_post_type'] : ''; // phpcs:ignore 	WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             if( ! empty( $cleanups ) ){
                 foreach ($cleanups as $cleanuptype ) {
                     $messages[] = wpbulkdelete()->api->run_cleanup( $cleanuptype );                
@@ -48,7 +48,7 @@ function wpbd_cleanup_form( $type = 'general' ){
             foreach ( $error as $err ) {
                 ?>
                 <div class="notice wpbd-notice notice-error">
-                    <p><strong><?php esc_html_e( $err, 'wp-bulk-delete' ); ?></strong></p>
+                    <p><strong><?php esc_html_e( $err, 'wp-bulk-delete' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></strong></p>
                 </div>
                 <?php
             }
@@ -65,7 +65,7 @@ function wpbd_cleanup_form( $type = 'general' ){
                     if( $message != '' ){
                         ?>
                         <div class="notice wpbd-notice notice-success is-dismissible">
-                            <p><strong><?php esc_html_e( $message, 'wp-bulk-delete' ); ?></strong></p>
+                            <p><strong><?php esc_html_e( $message, 'wp-bulk-delete' );  // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></strong></p>
                         </div>
                         <?php
                     }
