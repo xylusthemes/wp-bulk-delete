@@ -74,20 +74,30 @@ add_action( 'wp_ajax_delete_posts_count', 'wpbd_delete_posts_count' );
  * @return void
  */
 function wpbd_render_taxonomy_by_posttype() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        wp_send_json_error( 'Unauthorized access' );
+        wp_die();
+    }
+    // Sanitize input
+    $post_type = isset( $_REQUEST['post_type'] ) ? $_REQUEST['post_type'] : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
+    $taxonomies = array();
+    if ( $post_type !== '' ) {
+        $taxonomies = wpbd_get_taxonomy_by_posttype( $post_type );
+    }
 
-	$post_type  = isset( $_REQUEST['post_type'] ) ? $_REQUEST['post_type'] : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
-	$taxonomies = array();
-	if ( $post_type != '' ) {
-		$taxonomies = wpbd_get_taxonomy_by_posttype( $post_type );
-	}
-	if( ! empty( $taxonomies ) ){
-		foreach ($taxonomies as $slug => $name ) {
-			?>
-			<input type="radio" name="post_taxonomy" value="<?php echo esc_attr__( $slug, 'wp-bulk-delete' ); ?>" class="post_taxonomy_radio" title="<?php echo esc_attr__( $name, 'wp-bulk-delete' ); ?>"><?php echo esc_attr__( $name, 'wp-bulk-delete' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?> <br />
-			<?php	
-		}		
-	}
-	wp_die();
+    if ( ! empty( $taxonomies ) ) {
+        foreach ( $taxonomies as $slug => $name ) {
+            ?>
+            <input type="radio" name="post_taxonomy" 
+                   value="<?php echo esc_attr( $slug ); ?>" 
+                   class="post_taxonomy_radio" 
+                   title="<?php echo esc_attr( $name ); ?>">
+            <?php echo esc_html( $name ); ?><br />
+            <?php
+        }
+    }
+
+    wp_die();
 }
 add_action( 'wp_ajax_render_taxonomy_by_posttype', 'wpbd_render_taxonomy_by_posttype' );
 
@@ -99,27 +109,35 @@ add_action( 'wp_ajax_render_taxonomy_by_posttype', 'wpbd_render_taxonomy_by_post
  * @return void
  */
 function wpbd_render_terms_by_taxonomy() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        wp_send_json_error( 'Unauthorized access' );
+        wp_die();
+    }
 
-	$post_taxo  = esc_attr( $_REQUEST['post_taxomony'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
-	$terms = array();
-	if ( $post_taxo != '' ) {
-		if( taxonomy_exists( $post_taxo ) ){
-			$terms = get_terms( array( 'taxonomy'   => $post_taxo, 'hide_empty' => true, ) );
-		}
-	}
-	if( ! empty( $terms ) ){
-		?>
-		<select name="post_taxonomy_terms[]" class="taxonomy_terms_select" multiple="multiple">
-			<?php
-			foreach ($terms as $term ) {
-				?>
-				<option value="<?php echo esc_attr__( $term->term_id, 'wp-bulk-delete' ); ?>"><?php echo esc_attr__( $term->name, 'wp-bulk-delete' ); // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></option>
-				<?php	
-			} ?>
-		</select>
-		<?php
-	}
-	wp_die();
+    // Sanitize input
+    $post_taxo = isset( $_REQUEST['post_taxomony'] ) ? $_REQUEST['post_taxomony'] : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
+
+    $terms = array();
+    if ( $post_taxo !== '' && taxonomy_exists( $post_taxo ) ) {
+        $terms = get_terms( array(
+            'taxonomy'   => $post_taxo,
+            'hide_empty' => true,
+        ) );
+    }
+
+    if ( ! empty( $terms ) ) {
+        ?>
+        <select name="post_taxonomy_terms[]" class="taxonomy_terms_select" multiple="multiple">
+            <?php foreach ( $terms as $term ) : ?>
+                <option value="<?php echo esc_attr( $term->term_id ); ?>">
+                    <?php echo esc_html( $term->name ); ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <?php
+    }
+
+    wp_die();
 }
 add_action( 'wp_ajax_render_terms_by_taxonomy', 'wpbd_render_terms_by_taxonomy' );
 
@@ -395,6 +413,11 @@ add_action( 'wp_ajax_delete_terms_count', 'wpbd_delete_terms_count' );
  * @return void
  */
 function wpbd_render_postdropdown_by_posttype() {
+
+	if ( ! current_user_can( 'manage_options' ) ) {
+        wp_send_json_error( 'Unauthorized access' );
+        wp_die();
+    }
 
 	$post_type  = $_REQUEST['post_type']; // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotValidated, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Recommended
 	$posts = array();
