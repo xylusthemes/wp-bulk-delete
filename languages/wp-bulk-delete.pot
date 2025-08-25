@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-05-03T06:11:25+00:00\n"
+"POT-Creation-Date: 2025-08-25T10:02:55+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-bulk-delete\n"
 
 #. Plugin Name of the plugin
@@ -123,10 +123,10 @@ msgstr ""
 
 #: includes/admin/cleanup/cleanup-form.php:27
 #: includes/ajax-functions.php:27
-#: includes/ajax-functions.php:139
-#: includes/ajax-functions.php:192
-#: includes/ajax-functions.php:258
-#: includes/ajax-functions.php:337
+#: includes/ajax-functions.php:157
+#: includes/ajax-functions.php:210
+#: includes/ajax-functions.php:276
+#: includes/ajax-functions.php:355
 #: includes/delele-comments-form-functions.php:33
 #: includes/delele-posts-form-functions.php:48
 #: includes/delele-terms-form-functions.php:29
@@ -141,10 +141,10 @@ msgstr ""
 
 #: includes/admin/cleanup/cleanup-form.php:44
 #: includes/ajax-functions.php:57
-#: includes/ajax-functions.php:168
-#: includes/ajax-functions.php:233
-#: includes/ajax-functions.php:312
-#: includes/ajax-functions.php:378
+#: includes/ajax-functions.php:186
+#: includes/ajax-functions.php:251
+#: includes/ajax-functions.php:330
+#: includes/ajax-functions.php:396
 #: includes/delele-comments-form-functions.php:78
 #: includes/delele-posts-form-functions.php:90
 #: includes/delele-terms-form-functions.php:36
@@ -231,6 +231,7 @@ msgstr ""
 
 #. translators: %s: Plugin slug used in image alt text.
 #: includes/admin/support-page.php:136
+#, php-format
 msgid "%s Image"
 msgstr ""
 
@@ -262,10 +263,10 @@ msgid "Action "
 msgstr ""
 
 #: includes/ajax-functions.php:45
-#: includes/ajax-functions.php:156
-#: includes/ajax-functions.php:221
-#: includes/ajax-functions.php:300
-#: includes/ajax-functions.php:366
+#: includes/ajax-functions.php:174
+#: includes/ajax-functions.php:239
+#: includes/ajax-functions.php:318
+#: includes/ajax-functions.php:384
 #: includes/delele-comments-form-functions.php:66
 #: includes/delele-posts-form-functions.php:78
 #: includes/delele-terms-form-functions.php:58
@@ -273,46 +274,50 @@ msgstr ""
 msgid "Nothing to delete!!"
 msgstr ""
 
-#: includes/ajax-functions.php:196
+#: includes/ajax-functions.php:214
 #: includes/delele-comments-form-functions.php:36
 msgid "Please select Comment status for proceed delete operation."
 msgstr ""
 
-#: includes/ajax-functions.php:209
-#: includes/ajax-functions.php:354
+#: includes/ajax-functions.php:227
+#: includes/ajax-functions.php:372
 #: includes/delele-comments-form-functions.php:53
 #: includes/delele-terms-form-functions.php:45
 msgid "Something went wrong please try again!!"
 msgstr ""
 
-#: includes/ajax-functions.php:262
-#: includes/ajax-functions.php:267
-#: includes/ajax-functions.php:273
+#: includes/ajax-functions.php:280
+#: includes/ajax-functions.php:285
+#: includes/ajax-functions.php:291
 msgid "Please select all required fields."
 msgstr ""
 
-#: includes/ajax-functions.php:341
+#: includes/ajax-functions.php:359
 #: includes/delele-terms-form-functions.php:32
 msgid "Please select required fields for proceed delete operation."
 msgstr ""
 
 #. translators: %s: Number Of Revisions Cleaned up.
 #: includes/class-delete-api.php:308
+#, php-format
 msgid "%s Revisions Cleaned up"
 msgstr ""
 
 #. translators: %s: Number Of Auto Drafts Cleaned up.
 #: includes/class-delete-api.php:320
+#, php-format
 msgid "%s Auto Drafts Cleaned up"
 msgstr ""
 
 #. translators: %s: Number Of Posts Cleaned up.
 #: includes/class-delete-api.php:332
+#, php-format
 msgid "%s Trashed Posts Cleaned up"
 msgstr ""
 
 #. translators: %s: Number Of Orphan and Duplicate Meta Cleaned up.
 #: includes/class-delete-api.php:455
+#, php-format
 msgid "%s Orphan and Duplicate Meta Cleaned up"
 msgstr ""
 
@@ -460,6 +465,7 @@ msgstr ""
 
 #. translators: %d = number of comments deleted
 #: includes/delele-comments-form-functions.php:61
+#, php-format
 msgid "%d comment(s) deleted successfully."
 msgstr ""
 
@@ -493,6 +499,7 @@ msgid "Select the comment statuses that you want to delete."
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:150
+#, php-format
 msgid "( %s Comment(s) )"
 msgstr ""
 
@@ -571,6 +578,7 @@ msgstr ""
 
 #. translators: %s: date format.
 #: includes/delele-comments-form-functions.php:272
+#, php-format
 msgid "Set the date interval for comments to delete ( only delete comments between these dates ) or leave these fields blank to select all comments. The dates must be specified in the following format: %s"
 msgstr ""
 
@@ -631,11 +639,13 @@ msgstr ""
 
 #. translators: %s: meta text.
 #: includes/delele-meta-form-functions.php:47
+#, php-format
 msgid " %s"
 msgstr ""
 
 #. translators: %d: Number of Record deleted.
 #: includes/delele-posts-form-functions.php:73
+#, php-format
 msgid "%d Record deleted successfully."
 msgstr ""
 
@@ -645,6 +655,7 @@ msgstr ""
 
 #. translators: %d: Number of posts.
 #: includes/delele-posts-form-functions.php:133
+#, php-format
 msgid " (%d)"
 msgstr ""
 
@@ -660,6 +671,7 @@ msgstr ""
 #. translators: %s: post types.
 #: includes/delele-posts-form-functions.php:186
 #: includes/delele-posts-form-functions.php:646
+#, php-format
 msgid "%s"
 msgstr ""
 
@@ -668,10 +680,12 @@ msgid " Taxonomy "
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:246
+#, php-format
 msgid "Delete %s From Selected Category Only"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:262
+#, php-format
 msgid "By selecting this option, only the selected category %1$s will be deleted, but if the %1$s has another category with the selected category, that %1$s will not be deleted (which means %1$s that have multiple categories will not be deleted)"
 msgstr ""
 
@@ -697,6 +711,7 @@ msgstr ""
 
 #: includes/delele-posts-form-functions.php:359
 #: includes/delele-posts-form-functions.php:442
+#, php-format
 msgid "Delete %s which are"
 msgstr ""
 
@@ -710,10 +725,12 @@ msgid "posted between custom"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:385
+#, php-format
 msgid "Set the date interval for items to delete, or leave these fields blank to select all %1$s. The dates must be specified in the following format: %2$s"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:412
+#, php-format
 msgid "This option will work well with Scheduled Delete, which will help to delete %s of the selected option from the scheduled run date."
 msgstr ""
 
@@ -726,6 +743,7 @@ msgid "posted between"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:462
+#, php-format
 msgid "Set the modified date interval for items to delete, or leave these fields blank to select all %1$s. The dates must be specified in the following format: %2$s"
 msgstr ""
 
@@ -851,14 +869,17 @@ msgid "Cleanup Posts "
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:782
+#, php-format
 msgid "Revisions (%d Revisions)"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:789
+#, php-format
 msgid "Trash (Deleted Posts) (%d Trash)"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:796
+#, php-format
 msgid "Auto Drafts (%d Auto Drafts)"
 msgstr ""
 
@@ -879,6 +900,7 @@ msgid "repeat"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:832
+#, php-format
 msgid "Timezone: (%s)"
 msgstr ""
 
@@ -976,6 +998,7 @@ msgstr ""
 
 #. translators: %d: Number of terms deleted.
 #: includes/delele-terms-form-functions.php:53
+#, php-format
 msgid "%d Term(s) deleted successfully."
 msgstr ""
 
@@ -993,6 +1016,7 @@ msgstr ""
 
 #. translators: %d: Number of Users deleted.
 #: includes/delele-users-form-functions.php:71
+#, php-format
 msgid "%d User(s) deleted successfully."
 msgstr ""
 
@@ -1006,6 +1030,7 @@ msgstr ""
 
 #. translators: %s: Number of Users
 #: includes/delele-users-form-functions.php:127
+#, php-format
 msgid "( %s Users )"
 msgstr ""
 
@@ -1043,6 +1068,7 @@ msgstr ""
 
 #. translators: %s: Date format (e.g., YYYY-MM-DD).
 #: includes/delele-users-form-functions.php:233
+#, php-format
 msgid "Set the reigration date interval for users to delete ( only delete users registered between these dates ) or leave these fields blank to select all users. The dates must be specified in the following format: %s"
 msgstr ""
 
@@ -1067,7 +1093,7 @@ msgstr ""
 msgid "Select the user to whom you want to assign the deleted user's data."
 msgstr ""
 
-#: wp-bulk-delete.php:75
-#: wp-bulk-delete.php:82
+#: wp-bulk-delete.php:72
+#: wp-bulk-delete.php:79
 msgid "Cheatin&#8217; huh?"
 msgstr ""
