@@ -14,6 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /** Actions *************************************************************/
 add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_status' );
 add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_type' );
+add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_description' );
 add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_users' );
 add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_posts' );
 add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_date_interval' );
@@ -196,6 +197,55 @@ function wpdb_render_delete_comments_type(){
                                 <div class="wpbd-blur-filter-option">
                                     <?php
                                         wpdb_render_delete_comments_types();
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="wpbd-blur-filter-cta" >
+                                <span style="color: red"><?php echo esc_html_e( 'Available in Pro version.', 'wp-bulk-delete' ); ?> </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php echo esc_html_e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
+                            </div>
+                        </div>
+                    <?php
+                }
+            ?>
+        </div>
+    </div>
+    <?php
+}
+
+/**
+ * Render Comment Description.
+ *
+ * @since 1.1.0
+ * @return void
+ */
+function wpdb_render_delete_comments_description(){
+    global $wpdb;
+    ?>
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php esc_html_e('Comment Description ','wp-bulk-delete');  if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="false" style="display:none;" >
+            <?php 
+                if( wpbd_is_pro() && class_exists( 'WP_Bulk_Delete_Pro_Common' ) ){
+                        $wpdb->common_pro->wpdb_render_delete_comments_description_pro();
+                }else{
+                    ?>
+                        <div class="wpbd-blur-filter" >
+                            <div class="wpbd-blur" >
+                                <div class="wpbd-blur-filter-option">
+                                    <?php
+                                        wpdb_render_delete_comments_descriptions();
                                     ?>
                                 </div>
                             </div>
@@ -473,6 +523,30 @@ function wpbd_render_delete_comment_author(){
             <select name="sample1" class="comment_author" disabled="disabled" >
                 <option value=""><?php esc_attr_e( 'Select author', 'wp-bulk-delete' ); ?></option>
             </select>
+        </div>
+    </div>
+    <?php
+}
+
+/**
+ * Render Comment Description
+ */
+function wpdb_render_delete_comments_descriptions(){
+    ?>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" >
+                <?php esc_html_e('Comment Description ','wp-bulk-delete'); ?>
+            </span>
+        </div>
+        <div class="wpbd-inner-section-2">
+            <select name="">
+                <option value=""><?php esc_html_e( 'equal to ( string )', 'wp-bulk-delete' ); ?></option>
+                <option value=""><?php esc_html_e( 'not equal to ( string )', 'wp-bulk-delete' ); ?></option>
+                <option value=""><?php esc_html_e( 'like ( string )', 'wp-bulk-delete' ); ?></option>
+                <option value=""><?php esc_html_e( 'not like ( string )', 'wp-bulk-delete' ); ?></option>
+            </select>
+            <textarea style="width:100%;" class="wp_user_email_text" placeholder="insert comment description here..." ></textarea>
         </div>
     </div>
     <?php
