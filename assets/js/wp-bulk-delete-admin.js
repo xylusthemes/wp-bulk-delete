@@ -39,6 +39,10 @@
 	// Delete posts form handle.
 	jQuery(document).ready(function() {
 	    jQuery('#delete_posts_submit').on( 'click', function() {
+
+			let proceed = validateSchedule("delete_posts_form");
+			if(!proceed) return;
+
 			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled"){
 				jQuery("#delete_posts_form").attr('action', wpBulkDeleteData.siteUrl + '/wp-admin/admin-post.php');
 				jQuery("#delete_posts_form").submit();
@@ -131,6 +135,10 @@
 	// Delete users form handle.
 	jQuery(document).ready(function() {
 	    jQuery('#delete_users_submit').on( 'click', function() {
+
+			let uproceed = validateSchedule("delete_users_form");
+			if(!uproceed) return;
+
 			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled"){
 				jQuery("#delete_users_form").attr('action', wpBulkDeleteData.siteUrl + '/wp-admin/admin-post.php');
 				jQuery("#delete_users_form").submit();
@@ -164,6 +172,10 @@
 	// Delete comments form handle.
 	jQuery(document).ready(function() {
 	    jQuery('#delete_comments_submit').on( 'click', function() {
+
+			let cproceed = validateSchedule("delete_comments_form");
+			if(!cproceed) return;
+
 			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled"){
 				jQuery("#delete_comments_form").attr('action', wpBulkDeleteData.siteUrl + '/wp-admin/admin-post.php');
 				jQuery("#delete_comments_form").submit();
@@ -387,6 +399,31 @@
             jQuery('.cleanup_post_type').prop('checked', isChecked);
         });
 	});
+
+	function validateSchedule(formId) {
+		let selected = jQuery('input[name="delete_time"]:checked').val();
+
+		if(selected === "scheduled"){
+			let datetime = jQuery("#delete_datetime").val().trim();
+			let schedulename = jQuery("input[name='schedule_name']").val().trim();
+
+			if(datetime === ""){
+				alert("Please select a scheduled date & time.");
+				return false;
+			}
+
+			if(schedulename === ""){
+				alert("Please enter a schedule name.");
+				return false;
+			}
+
+			jQuery("#" + formId).attr('action', wpBulkDeleteData.siteUrl + '/wp-admin/admin-post.php');
+			jQuery("#" + formId).submit();
+			return false;
+		}
+
+		return true;
+	}
 
 })( jQuery );
 
