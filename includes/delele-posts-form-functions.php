@@ -317,7 +317,7 @@ function wpbd_render_form_custom_query(){
     ?>
     <div class="wpbd-inner-main-section">
         <div class="wpbd-inner-section-1" >
-            <span class="wpbd-title-text" ><?php esc_html_e('Post Delete from Custom Query ','wp-bulk-delete'); ?></span>
+            <span class="wpbd-title-text" ><?php esc_html_e('Delete posts from Quick Delete ','wp-bulk-delete'); ?></span>
         </div>
         <div class="wpbd-inner-section-2">
             <fieldset>
@@ -817,9 +817,9 @@ function wpbd_render_delete_time(){
             <span class="wpbd-title-text" ><?php esc_html_e('Delete Time ','wp-bulk-delete'); ?></span>
         </div>
         <div class="wpbd-inner-section-2">
-            <input type="radio" id="delete_time_now" name="delete_time" class="delete_time" value="now" checked="checked" />
+            <input type="radio" id="delete_time_now" name="delete_time" class="delete_time" <?php echo ( !wpbd_is_pro() ) ?  'checked="checked"' : ''; ?> value="now" />
             <?php esc_html_e( 'Delete now', 'wp-bulk-delete'  ); ?><br />
-            <input type="radio" id="delete_time_later" name="delete_time" class="delete_time" value="scheduled" <?php echo( ( ! wpbd_is_pro() ) ? 'disabled="disabled"' : '' ); ?>/>
+            <input type="radio" <?php echo ( wpbd_is_pro() ) ?  'checked="checked"' : ''; ?> id="delete_time_later" name="delete_time" class="delete_time" value="scheduled" <?php echo( ( ! wpbd_is_pro() ) ? 'disabled="disabled"' : '' ); ?>/>
             <?php esc_html_e( 'Schedule delete at', 'wp-bulk-delete'  ); ?>
             <input type="text" id="delete_datetime" name="delete_datetime" class="delete_all_datetimepicker" placeholder="YYYY-MM-DD HH:mm:ss" <?php echo( ( ! wpbd_is_pro() ) ? 'disabled="disabled"' : '' ); ?>/>
             <?php 
@@ -1186,7 +1186,7 @@ function wpbd_render_common_form() {
             <div class="text" >
                 <div class="header-icon" ></div>
                 <div class="header-title" >
-                    <span><?php esc_html_e('Custom Query Filter ','wp-bulk-delete'); ?></span>
+                    <span><?php esc_html_e('Quick Delete Filter ','wp-bulk-delete'); ?></span>
                 </div>
                 <div class="header-extra" ></div>
             </div>
