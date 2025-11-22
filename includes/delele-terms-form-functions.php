@@ -42,7 +42,7 @@ function xt_delete_terms_form_process( $data ) {
         if( false === $term_count ){
             return array(
                 'status' => 0,
-                'messages' => array( esc_html_e( 'Something went wrong please try again!!', 'wp-bulk-delete' ) ),
+                'messages' => array( esc_html__( 'Something went wrong please try again!!', 'wp-bulk-delete' ) ),
             );
         }
 
@@ -55,7 +55,7 @@ function xt_delete_terms_form_process( $data ) {
         } else {                
             return  array(
     			'status' => 1,
-    			'messages' => array( esc_html_e( 'Nothing to delete!!', 'wp-bulk-delete' ) ),
+    			'messages' => array( esc_html__( 'Nothing to delete!!', 'wp-bulk-delete' ) ),
     		);
         }
 
