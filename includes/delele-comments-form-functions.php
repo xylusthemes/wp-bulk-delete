@@ -379,8 +379,13 @@ function wpdb_render_delete_comments_users(){
         </div>
         <div class="content"  aria-expanded="false" style="display:none;" >
             <?php 
-                if( wpbd_is_pro() && class_exists( 'WP_Bulk_Delete_Pro_Common' ) ){
+                if ( wpbd_is_pro() && class_exists( 'WP_Bulk_Delete_Pro_Common' ) && isset( $wpdb->common_pro ) && is_object( $wpdb->common_pro ) ){
+                    if ( method_exists( $wpdb->common_pro, 'wpbd_render_delete_comment_author_pro' ) ) {
                         $wpdb->common_pro->wpbd_render_delete_comment_author_pro();
+                    }
+                    if ( method_exists( $wpdb->common_pro, 'wpbd_render_delete_comment_author_email_pro' ) ) {
+                        $wpdb->common_pro->wpbd_render_delete_comment_author_email_pro();
+                    }
                 }else{
                     ?>
                         <div class="wpbd-blur-filter" >
@@ -388,6 +393,7 @@ function wpdb_render_delete_comments_users(){
                                 <div class="wpbd-blur-filter-option">
                                     <?php
                                         wpbd_render_delete_comment_author();
+                                        wpbd_render_delete_comment_author_email();
                                     ?>
                                 </div>
                             </div>
@@ -523,6 +529,25 @@ function wpbd_render_delete_comment_author(){
             <select name="sample1" class="comment_author" disabled="disabled" >
                 <option value=""><?php esc_attr_e( 'Select author', 'wp-bulk-delete' ); ?></option>
             </select>
+        </div>
+    </div>
+    <?php
+}
+
+/**
+ * Render Comment Author
+ */
+function wpbd_render_delete_comment_author_email(){
+    ?>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php esc_html_e('Comment Author Email ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2" style="display: flex;flex-direction: row;flex-wrap: nowrap;align-items: center;gap: 5px;">
+            <select name="sample4" disabled="disabled" >
+                <option value=""><?php esc_html_e( 'equal to ( string )', 'wp-bulk-delete' ); ?></option>
+            </select>
+            <textarea name="sample5" id="sample5" cols="88" style="height: 30px;" class="wp_comment_email_text" placeholder="You can add multiple emails with comma(,) separator" disabled="disabled" ></textarea><br/>
         </div>
     </div>
     <?php
