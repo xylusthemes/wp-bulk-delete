@@ -5,7 +5,7 @@ Tags: delete, bulk, clean database, bulk delete, bulk clean
 Requires at least: 4.9
 Requires PHP: 5.3
 Tested up to: 6.9 
-Stable tag: 1.3.8
+Stable tag: 1.3.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,8 @@ posts delete, delete all, mass delete, delete posts, delete comments, delete use
 * ✅ Delete Comments by Status.
 * ✅ Delete Comments by Types. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
 * ✅ Delete Comments by Authors. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Comments by Authors Email. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Comments by Meta Fields [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
 * ✅ Delete Comments by Post. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
 * ✅ Delete Comments by Registration Date.
 * ✅ Schedule automatic comment deletion [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
@@ -69,6 +71,9 @@ posts delete, delete all, mass delete, delete posts, delete comments, delete use
 * ✅ Assign deleted user data to another user [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
 * ✅ Delete Users by User Meta. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
 * ✅ Delete Users by Email. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Users by Display Name. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Users by Nicename. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Users by Login. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
 * ✅ Schedule automatic user deletion [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
 
 ## 🗃️ Deleting Categories and Tags
@@ -153,6 +158,13 @@ posts delete, delete all, mass delete, delete posts, delete comments, delete use
 10. 🔍 Delete WooCommerce General Filter
 
 == Changelog ==
+
+= 1.3.9 =
+* ADDED: Delete User by Display Name. ( PRO )
+* ADDED: Delete User by Nicename. ( PRO )
+* ADDED: Delete User by Login. ( PRO )
+* ADDED: Delete Comments by Authors Email. ( PRO )
+* ADDED: Delete Comments by Meta Fields. ( PRO )
 
 = 1.3.8 =
 * ADDED: Active/Pause button in schedule delete. ( PRO )
