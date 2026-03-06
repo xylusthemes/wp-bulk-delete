@@ -47,16 +47,11 @@ function xt_delete_comments_form_process( $data ) {
                 $data['delete_entity'] = 'comment';
                 return wpbd_save_scheduled_delete( $data );
             }
-    		
-            $comment_count = wpbulkdelete()->api->do_delete_comments( $data );
-            if( false === $comment_count ){
-                return array(
-                    'status' => 0,
-                    'messages' => array( esc_html__( 'Something went wrong please try again!!', 'wp-bulk-delete' ) ),
-                );
-            }
 
-    		if ( ! empty( $comment_count ) && $comment_count > 0 ) {
+            // Get comment_ids for delete based on user input.
+    		$comment_ids = wpbulkdelete()->api->get_delete_comment_count( $data );
+    		if ( ! empty( $comment_ids ) && count( $comment_ids ) > 0 ) {
+    			$comment_count = wpbulkdelete()->api->do_delete_comments( $comment_ids, $data  ); 
     			return  array(
 	    			'status' => 1,
                     // translators: %d = number of comments deleted
