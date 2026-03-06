@@ -13,9 +13,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 /** Actions *************************************************************/
 add_action( 'wpbd_delete_users_form', 'wpdb_render_delete_users_userroles', 10 );
+add_action( 'wpbd_delete_users_advance_form', 'wpdb_render_delete_users_assignuser', 20 );
 add_action( 'wpbd_delete_users_advance_form', 'wpdb_render_delete_users_usermeta', 20 );
 add_action( 'wpbd_delete_users_advance_form', 'wpdb_render_delete_users_useremail', 20 );
-add_action( 'wpbd_delete_users_advance_form', 'wpdb_render_delete_users_assignuser', 20 );
+add_action( 'wpbd_delete_users_advance_form', 'wpdb_render_delete_users_nicename', 20 );
+add_action( 'wpbd_delete_users_advance_form', 'wpdb_render_delete_users_displayname', 20 );
+add_action( 'wpbd_delete_users_advance_form', 'wpdb_render_delete_users_login', 20 );
 add_action( 'wpbd_delete_users_date_form', 'wpdb_render_delete_users_date_interval', 40 );
 add_action( 'wpbd_delete_users_action_limit_form', 'wpdb_render_delete_users_limit', 60 );
 
@@ -159,7 +162,6 @@ function wpdb_render_delete_users_usermeta(){
             </select>
             <?php esc_html_e( 'Value', 'wp-bulk-delete' ); ?> 
             <input type="text" id="sample3" name="sample3" class="sample3" placeholder="meta_value" disabled="disabled" /><br/>
-            <?php do_action( 'wpbd_display_available_in_pro'); ?>
         </div>
     </div>
     <?php
@@ -183,7 +185,6 @@ function wpdb_render_delete_users_useremail(){
                 <option value="equal_to_str"><?php esc_html_e( 'equal to ( string )', 'wp-bulk-delete' ); ?></option>
             </select>
             <textarea name="sample5" id="sample5" cols="59" class="wp_user_email_text" placeholder="You can add multiple emails with comma(,) separator" disabled="disabled" ></textarea><br/>
-            <?php do_action( 'wpbd_display_available_in_pro'); ?>
         </div>
     </div>
     <?php
@@ -326,7 +327,82 @@ function wpdb_render_delete_users_assignuser(){
                     </span>
                 </div>
             </span>
-            <?php do_action( 'wpbd_display_available_in_pro'); ?>
+        </div>
+    </div>
+    <?php
+}
+
+
+/**
+ * Render Userroles checkboxes.
+ *
+ * @since 1.1
+ * @return void
+ */
+function wpdb_render_delete_users_nicename(){
+    ?>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('User Nicename ','wp-bulk-delete-pro'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
+            <select name="sample_user" disabled="disabled">
+                <option value=""><?php esc_html_e( 'equal to ( string )', 'wp-bulk-delete' ); ?></option>
+                <option value=""><?php esc_html_e( 'not equal to ( string )', 'wp-bulk-delete' ); ?></option>
+                <option value=""><?php esc_html_e( 'like ( string )', 'wp-bulk-delete' ); ?></option>
+                <option value=""><?php esc_html_e( 'not like ( string )', 'wp-bulk-delete' ); ?></option>
+            </select>
+            <input type="text" name="sample_nicename" id="sample_nicename" style="width: 80%;" placeholder="You can add user nickname" ></textarea>
+        </div>
+    </div>
+    <?php
+}
+
+/**
+ * Render Userroles checkboxes.
+ *
+ * @since 1.1
+ * @return void
+ */
+function wpdb_render_delete_users_displayname(){
+    ?>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('User Display Name ','wp-bulk-delete-pro'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
+            <select name="sample_user" disabled="disabled">
+                <option value=""><?php esc_html_e( 'equal to ( string )', 'wp-bulk-delete' ); ?></option>
+                <option value=""><?php esc_html_e( 'not equal to ( string )', 'wp-bulk-delete' ); ?></option>
+                <option value=""><?php esc_html_e( 'like ( string )', 'wp-bulk-delete' ); ?></option>
+                <option value=""><?php esc_html_e( 'not like ( string )', 'wp-bulk-delete' ); ?></option>
+            </select>
+            <input type="text" name="sample_display_name" id="sample_display_name" style="width: 80%;" placeholder="You can add user display name" ></textarea>
+        </div>
+    </div>
+    <?php
+}
+
+/**
+ * Render Userroles checkboxes.
+ *
+ * @since 1.1
+ * @return void
+ */
+function wpdb_render_delete_users_login(){
+    ?>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php _e('User Login ','wp-bulk-delete-pro'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
+            <select name="sample_user" disabled="disabled">
+                <option value=""><?php esc_html_e( 'equal to ( string )', 'wp-bulk-delete' ); ?></option>
+                <option value=""><?php esc_html_e( 'not equal to ( string )', 'wp-bulk-delete' ); ?></option>
+                <option value=""><?php esc_html_e( 'like ( string )', 'wp-bulk-delete' ); ?></option>
+                <option value=""><?php esc_html_e( 'not like ( string )', 'wp-bulk-delete' ); ?></option>
+            </select>
+            <input type="text" name="sample_login" id="sample_login" style="width: 80%;" placeholder="You can add user Login" ></textarea>
         </div>
     </div>
     <?php

@@ -59,7 +59,7 @@ msgstr ""
 
 #: includes/admin/admin-pages.php:28
 #: includes/admin/posts/display-delete-posts.php:82
-#: includes/admin/users/display-delete-users.php:142
+#: includes/admin/users/display-delete-users.php:141
 msgid "Delete Users"
 msgstr ""
 
@@ -93,7 +93,7 @@ msgstr ""
 
 #: includes/admin/admin-pages.php:105
 #: includes/admin/posts/display-delete-posts.php:148
-#: includes/admin/users/display-delete-users.php:103
+#: includes/admin/users/display-delete-users.php:102
 #: includes/common-functions.php:101
 #: includes/delele-comments-form-functions.php:200
 #: includes/delele-comments-form-functions.php:249
@@ -110,7 +110,7 @@ msgstr ""
 
 #: includes/admin/admin-pages.php:105
 #: includes/admin/posts/display-delete-posts.php:148
-#: includes/admin/users/display-delete-users.php:103
+#: includes/admin/users/display-delete-users.php:102
 #: includes/common-functions.php:102
 #: includes/delele-comments-form-functions.php:200
 #: includes/delele-comments-form-functions.php:249
@@ -134,7 +134,7 @@ msgstr ""
 #: includes/delele-comments-form-functions.php:35
 #: includes/delele-posts-form-functions.php:48
 #: includes/delele-terms-form-functions.php:29
-#: includes/delele-users-form-functions.php:34
+#: includes/delele-users-form-functions.php:37
 msgid "You don't have enough permission for this operation."
 msgstr ""
 
@@ -152,7 +152,7 @@ msgstr ""
 #: includes/delele-comments-form-functions.php:75
 #: includes/delele-posts-form-functions.php:90
 #: includes/delele-terms-form-functions.php:36
-#: includes/delele-users-form-functions.php:88
+#: includes/delele-users-form-functions.php:91
 msgid "Sorry, Your nonce did not verify."
 msgstr ""
 
@@ -274,7 +274,7 @@ msgstr ""
 #: includes/delele-comments-form-functions.php:63
 #: includes/delele-posts-form-functions.php:78
 #: includes/delele-terms-form-functions.php:58
-#: includes/delele-users-form-functions.php:76
+#: includes/delele-users-form-functions.php:79
 msgid "Nothing to delete!!"
 msgstr ""
 
@@ -526,7 +526,7 @@ msgstr ""
 #: includes/delele-comments-form-functions.php:293
 #: includes/delele-posts-form-functions.php:361
 #: includes/delele-posts-form-functions.php:444
-#: includes/delele-users-form-functions.php:207
+#: includes/delele-users-form-functions.php:208
 msgid "older than"
 msgstr ""
 
@@ -536,25 +536,25 @@ msgstr ""
 
 #: includes/delele-comments-form-functions.php:296
 #: includes/delele-posts-form-functions.php:364
-#: includes/delele-users-form-functions.php:210
+#: includes/delele-users-form-functions.php:211
 msgid "1 Month"
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:297
 #: includes/delele-posts-form-functions.php:365
-#: includes/delele-users-form-functions.php:211
+#: includes/delele-users-form-functions.php:212
 msgid "6 Months"
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:298
 #: includes/delele-posts-form-functions.php:366
-#: includes/delele-users-form-functions.php:212
+#: includes/delele-users-form-functions.php:213
 msgid "1 Year"
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:299
 #: includes/delele-posts-form-functions.php:367
-#: includes/delele-users-form-functions.php:213
+#: includes/delele-users-form-functions.php:214
 msgid "2 Years"
 msgstr ""
 
@@ -565,21 +565,21 @@ msgstr ""
 #: includes/delele-comments-form-functions.php:304
 #: includes/delele-posts-form-functions.php:372
 #: includes/delele-posts-form-functions.php:449
-#: includes/delele-users-form-functions.php:218
+#: includes/delele-users-form-functions.php:219
 msgid "days"
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:307
 #: includes/delele-posts-form-functions.php:375
 #: includes/delele-posts-form-functions.php:452
-#: includes/delele-users-form-functions.php:221
+#: includes/delele-users-form-functions.php:222
 msgid "Start Date"
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:309
 #: includes/delele-posts-form-functions.php:377
 #: includes/delele-posts-form-functions.php:454
-#: includes/delele-users-form-functions.php:223
+#: includes/delele-users-form-functions.php:224
 msgid "End Date"
 msgstr ""
 
@@ -631,7 +631,7 @@ msgstr ""
 
 #: includes/delele-comments-form-functions.php:548
 #: includes/delele-posts-form-functions.php:669
-#: includes/delele-users-form-functions.php:274
+#: includes/delele-users-form-functions.php:275
 msgid "Limit "
 msgstr ""
 
@@ -649,6 +649,9 @@ msgstr ""
 
 #: includes/delele-comments-form-functions.php:610
 #: includes/delele-posts-form-functions.php:1267
+#: includes/delele-users-form-functions.php:351
+#: includes/delele-users-form-functions.php:376
+#: includes/delele-users-form-functions.php:401
 msgid "not equal to ( string )"
 msgstr ""
 
@@ -1041,86 +1044,86 @@ msgstr ""
 msgid "Select the post taxonomy whose terms you want to delete."
 msgstr ""
 
-#: includes/delele-users-form-functions.php:37
+#: includes/delele-users-form-functions.php:40
 msgid "Please select user role or add user meta key and value."
 msgstr ""
 
 #. translators: %d: Number of Users deleted.
-#: includes/delele-users-form-functions.php:71
+#: includes/delele-users-form-functions.php:74
 #, php-format
 msgid "%d User(s) deleted successfully."
 msgstr ""
 
-#: includes/delele-users-form-functions.php:103
+#: includes/delele-users-form-functions.php:106
 msgid "User roles "
 msgstr ""
 
-#: includes/delele-users-form-functions.php:110
+#: includes/delele-users-form-functions.php:113
 msgid "Select the user roles from which you want to delete users."
 msgstr ""
 
 #. translators: %s: Number of Users
-#: includes/delele-users-form-functions.php:127
+#: includes/delele-users-form-functions.php:130
 #, php-format
 msgid "( %s Users )"
 msgstr ""
 
-#: includes/delele-users-form-functions.php:152
+#: includes/delele-users-form-functions.php:155
 msgid "User Meta "
 msgstr ""
 
-#: includes/delele-users-form-functions.php:155
+#: includes/delele-users-form-functions.php:158
 msgid "User Meta Key"
 msgstr ""
 
-#: includes/delele-users-form-functions.php:178
+#: includes/delele-users-form-functions.php:180
 msgid "User Email "
 msgstr ""
 
-#: includes/delele-users-form-functions.php:181
+#: includes/delele-users-form-functions.php:183
 msgid "User Email"
 msgstr ""
 
-#: includes/delele-users-form-functions.php:202
+#: includes/delele-users-form-functions.php:203
 msgid "User Registration Date "
 msgstr ""
 
-#: includes/delele-users-form-functions.php:205
+#: includes/delele-users-form-functions.php:206
 msgid "Delete Users which are"
 msgstr ""
 
-#: includes/delele-users-form-functions.php:208
+#: includes/delele-users-form-functions.php:209
 msgid "registered within last"
 msgstr ""
 
-#: includes/delele-users-form-functions.php:215
+#: includes/delele-users-form-functions.php:216
 msgid "registered between custom"
 msgstr ""
 
 #. translators: %s: Date format (e.g., YYYY-MM-DD).
-#: includes/delele-users-form-functions.php:233
+#: includes/delele-users-form-functions.php:234
 #, php-format
 msgid "Set the reigration date interval for users to delete ( only delete users registered between these dates ) or leave these fields blank to select all users. The dates must be specified in the following format: %s"
 msgstr ""
 
-#: includes/delele-users-form-functions.php:253
+#: includes/delele-users-form-functions.php:254
 msgid "This option will work well with Scheduled Delete, which will help to delete users of the selected option from the scheduled run date."
 msgstr ""
 
-#: includes/delele-users-form-functions.php:284
+#: includes/delele-users-form-functions.php:285
 msgid "Set the limit over user delete. It will delete only the first limited users. This option will help you in case you have lots of users to delete and script timeout."
 msgstr ""
 
-#: includes/delele-users-form-functions.php:304
+#: includes/delele-users-form-functions.php:305
 msgid "Assign deleted user's data to "
 msgstr ""
 
-#: includes/delele-users-form-functions.php:309
-#: includes/delele-users-form-functions.php:313
+#: includes/delele-users-form-functions.php:310
+#: includes/delele-users-form-functions.php:314
 msgid "Select User"
 msgstr ""
 
-#: includes/delele-users-form-functions.php:324
+#: includes/delele-users-form-functions.php:325
 msgid "Select the user to whom you want to assign the deleted user's data."
 msgstr ""
 

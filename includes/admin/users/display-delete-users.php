@@ -94,8 +94,7 @@ function wpbd_delete_users_page(){
 													<div class="wpbd-blur" >
 														<div class="wpbd-blur-filter-option">
 															<?php
-																wpbd_render_form_custom_fields();
-																wpbd_render_form_post_contains();
+																do_action( 'wpbd_delete_users_advance_form' );
 															?>
 														</div>
 													</div>
