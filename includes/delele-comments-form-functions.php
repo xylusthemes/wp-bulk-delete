@@ -16,6 +16,7 @@ add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_status' );
 add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_type' );
 add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_description' );
 add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_users' );
+add_action( 'wpbd_delete_comments_form', 'wpbd_render_form_comment_custom_fields' );
 add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_posts' );
 add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_date_interval' );
 add_action( 'wpbd_delete_comments_form', 'wpdb_render_delete_comments_limit' );
@@ -46,16 +47,11 @@ function xt_delete_comments_form_process( $data ) {
                 $data['delete_entity'] = 'comment';
                 return wpbd_save_scheduled_delete( $data );
             }
-    		
-            $comment_count = wpbulkdelete()->api->do_delete_comments( $data );
-            if( false === $comment_count ){
-                return array(
-                    'status' => 0,
-                    'messages' => array( esc_html__( 'Something went wrong please try again!!', 'wp-bulk-delete' ) ),
-                );
-            }
 
-    		if ( ! empty( $comment_count ) && $comment_count > 0 ) {
+            // Get comment_ids for delete based on user input.
+    		$comment_ids = wpbulkdelete()->api->get_delete_comment_count( $data );
+    		if ( ! empty( $comment_ids ) && count( $comment_ids ) > 0 ) {
+    			$comment_count = wpbulkdelete()->api->do_delete_comments( $comment_ids, $data  ); 
     			return  array(
 	    			'status' => 1,
                     // translators: %d = number of comments deleted
@@ -404,6 +400,75 @@ function wpdb_render_delete_comments_users(){
                     <?php
                 }
             ?>
+        </div>
+    </div>
+    <?php
+}
+
+/**
+ * Render Custom Fields.
+ *
+ * @since 1.0
+ * @return void
+ */
+function wpbd_render_form_comment_custom_fields(){
+    global $wpdb;
+    ?>
+    <div class="wpbd-card" >
+        <div class="header toggles" >
+            <div class="text" >
+                <div class="header-icon" ></div>
+                <div class="header-title" >
+                    <span><?php esc_html_e('Comment Meta Filter ','wp-bulk-delete');  if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } ?></span>
+                </div>
+                <div class="header-extra" ></div>
+            </div>
+            <svg viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg" class="wpbd-caret">
+                <path d="M16.59 8.29492L12 12.8749L7.41 8.29492L6 9.70492L12 15.7049L18 9.70492L16.59 8.29492Z" fill="currentColor"></path>
+            </svg>
+        </div>
+        <div class="content"  aria-expanded="false" style="display:none;" >
+            <?php 
+                if( wpbd_is_pro() && class_exists( 'WP_Bulk_Delete_Pro_Common' ) ){
+                        $wpdb->common_pro->wpbd_render_form_comment_meta_key_value_pro();
+                }else{
+                    ?>
+                        <div class="wpbd-blur-filter" >
+                            <div class="wpbd-blur" >
+                                <div class="wpbd-blur-filter-option">
+                                    <?php
+                                        wpbd_render_form_comment_meta_key_value();
+                                    ?>
+                                </div>
+                            </div>
+                            <div class="wpbd-blur-filter-cta" >
+                                <span style="color: red"><?php echo esc_html_e( 'Available in Pro version.', 'wp-bulk-delete' ); ?> </span><a href="<?php echo esc_url(WPBD_PLUGIN_BUY_NOW_URL); ?>"><?php echo esc_html_e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
+                            </div>
+                        </div>
+                    <?php
+                }
+            ?>
+        </div>
+    </div>
+    <?php
+}
+
+function wpbd_render_form_comment_meta_key_value(){
+    ?>
+    <div class="wpbd-inner-main-section">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php esc_html_e('Comment Meta Key ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
+            <?php esc_html_e( 'Comment Meta Key', 'wp-bulk-delete' ); ?> 
+            <input type="text" id="disabled_sample1" name="disabled_sample1" class="disabled_sample1" disabled="disabled" />
+            <select name="disabled_sample2" disabled="disabled">
+                <option value=""><?php esc_html_e( 'equal to ( string )', 'wp-bulk-delete' ); ?></option>
+            </select>
+            <?php esc_html_e( 'Value', 'wp-bulk-delete' ); ?> 
+            <input type="text" id="disabled_sample3" name="disabled_sample3" class="disabled_sample3" disabled="disabled" />
+            <br />
         </div>
     </div>
     <?php

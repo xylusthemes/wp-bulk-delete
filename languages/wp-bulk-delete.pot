@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-26T11:22:45+00:00\n"
+"POT-Creation-Date: 2026-03-06T07:31:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-bulk-delete\n"
@@ -95,10 +95,11 @@ msgstr ""
 #: includes/admin/posts/display-delete-posts.php:148
 #: includes/admin/users/display-delete-users.php:102
 #: includes/common-functions.php:101
-#: includes/delele-comments-form-functions.php:204
-#: includes/delele-comments-form-functions.php:253
-#: includes/delele-comments-form-functions.php:401
-#: includes/delele-comments-form-functions.php:450
+#: includes/delele-comments-form-functions.php:200
+#: includes/delele-comments-form-functions.php:249
+#: includes/delele-comments-form-functions.php:397
+#: includes/delele-comments-form-functions.php:446
+#: includes/delele-comments-form-functions.php:515
 #: includes/delele-posts-form-functions.php:1020
 #: includes/delele-posts-form-functions.php:1057
 #: includes/delele-posts-form-functions.php:1095
@@ -111,10 +112,11 @@ msgstr ""
 #: includes/admin/posts/display-delete-posts.php:148
 #: includes/admin/users/display-delete-users.php:102
 #: includes/common-functions.php:102
-#: includes/delele-comments-form-functions.php:204
-#: includes/delele-comments-form-functions.php:253
-#: includes/delele-comments-form-functions.php:401
-#: includes/delele-comments-form-functions.php:450
+#: includes/delele-comments-form-functions.php:200
+#: includes/delele-comments-form-functions.php:249
+#: includes/delele-comments-form-functions.php:397
+#: includes/delele-comments-form-functions.php:446
+#: includes/delele-comments-form-functions.php:515
 #: includes/delele-posts-form-functions.php:1020
 #: includes/delele-posts-form-functions.php:1057
 #: includes/delele-posts-form-functions.php:1095
@@ -127,9 +129,9 @@ msgstr ""
 #: includes/ajax-functions.php:27
 #: includes/ajax-functions.php:157
 #: includes/ajax-functions.php:210
-#: includes/ajax-functions.php:276
-#: includes/ajax-functions.php:355
-#: includes/delele-comments-form-functions.php:34
+#: includes/ajax-functions.php:268
+#: includes/ajax-functions.php:347
+#: includes/delele-comments-form-functions.php:35
 #: includes/delele-posts-form-functions.php:48
 #: includes/delele-terms-form-functions.php:29
 #: includes/delele-users-form-functions.php:37
@@ -144,10 +146,10 @@ msgstr ""
 #: includes/admin/cleanup/cleanup-form.php:44
 #: includes/ajax-functions.php:57
 #: includes/ajax-functions.php:186
-#: includes/ajax-functions.php:251
-#: includes/ajax-functions.php:330
-#: includes/ajax-functions.php:396
-#: includes/delele-comments-form-functions.php:79
+#: includes/ajax-functions.php:243
+#: includes/ajax-functions.php:322
+#: includes/ajax-functions.php:388
+#: includes/delele-comments-form-functions.php:75
 #: includes/delele-posts-form-functions.php:90
 #: includes/delele-terms-form-functions.php:36
 #: includes/delele-users-form-functions.php:91
@@ -250,7 +252,7 @@ msgid "Users Filter "
 msgstr ""
 
 #: includes/admin/users/display-delete-users.php:59
-#: includes/delele-comments-form-functions.php:278
+#: includes/delele-comments-form-functions.php:274
 msgid "Date Filter "
 msgstr ""
 
@@ -259,17 +261,17 @@ msgid "Advance Users Filter "
 msgstr ""
 
 #: includes/admin/users/display-delete-users.php:118
-#: includes/delele-comments-form-functions.php:476
+#: includes/delele-comments-form-functions.php:541
 #: includes/delele-posts-form-functions.php:1210
 msgid "Action "
 msgstr ""
 
 #: includes/ajax-functions.php:45
 #: includes/ajax-functions.php:174
-#: includes/ajax-functions.php:239
-#: includes/ajax-functions.php:318
-#: includes/ajax-functions.php:384
-#: includes/delele-comments-form-functions.php:67
+#: includes/ajax-functions.php:231
+#: includes/ajax-functions.php:310
+#: includes/ajax-functions.php:376
+#: includes/delele-comments-form-functions.php:63
 #: includes/delele-posts-form-functions.php:78
 #: includes/delele-terms-form-functions.php:58
 #: includes/delele-users-form-functions.php:79
@@ -277,26 +279,24 @@ msgid "Nothing to delete!!"
 msgstr ""
 
 #: includes/ajax-functions.php:214
-#: includes/delele-comments-form-functions.php:37
+#: includes/delele-comments-form-functions.php:38
 msgid "Please select Comment status for proceed delete operation."
 msgstr ""
 
-#: includes/ajax-functions.php:227
-#: includes/ajax-functions.php:372
-#: includes/delele-comments-form-functions.php:54
-#: includes/delele-terms-form-functions.php:45
-msgid "Something went wrong please try again!!"
-msgstr ""
-
-#: includes/ajax-functions.php:280
-#: includes/ajax-functions.php:285
-#: includes/ajax-functions.php:291
+#: includes/ajax-functions.php:272
+#: includes/ajax-functions.php:277
+#: includes/ajax-functions.php:283
 msgid "Please select all required fields."
 msgstr ""
 
-#: includes/ajax-functions.php:359
+#: includes/ajax-functions.php:351
 #: includes/delele-terms-form-functions.php:32
 msgid "Please select required fields for proceed delete operation."
+msgstr ""
+
+#: includes/ajax-functions.php:364
+#: includes/delele-terms-form-functions.php:45
+msgid "Something went wrong please try again!!"
 msgstr ""
 
 #. translators: %s: Number Of Revisions Cleaned up.
@@ -323,27 +323,27 @@ msgstr ""
 msgid "%s Orphan and Duplicate Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:1323
+#: includes/class-delete-api.php:1270
 msgid "WP Event Aggregator"
 msgstr ""
 
-#: includes/class-delete-api.php:1324
+#: includes/class-delete-api.php:1271
 msgid "Import Social Events"
 msgstr ""
 
-#: includes/class-delete-api.php:1325
+#: includes/class-delete-api.php:1272
 msgid "Import Eventbrite Events"
 msgstr ""
 
-#: includes/class-delete-api.php:1326
+#: includes/class-delete-api.php:1273
 msgid "Import Meetup Events"
 msgstr ""
 
-#: includes/class-delete-api.php:1327
+#: includes/class-delete-api.php:1274
 msgid "Event Schema / Structured Data"
 msgstr ""
 
-#: includes/class-delete-api.php:1328
+#: includes/class-delete-api.php:1275
 msgid "WP Smart Import : Import any XML File to WordPress"
 msgstr ""
 
@@ -466,117 +466,117 @@ msgid "Dashboard"
 msgstr ""
 
 #. translators: %d = number of comments deleted
-#: includes/delele-comments-form-functions.php:62
+#: includes/delele-comments-form-functions.php:58
 #, php-format
 msgid "%d comment(s) deleted successfully."
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:92
+#: includes/delele-comments-form-functions.php:88
 msgid "Pending Comments"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:93
+#: includes/delele-comments-form-functions.php:89
 msgid "Spam Comments"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:94
+#: includes/delele-comments-form-functions.php:90
 msgid "Trash Comments"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:95
+#: includes/delele-comments-form-functions.php:91
 msgid "Approved Comments"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:104
+#: includes/delele-comments-form-functions.php:100
 #: includes/delele-posts-form-functions.php:908
 msgid "Basic Filter "
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:117
+#: includes/delele-comments-form-functions.php:113
 msgid "Comment Status "
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:124
+#: includes/delele-comments-form-functions.php:120
 msgid "Select the comment statuses that you want to delete."
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:151
+#: includes/delele-comments-form-functions.php:147
 #, php-format
 msgid "( %s Comment(s) )"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:180
-#: includes/delele-comments-form-functions.php:588
+#: includes/delele-comments-form-functions.php:176
+#: includes/delele-comments-form-functions.php:653
 msgid "Comment Type "
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:229
-#: includes/delele-comments-form-functions.php:564
+#: includes/delele-comments-form-functions.php:225
+#: includes/delele-comments-form-functions.php:629
 msgid "Comment Description "
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:291
+#: includes/delele-comments-form-functions.php:287
 msgid "Comment Date "
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:295
+#: includes/delele-comments-form-functions.php:291
 msgid "Delete Comments which are"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:297
+#: includes/delele-comments-form-functions.php:293
 #: includes/delele-posts-form-functions.php:361
 #: includes/delele-posts-form-functions.php:444
 #: includes/delele-users-form-functions.php:208
 msgid "older than"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:298
+#: includes/delele-comments-form-functions.php:294
 msgid "submitted within last"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:300
+#: includes/delele-comments-form-functions.php:296
 #: includes/delele-posts-form-functions.php:364
 #: includes/delele-users-form-functions.php:211
 msgid "1 Month"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:301
+#: includes/delele-comments-form-functions.php:297
 #: includes/delele-posts-form-functions.php:365
 #: includes/delele-users-form-functions.php:212
 msgid "6 Months"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:302
+#: includes/delele-comments-form-functions.php:298
 #: includes/delele-posts-form-functions.php:366
 #: includes/delele-users-form-functions.php:213
 msgid "1 Year"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:303
+#: includes/delele-comments-form-functions.php:299
 #: includes/delele-posts-form-functions.php:367
 #: includes/delele-users-form-functions.php:214
 msgid "2 Years"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:305
+#: includes/delele-comments-form-functions.php:301
 msgid "submitted between custom"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:308
+#: includes/delele-comments-form-functions.php:304
 #: includes/delele-posts-form-functions.php:372
 #: includes/delele-posts-form-functions.php:449
 #: includes/delele-users-form-functions.php:219
 msgid "days"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:311
+#: includes/delele-comments-form-functions.php:307
 #: includes/delele-posts-form-functions.php:375
 #: includes/delele-posts-form-functions.php:452
 #: includes/delele-users-form-functions.php:222
 msgid "Start Date"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:313
+#: includes/delele-comments-form-functions.php:309
 #: includes/delele-posts-form-functions.php:377
 #: includes/delele-posts-form-functions.php:454
 #: includes/delele-users-form-functions.php:224
@@ -584,48 +584,35 @@ msgid "End Date"
 msgstr ""
 
 #. translators: %s: date format.
-#: includes/delele-comments-form-functions.php:322
+#: includes/delele-comments-form-functions.php:318
 #, php-format
 msgid "Set the date interval for comments to delete ( only delete comments between these dates ) or leave these fields blank to select all comments. The dates must be specified in the following format: %s"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:343
+#: includes/delele-comments-form-functions.php:339
 msgid "This option will work well with Scheduled Delete, which will help to delete comments of the selected option from the scheduled run date."
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:371
+#: includes/delele-comments-form-functions.php:367
 #: includes/delele-posts-form-functions.php:953
 msgid "Author Filter "
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:426
-msgid "Post Filter "
+#: includes/delele-comments-form-functions.php:422
+msgid "Comment Meta Filter "
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:489
-#: includes/delele-posts-form-functions.php:669
-#: includes/delele-users-form-functions.php:275
-msgid "Limit "
+#: includes/delele-comments-form-functions.php:461
+msgid "Comment Meta Key "
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:500
-msgid "Set the limit over comments delete. It will delete only the first limit comments. This option will help you in case you have lots of comments to delete and script timeout."
+#: includes/delele-comments-form-functions.php:464
+msgid "Comment Meta Key"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:525
-msgid "Comment Author "
-msgstr ""
-
-#: includes/delele-comments-form-functions.php:530
-msgid "Select author"
-msgstr ""
-
-#: includes/delele-comments-form-functions.php:544
-msgid "Comment Author Email "
-msgstr ""
-
-#: includes/delele-comments-form-functions.php:548
-#: includes/delele-comments-form-functions.php:569
+#: includes/delele-comments-form-functions.php:467
+#: includes/delele-comments-form-functions.php:613
+#: includes/delele-comments-form-functions.php:634
 #: includes/delele-posts-form-functions.php:705
 #: includes/delele-posts-form-functions.php:1266
 #: includes/delele-users-form-functions.php:161
@@ -636,7 +623,39 @@ msgstr ""
 msgid "equal to ( string )"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:570
+#: includes/delele-comments-form-functions.php:469
+#: includes/delele-posts-form-functions.php:707
+#: includes/delele-users-form-functions.php:163
+msgid "Value"
+msgstr ""
+
+#: includes/delele-comments-form-functions.php:491
+msgid "Post Filter "
+msgstr ""
+
+#: includes/delele-comments-form-functions.php:554
+#: includes/delele-posts-form-functions.php:669
+#: includes/delele-users-form-functions.php:275
+msgid "Limit "
+msgstr ""
+
+#: includes/delele-comments-form-functions.php:565
+msgid "Set the limit over comments delete. It will delete only the first limit comments. This option will help you in case you have lots of comments to delete and script timeout."
+msgstr ""
+
+#: includes/delele-comments-form-functions.php:590
+msgid "Comment Author "
+msgstr ""
+
+#: includes/delele-comments-form-functions.php:595
+msgid "Select author"
+msgstr ""
+
+#: includes/delele-comments-form-functions.php:609
+msgid "Comment Author Email "
+msgstr ""
+
+#: includes/delele-comments-form-functions.php:635
 #: includes/delele-posts-form-functions.php:1267
 #: includes/delele-users-form-functions.php:351
 #: includes/delele-users-form-functions.php:376
@@ -644,29 +663,29 @@ msgstr ""
 msgid "not equal to ( string )"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:571
+#: includes/delele-comments-form-functions.php:636
 #: includes/delele-users-form-functions.php:352
 #: includes/delele-users-form-functions.php:377
 #: includes/delele-users-form-functions.php:402
 msgid "like ( string )"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:572
+#: includes/delele-comments-form-functions.php:637
 #: includes/delele-users-form-functions.php:353
 #: includes/delele-users-form-functions.php:378
 #: includes/delele-users-form-functions.php:403
 msgid "not like ( string )"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:593
+#: includes/delele-comments-form-functions.php:658
 msgid "Select Comment Type"
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:608
+#: includes/delele-comments-form-functions.php:673
 msgid "Comment Posts "
 msgstr ""
 
-#: includes/delele-comments-form-functions.php:613
+#: includes/delele-comments-form-functions.php:678
 msgid "Select post"
 msgstr ""
 
@@ -879,11 +898,6 @@ msgstr ""
 
 #: includes/delele-posts-form-functions.php:702
 msgid "Custom Fields Key"
-msgstr ""
-
-#: includes/delele-posts-form-functions.php:707
-#: includes/delele-users-form-functions.php:163
-msgid "Value"
 msgstr ""
 
 #: includes/delele-posts-form-functions.php:725

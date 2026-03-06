@@ -217,21 +217,13 @@ function wpbd_delete_comments_count() {
 	    if ( isset( $data['_delete_comments_wpnonce'] ) && wp_verify_nonce( $data['_delete_comments_wpnonce'], 'delete_comments_nonce' ) ) {
 
 	    	if( empty( $error ) ){
+	    		// Get comment_ids for delete based on form data
+		        $comment_ids = wpbulkdelete()->api->get_delete_comment_count( $data );
 	    		
-	    		// Get delete comment count based on form data
-		        $deletecomment_count = wpbulkdelete()->api->get_delete_comment_count( $data );
-	    		
-	    		if( false === $deletecomment_count ){
-	                $return = array(
-	                    'status' => 0,
-	                    'messages' => array( esc_html__( 'Something went wrong please try again!!', 'wp-bulk-delete' ) ),
-	                );
-	            }
-
-	    		if ( $deletecomment_count > 0 ) {
+	    		if ( ! empty( $comment_ids ) && count( $comment_ids ) > 0 ) {
 	    			$return = array(
 		    			'status' => 1,
-		    			'post_count' => $deletecomment_count,
+		    			'post_count' => count( $comment_ids ),
 		    		);
 	            } else {
 	                $return = array(
