@@ -97,10 +97,48 @@ function wpbd_render_delete_terms_taxonomy(){?>
             </div>
         </div>
     </div>
+
+    <!-- Taxonomy Term Meta Filter Section -->
+    <div class="wpbd-inner-main-section term_meta_filter_section" style="display:none;">
+        <div class="wpbd-inner-section-1" >
+            <span class="wpbd-title-text" ><?php esc_html_e('Taxonomy Meta Filter ','wp-bulk-delete'); ?></span>
+        </div>
+        <div class="wpbd-inner-section-2">
+            <?php wpbd_render_term_meta_filter_fields(); ?>
+        </div>
+    </div>
+
     <script>
         jQuery(document).ready(function(){
             jQuery('#delete_post_type').trigger( 'change' );
         });
     </script>
     <?php
+}
+
+/**
+ * Render Term Meta Filter Fields.
+ *
+ * @since 1.2
+ * @return void
+ */
+function wpbd_render_term_meta_filter_fields() {
+    if ( function_exists( 'wpbd_render_term_meta_filter_fields_pro' ) ) {
+        wpbd_render_term_meta_filter_fields_pro();
+    } else {
+        ?>
+        <?php esc_html_e( 'Term Meta Key', 'wp-bulk-delete' ); ?> 
+        <select id="term_meta_key" name="term_meta_key" class="term_meta_key" style="width: 32%;">
+            <option value=""><?php esc_html_e( 'Select Term Meta Key', 'wp-bulk-delete' ); ?></option>
+        </select>
+        <select name="term_meta_compare" class="term_meta_compare">
+            <option value="equal_to_str"><?php esc_html_e( 'equal to ( string )', 'wp-bulk-delete' ); ?></option>
+            <option value="notequal_to_str"><?php esc_html_e( 'not equal to ( string )', 'wp-bulk-delete' ); ?></option>
+            <option value="like_str"><?php esc_html_e( 'like ( string )', 'wp-bulk-delete' ); ?></option>
+            <option value="notlike_str"><?php esc_html_e( 'not like ( string )', 'wp-bulk-delete' ); ?></option>
+        </select>
+        <?php esc_html_e( 'Value', 'wp-bulk-delete' ); ?> 
+        <input type="text" id="term_meta_value" name="term_meta_value" class="term_meta_value" placeholder="<?php esc_attr_e( 'meta value', 'wp-bulk-delete' ); ?>" />
+        <?php
+    }
 }
