@@ -612,7 +612,7 @@ function wpbd_render_delete_comment_author_email(){
             <select name="sample4" disabled="disabled" >
                 <option value=""><?php esc_html_e( 'equal to ( string )', 'wp-bulk-delete' ); ?></option>
             </select>
-            <textarea name="sample5" id="sample5" cols="88" style="height: 30px;" class="wp_comment_email_text" placeholder="You can add multiple emails with comma(,) separator" disabled="disabled" ></textarea><br/>
+            <textarea name="sample5" id="sample5" cols="88" style="height: 40px;" class="wp_comment_email_text" placeholder="You can add multiple emails with comma(,) separator" disabled="disabled" ></textarea><br/>
         </div>
     </div>
     <?php

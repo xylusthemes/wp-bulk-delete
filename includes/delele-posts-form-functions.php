@@ -585,7 +585,7 @@ function wpbd_render_form_post_ids(){
             <span class="wpbd-title-text" ><?php esc_html_e('Post IDs ','wp-bulk-delete'); ?></span>
         </div>
         <div class="wpbd-inner-section-2">
-            <textarea name="" disabled="disabled"  id="" cols="70" style="height: 30px;" class="" placeholder="You can add multiple post IDs with comma(,) separator" ></textarea>
+            <textarea name="" disabled="disabled"  id="" cols="70" style="height: 40px;" class="" placeholder="You can add multiple post IDs with comma(,) separator" ></textarea>
             <?php esc_html_e( 'Then', 'wp-bulk-delete'  ); ?>
             <select name="disabled_sample5" disabled="disabled">
                 <option value=""><?php esc_html_e( 'Delete It.', 'wp-bulk-delete' ); ?> </option>
@@ -1266,7 +1266,7 @@ function wpdb_render_delete_users_postlinks(){
                 <option value=""><?php esc_html_e( 'equal to ( string )', 'wp-bulk-delete' ); ?></option>
                 <option value=""><?php esc_html_e( 'not equal to ( string )', 'wp-bulk-delete' ); ?></option>
             </select>
-            <textarea name="" disabled="disabled"  id="" cols="70" style="height: 30px;" class="" placeholder="You can add multiple post links with comma(,) separator" ></textarea>
+            <textarea name="" disabled="disabled"  id="" cols="70" style="height: 40px;" class="" placeholder="You can add multiple post links with comma(,) separator" ></textarea>
         </div>
     </div>
     <?php
