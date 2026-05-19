@@ -119,7 +119,10 @@
 	            }else{
 	            	terms_space.html( '' );
 	            }	            
-	        });    
+	        });
+
+	        // Load term meta filter section
+	        wpbd_load_term_meta_filter( post_taxomony );
 	    });
 		
 		jQuery(document).on( 'change', '.taxonomy_terms_select', function() {
@@ -130,6 +133,36 @@
 			}
 		});
 	});
+
+	/**
+	 * Load Term Meta Filter section based on selected taxonomy
+	 */
+	function wpbd_load_term_meta_filter( taxonomy ) {
+		var term_meta_space = jQuery('.term_meta_filter_section');
+		var term_meta_dropdown = jQuery('#term_meta_key');
+		
+		if ( taxonomy !== '' ) {
+			var data = {
+				'action': 'render_termmeta_keys_by_taxonomy',
+				'taxonomy': taxonomy
+			};
+			
+			// Show spinner in the dropdown
+			term_meta_dropdown.html('<option value="">Loading...</option>');
+			term_meta_space.show();
+			
+			jQuery.post(ajaxurl, data, function(response) {
+				if( response != '' ) {
+					term_meta_dropdown.html( '<option value="">Select Term Meta Key</option>' + response );
+				} else {
+					term_meta_dropdown.html( '<option value="">No meta keys found</option>' );
+				}
+				term_meta_dropdown.trigger('chosen:updated');
+			});
+		} else {
+			term_meta_space.hide();
+		}
+	}
 
 
 	// Delete users form handle.
@@ -424,6 +457,24 @@
 
 		return true;
 	}
+
+	function toggleInputs() {
+		var userMetaVal    = $('select[name="user_meta_compare"]').val();
+		var customFieldVal = $('select[name="custom_field_compare"]').val();
+		var termMetaVal    = $('select[name="term_meta_compare"]').val();
+		var disable        = ['not_exist', 'is_null', 'is_not_null'];
+
+		if (disable.includes(userMetaVal) || disable.includes(customFieldVal) || disable.includes(termMetaVal)) {
+			$('.user_meta_value, .custom_field_value, .term_meta_value').prop('disabled', true);
+		} else {
+			$('.user_meta_value, .custom_field_value, .term_meta_value').prop('disabled', false);
+		}
+	}
+
+	jQuery(document).ready(function() {
+		$('select[name="user_meta_compare"], select[name="custom_field_compare"], select[name="term_meta_compare"]').on('change', toggleInputs);
+		toggleInputs();
+	});
 
 })( jQuery );
 

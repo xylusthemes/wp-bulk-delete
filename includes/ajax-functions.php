@@ -436,3 +436,49 @@ function wpbd_render_postdropdown_by_posttype() {
 	wp_die();
 }
 add_action( 'wp_ajax_render_postdropdown_by_posttype', 'wpbd_render_postdropdown_by_posttype' );
+
+/**
+ * Render Taxonomy Term Meta Keys based on Taxonomy Selection.
+ *
+ * @since 1.2
+ * @return void
+ */
+function wpbd_render_termmeta_keys_by_taxonomy() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        wp_send_json_error( 'Unauthorized access' );
+        wp_die();
+    }
+
+    // Sanitize input
+    $taxonomy = isset( $_REQUEST['taxonomy'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['taxonomy'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.MissingUnslash, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
+    $meta_keys = array();
+    if ( $taxonomy !== '' && taxonomy_exists( $taxonomy ) ) {
+        global $wpdb;
+        // Get all terms for this taxonomy
+        $terms = get_terms( array(
+            'taxonomy'   => $taxonomy,
+            'hide_empty' => false,
+            'fields'     => 'ids',
+        ) );
+        
+        if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+            // Get distinct meta keys from termmeta table for these terms
+            $term_ids_placeholder = implode( ',', array_fill( 0, count( $terms ), '%d' ) );
+            // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+            $meta_keys = $wpdb->get_col( $wpdb->prepare(
+                "SELECT DISTINCT meta_key FROM {$wpdb->termmeta} WHERE term_id IN ( {$term_ids_placeholder} ) AND meta_key != '' ORDER BY meta_key ASC",
+                ...$terms
+            ) );
+        }
+    }
+
+    if ( ! empty( $meta_keys ) ) {
+        foreach ( $meta_keys as $meta_key ) {
+            echo '<option value="' . esc_attr( $meta_key ) . '">' . esc_html( $meta_key ) . '</option>';
+        }
+    }
+
+    wp_die();
+}
+add_action( 'wp_ajax_render_termmeta_keys_by_taxonomy', 'wpbd_render_termmeta_keys_by_taxonomy' );

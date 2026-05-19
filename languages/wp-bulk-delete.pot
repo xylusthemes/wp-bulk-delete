@@ -323,27 +323,27 @@ msgstr ""
 msgid "%s Orphan and Duplicate Meta Cleaned up"
 msgstr ""
 
-#: includes/class-delete-api.php:1270
+#: includes/class-delete-api.php:1442
 msgid "WP Event Aggregator"
 msgstr ""
 
-#: includes/class-delete-api.php:1271
+#: includes/class-delete-api.php:1443
 msgid "Import Social Events"
 msgstr ""
 
-#: includes/class-delete-api.php:1272
+#: includes/class-delete-api.php:1444
 msgid "Import Eventbrite Events"
 msgstr ""
 
-#: includes/class-delete-api.php:1273
+#: includes/class-delete-api.php:1445
 msgid "Import Meetup Events"
 msgstr ""
 
-#: includes/class-delete-api.php:1274
+#: includes/class-delete-api.php:1446
 msgid "Event Schema / Structured Data"
 msgstr ""
 
-#: includes/class-delete-api.php:1275
+#: includes/class-delete-api.php:1447
 msgid "WP Smart Import : Import any XML File to WordPress"
 msgstr ""
 
@@ -615,6 +615,7 @@ msgstr ""
 #: includes/delele-comments-form-functions.php:634
 #: includes/delele-posts-form-functions.php:705
 #: includes/delele-posts-form-functions.php:1266
+#: includes/delele-terms-form-functions.php:135
 #: includes/delele-users-form-functions.php:161
 #: includes/delele-users-form-functions.php:185
 #: includes/delele-users-form-functions.php:350
@@ -625,6 +626,7 @@ msgstr ""
 
 #: includes/delele-comments-form-functions.php:469
 #: includes/delele-posts-form-functions.php:707
+#: includes/delele-terms-form-functions.php:140
 #: includes/delele-users-form-functions.php:163
 msgid "Value"
 msgstr ""
@@ -657,6 +659,7 @@ msgstr ""
 
 #: includes/delele-comments-form-functions.php:635
 #: includes/delele-posts-form-functions.php:1267
+#: includes/delele-terms-form-functions.php:136
 #: includes/delele-users-form-functions.php:351
 #: includes/delele-users-form-functions.php:376
 #: includes/delele-users-form-functions.php:401
@@ -664,6 +667,7 @@ msgid "not equal to ( string )"
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:636
+#: includes/delele-terms-form-functions.php:137
 #: includes/delele-users-form-functions.php:352
 #: includes/delele-users-form-functions.php:377
 #: includes/delele-users-form-functions.php:402
@@ -671,6 +675,7 @@ msgid "like ( string )"
 msgstr ""
 
 #: includes/delele-comments-form-functions.php:637
+#: includes/delele-terms-form-functions.php:138
 #: includes/delele-users-form-functions.php:353
 #: includes/delele-users-form-functions.php:378
 #: includes/delele-users-form-functions.php:403
@@ -1056,6 +1061,22 @@ msgstr ""
 
 #: includes/delele-terms-form-functions.php:88
 msgid "Select the post taxonomy whose terms you want to delete."
+msgstr ""
+
+#: includes/delele-terms-form-functions.php:104
+msgid "Taxonomy Meta Filter "
+msgstr ""
+
+#: includes/delele-terms-form-functions.php:130
+msgid "Term Meta Key"
+msgstr ""
+
+#: includes/delele-terms-form-functions.php:132
+msgid "Select Term Meta Key"
+msgstr ""
+
+#: includes/delele-terms-form-functions.php:141
+msgid "meta value"
 msgstr ""
 
 #: includes/delele-users-form-functions.php:40

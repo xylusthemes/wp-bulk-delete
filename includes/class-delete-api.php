@@ -450,7 +450,7 @@ class WPBD_Delete_API {
                     }
                     $dtm = number_format_i18n( sizeof( $query7 ) );
                 }
-                $odsum = $dp + $ocm + $oum + $otm + $dpm + $dcm + $dum + $dtm;
+                $odsum = (int)$dp + (int)$ocm + (int)$oum + (int)$otm + (int)$dpm + (int)$dcm + (int)$dum + (int)$dtm;
                 // translators: %s: Number Of Orphan and Duplicate Meta Cleaned up.
                 $message = sprintf( __( '%s Orphan and Duplicate Meta Cleaned up', 'wp-bulk-delete' ), number_format_i18n( $odsum ) );
                 break;
@@ -1135,7 +1135,30 @@ class WPBD_Delete_API {
             return 0; 
         }
 
-        return $numTerms = wp_count_terms( $data['post_taxonomy'] );
+        $term_args = array(
+            'taxonomy'   => $data['post_taxonomy'],
+            'hide_empty' => false,
+        );
+
+        // Apply term meta filter if provided
+        $term_meta_key = isset( $data['term_meta_key'] ) ? esc_sql( $data['term_meta_key'] ) : '';
+        $term_meta_value = isset( $data['term_meta_value'] ) ? esc_sql( $data['term_meta_value'] ) : '';
+        $term_meta_compare = isset( $data['term_meta_compare'] ) ? $data['term_meta_compare'] : 'equal_to_str';
+
+        if ( $term_meta_key != '' && ( $term_meta_value != '' || in_array( $term_meta_compare, array( 'is_null', 'is_not_null', 'not_exist' ), true ) ) ) {
+            $meta_query = $this->get_term_meta_query( $term_meta_key, $term_meta_value, $term_meta_compare );
+            if ( ! empty( $meta_query ) ) {
+                $term_args['meta_query'] = $meta_query;
+            }
+        }
+        
+        $terms = get_terms( $term_args );
+
+        if ( is_wp_error( $terms ) ) {
+            return 0;
+        }
+
+        return count( $terms );
 
     }
 
@@ -1155,13 +1178,162 @@ class WPBD_Delete_API {
                 return $terms_delete_count;
             }
 
-            $terms = get_terms( array( 'taxonomy'   => $data['post_taxonomy'], 'fields' => 'ids', 'hide_empty' => false ) );
-            foreach ( $terms as $value ) {
-               wp_delete_term( $value, $data['post_taxonomy'] );
+            $term_args = array( 
+                'taxonomy'   => $data['post_taxonomy'], 
+                'fields' => 'ids', 
+                'hide_empty' => false 
+            );
+
+            // Apply term meta filter if provided
+            $term_meta_key     = isset( $data['term_meta_key'] ) ? esc_sql( $data['term_meta_key'] ) : '';
+            $term_meta_value   = isset( $data['term_meta_value'] ) ? esc_sql( $data['term_meta_value'] ) : '';
+            $term_meta_compare = isset( $data['term_meta_compare'] ) ? $data['term_meta_compare'] : 'equal_to_str';
+
+            if ( $term_meta_key != '' && ( $term_meta_value != '' || in_array( $term_meta_compare, array( 'is_null', 'is_not_null', 'not_exist' ), true ) ) ) {
+                $meta_query = $this->get_term_meta_query( $term_meta_key, $term_meta_value, $term_meta_compare );
+                if ( ! empty( $meta_query ) ) {
+                    $term_args['meta_query'] = $meta_query;
+                }
             }
-            $terms_delete_count = number_format_i18n( sizeof( $terms ) );
+
+            $terms = get_terms( $term_args );
+            
+            if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
+                foreach ( $terms as $value ) {
+                   wp_delete_term( $value, $data['post_taxonomy'] );
+                }
+                $terms_delete_count = number_format_i18n( sizeof( $terms ) );
+            }
         }
         return $terms_delete_count;
+    }
+
+    /**
+     * Generate meta query for term meta filter.
+     *
+     * @access public
+     * @since 1.2
+     * @param string $meta_key Meta key.
+     * @param string $meta_value Meta value.
+     * @param string $compare Compare operator.
+     * @return array | meta query array.
+     */
+    public function get_term_meta_query( $meta_key, $meta_value, $compare = 'equal_to_str' ){
+        $meta_query = array();
+        
+        if ( empty( $meta_key ) ) {
+            return $meta_query;
+        }
+
+        // Handle special cases where value is not needed
+        if ( in_array( $compare, array( 'is_null', 'is_not_null', 'not_exist' ), true ) ) {
+            switch ( $compare ) {
+                case 'is_null':
+                    $meta_query[] = array(
+                        'key'     => $meta_key,
+                        'value'   => '',
+                        'compare' => '=',
+                    );
+                    break;
+                case 'is_not_null':
+                    $meta_query[] = array(
+                        'key'     => $meta_key,
+                        'value'   => '',
+                        'compare' => '!=',
+                    );
+                    break;
+                case 'not_exist':
+                    $meta_query[] = array(
+                        'key'     => $meta_key,
+                        'compare' => 'NOT EXISTS',
+                    );
+                    break;
+            }
+            return $meta_query;
+        }
+
+        $wp_compare = '=';
+        $type = 'CHAR';
+        
+        switch ( $compare ) {
+            case 'equal_to_str':
+                $wp_compare = '=';
+                $type = 'CHAR';
+                break;
+            case 'notequal_to_str':
+                $wp_compare = '!=';
+                $type = 'CHAR';
+                break;
+            case 'like_str':
+                $wp_compare = 'LIKE';
+                $type = 'CHAR';
+                break;
+            case 'notlike_str':
+                $wp_compare = 'NOT LIKE';
+                $type = 'CHAR';
+                break;
+            case 'equal_to_date':
+                $wp_compare = '=';
+                $type = 'DATE';
+                break;
+            case 'notequal_to_date':
+                $wp_compare = '!=';
+                $type = 'DATE';
+                break;
+            case 'lessthen_date':
+                $wp_compare = '<';
+                $type = 'DATE';
+                break;
+            case 'lessthenequal_date':
+                $wp_compare = '<=';
+                $type = 'DATE';
+                break;
+            case 'greaterthen_date':
+                $wp_compare = '>';
+                $type = 'DATE';
+                break;
+            case 'greaterthenequal_date':
+                $wp_compare = '>=';
+                $type = 'DATE';
+                break;
+            case 'equal_to_number':
+                $wp_compare = '=';
+                $type = 'NUMERIC';
+                break;
+            case 'notequal_to_number':
+                $wp_compare = '!=';
+                $type = 'NUMERIC';
+                break;
+            case 'lessthen_number':
+                $wp_compare = '<';
+                $type = 'NUMERIC';
+                break;
+            case 'lessthenequal_number':
+                $wp_compare = '<=';
+                $type = 'NUMERIC';
+                break;
+            case 'greaterthen_number':
+                $wp_compare = '>';
+                $type = 'NUMERIC';
+                break;
+            case 'greaterthenequal_number':
+                $wp_compare = '>=';
+                $type = 'NUMERIC';
+                break;
+            default:
+                $wp_compare = '=';
+                $type = 'CHAR';
+                break;
+        }
+
+        $meta_query[] = array(
+            'key'     => $meta_key,
+            'value'   => $meta_value,
+            'compare' => $wp_compare,
+            'type'    => $type,
+        );
+
+        return $meta_query;
     }
 
     /**
