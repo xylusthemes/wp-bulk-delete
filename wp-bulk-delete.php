@@ -125,6 +125,7 @@ class WP_Bulk_Delete{
 		require_once WPBD_PLUGIN_DIR . 'includes/class-delete-api.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/common-functions.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/ajax-functions.php';
+		require_once WPBD_PLUGIN_DIR . 'includes/ajax-delete-handler.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/delele-posts-form-functions.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/delele-users-form-functions.php';
 		require_once WPBD_PLUGIN_DIR . 'includes/delele-comments-form-functions.php';

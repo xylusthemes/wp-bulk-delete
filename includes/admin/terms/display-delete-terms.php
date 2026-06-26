@@ -27,7 +27,7 @@ function wpbd_delete_terms_page(){
 			<div id="poststuff">
 				<div id="post-body" class="metabox-holder columns-2">
 					<div id="postbox-container-2" class="postbox-container">
-						<form method="post" id="delete_terms_form">
+						<form method="post" id="delete_terms_form" class="wpbd-delete-form">
 							<div class="wpbd-card" style="margin-top:20px;">
 								<div class="content" >
 									<?php do_action( 'wpbd_delete_terms_form' ); ?>

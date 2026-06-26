@@ -74,7 +74,7 @@ function wpbd_cleanup_form( $type = 'general' ){
         }  
     } 
     ?>
-    <form method="post" id="cleanup">
+    <form method="post" id="cleanup" class="wpbd-delete-form">
         <div class="form-table">
             <div>
                 <?php

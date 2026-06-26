@@ -140,7 +140,9 @@ class WPBD_Delete_API {
                 $query .= " AND $wpdb->posts.post_author IN ( " . implode( ",", $delete_authors ). " )";
             }
 
-            if( is_numeric( $limit_post ) ){
+            if( isset( $data['query_limit'] ) && isset( $data['query_offset'] ) ){
+                $query .= " LIMIT " . absint( $data['query_offset'] ) . ", " . absint( $data['query_limit'] );
+            } elseif( is_numeric( $limit_post ) ){
                 $query .= " LIMIT " . $limit_post;
             }
             // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
@@ -659,7 +661,9 @@ class WPBD_Delete_API {
 
         $query .= " AND $wpdb->users.ID NOT IN ( ".get_current_user_id()." )";
 
-        if( !empty( $limit_user ) ){
+        if( isset( $data['query_limit'] ) && isset( $data['query_offset'] ) ){
+            $query .= " ORDER BY $wpdb->users.ID ASC LIMIT " . absint( $data['query_offset'] ) . ", " . absint( $data['query_limit'] );
+        } elseif( !empty( $limit_user ) ){
             if( is_numeric( $limit_user ) ){
                 $query .= " ORDER BY $wpdb->users.ID ASC LIMIT " . $limit_user;    
             }
@@ -769,7 +773,9 @@ class WPBD_Delete_API {
             if( $delete_end_date != ''){
                 $delete_comment_query .= " AND ( comment_date <= '{$delete_end_date} 23:59:59' )";
             }
-            if( is_numeric( $limit_comment ) ){
+            if( isset( $data['query_limit'] ) && isset( $data['query_offset'] ) ){
+                $delete_comment_query .= " LIMIT " . absint( $data['query_offset'] ) . ", " . absint( $data['query_limit'] );
+            } elseif( is_numeric( $limit_comment ) ){
                 $delete_comment_query .= " LIMIT " . $limit_comment;
             }
             // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
