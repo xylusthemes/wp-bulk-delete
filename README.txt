@@ -5,7 +5,7 @@ Tags: delete, bulk, clean database, bulk delete, bulk clean
 Requires at least: 4.9
 Requires PHP: 5.3
 Tested up to: 7.0 
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,6 +21,7 @@ posts delete, delete all, mass delete, delete posts, delete comments, delete use
 
 ## 💻 Database Cleanup
 * ✅ Delete Auto Drafts, Trash Posts, and Revisions
+* ✅ Advanced Cleanup: Clean up revisions, auto-drafts, and trash for specific separate post types (e.g., custom post types) [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
 * ✅ Delete Orphaned and Duplicate Meta:
    * 🗃️ Post Meta:
         * Orphan Post Meta
@@ -158,6 +159,11 @@ posts delete, delete all, mass delete, delete posts, delete comments, delete use
 10. 🔍 Delete WooCommerce General Filter
 
 == Changelog ==
+
+= 1.4.1 =
+* ADDED: Real-time progress bar for batched deletion operations.
+* ADDED: Cancel Deletion button to stop running operations.
+* ADDED: Advanced Cleanup options allowing cleanup by separate post types (PRO).
 
 = 1.4.0 =
 * ADDED: Delete Term by Meta Fields. ( PRO )
