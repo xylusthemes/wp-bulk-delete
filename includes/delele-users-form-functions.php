@@ -343,7 +343,7 @@ function wpdb_render_delete_users_nicename(){
     ?>
     <div class="wpbd-inner-main-section">
         <div class="wpbd-inner-section-1" >
-            <span class="wpbd-title-text" ><?php _e('User Nicename ','wp-bulk-delete-pro'); ?></span>
+            <span class="wpbd-title-text" ><?php esc_attr_e('User Nicename ','wp-bulk-delete'); ?></span>
         </div>
         <div class="wpbd-inner-section-2">
             <select name="sample_user" disabled="disabled">
@@ -368,7 +368,7 @@ function wpdb_render_delete_users_displayname(){
     ?>
     <div class="wpbd-inner-main-section">
         <div class="wpbd-inner-section-1" >
-            <span class="wpbd-title-text" ><?php _e('User Display Name ','wp-bulk-delete-pro'); ?></span>
+            <span class="wpbd-title-text" ><?php esc_attr_e('User Display Name ','wp-bulk-delete'); ?></span>
         </div>
         <div class="wpbd-inner-section-2">
             <select name="sample_user" disabled="disabled">
@@ -393,7 +393,7 @@ function wpdb_render_delete_users_login(){
     ?>
     <div class="wpbd-inner-main-section">
         <div class="wpbd-inner-section-1" >
-            <span class="wpbd-title-text" ><?php _e('User Login ','wp-bulk-delete-pro'); ?></span>
+            <span class="wpbd-title-text" ><?php esc_attr_e('User Login ','wp-bulk-delete'); ?></span>
         </div>
         <div class="wpbd-inner-section-2">
             <select name="sample_user" disabled="disabled">
