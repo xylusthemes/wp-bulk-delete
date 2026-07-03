@@ -51,6 +51,29 @@ function wpbd_render_meta_cleanup(){
                             </div>
                         </span>
                     </div>
+                    <?php if ( wpbd_is_pro() ) : ?>
+                    <div class="cleanup-advanced-options" id="all_orphan_duplicate_advanced" style="display: none; margin-left: 25px; margin-top: 10px; margin-bottom: 20px;">
+                        <strong><?php esc_html_e( 'Choose Post Types for Metadata Cleanup (Applies to Duplicate Post and Comment Meta):', 'wp-bulk-delete' ); ?></strong>
+                        <span style="font-size: 11px; margin-left: 10px;">
+                            <a href="#" class="cleanup-select-all-pts" data-target="cleanup_meta_post_types"><?php esc_html_e( 'Select All', 'wp-bulk-delete' ); ?></a> | 
+                            <a href="#" class="cleanup-clear-all-pts" data-target="cleanup_meta_post_types"><?php esc_html_e( 'Clear All', 'wp-bulk-delete' ); ?></a>
+                        </span>
+                        <div class="cleanup-post-types-grid" style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                            <?php
+                                $types = wpbd_get_cleanup_post_types();
+                                foreach ( $types as $name => $label ) {
+                                    $input_id = 'cleanup_meta_post_type_' . $name;
+                                    ?>
+                                    <label for="<?php echo esc_attr( $input_id ); ?>" style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-weight: normal; margin: 0;">
+                                        <input type="checkbox" id="<?php echo esc_attr( $input_id ); ?>" name="cleanup_meta_post_types[]" class="cleanup_meta_post_types" value="<?php echo esc_attr( $name ); ?>" checked="checked" />
+                                        <?php echo esc_html( $label ); ?>
+                                    </label>
+                                    <?php
+                                }
+                            ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

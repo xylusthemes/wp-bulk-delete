@@ -27,7 +27,7 @@ function wpbd_delete_comments_page(){
 			<div id="poststuff">
 				<div id="post-body" class="metabox-holder columns-2">
 					<div id="postbox-container-2" class="postbox-container">
-						<form method="post" id="delete_comments_form">
+						<form method="post" id="delete_comments_form" class="wpbd-delete-form">
 							<div class="form-table">
 								<div class="wpbd-post-form-tbody">
 									<?php 

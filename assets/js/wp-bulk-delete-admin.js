@@ -427,10 +427,116 @@
 			svgIcon.toggleClass('rotated');
 		});
 
+		function updateSelectAllState() {
+			var total = jQuery('.cleanup_post_type').length;
+			if (total > 0) {
+				var checked = jQuery('.cleanup_post_type:checked').length;
+				jQuery('#select_all').prop('checked', total === checked);
+			}
+		}
+
 		jQuery('#select_all').change(function() {
             var isChecked = jQuery(this).is(':checked');
-            jQuery('.cleanup_post_type').prop('checked', isChecked);
+            jQuery('.cleanup_post_type').each(function() {
+                if (jQuery(this).prop('checked') !== isChecked) {
+                    jQuery(this).prop('checked', isChecked).trigger('change');
+                }
+            });
+            jQuery('.cleanup_revision_post_types, .cleanup_trash_post_types, .cleanup_auto_drafts_post_types, .cleanup_meta_post_types').prop('checked', isChecked);
         });
+
+        jQuery(document).on('click', '.cleanup-select-all-pts', function(e) {
+            e.preventDefault();
+            var targetClass = jQuery(this).data('target');
+            jQuery('.' + targetClass).prop('checked', true);
+        });
+
+        jQuery(document).on('click', '.cleanup-clear-all-pts', function(e) {
+            e.preventDefault();
+            var targetClass = jQuery(this).data('target');
+            jQuery('.' + targetClass).prop('checked', false);
+        });
+
+		jQuery('.cleanup_post_type').change(function() {
+			var isChecked = jQuery(this).is(':checked');
+			var val = jQuery(this).val();
+			var targetId;
+			if (val === 'all_orphan_duplicate') {
+				targetId = '#all_orphan_duplicate_advanced';
+			} else {
+				targetId = '#cleanup_' + val + '_advanced';
+			}
+			if (isChecked) {
+				jQuery(targetId).slideDown();
+			} else {
+				jQuery(targetId).slideUp();
+			}
+			updateSelectAllState();
+		});
+
+		// Run initially on load to set correct state
+		updateSelectAllState();
+
+		// Fetch post type counts for cleanup advanced options on page load
+		if ( jQuery('.cleanup-advanced-options').length ) {
+			jQuery.ajax({
+				url: ajaxurl,
+				type: 'POST',
+				data: {
+					action: 'wpbd_get_cleanup_post_type_counts'
+				},
+				success: function(response) {
+					if ( response.success ) {
+						var counts = response.data;
+
+						// 1. Revisions
+						jQuery('.cleanup_revision_post_types').each(function() {
+							var $input = jQuery(this);
+							var postType = $input.val();
+							var count = counts.revision[postType] || 0;
+							$input.parent().append(' <span class="cleanup-pt-count" style="color: #666; font-size: 11px;">(' + count + ')</span>');
+						});
+
+						// 2. Trash
+						jQuery('.cleanup_trash_post_types').each(function() {
+							var $input = jQuery(this);
+							var postType = $input.val();
+							var count = counts.trash[postType] || 0;
+							$input.parent().append(' <span class="cleanup-pt-count" style="color: #666; font-size: 11px;">(' + count + ')</span>');
+						});
+
+						// 3. Auto drafts
+						jQuery('.cleanup_auto_drafts_post_types').each(function() {
+							var $input = jQuery(this);
+							var postType = $input.val();
+							var count = counts.auto_drafts[postType] || 0;
+							$input.parent().append(' <span class="cleanup-pt-count" style="color: #666; font-size: 11px;">(' + count + ')</span>');
+						});
+
+						// 4. Metadata cleanup
+						jQuery('.cleanup_meta_post_types').each(function() {
+							var $input = jQuery(this);
+							var postType = $input.val();
+							var count = counts.meta[postType] || 0;
+							$input.parent().append(' <span class="cleanup-pt-count" style="color: #666; font-size: 11px;">(' + count + ')</span>');
+						});
+					}
+				}
+			});
+		}
+
+		jQuery('#run_post_cleanup_submit').on('click', function() {
+			// Validate that at least one cleanup type is selected
+			var checkedTypes = jQuery('.cleanup_post_type:checked');
+			if (checkedTypes.length === 0) {
+				jQuery('.cleanup_delete_notice').html('<div class="notice wpbd-notice notice-error is-dismissible"><p><strong>Please select at least one cleanup type to proceed.</strong></p></div>');
+				jQuery('html, body').animate({ scrollTop: jQuery('.cleanup_delete_notice').offset().top - 80 }, 500);
+				return;
+			}
+			// Trigger form submit — wpbd-progress.js will intercept this
+			// and handle via AJAX batched deletion with progress bar
+			jQuery("#cleanup").submit();
+		});
 	});
 
 	function validateSchedule(formId) {

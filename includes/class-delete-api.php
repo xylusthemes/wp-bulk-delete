@@ -140,7 +140,9 @@ class WPBD_Delete_API {
                 $query .= " AND $wpdb->posts.post_author IN ( " . implode( ",", $delete_authors ). " )";
             }
 
-            if( is_numeric( $limit_post ) ){
+            if( isset( $data['query_limit'] ) && isset( $data['query_offset'] ) ){
+                $query .= " LIMIT " . absint( $data['query_offset'] ) . ", " . absint( $data['query_limit'] );
+            } elseif( is_numeric( $limit_post ) ){
                 $query .= " LIMIT " . $limit_post;
             }
             // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
@@ -291,15 +293,28 @@ class WPBD_Delete_API {
      * @param array $cleanuptype Cleanup type.
      * @return string | message.
      */
-    public function run_cleanup( $cleanuptype = '' ){
+    public function run_cleanup( $cleanuptype = '', $data = array() ){
         global $wpdb;
         $message = '';
 
         switch( $cleanuptype ) {
             case 'revision':
                 // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
-                $posts = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = %s", 'revision' ) );
+                $post_types = isset( $data['cleanup_revision_post_types'] ) ? $data['cleanup_revision_post_types'] : array();
+                if( ! empty( $post_types ) ) {
+                    $post_types_placeholder = implode( ',', array_fill( 0, count( $post_types ), '%s' ) );
+                    $posts = $wpdb->get_col( $wpdb->prepare( "SELECT r.ID FROM $wpdb->posts r INNER JOIN $wpdb->posts p ON r.post_parent = p.ID WHERE r.post_type = 'revision' AND p.post_type IN ($post_types_placeholder) ORDER BY r.ID ASC", ...$post_types ) );
+                } else {
+                    if ( wpbd_is_pro() ) {
+                        $posts = array();
+                    } else {
+                        $posts = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type = %s ORDER BY ID ASC", 'revision' ) );
+                    }
+                }
                 if( $posts ) {
+                    if ( ! empty( $data['limit_post'] ) ) {
+                        $posts = array_slice( $posts, 0, absint( $data['limit_post'] ) );
+                    }
                     foreach ( $posts as $id ) {
                         wp_delete_post_revision( intval( $id ) );
                     }
@@ -310,8 +325,21 @@ class WPBD_Delete_API {
                 break;
             case 'auto_drafts':
                 // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
-                $posts = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_status = %s", 'auto-draft' ) );
+                $post_types = isset( $data['cleanup_auto_drafts_post_types'] ) ? $data['cleanup_auto_drafts_post_types'] : array();
+                if( ! empty( $post_types ) ) {
+                    $post_types_placeholder = implode( ',', array_fill( 0, count( $post_types ), '%s' ) );
+                    $posts = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_status = 'auto-draft' AND post_type IN ($post_types_placeholder) ORDER BY ID ASC", ...$post_types ) );
+                } else {
+                    if ( wpbd_is_pro() ) {
+                        $posts = array();
+                    } else {
+                        $posts = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_status = %s ORDER BY ID ASC", 'auto-draft' ) );
+                    }
+                }
                 if( $posts ) {
+                    if ( ! empty( $data['limit_post'] ) ) {
+                        $posts = array_slice( $posts, 0, absint( $data['limit_post'] ) );
+                    }
                     foreach ( $posts as $id ) {
                         wp_delete_post( intval( $id ), true );
                     }
@@ -322,8 +350,21 @@ class WPBD_Delete_API {
                 break;
             case 'trash':
                 // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
-                $posts = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_status = %s", 'trash' ) );
+                $post_types = isset( $data['cleanup_trash_post_types'] ) ? $data['cleanup_trash_post_types'] : array();
+                if( ! empty( $post_types ) ) {
+                    $post_types_placeholder = implode( ',', array_fill( 0, count( $post_types ), '%s' ) );
+                    $posts = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_status = 'trash' AND post_type IN ($post_types_placeholder) ORDER BY ID ASC", ...$post_types ) );
+                } else {
+                    if ( wpbd_is_pro() ) {
+                        $posts = array();
+                    } else {
+                        $posts = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_status = %s ORDER BY ID ASC", 'trash' ) );
+                    }
+                }
                 if( $posts ) {
+                    if ( ! empty( $data['limit_post'] ) ) {
+                        $posts = array_slice( $posts, 0, absint( $data['limit_post'] ) );
+                    }
                     foreach ( $posts as $id ) {
                         wp_delete_post( $id, true );
                     }
@@ -401,7 +442,13 @@ class WPBD_Delete_API {
             
                 //Duplicate Post Meta
                 // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
-                $query5 = $wpdb->get_results( $wpdb->prepare( "SELECT GROUP_CONCAT(meta_id ORDER BY meta_id DESC) AS ids, post_id, COUNT(*) AS count FROM $wpdb->postmeta GROUP BY post_id, meta_key, meta_value HAVING count > %d", 1 ) );
+                $post_types = isset( $data['cleanup_meta_post_types'] ) ? $data['cleanup_meta_post_types'] : array();
+                if( ! empty( $post_types ) ) {
+                    $post_types_placeholder = implode( ',', array_fill( 0, count( $post_types ), '%s' ) );
+                    $query5 = $wpdb->get_results( $wpdb->prepare( "SELECT GROUP_CONCAT(pm.meta_id ORDER BY pm.meta_id DESC) AS ids, pm.post_id, COUNT(*) AS count FROM $wpdb->postmeta pm INNER JOIN $wpdb->posts p ON pm.post_id = p.ID WHERE p.post_type IN ($post_types_placeholder) GROUP BY pm.post_id, pm.meta_key, pm.meta_value HAVING count > 1", ...$post_types ) );
+                } else {
+                    $query5 = $wpdb->get_results( $wpdb->prepare( "SELECT GROUP_CONCAT(meta_id ORDER BY meta_id DESC) AS ids, post_id, COUNT(*) AS count FROM $wpdb->postmeta GROUP BY post_id, meta_key, meta_value HAVING count > %d", 1 ) );
+                }
                 if( $query5 ) {
                     foreach ( $query5 as $meta ) {
                         $ids = array_map( 'intval', explode( ',', $meta->ids ) );
@@ -414,7 +461,12 @@ class WPBD_Delete_API {
 
                 //Duplicate Comment Meta
                 // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
-                $query6 = $wpdb->get_results( $wpdb->prepare( "SELECT GROUP_CONCAT(meta_id ORDER BY meta_id DESC) AS ids, comment_id, COUNT(*) AS count FROM $wpdb->commentmeta GROUP BY comment_id, meta_key, meta_value HAVING count > %d", 1 ) );
+                if( ! empty( $post_types ) ) {
+                    $post_types_placeholder = implode( ',', array_fill( 0, count( $post_types ), '%s' ) );
+                    $query6 = $wpdb->get_results( $wpdb->prepare( "SELECT GROUP_CONCAT(cm.meta_id ORDER BY cm.meta_id DESC) AS ids, cm.comment_id, COUNT(*) AS count FROM $wpdb->commentmeta cm INNER JOIN $wpdb->comments c ON cm.comment_id = c.comment_ID INNER JOIN $wpdb->posts p ON c.comment_post_ID = p.ID WHERE p.post_type IN ($post_types_placeholder) GROUP BY cm.comment_id, cm.meta_key, cm.meta_value HAVING count > 1", ...$post_types ) );
+                } else {
+                    $query6 = $wpdb->get_results( $wpdb->prepare( "SELECT GROUP_CONCAT(meta_id ORDER BY meta_id DESC) AS ids, comment_id, COUNT(*) AS count FROM $wpdb->commentmeta GROUP BY comment_id, meta_key, meta_value HAVING count > %d", 1 ) );
+                }
                 if( $query6 ) {
                     foreach ( $query6 as $meta ) {
                         $ids = array_map( 'intval', explode( ',', $meta->ids ) );
@@ -448,7 +500,7 @@ class WPBD_Delete_API {
                         // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
                         $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->termmeta WHERE meta_id IN (" . implode( ',', $ids ) . ") AND term_id = %d", intval( $meta->term_id ) ) );
                     }
-                    $dtm = number_format_i18n( sizeof( $query7 ) );
+                    $dtm = number_format_i18n( sizeof( $query8 ) );
                 }
                 $odsum = (int)$dp + (int)$ocm + (int)$oum + (int)$otm + (int)$dpm + (int)$dcm + (int)$dum + (int)$dtm;
                 // translators: %s: Number Of Orphan and Duplicate Meta Cleaned up.
@@ -659,7 +711,9 @@ class WPBD_Delete_API {
 
         $query .= " AND $wpdb->users.ID NOT IN ( ".get_current_user_id()." )";
 
-        if( !empty( $limit_user ) ){
+        if( isset( $data['query_limit'] ) && isset( $data['query_offset'] ) ){
+            $query .= " ORDER BY $wpdb->users.ID ASC LIMIT " . absint( $data['query_offset'] ) . ", " . absint( $data['query_limit'] );
+        } elseif( !empty( $limit_user ) ){
             if( is_numeric( $limit_user ) ){
                 $query .= " ORDER BY $wpdb->users.ID ASC LIMIT " . $limit_user;    
             }
@@ -769,7 +823,9 @@ class WPBD_Delete_API {
             if( $delete_end_date != ''){
                 $delete_comment_query .= " AND ( comment_date <= '{$delete_end_date} 23:59:59' )";
             }
-            if( is_numeric( $limit_comment ) ){
+            if( isset( $data['query_limit'] ) && isset( $data['query_offset'] ) ){
+                $delete_comment_query .= " LIMIT " . absint( $data['query_offset'] ) . ", " . absint( $data['query_limit'] );
+            } elseif( is_numeric( $limit_comment ) ){
                 $delete_comment_query .= " LIMIT " . $limit_comment;
             }
             // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange

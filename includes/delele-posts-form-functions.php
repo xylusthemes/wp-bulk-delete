@@ -748,7 +748,30 @@ function wpbd_render_form_duplicate_posts(){
  * @since 1.0
  * @return void
  */
+/**
+ * Helper to get post types for cleanup advanced options.
+ *
+ * @since 1.5.0
+ * @return array Array of post types.
+ */
+function wpbd_get_cleanup_post_types() {
+    global $wp_post_types;
+    $ingnore_types = array( 'attachment', 'revision', 'nav_menu_item', 'custom_css', 'customize_changeset', 'oembed_cache', 'user_request', 'wp_block', 'wp_template', 'wp_template_part', 'wp_global_styles', 'wp_navigation', 'wpbd_scheduled', 'wp_font_face', 'wp_font_family', 'shop_order_refund', 'shop_order_placehold', 'shop_order', 'shop_order_lagecy' );
+    $types = array();
+    if( !empty( $wp_post_types ) ){
+        foreach( $wp_post_types as $key_type => $post_type ){
+            if( in_array( $key_type, $ingnore_types ) ){
+                continue;
+            }else{
+                $types[$key_type] = $post_type->labels->name;
+            }
+        }
+    }
+    return $types;
+}
+
 function wpbd_render_post_cleanup(){
+    $types = wpbd_get_cleanup_post_types();
     ?>
     <div class="wpbd-post-form-tbody">
         <div class="wpbd-card" >
@@ -777,25 +800,91 @@ function wpbd_render_post_cleanup(){
                     </div>
                     <div class="wpbd-inner-section-2">
                         <div class="cleanups_section" >
-                            <label for="cleanup_post_type">
+                            <label for="cleanup_revision">
                                 <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_revision" type="checkbox" value="revision" >
                                 <?php printf( esc_attr__( 'Revisions (%d Revisions)', 'wp-bulk-delete' ), esc_attr__( wpbulkdelete()->api->get_post_count('revision'), 'wp-bulk-delete' ) ); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment, WordPress.WP.I18n.NonSingularStringLiteralText ?>
                             </label>
                         </div>
+                        <?php if ( wpbd_is_pro() ) : ?>
+                        <div class="cleanup-advanced-options" id="cleanup_revision_advanced" style="display: none; margin-left: 25px; margin-top: 10px; margin-bottom: 20px;">
+                            <strong><?php esc_html_e( 'Choose Post Types for Revisions:', 'wp-bulk-delete' ); ?></strong>
+                            <span style="font-size: 11px; margin-left: 10px;">
+                                <a href="#" class="cleanup-select-all-pts" data-target="cleanup_revision_post_types"><?php esc_html_e( 'Select All', 'wp-bulk-delete' ); ?></a> | 
+                                <a href="#" class="cleanup-clear-all-pts" data-target="cleanup_revision_post_types"><?php esc_html_e( 'Clear All', 'wp-bulk-delete' ); ?></a>
+                            </span>
+                            <div class="cleanup-post-types-grid" style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                                <?php
+                                    foreach ( $types as $name => $label ) {
+                                        $input_id = 'cleanup_revision_post_type_' . $name;
+                                        ?>
+                                        <label for="<?php echo esc_attr( $input_id ); ?>" style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-weight: normal; margin: 0;">
+                                            <input type="checkbox" id="<?php echo esc_attr( $input_id ); ?>" name="cleanup_revision_post_types[]" class="cleanup_revision_post_types" value="<?php echo esc_attr( $name ); ?>" checked="checked" />
+                                            <?php echo esc_html( $label ); ?>
+                                        </label>
+                                        <?php
+                                    }
+                                ?>
+                            </div>
+                        </div>
+                        <?php endif; ?>
 
                         <div class="cleanups_section" >
-                            <label for="cleanup_post_type">
+                            <label for="cleanup_trash">
                                 <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_trash" type="checkbox" value="trash" >
                                 <?php printf( esc_attr__( 'Trash (Deleted Posts) (%d Trash)', 'wp-bulk-delete' ),  esc_attr__( wpbulkdelete()->api->get_post_count('trash'), 'wp-bulk-delete' ) ); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment, WordPress.WP.I18n.NonSingularStringLiteralText ?>
                             </label>
                         </div>
+                        <?php if ( wpbd_is_pro() ) : ?>
+                        <div class="cleanup-advanced-options" id="cleanup_trash_advanced" style="display: none; margin-left: 25px; margin-top: 10px; margin-bottom: 20px;">
+                            <strong><?php esc_html_e( 'Choose Post Types for Trash:', 'wp-bulk-delete' ); ?></strong>
+                            <span style="font-size: 11px; margin-left: 10px;">
+                                <a href="#" class="cleanup-select-all-pts" data-target="cleanup_trash_post_types"><?php esc_html_e( 'Select All', 'wp-bulk-delete' ); ?></a> | 
+                                <a href="#" class="cleanup-clear-all-pts" data-target="cleanup_trash_post_types"><?php esc_html_e( 'Clear All', 'wp-bulk-delete' ); ?></a>
+                            </span>
+                            <div class="cleanup-post-types-grid" style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                                <?php
+                                    foreach ( $types as $name => $label ) {
+                                        $input_id = 'cleanup_trash_post_type_' . $name;
+                                        ?>
+                                        <label for="<?php echo esc_attr( $input_id ); ?>" style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-weight: normal; margin: 0;">
+                                            <input type="checkbox" id="<?php echo esc_attr( $input_id ); ?>" name="cleanup_trash_post_types[]" class="cleanup_trash_post_types" value="<?php echo esc_attr( $name ); ?>" checked="checked" />
+                                            <?php echo esc_html( $label ); ?>
+                                        </label>
+                                        <?php
+                                    }
+                                ?>
+                            </div>
+                        </div>
+                        <?php endif; ?>
 
                         <div class="cleanups_section" >
-                            <label for="cleanup_post_type">
-                                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_revision" type="checkbox" value="auto_drafts" >
+                            <label for="cleanup_auto_drafts">
+                                <input name="cleanup_post_type[]" class="cleanup_post_type" id="cleanup_auto_drafts" type="checkbox" value="auto_drafts" >
                                 <?php printf( esc_attr__( 'Auto Drafts (%d Auto Drafts)', 'wp-bulk-delete' ),  esc_attr__( wpbulkdelete()->api->get_post_count('auto_drafts'), 'wp-bulk-delete' ) ); // phpcs:ignore WordPress.WP.I18n.MissingTranslatorsComment, WordPress.WP.I18n.NonSingularStringLiteralText ?>
                             </label>
                         </div>
+                        <?php if ( wpbd_is_pro() ) : ?>
+                        <div class="cleanup-advanced-options" id="cleanup_auto_drafts_advanced" style="display: none; margin-left: 25px; margin-top: 10px; margin-bottom: 20px;">
+                            <strong><?php esc_html_e( 'Choose Post Types for Auto Drafts:', 'wp-bulk-delete' ); ?></strong>
+                            <span style="font-size: 11px; margin-left: 10px;">
+                                <a href="#" class="cleanup-select-all-pts" data-target="cleanup_auto_drafts_post_types"><?php esc_html_e( 'Select All', 'wp-bulk-delete' ); ?></a> | 
+                                <a href="#" class="cleanup-clear-all-pts" data-target="cleanup_auto_drafts_post_types"><?php esc_html_e( 'Clear All', 'wp-bulk-delete' ); ?></a>
+                            </span>
+                            <div class="cleanup-post-types-grid" style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                                <?php
+                                    foreach ( $types as $name => $label ) {
+                                        $input_id = 'cleanup_auto_drafts_post_type_' . $name;
+                                        ?>
+                                        <label for="<?php echo esc_attr( $input_id ); ?>" style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-weight: normal; margin: 0;">
+                                            <input type="checkbox" id="<?php echo esc_attr( $input_id ); ?>" name="cleanup_auto_drafts_post_types[]" class="cleanup_auto_drafts_post_types" value="<?php echo esc_attr( $name ); ?>" checked="checked" />
+                                            <?php echo esc_html( $label ); ?>
+                                        </label>
+                                        <?php
+                                    }
+                                ?>
+                            </div>
+                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
