@@ -482,3 +482,119 @@ function wpbd_render_termmeta_keys_by_taxonomy() {
     wp_die();
 }
 add_action( 'wp_ajax_render_termmeta_keys_by_taxonomy', 'wpbd_render_termmeta_keys_by_taxonomy' );
+
+
+/**
+ * Get counts for each post type under Cleanup options.
+ *
+ * @since 1.5.0
+ * @return void
+ */
+function wpbd_ajax_get_cleanup_post_type_counts() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        wp_send_json_error( 'Unauthorized' );
+        wp_die();
+    }
+
+    global $wpdb;
+    $counts = array(
+        'revision'    => array(),
+        'trash'       => array(),
+        'auto_drafts' => array(),
+        'meta'        => array(),
+    );
+
+    // 1. Revision counts
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+    $revisions_query = $wpdb->get_results(
+        "SELECT p.post_type, COUNT(r.ID) as cnt 
+        FROM {$wpdb->posts} r 
+        INNER JOIN {$wpdb->posts} p ON r.post_parent = p.ID 
+        WHERE r.post_type = 'revision' 
+        GROUP BY p.post_type"
+    );
+    if ( $revisions_query ) {
+        foreach ( $revisions_query as $row ) {
+            $counts['revision'][ $row->post_type ] = intval( $row->cnt );
+        }
+    }
+
+    // 2. Trash counts
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+    $trash_query = $wpdb->get_results(
+        "SELECT post_type, COUNT(ID) as cnt 
+        FROM {$wpdb->posts} 
+        WHERE post_status = 'trash' 
+        GROUP BY post_type"
+    );
+    if ( $trash_query ) {
+        foreach ( $trash_query as $row ) {
+            $counts['trash'][ $row->post_type ] = intval( $row->cnt );
+        }
+    }
+
+    // 3. Auto drafts counts
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+    $auto_drafts_query = $wpdb->get_results(
+        "SELECT post_type, COUNT(ID) as cnt 
+        FROM {$wpdb->posts} 
+        WHERE post_status = 'auto-draft' 
+        GROUP BY post_type"
+    );
+    if ( $auto_drafts_query ) {
+        foreach ( $auto_drafts_query as $row ) {
+            $counts['auto_drafts'][ $row->post_type ] = intval( $row->cnt );
+        }
+    }
+
+    // 4. Duplicate post metadata count
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+    $dup_postmeta_query = $wpdb->get_results(
+        "SELECT p.post_type, SUM(pm_count.cnt - 1) as cnt
+        FROM (
+            SELECT post_id, COUNT(*) as cnt 
+            FROM {$wpdb->postmeta} 
+            GROUP BY post_id, meta_key, meta_value 
+            HAVING cnt > 1
+        ) pm_count
+        INNER JOIN {$wpdb->posts} p ON pm_count.post_id = p.ID
+        GROUP BY p.post_type"
+    );
+    if ( $dup_postmeta_query ) {
+        foreach ( $dup_postmeta_query as $row ) {
+            $post_type = $row->post_type;
+            if ( ! isset( $counts['meta'][ $post_type ] ) ) {
+                $counts['meta'][ $post_type ] = 0;
+            }
+            $counts['meta'][ $post_type ] += intval( $row->cnt );
+        }
+    }
+
+    // 5. Duplicate comment metadata count
+    // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+    $dup_commmeta_query = $wpdb->get_results(
+        "SELECT p.post_type, SUM(cm_count.cnt - 1) as cnt
+        FROM (
+            SELECT comment_id, COUNT(*) as cnt 
+            FROM {$wpdb->commentmeta} 
+            GROUP BY comment_id, meta_key, meta_value 
+            HAVING cnt > 1
+        ) cm_count
+        INNER JOIN {$wpdb->comments} c ON cm_count.comment_id = c.comment_ID
+        INNER JOIN {$wpdb->posts} p ON c.comment_post_ID = p.ID
+        GROUP BY p.post_type"
+    );
+    if ( $dup_commmeta_query ) {
+        foreach ( $dup_commmeta_query as $row ) {
+            $post_type = $row->post_type;
+            if ( ! isset( $counts['meta'][ $post_type ] ) ) {
+                $counts['meta'][ $post_type ] = 0;
+            }
+            $counts['meta'][ $post_type ] += intval( $row->cnt );
+        }
+    }
+
+    wp_send_json_success( $counts );
+    wp_die();
+}
+add_action( 'wp_ajax_wpbd_get_cleanup_post_type_counts', 'wpbd_ajax_get_cleanup_post_type_counts' );

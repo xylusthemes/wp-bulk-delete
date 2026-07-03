@@ -69,6 +69,24 @@
 			'box-shadow: 0 2px 6px rgba(214,54,56,0.25) !important;' +
 		'}' +
 
+		'.wpbd-cancel-btn {' +
+			'background: #d63638;' +
+			'color: #fff;' +
+			'border: none;' +
+			'border-radius: 4px;' +
+			'padding: 6px 14px;' +
+			'font-size: 11px;' +
+			'font-weight: 600;' +
+			'cursor: pointer;' +
+			'transition: background 0.2s ease;' +
+			'margin-left: auto;' +
+			'line-height: 1.2;' +
+		'}' +
+
+		'.wpbd-cancel-btn:hover {' +
+			'background: #b32124;' +
+		'}' +
+
 		'.wpbd-pn-title {' +
 			'font-size: 14px;' +
 			'font-weight: 600;' +
@@ -189,6 +207,9 @@
 
 		injectStyles();
 
+		var activeXHR = null;
+		var isCancelled = false;
+
 		// Intercept the final form submission for any form with .wpbd-delete-form class
 		$(document).on('submit', '.wpbd-delete-form', function(e) {
 
@@ -203,11 +224,14 @@
 			var $form = $(this);
 			var formData = $form.serialize();
 
+			isCancelled = false;
+			activeXHR = null;
+
 			// Inject progress UI
 			showProgressUI($form);
 
 			// Start the batch deletion
-			runBatchDelete(formData, 0);
+			runBatchDelete($form, formData, 0);
 		});
 
 		function showProgressUI($form) {
@@ -223,6 +247,7 @@
 						'<div class="wpbd-pn-header">' +
 							'<div class="wpbd-pn-icon">' + deleteIcon() + '</div>' +
 							'<div class="wpbd-pn-title">Deleting items <span>&hellip;</span></div>' +
+							'<button type="button" class="wpbd-cancel-btn">Cancel Deletion</button>' +
 						'</div>' +
 						'<div class="wpbd-pn-bar-outer">' +
 							'<div class="wpbd-pn-bar-inner" style="width: 0%;"></div>' +
@@ -235,9 +260,15 @@
 					'</div>' +
 				'</div>';
 
-			// Append progress UI below the notice area or above the form
-			if ($('.delete_notice').length) {
-				$('.delete_notice').html(progressHTML);
+			// Find the best container for the progress bar:
+			// 1. A sibling .delete_notice right before the form (cleanup-specific)
+			// 2. The page-level .delete_notice
+			// 3. Prepend inside the form
+			var $noticeContainer = $form.prev('.delete_notice');
+			if ($noticeContainer.length) {
+				$noticeContainer.html(progressHTML);
+			} else if ($('.delete_notice').length) {
+				$('.delete_notice').first().html(progressHTML);
 			} else {
 				$form.prepend(progressHTML);
 			}
@@ -264,6 +295,9 @@
 
 		function finishProgressUI(deleted, total, isError, errorMessage) {
 			$('.wpbd-delete-form').find('.wpbd_button, input[type="submit"]').prop('disabled', false);
+
+			// Remove cancel button
+			$('.wpbd-cancel-btn').remove();
 
 			if (isError) {
 				$('.wpbd-progress-notice').addClass('wpbd-pn-error');
@@ -294,7 +328,11 @@
 			}
 		}
 
-		function runBatchDelete(formData, offset) {
+		function runBatchDelete($form, formData, offset) {
+			if (isCancelled) {
+				return;
+			}
+
 			var ajaxData = {
 				action: 'wpbd_run_delete',
 				nonce: wpbdProgressData.nonce,
@@ -303,9 +341,28 @@
 				wpbd_args: formData
 			};
 
-			$.post(wpbdProgressData.ajaxurl, ajaxData, function(response) {
+			activeXHR = $.post(wpbdProgressData.ajaxurl, ajaxData, function(response) {
+				if (isCancelled) {
+					return;
+				}
 				if (response.success) {
 					var data = response.data;
+					
+					if (offset === 0 && data.total === 0) {
+						// Enable submit button
+						$form.find('.wpbd_button, input[type="submit"]').prop('disabled', false);
+						// Remove progress bar
+						$('.wpbd-progress-notice').remove();
+						// Show notice
+						var noticeHTML = '<div class="notice wpbd-notice notice-success is-dismissible"><p><strong>Nothing to delete!!</strong></p></div>';
+						if ($('.delete_notice').length) {
+							$('.delete_notice').html(noticeHTML);
+						} else {
+							$form.prepend(noticeHTML);
+						}
+						return;
+					}
+
 					updateProgressUI(data.deleted, data.offset, data.total);
 
 					if (data.done) {
@@ -315,16 +372,57 @@
 						}, 800);
 					} else {
 						// Process next batch
-						runBatchDelete(formData, data.offset);
+						runBatchDelete($form, formData, data.offset);
 					}
 				} else {
 					var errorMsg = response.data && response.data.message ? response.data.message : 'Unknown error occurred.';
 					finishProgressUI(0, 0, true, errorMsg);
 				}
 			}).fail(function(jqXHR, textStatus, errorThrown) {
+				if (isCancelled) {
+					return;
+				}
 				finishProgressUI(0, 0, true, 'Server error: ' + textStatus);
 			});
 		}
+
+		// Handle cancel button click
+		$(document).on('click', '.wpbd-cancel-btn', function() {
+			isCancelled = true;
+			if (activeXHR) {
+				activeXHR.abort();
+			}
+
+			// Show cancelled status
+			$('.wpbd-progress-notice').addClass('wpbd-pn-error');
+			$('.wpbd-pn-icon').html(errorIcon());
+			$('.wpbd-pn-title').html('Deletion <span>cancelled</span>');
+			$('.wpbd-pn-bar-pct').text('Cancelled');
+			$('.wpbd-pn-stats').html(
+				'<span style="color:#d63638;font-weight:600;">Process was manually cancelled.</span>' +
+				'<span></span>'
+			);
+
+			// Remove cancel button
+			$('.wpbd-cancel-btn').remove();
+
+			// Enable submit button
+			$('.wpbd-delete-form').find('.wpbd_button, input[type="submit"]').prop('disabled', false);
+
+			// Add dismiss button
+			if (!$('.wpbd-progress-notice .wpbd-dismiss-btn').length) {
+				$('.wpbd-pn-header').append('<button type="button" class="notice-dismiss wpbd-dismiss-btn" style="position:absolute; top:50%; right:0; transform:translateY(-50%); text-decoration:none;"><span class="screen-reader-text">Dismiss this notice.</span></button>');
+			}
+
+			// Notify server to clear the transient
+			var $form = $('.wpbd-delete-form');
+			var formData = $form.serialize();
+			$.post(wpbdProgressData.ajaxurl, {
+				action: 'wpbd_cancel_delete',
+				nonce: wpbdProgressData.nonce,
+				wpbd_args: formData
+			});
+		});
 
 		// Handle dismiss button click
 		$(document).on('click', '.wpbd-progress-notice .wpbd-dismiss-btn', function() {
