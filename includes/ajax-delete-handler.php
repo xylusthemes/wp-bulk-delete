@@ -242,8 +242,7 @@ function wpbd_get_all_matching_ids( $entity_type, $data ) {
 
 		case 'wca_general':
 			global $wpbd_wca;
-			// General actually gets users
-			return isset($wpbd_wca) ? $wpbd_wca->wpbd_wca_api->get_wpbd_wca_delete_users_whno_ids( $data ) : array();
+			return array( 1 );
 
 		default:
 			// Fallback filter
@@ -648,6 +647,14 @@ function wpbd_execute_batch_delete( $entity_type, $batch, $data ) {
 			return $count;
 
 		case 'wca_products':
+			global $wpbd_wca;
+			if ( ! isset( $wpbd_wca ) ) return 0;
+			$force_delete = false;
+			if ( isset( $data['delete_type'] ) && $data['delete_type'] === 'permenant' ) {
+				$force_delete = true;
+			}
+			return $wpbd_wca->wpbd_wca_api->do_delete_wca_products( $batch, $force_delete, $data );
+
 		case 'wca_orders':
 			global $wpbd_wca;
 			if ( ! isset( $wpbd_wca ) ) return 0;
@@ -655,14 +662,19 @@ function wpbd_execute_batch_delete( $entity_type, $batch, $data ) {
 			if ( isset( $data['delete_type'] ) && $data['delete_type'] === 'permenant' ) {
 				$force_delete = true;
 			}
-			return $wpbd_wca->wpbd_wca_api->do_delete_wpbd_wca_posts( $batch, $force_delete, $data );
+			return $wpbd_wca->wpbd_wca_api->do_delete_wca_order( $batch, $force_delete, $data );
 
 		case 'wca_users':
-		case 'wca_general':
 			global $wpbd_wca;
 			if ( ! isset( $wpbd_wca ) ) return 0;
 			$reassign_user = isset( $data['reassign_user'] ) ? $data['reassign_user'] : '';
-			return $wpbd_wca->wpbd_wca_api->do_delete_wpbd_wca_users( $batch, $reassign_user, $data );
+			return $wpbd_wca->wpbd_wca_api->do_wpbd_wca_delete_users( $batch, $reassign_user );
+
+		case 'wca_general':
+			global $wpbd_wca;
+			if ( ! isset( $wpbd_wca ) ) return 0;
+			$wpbd_wca->wpbd_wca_api->do_delete_general_action( $data );
+			return 1;
 
 		default:
 			// Fallback filter
