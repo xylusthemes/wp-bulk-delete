@@ -5,7 +5,7 @@ Tags: delete, bulk, clean database, bulk delete, bulk clean
 Requires at least: 4.9
 Requires PHP: 5.3
 Tested up to: 7.0 
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -159,6 +159,10 @@ posts delete, delete all, mass delete, delete posts, delete comments, delete use
 10. 🔍 Delete WooCommerce General Filter
 
 == Changelog ==
+
+= 1.4.3 =
+* SECURITY: Improved security hardening and input sanitization.
+* FIXED: Fatal error in certain metadata cleanup scenarios.
 
 = 1.4.2 =
 * FIXED: AJAX error when deleting WooCommerce orders. ( Pro )
