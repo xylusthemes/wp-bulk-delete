@@ -940,6 +940,7 @@ class WPBD_Delete_API {
      * @return array | deleted postmetas count.
      */
     public function do_delete_postmetas( $meta_results = array() ) {
+        global $wpdb;
         $post_delete_count = 0;
 
         if ( ! empty( $meta_results ) ){
@@ -1037,6 +1038,7 @@ class WPBD_Delete_API {
      * @return array | deleted commentmeta count.
      */
     public function do_delete_commentmetas( $meta_results = array() ) {
+        global $wpdb;
         $post_delete_count = 0;
 
         if ( ! empty( $meta_results ) ){
@@ -1069,6 +1071,7 @@ class WPBD_Delete_API {
         if( $data['custom_field_key'] != '' && !empty( $data['delete_user_roles'] ) ){
             
             $delete_user_roles = isset( $data['delete_user_roles'] ) ? $data['delete_user_roles'] : array();
+            $delete_user_roles = array_map( 'esc_sql', $delete_user_roles );
             $delete_start_date = isset( $data['delete_start_date'] ) ? esc_sql( $data['delete_start_date'] ) : '';
             $delete_end_date = isset( $data['delete_end_date'] ) ? esc_sql( $data['delete_end_date'] ) : '';
             $date_type = isset( $data['date_type'] ) ? esc_sql( $data['date_type'] ) : 'custom_date';
@@ -1159,6 +1162,7 @@ class WPBD_Delete_API {
      * @return array | deleted usermeta count.
      */
     public function do_delete_usermetas( $meta_results = array() ) {
+        global $wpdb;
         $usermeta_delete_count = 0;
         if ( ! empty( $meta_results ) ){
 
