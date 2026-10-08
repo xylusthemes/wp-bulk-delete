@@ -4,8 +4,8 @@ Donate link: http://xylusthemes.com
 Tags: delete, bulk, clean database, bulk delete, bulk clean
 Requires at least: 4.9
 Requires PHP: 5.3
-Tested up to: 7.0 
-Stable tag: 1.4.3
+Tested up to: 7.1 
+Stable tag: 1.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -159,6 +159,12 @@ posts delete, delete all, mass delete, delete posts, delete comments, delete use
 10. 🔍 Delete WooCommerce General Filter
 
 == Changelog ==
+
+= 1.4.4 =
+* FIXED: Fixed an issue with scheduled delete functionality.
+* IMPROVEMENT: Added Cleanup support for post types managed through the separate Cleanup menu.
+* IMPROVEMENT: Added compatibility with WordPress 7.1.
+* SECURITY: Code standard improvements and PHPCS fixes.
 
 = 1.4.3 =
 * SECURITY: Improved security hardening and input sanitization.
