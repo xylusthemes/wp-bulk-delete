@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-13T11:45:12+00:00\n"
+"POT-Creation-Date: 2026-10-08T09:50:15+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-bulk-delete\n"
@@ -42,57 +42,87 @@ msgid "http://xylusthemes.com"
 msgstr ""
 
 #: includes/admin/admin-pages.php:25
-#: includes/admin/posts/display-delete-posts.php:76
+#: includes/admin/admin-pages.php:120
+#: includes/admin/posts/display-delete-posts.php:85
 msgid "Cleanup"
 msgstr ""
 
 #: includes/admin/admin-pages.php:26
-#: includes/admin/posts/display-delete-posts.php:79
+#: includes/admin/admin-pages.php:123
+#: includes/admin/posts/display-delete-posts.php:88
 msgid "Delete Posts"
 msgstr ""
 
 #: includes/admin/admin-pages.php:27
+#: includes/admin/admin-pages.php:126
 #: includes/admin/comments/display-delete-comments.php:44
-#: includes/admin/posts/display-delete-posts.php:82
+#: includes/admin/posts/display-delete-posts.php:91
 msgid "Delete Comments"
 msgstr ""
 
 #: includes/admin/admin-pages.php:28
-#: includes/admin/posts/display-delete-posts.php:85
+#: includes/admin/admin-pages.php:129
+#: includes/admin/posts/display-delete-posts.php:94
 #: includes/admin/users/display-delete-users.php:141
 msgid "Delete Users"
 msgstr ""
 
 #: includes/admin/admin-pages.php:29
-#: includes/admin/posts/display-delete-posts.php:88
+#: includes/admin/admin-pages.php:132
+#: includes/admin/posts/display-delete-posts.php:97
 msgid "Delete Category"
 msgstr ""
 
-#: includes/admin/admin-pages.php:33
+#: includes/admin/admin-pages.php:44
 msgid "Scheduled Delete"
 msgstr ""
 
-#: includes/admin/admin-pages.php:35
-#: includes/admin/posts/display-delete-posts.php:99
+#: includes/admin/admin-pages.php:46
+#: includes/admin/posts/display-delete-posts.php:109
 msgid "License"
 msgstr ""
 
-#: includes/admin/admin-pages.php:38
-#: includes/admin/posts/display-delete-posts.php:106
+#: includes/admin/admin-pages.php:49
+#: includes/admin/admin-pages.php:139
+#: includes/admin/posts/display-delete-posts.php:116
 msgid "Support & Help"
 msgstr ""
 
-#: includes/admin/admin-pages.php:41
+#: includes/admin/admin-pages.php:52
 msgid "Upgrade to Pro"
 msgstr ""
 
-#: includes/admin/admin-pages.php:78
-#: includes/admin/admin-pages.php:79
+#: includes/admin/admin-pages.php:89
+#: includes/admin/admin-pages.php:90
+#: includes/admin/admin-pages.php:116
+#: includes/admin/posts/display-delete-posts.php:78
+#: includes/admin/posts/display-delete-posts.php:80
 msgid "WooCommerce"
 msgstr ""
 
-#: includes/admin/admin-pages.php:107
-#: includes/admin/posts/display-delete-posts.php:151
+#: includes/admin/admin-pages.php:136
+#: includes/admin/posts/display-delete-posts.php:101
+msgid "Schedule Delete"
+msgstr ""
+
+#: includes/admin/admin-pages.php:151
+msgid "WooCommerce Users"
+msgstr ""
+
+#: includes/admin/admin-pages.php:154
+msgid "WooCommerce Products"
+msgstr ""
+
+#: includes/admin/admin-pages.php:157
+msgid "WooCommerce Orders"
+msgstr ""
+
+#: includes/admin/admin-pages.php:160
+msgid "WooCommerce General"
+msgstr ""
+
+#: includes/admin/admin-pages.php:173
+#: includes/admin/posts/display-delete-posts.php:161
 #: includes/admin/users/display-delete-users.php:102
 #: includes/common-functions.php:101
 #: includes/delele-comments-form-functions.php:201
@@ -108,8 +138,8 @@ msgstr ""
 msgid "Available in Pro version."
 msgstr ""
 
-#: includes/admin/admin-pages.php:107
-#: includes/admin/posts/display-delete-posts.php:151
+#: includes/admin/admin-pages.php:173
+#: includes/admin/posts/display-delete-posts.php:161
 #: includes/admin/users/display-delete-users.php:102
 #: includes/common-functions.php:102
 #: includes/delele-comments-form-functions.php:201
@@ -157,10 +187,6 @@ msgstr ""
 
 #: includes/admin/posts/display-delete-posts.php:50
 msgid "WARNING: Before you delete any data, please take a backup; and the deletion operation is irreversible. Please use it with caution!"
-msgstr ""
-
-#: includes/admin/posts/display-delete-posts.php:91
-msgid "Schedule Delete"
 msgstr ""
 
 #: includes/admin/support-page.php:34

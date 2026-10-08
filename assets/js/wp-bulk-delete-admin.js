@@ -32,7 +32,8 @@
 		jQuery('.delete_all_datepicker').datepicker({
 			changeMonth: true,
 			changeYear: true,
-			dateFormat: 'yy-mm-dd'
+			dateFormat: 'yy-mm-dd',
+			yearRange: '2000:c+10'
 		});
 	});
 
@@ -378,7 +379,10 @@
 	jQuery(document).ready(function(){
 		jQuery('.delete_all_datetimepicker').datetimepicker({
 			dateFormat: 'yy-mm-dd', 
-			timeFormat: 'HH:mm:ss'
+			timeFormat: 'HH:mm:ss',
+			changeMonth: true,
+			changeYear: true,
+			yearRange: '2000:c+10'
 		});
 	});
 
