@@ -72,6 +72,15 @@ function wpbd_delete_posts_page(){
 								<div class="tabs-scroller">
 									<div class="var-tabs var-tabs--item-horizontal var-tabs--layout-horizontal-padding">
 										<div class="var-tabs__tab-wrap var-tabs--layout-horizontal">
+											<?php 
+											$woo_tab_html = '';
+											if ( wpbd_is_pro() ) {
+												$woo_tab_html = '<a href="?page=wpbd_wca" class="var-tab ' . ($active_tab == 'wpbd_wca' ? 'var-tab--active' : 'var-tab--inactive') . '"><span class="tab-label">' . esc_html__( 'WooCommerce', 'wp-bulk-delete' ) . '</span></a>';
+											} else {
+												$woo_tab_html = '<a href="?page=wpbd_wca_free" class="var-tab ' . ($active_tab == 'wpbd_wca_free' ? 'var-tab--active' : 'var-tab--inactive') . '"><span class="tab-label">' . esc_html__( 'WooCommerce', 'wp-bulk-delete' ) . '<span style="margin-left: 5px;height: 22px;border-radius: 3px;background: #005AE0;color: #FFF;font-size: 12px;line-height: 18px;font-weight: 600;display: inline-flex;padding: 0 4px;align-items: center;" >PRO</span></span></a>';
+											}
+											if ( class_exists( 'WooCommerce' ) ) echo $woo_tab_html;
+											?>
 											<a href="?page=delete_all_actions&tab=by_cleanup" class="var-tab <?php echo $active_tab == 'by_cleanup' ? 'var-tab--active' : 'var-tab--inactive'; ?>">
 												<span class="tab-label"><?php esc_attr_e( 'Cleanup', 'wp-bulk-delete' ); ?></span>
 											</a>
@@ -87,6 +96,7 @@ function wpbd_delete_posts_page(){
 											<a href="?page=delete_all_actions&tab=by_terms" class="var-tab <?php echo $active_tab == 'by_terms' ? 'var-tab--active' : 'var-tab--inactive'; ?>">
 												<span class="tab-label"><?php esc_attr_e( 'Delete Category', 'wp-bulk-delete' ); ?></span>
 											</a>
+											<?php if ( ! class_exists( 'WooCommerce' ) ) echo $woo_tab_html; ?>
 											<a href="?page=delete_all_actions&tab=by_schedule-delete" class="var-tab <?php echo ( $active_tab == 'by_schedule-delete' || $active_tab == 'by_schedule-delete-history' )  ? 'var-tab--active' : 'var-tab--inactive'; ?>">
 												<span class="tab-label"><?php esc_attr_e( 'Schedule Delete', 'wp-bulk-delete' ); if( !wpbd_is_pro() ){ echo '<div class="wpbd-pro-badge"> PRO </div>'; } ?></span>
 											</a>

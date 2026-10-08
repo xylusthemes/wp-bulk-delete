@@ -30,6 +30,17 @@ function wpbd_add_menu_pages(){
 	
 	do_action( 'wpbd_add_addon_menu', $submenu );
 	
+	if ( class_exists( 'WooCommerce' ) && isset( $submenu['delete_all_actions'] ) ) {
+		foreach ( $submenu['delete_all_actions'] as $key => $item ) {
+			if ( isset( $item[2] ) && ( $item[2] === 'wpbd_wca' || $item[2] === 'wpbd_wca_free' ) ) {
+				$woo_item = $item;
+				unset( $submenu['delete_all_actions'][$key] );
+				array_splice( $submenu['delete_all_actions'], 1, 0, array( $woo_item ) );
+				break;
+			}
+		}
+	}
+	
 	$submenu['delete_all_actions'][] = array( __( 'Scheduled Delete', 'wp-bulk-delete' ), 'manage_options',admin_url( 'admin.php?page=delete_all_actions&tab=by_schedule-delete' ));
 	if( wpbd_is_pro() ){
 		$submenu['delete_all_actions'][] = array( __( 'License', 'wp-bulk-delete' ), 'manage_options',admin_url( 'admin.php?page=delete_all_actions&tab=wpbdpro-license' ) );
@@ -95,25 +106,79 @@ function wpbd_wca_callback_free(){
 		<div class="wpbd-wrap" >
 			<div id="poststuff">
 				<div id="post-body" class="metabox-holder columns-2">
-					<div class="wpbd-container">
-						<div class="wpbd-wrap">
-							<div id="poststuff">
-								<div class="wpbd-blur-filter" >
-									<div class="wpbd-blur"  >
-										<div class="wpbd-blur-filter-option">
+					<div id="postbox-container-2" class="postbox-container">
+						<div class="wpbd-app">
+							<div class="wpbd-tabs" style="margin-bottom: 20px;">
+								<div class="tabs-scroller">
+									<div class="var-tabs var-tabs--item-horizontal var-tabs--layout-horizontal-padding">
+										<div class="var-tabs__tab-wrap var-tabs--layout-horizontal">
+											<?php 
+											$woo_tab_html = '<a href="?page=wpbd_wca_free" class="var-tab var-tab--active"><span class="tab-label">' . esc_html__( 'WooCommerce', 'wp-bulk-delete' ) . '<span style="margin-left: 5px;height: 22px;border-radius: 3px;background: #005AE0;color: #FFF;font-size: 12px;line-height: 18px;font-weight: 600;display: inline-flex;padding: 0 4px;align-items: center;" >PRO</span></span></a>';
+											if ( class_exists( 'WooCommerce' ) ) echo $woo_tab_html;
+											?>
+											<a href="?page=delete_all_actions&tab=by_cleanup" class="var-tab var-tab--inactive">
+												<span class="tab-label"><?php esc_attr_e( 'Cleanup', 'wp-bulk-delete' ); ?></span>
+											</a>
+											<a href="?page=delete_all_actions&tab=by_posts" class="var-tab var-tab--inactive">
+												<span class="tab-label"><?php esc_attr_e( 'Delete Posts', 'wp-bulk-delete' ); ?></span>
+											</a>
+											<a href="?page=delete_all_actions&tab=by_comments" class="var-tab var-tab--inactive">
+												<span class="tab-label"><?php esc_attr_e( 'Delete Comments', 'wp-bulk-delete' ); ?></span>
+											</a>
+											<a href="?page=delete_all_actions&tab=by_users" class="var-tab var-tab--inactive">
+												<span class="tab-label"><?php esc_attr_e( 'Delete Users', 'wp-bulk-delete' ); ?></span>
+											</a>
+											<a href="?page=delete_all_actions&tab=by_terms" class="var-tab var-tab--inactive">
+												<span class="tab-label"><?php esc_attr_e( 'Delete Category', 'wp-bulk-delete' ); ?></span>
+											</a>
+											<?php if ( ! class_exists( 'WooCommerce' ) ) echo $woo_tab_html; ?>
+											<a href="?page=delete_all_actions&tab=by_schedule-delete" class="var-tab var-tab--inactive">
+												<span class="tab-label"><?php esc_attr_e( 'Schedule Delete', 'wp-bulk-delete' ); ?><div class="wpbd-pro-badge"> PRO </div></span>
+											</a>
+											<a href="?page=delete_all_actions&tab=by_support_help" class="var-tab var-tab--inactive">
+												<span class="tab-label"><?php esc_attr_e( 'Support & Help', 'wp-bulk-delete' ); ?></span>
+											</a>
 										</div>
 									</div>
-									<div class="wpbd-blur-filter-cta" style="top: 40px;" >
-										<span style="color: red"><?php echo esc_html_e( 'Available in Pro version.', 'wp-bulk-delete' ); ?>  </span><a href="<?php echo esc_url( WPBD_PLUGIN_BUY_NOW_URL ); ?>"><?php echo esc_html_e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
+								</div>
+							</div>
+							<div class="wpbd-app">
+								<div class="wpbd-tabs">
+									<div class="tabs-scroller">
+										<div class="var-tabs var-tabs--item-horizontal var-tabs--layout-horizontal-padding">
+											<div class="var-tabs__tab-wrap var-tabs--layout-horizontal">
+												<a href="javascript:void(0)" class="var-tab var-tab--active">
+													<span class="tab-label"><?php esc_attr_e( 'WooCommerce Users', 'wp-bulk-delete' ); ?></span>
+												</a>
+												<a href="javascript:void(0)" class="var-tab">
+													<span class="tab-label"><?php esc_attr_e( 'WooCommerce Products', 'wp-bulk-delete' ); ?></span>
+												</a>
+												<a href="javascript:void(0)" class="var-tab">
+													<span class="tab-label"><?php esc_attr_e( 'WooCommerce Orders', 'wp-bulk-delete' ); ?></span>
+												</a>
+												<a href="javascript:void(0)" class="var-tab">
+													<span class="tab-label"><?php esc_attr_e( 'WooCommerce General', 'wp-bulk-delete' ); ?></span>
+												</a>
+											</div>
+										</div>
 									</div>
+								</div>
+							</div>
+							<div class="wpbd-blur-filter" style="position: relative; padding-bottom: 20px;">
+								<div class="wpbd-blur"  >
+									<div class="wpbd-blur-filter-option">
+									</div>
+								</div>
+								<div class="wpbd-blur-filter-cta" style="position: relative; top: auto; left: auto; transform: none; width: 100%; max-width: 800px; margin: 40px auto; z-index: 99;" >
+									<span style="color: red"><?php echo esc_html_e( 'Available in Pro version.', 'wp-bulk-delete' ); ?>  </span><a href="<?php echo esc_url( WPBD_PLUGIN_BUY_NOW_URL ); ?>"><?php echo esc_html_e( 'Buy Now', 'wp-bulk-delete' ); ?></a>
 								</div>
 							</div>
 						</div>
 					</div>
+					<br class="clear">
 				</div>
 			</div>
 		</div>
-	</div>
 	<?php
 	$posts_footer_result = wpdb_render_common_footer();
 	echo esc_attr( $posts_footer_result );
