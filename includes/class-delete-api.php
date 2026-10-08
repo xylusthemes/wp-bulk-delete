@@ -141,6 +141,12 @@ class WPBD_Delete_API {
                 $query .= " AND $wpdb->posts.post_author IN ( " . implode( ",", $delete_authors ). " )";
             }
 
+            if ( ! empty( $data['return_count'] ) ) {
+                $count_query = str_replace( "SELECT DISTINCT $wpdb->posts.ID", "SELECT COUNT( DISTINCT $wpdb->posts.ID )", $query );
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
+                return absint( $wpdb->get_var( $count_query ) );
+            }
+
             if( isset( $data['query_limit'] ) && isset( $data['query_offset'] ) ){
                 $query .= " LIMIT " . absint( $data['query_offset'] ) . ", " . absint( $data['query_limit'] );
             } elseif( is_numeric( $limit_post ) ){

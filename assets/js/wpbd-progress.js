@@ -213,9 +213,9 @@
 		// Intercept the final form submission for any form with .wpbd-delete-form class
 		$(document).on('submit', '.wpbd-delete-form', function(e) {
 
-			// If it's a scheduled delete, don't intercept here (it's handled via admin-post.php)
-			var isScheduled = $(this).find('input[name="delete_time"]:checked').val() === 'scheduled';
-			if ( isScheduled ) {
+			// If it's a scheduled delete or background delete, don't intercept here (it's handled via admin-post.php)
+			var deleteTime = $(this).find('input[name="delete_time"]:checked').val();
+			if ( deleteTime === 'scheduled' || deleteTime === 'background_now' ) {
 				return;
 			}
 
