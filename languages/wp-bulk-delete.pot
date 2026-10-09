@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-08T12:28:24+00:00\n"
+"POT-Creation-Date: 2026-10-09T09:31:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: wp-bulk-delete\n"
@@ -292,7 +292,7 @@ msgid "Action "
 msgstr ""
 
 #: includes/ajax-delete-handler.php:33
-#: includes/ajax-delete-handler.php:132
+#: includes/ajax-delete-handler.php:147
 msgid "You do not have permission to perform this action."
 msgstr ""
 
@@ -300,8 +300,8 @@ msgstr ""
 msgid "Could not determine delete type."
 msgstr ""
 
-#: includes/ajax-delete-handler.php:82
-msgid "Session expired. Please try again."
+#: includes/ajax-delete-handler.php:94
+msgid "Session expired or no remaining items found. Please refresh and try again."
 msgstr ""
 
 #: includes/ajax-functions.php:45
