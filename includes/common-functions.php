@@ -375,8 +375,11 @@ function wpdb_render_common_header( $page_title  ){
             <div class="wpbd-header-content" >
                 <span style="font-size:18px;"><?php esc_html_e('Dashboard','wp-bulk-delete'); ?></span>
                 <span class="spacer"></span>
-                <span class="page-name"><?php esc_html_e( $page_title,'wp-bulk-delete');  // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></span></span>
+                <span class="page-name"><?php esc_html_e( $page_title,'wp-bulk-delete');  // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></span>
                 <div class="header-actions" >
+                    <?php if ( wpbd_is_pro() && defined( 'WPBDPRO_VERSION' ) ) : ?>
+                        <span class="wpbd-pro-badge"><?php echo esc_html( 'Pro v' . WPBDPRO_VERSION ); ?></span>
+                    <?php endif; ?>
                     <span class="round">
                         <a href="<?php echo esc_url( 'https://docs.xylusthemes.com/docs/wp-bulk-delete/' ); ?>" target="_blank">
                             <svg viewBox="0 0 20 20" fill="#000000" height="20px" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
