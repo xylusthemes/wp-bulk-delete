@@ -44,7 +44,7 @@
 			let proceed = validateSchedule("delete_posts_form");
 			if(!proceed) return;
 
-			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled"){
+			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled" || jQuery('input[name="delete_time"]:checked').val() === "background_now"){
 				jQuery("#delete_posts_form").attr('action', wpBulkDeleteData.siteUrl + '/wp-admin/admin-post.php');
 				jQuery("#delete_posts_form").submit();
 				return;
@@ -173,7 +173,7 @@
 			let uproceed = validateSchedule("delete_users_form");
 			if(!uproceed) return;
 
-			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled"){
+			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled" || jQuery('input[name="delete_time"]:checked').val() === "background_now"){
 				jQuery("#delete_users_form").attr('action', wpBulkDeleteData.siteUrl + '/wp-admin/admin-post.php');
 				jQuery("#delete_users_form").submit();
 				return;
@@ -210,7 +210,7 @@
 			let cproceed = validateSchedule("delete_comments_form");
 			if(!cproceed) return;
 
-			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled"){
+			if(jQuery('input[name="delete_time"]:checked').val() === "scheduled" || jQuery('input[name="delete_time"]:checked').val() === "background_now"){
 				jQuery("#delete_comments_form").attr('action', wpBulkDeleteData.siteUrl + '/wp-admin/admin-post.php');
 				jQuery("#delete_comments_form").submit();
 				return;
@@ -562,6 +562,12 @@
 	function validateSchedule(formId) {
 		let selected = jQuery('input[name="delete_time"]:checked').val();
 
+		if(selected === "background_now"){
+			jQuery("#" + formId).attr('action', wpBulkDeleteData.siteUrl + '/wp-admin/admin-post.php');
+			jQuery("#" + formId).submit();
+			return false;
+		}
+
 		if(selected === "scheduled"){
 			let datetime = jQuery("#delete_datetime").val().trim();
 			let schedulename = jQuery("input[name='schedule_name']").val().trim();
@@ -583,6 +589,24 @@
 
 		return true;
 	}
+
+	function toggleScheduleFields() {
+		var selected = jQuery('input[name="delete_time"]:checked').val();
+		if (selected === 'scheduled') {
+			jQuery('#wpbd_schedule_fields_wrap').slideDown(200);
+		} else {
+			jQuery('#wpbd_schedule_fields_wrap').slideUp(200);
+		}
+	}
+
+	jQuery(document).ready(function() {
+		jQuery(document).on('change', 'input[name="delete_time"]', toggleScheduleFields);
+		if (jQuery('input[name="delete_time"]:checked').val() === 'scheduled') {
+			jQuery('#wpbd_schedule_fields_wrap').show();
+		} else {
+			jQuery('#wpbd_schedule_fields_wrap').hide();
+		}
+	});
 
 	function toggleInputs() {
 		var userMetaVal    = $('select[name="user_meta_compare"]').val();

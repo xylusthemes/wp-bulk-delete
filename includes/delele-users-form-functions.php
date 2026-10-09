@@ -46,7 +46,7 @@ function xt_delete_users_form_process( $data ) {
     	if( empty( $error ) ){
             $delete_time = ( $data['delete_time'] ) ? $data['delete_time'] : 'now';
             $delete_datetime = isset( $data['delete_datetime'] ) ? $data['delete_datetime'] : '';
-            if( $delete_time === 'scheduled' && !empty($delete_datetime) && wpbd_is_pro() ) {
+            if( ( $delete_time === 'background_now' || ( $delete_time === 'scheduled' && !empty($delete_datetime) ) ) && wpbd_is_pro() ) {
                 $data['delete_entity'] = 'user';
                 return wpbd_save_scheduled_delete($data);
             }

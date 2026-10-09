@@ -54,14 +54,15 @@ function wpbd_ajax_run_delete() {
 		wp_send_json_error( array( 'message' => __( 'Could not determine delete type.', 'wp-bulk-delete' ) ) );
 	}
 
-	// Generate a unique transient key for this operation.
+	// Unique keys for storing batch IDs.
+	$storage_key   = '_wpbd_batch_ids_' . get_current_user_id() . '_' . $entity_type;
 	$transient_key = 'wpbd_batch_ids_' . get_current_user_id() . '_' . $entity_type;
 
 	// First call: get all matching IDs and store them.
 	if ( $offset === 0 ) {
 		$all_ids = wpbd_get_all_matching_ids( $entity_type, $data );
 
-		if ( empty( $all_ids ) ) {
+		if ( empty( $all_ids ) || ! is_array( $all_ids ) ) {
 			wp_send_json_success( array(
 				'deleted' => 0,
 				'offset'  => 0,
@@ -70,16 +71,28 @@ function wpbd_ajax_run_delete() {
 			) );
 		}
 
-		// Store IDs in transient (1 hour expiry as safety).
+		// Store in database option so external object cache flushes (Redis/Memcached) do not destroy IDs
+		update_option( $storage_key, $all_ids, 'no' );
 		set_transient( $transient_key, $all_ids, HOUR_IN_SECONDS );
 
 		$total = count( $all_ids );
 	} else {
-		// Subsequent calls: retrieve stored IDs.
-		$all_ids = get_transient( $transient_key );
+		// Subsequent calls: retrieve stored IDs from persistent option first, then transient fallback.
+		$all_ids = get_option( $storage_key );
+		if ( empty( $all_ids ) || ! is_array( $all_ids ) ) {
+			$all_ids = get_transient( $transient_key );
+		}
 
-		if ( false === $all_ids ) {
-			wp_send_json_error( array( 'message' => __( 'Session expired. Please try again.', 'wp-bulk-delete' ) ) );
+		if ( empty( $all_ids ) || ! is_array( $all_ids ) ) {
+			// Fallback: re-query matching IDs if cache was cleared
+			$all_ids = wpbd_get_all_matching_ids( $entity_type, $data );
+			if ( ! empty( $all_ids ) && is_array( $all_ids ) ) {
+				update_option( $storage_key, $all_ids, 'no' );
+			} else {
+				delete_option( $storage_key );
+				delete_transient( $transient_key );
+				wp_send_json_error( array( 'message' => __( 'Session expired or no remaining items found. Please refresh and try again.', 'wp-bulk-delete' ) ) );
+			}
 		}
 
 		$total = count( $all_ids );
@@ -89,6 +102,7 @@ function wpbd_ajax_run_delete() {
 	$batch = array_slice( $all_ids, $offset, $batch_size );
 
 	if ( empty( $batch ) ) {
+		delete_option( $storage_key );
 		delete_transient( $transient_key );
 		wp_send_json_success( array(
 			'deleted' => 0,
@@ -104,8 +118,9 @@ function wpbd_ajax_run_delete() {
 	$new_offset = $offset + count( $batch );
 	$done       = $new_offset >= $total;
 
-	// Clean up transient when done.
+	// Clean up storage when done.
 	if ( $done ) {
+		delete_option( $storage_key );
 		delete_transient( $transient_key );
 	}
 
@@ -121,7 +136,7 @@ add_action( 'wp_ajax_wpbd_run_delete', 'wpbd_ajax_run_delete' );
 
 /**
  * AJAX handler to cancel a running delete operation.
- * Clears the stored IDs transient.
+ * Clears the stored IDs transient and option.
  *
  * @since 1.5.0
  * @return void
@@ -137,7 +152,9 @@ function wpbd_ajax_cancel_delete() {
 	}
 	$entity_type = wpbd_detect_entity_type( $data );
 	if ( $entity_type ) {
+		$storage_key   = '_wpbd_batch_ids_' . get_current_user_id() . '_' . $entity_type;
 		$transient_key = 'wpbd_batch_ids_' . get_current_user_id() . '_' . $entity_type;
+		delete_option( $storage_key );
 		delete_transient( $transient_key );
 	}
 	wp_send_json_success();

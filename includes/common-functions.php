@@ -139,7 +139,7 @@ add_action('admin_post_wpbd_delete_post', 'handle_delete_posts');
 // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound
 function handle_delete_posts() {
 	$delete_time = isset( $_POST['delete_time'] ) ? esc_attr( sanitize_text_field( wp_unslash( $_POST['delete_time'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
-	if ( $delete_time === 'scheduled' ) {
+	if ( $delete_time === 'scheduled' || $delete_time === 'background_now' ) {
 		if( isset( $_POST['_delete_all_actions_wpnonce'] ) ){ // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 			$result = xt_delete_posts_form_process( $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		}
@@ -152,8 +152,10 @@ function handle_delete_posts() {
 		if( isset( $_POST['_delete_users_wpnonce'] ) ){ // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 			$result = xt_delete_users_form_process( $_POST ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
 		}
-		$message = $result['status'] === 1 ? 'Scheduled delete was created successfully.' : 'Error in scheduled delete.';
+		$default_msg = ( $delete_time === 'background_now' ) ? 'Background delete started successfully.' : 'Scheduled delete was created successfully.';
+		$message = ( isset( $result['status'] ) && $result['status'] === 1 ) ? $default_msg : 'Error in scheduled delete.';
 		wp_safe_redirect( admin_url( 'admin.php?page=delete_all_actions&message=' . $message ).'&tab=by_schedule-delete' );
+		exit;
 	}
 }
 
@@ -181,10 +183,20 @@ function wpbd_get_posttype_post_count( $posttype ){
  */
 function wpbd_save_scheduled_delete($data){
 	$scheduled = false;
-	$delete_datetime = ( $data['delete_datetime'] ) ? $data['delete_datetime'] : '';
-    $delete_frequency = ( $data['delete_frequency'] ) ? $data['delete_frequency'] : 'not_repeat';
+	$is_background_now = isset( $data['delete_time'] ) && $data['delete_time'] === 'background_now';
+	$delete_datetime = ( !empty( $data['delete_datetime'] ) ) ? $data['delete_datetime'] : current_time( 'mysql' );
+	$delete_frequency = ( !empty( $data['delete_frequency'] ) ) ? $data['delete_frequency'] : 'not_repeat';
+	if ( $is_background_now ) {
+		$delete_frequency = 'not_repeat';
+		// Unlimited: clear limits so all matching records are deleted
+		unset( $data['limit_post'], $data['limit_user'], $data['limit_comment'] );
+	}
 	$cron_time = strtotime($delete_datetime) - (int) ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
-	$title = !empty( $data['schedule_name'] ) ? $data['schedule_name'] : __( 'Scheduled Delete - ', 'wp-bulk-delete' ) . ucfirst($data['delete_entity']);
+	if ( $is_background_now || $cron_time < time() ) {
+		$cron_time = time();
+	}
+	$entity_name = isset( $data['delete_entity'] ) ? ucfirst( $data['delete_entity'] ) : 'Item';
+	$title = !empty( $data['schedule_name'] ) ? $data['schedule_name'] : ( ( $is_background_now ? __( 'Background Delete - ', 'wp-bulk-delete' ) : __( 'Scheduled Delete - ', 'wp-bulk-delete' ) ) . $entity_name );
 	
 	if( $delete_frequency === 'not_repeat' ){
 		$insert_args = array(
@@ -202,7 +214,13 @@ function wpbd_save_scheduled_delete($data){
 		}
 		$data['wpbd_scheduled_id'] = $insert;
 		update_post_meta( $insert, 'delete_options', $data );
-		$scheduled = wp_schedule_single_event($cron_time, 'wpbd_run_scheduled_delete', array( (int) $insert ) );
+		if ( $is_background_now ) {
+			// Trigger background delete immediately — do not schedule duplicate cron event
+			do_action( 'wpbd_run_scheduled_delete', (int) $insert );
+			$scheduled = true;
+		} else {
+			$scheduled = wp_schedule_single_event($cron_time, 'wpbd_run_scheduled_delete', array( (int) $insert ) );
+		}
 	} else {
 		$insert_args = array(
 			'post_type'   => 'wpbd_scheduled',
@@ -222,9 +240,10 @@ function wpbd_save_scheduled_delete($data){
 		$scheduled = wp_schedule_event( $cron_time, $delete_frequency, 'wpbd_run_scheduled_delete', array( (int) $insert ) );
 	}
 	if( $scheduled) {
+		$msg = $is_background_now ? esc_html__( 'Background delete started successfully.', 'wp-bulk-delete' ) : esc_html__( 'Delete scheduled successfully.', 'wp-bulk-delete' );
 		return  array(
 			'status' => 1,
-			'messages' => array( esc_html__( 'Delete scheduled successfully.', 'wp-bulk-delete' ) )
+			'messages' => array( $msg )
 		);
 	}else{
 		return array(
@@ -306,9 +325,13 @@ function wpdb_render_common_footer(){
 function wpbd_render_common_notice(){
 	$get_posts   = $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
 	if( !empty( $get_posts ) ){
+		$delete_time = isset( $get_posts['delete_time'] ) ? $get_posts['delete_time'] : '';
+		if ( $delete_time === 'scheduled' || $delete_time === 'background_now' ) {
+			return;
+		}
+
 		if( isset( $get_posts['delete_post_type'] ) ){
-			$delete_time = isset( $get_posts['delete_time'] ) ? $get_posts['delete_time'] : '';
-			if ( $delete_time !== 'scheduled' && isset( $get_posts['_delete_all_actions_wpnonce'] ) ) {
+			if ( isset( $get_posts['_delete_all_actions_wpnonce'] ) ) {
 				$post_result = xt_delete_posts_form_process( $get_posts );
 				wpbd_display_admin_notice( $post_result );
 			}
@@ -352,8 +375,11 @@ function wpdb_render_common_header( $page_title  ){
             <div class="wpbd-header-content" >
                 <span style="font-size:18px;"><?php esc_html_e('Dashboard','wp-bulk-delete'); ?></span>
                 <span class="spacer"></span>
-                <span class="page-name"><?php esc_html_e( $page_title,'wp-bulk-delete');  // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></span></span>
+                <span class="page-name"><?php esc_html_e( $page_title,'wp-bulk-delete');  // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText ?></span>
                 <div class="header-actions" >
+                    <?php if ( wpbd_is_pro() && defined( 'WPBDPRO_VERSION' ) ) : ?>
+                        <span class="wpbd-pro-badge"><?php echo esc_html( 'Pro v' . WPBDPRO_VERSION ); ?></span>
+                    <?php endif; ?>
                     <span class="round">
                         <a href="<?php echo esc_url( 'https://docs.xylusthemes.com/docs/wp-bulk-delete/' ); ?>" target="_blank">
                             <svg viewBox="0 0 20 20" fill="#000000" height="20px" xmlns="http://www.w3.org/2000/svg" class="wpbd-circle-question-mark">
