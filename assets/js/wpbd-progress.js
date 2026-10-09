@@ -371,8 +371,10 @@
 							finishProgressUI(data.deleted, data.total, false, '');
 						}, 800);
 					} else {
-						// Process next batch
-						runBatchDelete($form, formData, data.offset);
+						// Process next batch with a 500ms delay to prevent server/Wordfence rate-limit blocking
+						setTimeout(function() {
+							runBatchDelete($form, formData, data.offset);
+						}, 500);
 					}
 				} else {
 					var errorMsg = response.data && response.data.message ? response.data.message : 'Unknown error occurred.';
@@ -382,7 +384,19 @@
 				if (isCancelled) {
 					return;
 				}
-				finishProgressUI(0, 0, true, 'Server error: ' + textStatus);
+				var errorMsg = 'Server communication error (' + textStatus + ').';
+				if (jqXHR.responseJSON && jqXHR.responseJSON.data && jqXHR.responseJSON.data.message) {
+					errorMsg = jqXHR.responseJSON.data.message;
+				} else if (jqXHR.status === 403) {
+					errorMsg = 'Request blocked (HTTP 403 Forbidden). A security plugin (like Wordfence) or firewall may be rate-limiting rapid requests. Please whitelist admin-ajax.php or use "Schedule / Run in Background".';
+				} else if (jqXHR.status === 504 || jqXHR.status === 524) {
+					errorMsg = 'Gateway Timeout (HTTP ' + jqXHR.status + '). The server took too long to process this batch. Please use "Schedule / Run in Background" for large batches.';
+				} else if (jqXHR.status === 500) {
+					errorMsg = 'Internal Server Error (HTTP 500). The server encountered an issue processing the batch. Please check PHP memory limit or use "Schedule / Run in Background".';
+				} else if (jqXHR.statusText && jqXHR.statusText !== 'error') {
+					errorMsg = 'Server error (' + jqXHR.status + ' ' + jqXHR.statusText + ').';
+				}
+				finishProgressUI(0, 0, true, errorMsg);
 			});
 		}
 

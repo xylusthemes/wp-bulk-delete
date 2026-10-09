@@ -188,7 +188,7 @@ class WPBD_Delete_API {
                         $post_attachment_id = get_post_meta( $post_id, '_thumbnail_id', true );
                         if( !empty( $post_attachment_id ) ){
                             // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
-                            $attachment_ids = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_value = %d", $post_attachment_id ) );
+                            $attachment_ids = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_thumbnail_id' AND meta_value = %d", $post_attachment_id ) );
                             if( !empty( $attachment_ids ) && count( $attachment_ids ) <= 1 ){
 
                                 $attachment_metadata = wp_get_attachment_metadata( $post_attachment_id );
@@ -242,7 +242,7 @@ class WPBD_Delete_API {
                         $post_attachment_id = get_post_meta( $post_id, '_thumbnail_id', true );
                         if( !empty( $post_attachment_id ) ){
                             // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared, WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.DirectDatabaseQuery.SchemaChange
-                            $attachment_ids = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_value = %d", $post_attachment_id ) );
+                            $attachment_ids = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key = '_thumbnail_id' AND meta_value = %d", $post_attachment_id ) );
                             if( count( $attachment_ids ) <= 1 ){
                                 wp_delete_attachment( $post_attachment_id, $force_delete );
                             }
