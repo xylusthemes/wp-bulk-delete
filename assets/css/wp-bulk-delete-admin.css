@@ -376,6 +376,15 @@ collepse
     border: 0;
 }
 
+.wpbd-pro-disabled {
+    opacity: 0.65;
+    cursor: not-allowed !important;
+}
+
+.wpbd-pro-disabled:hover {
+    background-color: #005AE0 !important;
+}
+
 
 
 

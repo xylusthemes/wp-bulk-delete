@@ -64,9 +64,22 @@ $post_by_tab = isset( $_GET['tab'] ) ? esc_attr( sanitize_text_field( wp_unslash
         ?>
         </div>
     </div>
-    <p class="submit">
+    <p class="submit" style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
         <input type="hidden" name="action" value="wpbd_delete_post">
-        <input name="delete_posts_submit" id="delete_posts_submit" class="wpbd_button" value="Delete Posts" type="button">
+        <input name="delete_posts_submit" id="delete_posts_submit" class="wpbd_button" value="<?php esc_attr_e( 'Delete Posts', 'wp-bulk-delete' ); ?>" type="button">
+        <?php if ( wpbd_is_pro() ) : ?>
+            <button type="button" name="export_posts_csv" id="export_posts_csv" class="wpbd_button"><?php esc_html_e( 'Export to CSV', 'wp-bulk-delete' ); ?></button>
+            <button type="button" name="export_posts_xml" id="export_posts_xml" class="wpbd_button"><?php esc_html_e( 'Export to XML', 'wp-bulk-delete' ); ?></button>
+        <?php else : ?>
+            <button type="button" class="wpbd_button wpbd-pro-disabled" disabled style="opacity: 0.65; cursor: not-allowed; display: inline-flex; align-items: center; gap: 6px;">
+                <?php esc_html_e( 'Export to CSV', 'wp-bulk-delete' ); ?>
+                <span class="wpbd-pro-badge" style="background: #fff; color: #005AE0; font-size: 10px; height: 18px; line-height: 18px; padding: 0 4px; border-radius: 3px;">PRO</span>
+            </button>
+            <button type="button" class="wpbd_button wpbd-pro-disabled" disabled style="opacity: 0.65; cursor: not-allowed; display: inline-flex; align-items: center; gap: 6px;">
+                <?php esc_html_e( 'Export to XML', 'wp-bulk-delete' ); ?>
+                <span class="wpbd-pro-badge" style="background: #fff; color: #005AE0; font-size: 10px; height: 18px; line-height: 18px; padding: 0 4px; border-radius: 3px;">PRO</span>
+            </button>
+        <?php endif; ?>
         <span class="spinner" style="float: none;"></span>
     </p>
 </form>
