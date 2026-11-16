@@ -29,12 +29,14 @@
 	 * practising this, we should strive to set a better example in our own work.
 	 */
 	jQuery(document).ready(function(){
-		jQuery('.delete_all_datepicker').datepicker({
-			changeMonth: true,
-			changeYear: true,
-			dateFormat: 'yy-mm-dd',
-			yearRange: '2000:c+10'
-		});
+		if ( typeof jQuery.fn.datepicker === 'function' ) {
+			jQuery('.delete_all_datepicker').datepicker({
+				changeMonth: true,
+				changeYear: true,
+				dateFormat: 'yy-mm-dd',
+				yearRange: '2000:c+10'
+			});
+		}
 	});
 
 	// Delete posts form handle.
@@ -315,12 +317,14 @@
 
 	// 
 	jQuery(document).ready(function(){
-		jQuery(".wpbd_global_multiple_select").chosen({ 
-			max_selected_options: 100, 
-			placeholder_text_multiple: "Select Multiple options...", 
-			width : '100%', 
-			clearAll: true 
-		});
+		if ( typeof jQuery.fn.chosen === 'function' ) {
+			jQuery(".wpbd_global_multiple_select").chosen({ 
+				max_selected_options: 100, 
+				placeholder_text_multiple: "Select Multiple options...", 
+				width : '100%', 
+				clearAll: true 
+			});
+		}
 	});	
 
 	// Render Dynamic post dropdown.
@@ -377,13 +381,15 @@
 	});
 
 	jQuery(document).ready(function(){
-		jQuery('.delete_all_datetimepicker').datetimepicker({
-			dateFormat: 'yy-mm-dd', 
-			timeFormat: 'HH:mm:ss',
-			changeMonth: true,
-			changeYear: true,
-			yearRange: '2000:c+10'
-		});
+		if ( typeof jQuery.fn.datetimepicker === 'function' ) {
+			jQuery('.delete_all_datetimepicker').datetimepicker({
+				dateFormat: 'yy-mm-dd', 
+				timeFormat: 'HH:mm:ss',
+				changeMonth: true,
+				changeYear: true,
+				yearRange: '2000:c+10'
+			});
+		}
 	});
 
 	jQuery(document).ready(function(){
@@ -591,16 +597,37 @@
 	}
 
 	function toggleScheduleFields() {
-		var selected = jQuery('input[name="delete_time"]:checked').val();
-		if (selected === 'scheduled') {
-			jQuery('#wpbd_schedule_fields_wrap').slideDown(200);
+		var $target = jQuery(this);
+		var selected = '';
+
+		if ( $target && $target.is && $target.is('input[name="delete_time"]') ) {
+			selected = $target.val();
 		} else {
-			jQuery('#wpbd_schedule_fields_wrap').slideUp(200);
+			selected = jQuery('input[name="delete_time"]:checked').val();
+		}
+
+		var $wrap = jQuery('#wpbd_schedule_fields_wrap');
+		if ( $target && $target.length && $target.closest ) {
+			var $localWrap = $target.closest('.wpbd-delete-time-options, form, .wpbd-inner-main-section').find('#wpbd_schedule_fields_wrap');
+			if ( $localWrap.length ) {
+				$wrap = $localWrap;
+			}
+		}
+
+		if ( selected === 'scheduled' ) {
+			$wrap.stop(true, true).slideDown(200);
+		} else {
+			$wrap.stop(true, true).slideUp(200);
 		}
 	}
 
 	jQuery(document).ready(function() {
-		jQuery(document).on('change', 'input[name="delete_time"]', toggleScheduleFields);
+		jQuery(document).on('change click', 'input[name="delete_time"]', toggleScheduleFields);
+		jQuery(document).on('click', 'label[for="delete_time_later"], label[for="delete_time_now"], label[for="delete_time_background"]', function() {
+			setTimeout(function() {
+				toggleScheduleFields();
+			}, 10);
+		});
 		if (jQuery('input[name="delete_time"]:checked').val() === 'scheduled') {
 			jQuery('#wpbd_schedule_fields_wrap').show();
 		} else {
