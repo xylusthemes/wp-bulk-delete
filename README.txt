@@ -5,7 +5,7 @@ Tags: delete, bulk, clean database, bulk delete, bulk clean
 Requires at least: 4.9
 Requires PHP: 5.3
 Tested up to: 7.1 
-Stable tag: 1.4.4
+Stable tag: 1.4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,6 +18,16 @@ WP Bulk Delete is a powerful WordPress plugin designed to help you delete posts,
 posts delete, delete all, mass delete, delete posts, delete comments, delete users, delete meta, delete taxonomy, delete revision, wp clean, clean trash, bulk user delete, clean spam, delete with condition, delete with filter, remove  
 
 ## 🔒 Powerful Features ##
+
+## ⚡ Background Deletion
+* ✅ Delete in Background with live progress tracking (percentages, processed items, remaining items).
+* ✅ Non-blocking AJAX batch processing prevents browser timeouts and server memory limit issues on large websites.
+* ✅ Cancel button to safely stop the deletion process at any time.
+
+## 💾 Export Before Deletion [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/)
+* ✅ Export filtered records to CSV or XML before deleting for safe backup.
+* ✅ Live batch export progress indicator with automatic download.
+* ✅ Supports Posts, Comments, Users, and WooCommerce data (Products, Orders, Customers).
 
 ## 💻 Database Cleanup
 * ✅ Delete Auto Drafts, Trash Posts, and Revisions
@@ -54,6 +64,8 @@ posts delete, delete all, mass delete, delete posts, delete comments, delete use
 * ✅ Delete Posts by Content Character Count [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
 * ✅ Delete Posts by Content Word Count [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
 * ✅ Delete Posts by Custom Query.
+* ✅ Delete Posts in Background with real-time progress bar.
+* ✅ Export Posts to CSV or XML before deletion [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
 * ✅ Schedule Post Deletion [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
 
 ## 📝 Deleting Comments
@@ -75,6 +87,8 @@ posts delete, delete all, mass delete, delete posts, delete comments, delete use
 * ✅ Delete Users by Display Name. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
 * ✅ Delete Users by Nicename. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
 * ✅ Delete Users by Login. [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
+* ✅ Delete Users in Background with real-time progress bar.
+* ✅ Export Users to CSV or XML before deletion [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
 * ✅ Schedule automatic user deletion [PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/).
 
 ## 🗃️ Deleting Categories and Tags
@@ -87,6 +101,10 @@ posts delete, delete all, mass delete, delete posts, delete comments, delete use
 
 
 ### 🛒 WooCommerce ([PRO Version](https://xylusthemes.com/plugins/wp-bulk-delete/))
+* ✅ Streamlined tab layout and menu navigation for Orders, Products, Users, and General filters.
+* ✅ Export WooCommerce data (Orders, Products, Customers) to CSV or XML before deletion.
+* ✅ Delete in Background with live progress tracking for high-volume stores.
+
 ##📦 Delete WooCommerce Orders
 * ✅ Delete Order by Status.
 * ✅ Delete Order by Order Date
@@ -145,6 +163,12 @@ posts delete, delete all, mass delete, delete posts, delete comments, delete use
 = Can I bulk delete posts by custom post type (CPT)? =
 ✅ Yes, you can delete custom post types (CPTs), including WooCommerce products, events, or any CPT registered on your WordPress site.
 
+= Can I export data before deleting? =
+✅ Yes! With the PRO version, you can export your filtered posts, users, or WooCommerce records directly to CSV or XML before deleting them, ensuring you have a safe backup copy.
+
+= How does "Delete in background" work? =
+✅ "Delete in background" processes items in controlled AJAX batches. It displays a real-time progress bar with completed percentage, deleted count, remaining count, and allows you to cancel the deletion process at any time without running into server timeout or memory exhaustion errors.
+
 == Screenshots ==
 
 1. 🧹 Cleanup
@@ -159,6 +183,13 @@ posts delete, delete all, mass delete, delete posts, delete comments, delete use
 10. 🔍 Delete WooCommerce General Filter
 
 == Changelog ==
+
+= 1.4.5 =
+* ADDED: Export to CSV and XML feature before deleting posts, users, and WooCommerce data (PRO).
+* ADDED: "Delete in background" processing option with real-time progress bar, item counts, and cancel support.
+* IMPROVEMENT: Reorganized WooCommerce tab layout and submenu navigation for improved user experience (PRO).
+* FIXED: PHP 8.2+ compatibility enhancements for data export and encoding.
+* SECURITY: Enhanced nonce checks, sanitization, and capability verifications across deletion requests.
 
 = 1.4.4 =
 * FIXED: Fixed an issue with scheduled delete functionality.
@@ -349,4 +380,7 @@ posts delete, delete all, mass delete, delete posts, delete comments, delete use
 * ⚙️ Delete inactive users.
 * 🔍 Delete users not listed in WordPress but existing in WooCommerce.
 * 🗃️ Delete images along with posts.
+* 💾 Export filtered data to CSV / XML before deletion.
+* ⚡ Asynchronous background deletion with real-time progress bar.
+* 🛒 Enhanced WooCommerce bulk management (Orders, Products, Customers) with streamlined tabs.
 * 🚀 And much more!
